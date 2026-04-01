@@ -5,11 +5,14 @@ Use this as the final quick validator.
 ## Contract Check
 
 - Is `project root` explicit?
-- Is `current repo` explicit?
+- Is `current repo` explicit, or tracked as an open question with a resolution plan?
 - If references exist, is reference scope explicit?
 - If references exist, are they listed with type + identifier/link?
+- If invocation used `follow-up ticket <KEY> and below tickets`, is parent/child relationship captured?
 - Is one canonical context path selected?
 - Are related repos resolved to actual paths or marked as open questions?
+- If related inputs mixed paths and tokens, were they normalized into one resolved list?
+- If invocation used `related project like in <root>, ...`, was `<root>` captured as project root?
 
 ## Execution Check
 

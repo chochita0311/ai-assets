@@ -122,6 +122,12 @@ When provided, also capture:
 - `shared context path` or `follow context path`
 
 If a chain relationship is explicit (for example "ticket X and child tickets"), treat that as a required boundary.
+If `current repo` is not explicit, do not assume from related-repo lists unless one candidate is unambiguous.
+
+Invocation pattern guidance:
+- If input says `related project like in <root>, <repo-a>, <repo-b>...`, treat `<root>` as `project root` and remaining tokens as `related repos`.
+- If input says `follow-up ticket <KEY> and below tickets`, record `<KEY>` as parent reference and child scope as an explicit relationship in `reference relationships`.
+- Do not collapse unresolved repo tokens into `current repo`; keep them in `open questions` until resolved.
 
 ## Session Startup Contract
 
@@ -157,11 +163,12 @@ Reference-aware form:
 project root:
 current repo:
 related repos:
+shared context path:
+follow context:
 reference scope:
 references in scope:
 reference relationships:
 current goal:
-follow context:
 ```
 
 ## Required Context Fields
@@ -238,6 +245,9 @@ For each related repo name/path:
 Generic example:
 - user token: `service-api`
 - resolved path: `<project-root>/service-api` (or recorded alias mapping when naming differs)
+
+Input can include mixed forms (absolute paths + short repo tokens).
+Normalize both forms into one resolved repo list before deep exploration.
 
 ## Propagation Workflow
 

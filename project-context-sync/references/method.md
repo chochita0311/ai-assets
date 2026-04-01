@@ -27,6 +27,9 @@ Extract and normalize:
 
 If user input defines relationships (for example parent/child tickets), record that relation explicitly.
 If no reference is provided, continue with local-context-first flow.
+If `current repo` is missing, resolve it only when one explicit path candidate is unambiguous; otherwise keep it as an open question.
+If input is in the form `related project like in <root>, <repo-a>, <repo-b>...`, parse `<root>` as project root and remaining items as related repo tokens.
+If input says `follow-up ticket <KEY> and below tickets`, set relationship note as `parent=<KEY>, children=in-scope`.
 
 ### 2. Resolve Repo Paths
 
@@ -37,6 +40,8 @@ For each related repo token:
 4. record mapping in context (`token -> resolved path`)
 
 Do not silently invent repo names.
+If related inputs mix absolute paths and repo tokens, normalize both into one resolved list.
+Never promote unresolved related repo tokens to `current repo` without explicit evidence.
 
 ### 3. Resolve Canonical Context File
 
