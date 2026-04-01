@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor Plan"
+  short_description: "Plan scoped refactors and REFACTOR-000x tracks"
+  default_prompt: "Use $refactor-plan to draft or update the next REFACTOR-000x plan for this project."
