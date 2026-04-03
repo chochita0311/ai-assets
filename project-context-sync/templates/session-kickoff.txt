@@ -10,3 +10,4 @@ reference relationships:
 
 confirmed facts:
 current goal:
+pause after context sync: yes

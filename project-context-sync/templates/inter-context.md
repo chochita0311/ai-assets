@@ -21,6 +21,7 @@ reference relationships:
 - 
 branch purpose:
 current goal:
+user review status: pending|confirmed
 planned work (reference-defined, not implemented yet):
 
 reference sync status:

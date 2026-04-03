@@ -17,6 +17,7 @@ Use this as the final quick validator.
 ## Execution Check
 
 - Was local context read before deep repo scanning?
+- After context sync, did the agent pause and wait for explicit user confirmation before implementation?
 - Were `working targets` used as first navigation targets?
 - Was external reference recheck done only when needed?
 - Was context updated in the same session as code/policy change?

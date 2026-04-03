@@ -264,12 +264,23 @@ For inter-repo work, follow this flow.
 Use this sequence unless repository-local rules are stronger:
 1. confirm root/repo/goal and optional reference scope
 2. read canonical shared context
-3. open `working targets` first
-4. verify current repo implementation state
-5. verify related repos only when coupling exists
-6. if references are declared and freshness matters, recheck external references only when needed
-7. update shared context in the same session as code or policy changes
-8. end with a short handoff note
+3. create or update context draft and show it to the user
+4. stop and wait for user confirmation to proceed with implementation work
+5. after confirmation, open `working targets` first
+6. verify current repo implementation state
+7. verify related repos only when coupling exists
+8. if references are declared and freshness matters, recheck external references only when needed
+9. update shared context in the same session as code or policy changes
+10. end with a short handoff note
+
+### Mandatory Pause Gate
+
+After context is created/read/updated, do not start code edits or execution immediately.
+
+You must:
+- present the synced context summary or file update status
+- wait for explicit user confirmation (for example: "proceed", "go ahead")
+- allow user to revise/add context before implementation starts
 
 Detailed decision logic and failure diagnosis live in `references/method.md`.
 

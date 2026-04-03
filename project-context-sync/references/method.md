@@ -58,13 +58,22 @@ If none exists, initialize from `templates/inter-context.md`.
 Read current context first, then open `working targets`.
 Treat the context as baseline state for this session.
 
-### 5. Verify Code by Priority
+### 5. Pause and Confirm Before Implementation
+
+After creating/updating/reading context:
+- report synced context status to user
+- pause and wait for explicit confirmation
+- allow user to revise context before implementation begins
+
+Do not edit code, run implementation commands, or start refactoring before this confirmation.
+
+### 6. Verify Code by Priority
 
 1. current repo implementation
 2. related repo behavior only when coupling exists
 3. downstream/scheduler roles only when they affect current decision
 
-### 6. Decide External Recheck
+### 7. Decide External Recheck
 
 If no references are in scope, skip external recheck by default.
 Use external sources only when one of these is true:
@@ -75,7 +84,7 @@ Use external sources only when one of these is true:
 
 Otherwise, skip external recheck and continue on local context + code.
 
-### 7. Update Context in Same Session
+### 8. Update Context in Same Session
 
 When code or policy facts change, update context immediately:
 - confirmed facts
@@ -87,7 +96,7 @@ When code or policy facts change, update context immediately:
 - external recheck needed flag
 - next handoff note
 
-### 8. End with Handoff
+### 9. End with Handoff
 
 Handoff should include:
 - what was confirmed
@@ -113,3 +122,7 @@ Common failures and fixes:
 4. Context not updated after code change
 - Symptom: next session repeats discovery work.
 - Fix: enforce step 7 in same session as the change.
+
+5. Premature implementation start
+- Symptom: agent starts changing code immediately after context sync.
+- Fix: enforce step 5 pause gate and require explicit user "proceed" signal.
