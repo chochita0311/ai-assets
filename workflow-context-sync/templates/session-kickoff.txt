@@ -1,0 +1,16 @@
+workflow root:
+current repo:
+related repos:
+shared context path:
+follow context:
+
+sources in scope:
+- id:
+  type:
+  location:
+source relationships:
+
+known facts:
+current goal:
+approval mode: strict
+pause after reconciliation: yes

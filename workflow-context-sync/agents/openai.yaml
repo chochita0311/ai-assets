@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workflow Context Sync"
+  short_description: "Reconcile multi-source workflow context across repos, tickets, docs, and runtime signals"
+  default_prompt: "Use $workflow-context-sync to build or refresh one canonical workflow context across code, tickets, docs, and runtime signals; present reconciliation results, then wait for explicit approval before implementation."
