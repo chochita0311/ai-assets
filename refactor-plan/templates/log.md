@@ -63,12 +63,16 @@ If the project does not use numbered refactor tracks, replace `refactor-xxxx` wi
   - `...`
 - Parity claim status:
   - `Preserved | Provisional | Unknown`
+- Parity confidence basis:
+  - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
 - If `Preserved`, strict baseline audit completed:
   - `Yes | No`
 
 ## Validation
 
 - Baseline or compare target:
+  - `...`
+- Baseline resolved commit SHA (if available):
   - `...`
 - Build / compile:
   - command: `...`

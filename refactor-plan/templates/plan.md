@@ -46,6 +46,7 @@ Avoid steps that are only "misc cleanup" buckets.
 - Primary type: `Structural | Behavioral | Semantic`
 - Parity target: `Behavior-preserving | Intentional delta`
 - Compare baseline: `[branch, commit, release, or agreed target]`
+- Baseline pin: `[resolved commit SHA when available; otherwise explain why provisional]`
 
 ## Scope
 
@@ -87,6 +88,7 @@ Validation:
 - [targeted tests]
 - [startup, registration, or runtime smoke if needed]
 - [when parity is required: explicit baseline-compare audit tasks]
+- [when parity is required: explicit side-effect and failure-mode compare tasks]
 
 Exit gate:
 - [What must be true before moving on]
@@ -104,10 +106,12 @@ Exit gate:
 - Review focus:
   - `[contract parity, persistence semantics, side effects, transaction shape, etc.]`
 - Parity audit coverage (required when parity is requested):
-  - `[baseline pinned]`
+  - `[baseline pinned with resolved commit SHA when available]`
   - `[old->new source mapping complete]`
-  - `[query semantics audited]`
+  - `[query/write semantics audited at logic-unit level]`
   - `[payload/output mapping audited]`
+  - `[side-effect paths audited explicitly]`
+  - `[failure-mode paths audited explicitly]`
 
 ## Intentional Deltas
 

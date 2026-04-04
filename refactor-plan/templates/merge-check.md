@@ -30,6 +30,8 @@ Examples:
   - `...`
 - Compare baseline:
   - `...`
+- Baseline resolved commit SHA (if available):
+  - `...`
 - Baseline certainty:
   - `Confirmed | Provisional`
 
@@ -62,13 +64,17 @@ Examples:
 
 ## Strict Parity Audit Coverage
 
-- Baseline pinned:
+- Baseline pinned to immutable target (commit SHA):
   - `Yes | No`
 - Source mapping complete (old -> new paths):
   - `Yes | No`
-- Query semantics audited line-by-line:
+- Query/write semantics audited at logic-unit level:
   - `Yes | No`
 - Payload/output mapping audited field-by-field:
+  - `Yes | No`
+- Side-effect paths audited explicitly:
+  - `Yes | No`
+- Failure-mode paths audited explicitly:
   - `Yes | No`
 - Any unaudited relevant path:
   - `None | ...`
@@ -79,6 +85,8 @@ Examples:
   - `Yes | No | Not yet`
 - Behavioral parity vs baseline:
   - `Preserved | Intentional deltas present | Unknown`
+- Parity confidence basis:
+  - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
 - External contract parity:
   - `Preserved | Intentional deltas present | Unknown`
 - Client-visible change:
@@ -120,4 +128,4 @@ Examples:
 - If runtime evidence is user-verified or externally observed rather than directly executed, say that explicitly.
 - If the full test suite was not run, record that plainly instead of implying broader confidence.
 - If the answer is “not yet,” the log should still say what blocks merge and what to do next.
-- `Behavioral parity vs baseline = Preserved` is valid only when Strict Parity Audit Coverage is fully satisfied.
+- `Behavioral parity vs baseline = Preserved` is valid only when Strict Parity Audit Coverage is fully satisfied, including side-effect and failure-mode coverage.

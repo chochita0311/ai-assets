@@ -20,6 +20,7 @@ This skill is general-purpose. It should travel well across repositories, stacks
 2. Classify the refactor before designing phases.
    - Mark the work as primarily `Structural`, `Behavioral`, or `Semantic`.
    - State whether the goal is behavior-preserving parity or intentional semantic change.
+   - If merge safety or parity judgment is in scope, plan explicit parity-audit evidence requirements up front.
    - Separate non-goals so unrelated infrastructure churn, package churn, and semantic redesign do not get mixed casually.
 
 3. Decide whether to extend or create a tracking document.
@@ -51,6 +52,7 @@ This skill is general-purpose. It should travel well across repositories, stacks
 
 - Keep behavior-preserving work clearly separate from intentional semantic redesign.
 - If behavioral parity is requested, treat parity as a proof task, not an assumption.
+- For exploratory planning without merge judgment, keep parity status provisional by default.
 - Preserve interface, schema, config, and generated-artifact coupling awareness when types, packages, or module boundaries move.
 - Include wiring or registration checks when moving framework configuration, plugins, containers, consumers, handlers, or adapters.
 - Prefer targeted parity tests plus build, startup, and runtime smoke gates for touched paths rather than vague "test everything" plans.
@@ -156,10 +158,14 @@ If any of those are unknown, mark them as provisional instead of pretending they
 
 When the user prioritizes behavioral parity, this mode is mandatory.
 
+Activation boundary:
+- Use this mode when parity, no-drift, or safe-to-merge claims are explicitly requested or clearly implied.
+- If the user is only exploring plan options without merge judgment, keep parity provisional and do not force strict conclusions.
+
 Required behavior:
-- Pin an explicit compare baseline (branch/commit/release target).
+- Pin an explicit compare baseline (branch/commit/release target) and record an immutable reference (resolved commit SHA) when available.
 - Build a source mapping of affected old-path to new-path for the full execution flow.
-- Perform file-by-file and logic-path comparison before parity conclusions.
+- Perform file-by-file and logic-unit comparison before parity conclusions (branches, predicates, mappings, and side-effect paths).
 - Compare query semantics explicitly:
   - selected tables
   - join type and predicates
@@ -167,13 +173,28 @@ Required behavior:
   - group/order/limit behavior
   - null/default/fallback behavior
   - status/filter conditions
+- Compare write-path semantics explicitly:
+  - write targets and predicates
+  - upsert/update/insert behavior
+  - timestamps, actor/source, and idempotency-relevant fields
 - Compare mapping/output construction explicitly:
   - field-by-field payload population
   - defaults, fallbacks, and exception behavior
   - ordering and dedupe semantics
+- Compare side-effect semantics explicitly:
+  - events/messages emitted
+  - audit/history writes
+  - cache invalidation
+  - notifications
+  - security/authorization outcomes
+- Compare failure-mode semantics explicitly:
+  - exception propagation/translation
+  - retry/rollback/compensation behavior
+  - transaction boundary and partial-failure behavior
 
 Claim rules:
 - If any relevant path is not audited, parity status must be `Unknown/Provisional`.
 - Do not use confidence language to mask missing audit coverage.
+- `Behavioral parity = Preserved` is valid only when strict audit coverage is complete, including side-effect and failure-mode coverage.
 - If drift is found mid-audit, report it immediately and revise prior parity claims.
 - If a previous parity-safe statement is later contradicted by audit evidence, explicitly retract and correct that statement.

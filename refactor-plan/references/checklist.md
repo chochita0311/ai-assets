@@ -116,20 +116,35 @@ For every changed write path, verify:
 
 - Baseline target is explicit:
   - branch, commit, or release compare target is pinned
+  - resolved immutable reference (commit SHA) is recorded when available
 - Old-to-new source mapping is complete for affected flow:
   - entrypoint
   - orchestration/service path
   - repository/query path
   - payload builder/output writer path
-- Query semantics are compared explicitly for each affected query:
+- Query semantics are compared explicitly for each affected query at logic-unit level:
   - join types and join predicates
   - where predicates
   - group/order/limit
   - null/default/filter/status conditions
+- Write semantics are compared explicitly for each affected write path:
+  - target selection and predicates
+  - inserted/updated fields and defaults
+  - timestamp/actor/source behavior
 - Output semantics are compared explicitly:
   - field-by-field mapping
   - fallback/default behavior
   - dedupe and ordering behavior
+- Side-effect semantics are compared explicitly:
+  - events/messages
+  - audit/history writes
+  - cache invalidation
+  - notifications
+  - security/authorization behavior
+- Failure-mode semantics are compared explicitly:
+  - exception model
+  - retry/rollback/compensation behavior
+  - transaction boundary and partial-failure behavior
 - If any path was not audited:
   - parity conclusion must be `Unknown` or `Provisional`
   - do not conclude `Preserved`

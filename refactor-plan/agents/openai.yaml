@@ -1,4 +1,4 @@
 interface:
   display_name: "Refactor Plan"
-  short_description: "Plan scoped refactors and REFACTOR-000x tracks"
-  default_prompt: "Use $refactor-plan to draft or update the next REFACTOR-000x plan for this project."
+  short_description: "Plan scoped refactors with explicit parity and merge-safety gates"
+  default_prompt: "Use $refactor-plan to draft or update the next refactor plan for this project, pinning baseline and parity requirements when merge safety is in scope."
