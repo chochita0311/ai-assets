@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design Plan"
+  short_description: "Plan multi-screen design consistency and reconciliation work"
+  default_prompt: "Use $design-plan to create or update a concrete design planning track for BX, UI, and UX consistency across this project."
+
+policy:
+  allow_implicit_invocation: true

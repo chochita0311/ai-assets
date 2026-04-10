@@ -4,7 +4,7 @@
 - This file is the stable design source of truth.
 - Keep durable rules here.
 - Do not put immediate next actions, implementation sequencing, or temporary task lists here.
-- Do not write transition phrases inside locked rules; if something is unsettled, move it to the plan instead.
+- Do not write transition phrases inside locked rules; if something is unsettled, leave it out of the constitution or handle it in a separate planning workflow.
 
 ## 1. Project Context
 - Product type:
