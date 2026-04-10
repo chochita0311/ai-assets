@@ -128,7 +128,7 @@
 - `Pass` only if another agent could build several more screens without inventing new colors, radius families, spacing logic, or tone by guesswork.
 - `Fail` if the constitution contains implementation sequencing, next actions, or temporary tactical notes.
 - `Fail` if the governance doc leaves document ownership ambiguous.
-- `Fail` if the outputs depend on unstated assumptions a checker cannot verify from the files.
+- `Fail` if the outputs depend on unstated assumptions an evaluator cannot verify from the files.
 - Follow-up notes should stay in the response unless they clearly deserve a separate planning workflow.
 
 ## 15. Final Question

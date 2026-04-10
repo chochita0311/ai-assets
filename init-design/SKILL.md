@@ -75,7 +75,7 @@ Use this skill to turn a first screen artifact into a stable design starting poi
 - Always validate design against compatibility, expandability, and maintainability constraints.
 - Treat the constitution as the stable rule document.
 - Keep screen families in the constitution only when they are durable product structure.
-- Treat this skill as producer-checker friendly: a second agent should be able to judge pass/fail from the output files without reconstructing the whole design process.
+- Treat this skill as drafting-agent/evaluator friendly: a second agent should be able to judge pass/fail from the output files without reconstructing the whole design process.
 
 ## Constitution Scope
 - `design-constitution.md` answers:
@@ -106,4 +106,4 @@ Use this skill to turn a first screen artifact into a stable design starting poi
 - A run fails when:
   - the constitution mixes durable rules with temporary tasks or sequencing
   - the governance doc leaves source ownership ambiguous
-  - the output depends on unstated assumptions that a checker cannot verify from the files
+  - the output depends on unstated assumptions that an evaluator cannot verify from the files

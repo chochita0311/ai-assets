@@ -113,10 +113,10 @@ Rules:
 - If a section mainly answers "what now?", keep it in the response or hand it off to a separate planning skill instead of turning `init-design` into a mixed-purpose workflow.
 - If a section mainly answers "which document owns this kind of change?", it belongs in the governance doc.
 
-## Producer And Checker Model
-- The producer should generate files that stand on their own without extra verbal rescue.
-- The checker should be able to evaluate those files against the checklist without re-running artifact analysis from scratch.
-- If a checker would need unstated assumptions to judge the result, the producer output is too soft.
+## Drafting Agent And Evaluator Model
+- The drafting agent should generate files that stand on their own without extra verbal rescue.
+- The evaluator should be able to evaluate those files against the checklist without re-running artifact analysis from scratch.
+- If an evaluator would need unstated assumptions to judge the result, the drafting output is too soft.
 
 ## Department Structure
 - Think of `init-design` as seven departments.
@@ -276,7 +276,7 @@ Rules:
   - tactical next actions or rollout sequencing appear inside the constitution
   - the creative-source file exists but is not named in governance
   - durable rule ownership is ambiguous between source docs
-  - a checker could not tell whether three more screens could be built without visual drift
+  - an evaluator could not tell whether three more screens could be built without visual drift
 
 ## Screen Scope Rule
 - Do not force a literal `First 3 Screens` section in every project.
