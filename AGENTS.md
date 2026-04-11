@@ -4,9 +4,12 @@
 - This repo stores reusable AI assets, including Codex skills.
 - Each skill should remain portable, checkable, and maintainable across projects.
 - Optimize for strong contracts, clean file roles, and harness-friendly expansion.
+- Use `README.md` for the user-facing repository overview.
 
 ## Codebase Map
 - Scan the repo root before assuming structure.
+- `agents/` holds reusable top-level agent role contracts.
+- `agents/templates/` holds reusable PRD and feature templates for consuming repos.
 - `skills/` holds the reusable skill packages.
 - `SKILL.md` is the entry contract for a skill.
 - Within each skill package, `agents/` holds UI-facing skill metadata.
@@ -16,6 +19,7 @@
 
 ## Source Of Truth
 - Keep `AGENTS.md` short and operational.
+- Keep `README.md` as the overview and navigation doc for humans entering the repo.
 - Keep durable repo-level guidance under `docs/policies/`.
 - Keep future tracking or planning docs under `docs/plans/` if this repo later needs them.
 - Let each skill package own its own domain instructions; do not duplicate skill-local rules in `AGENTS.md`.
