@@ -9,8 +9,8 @@
 - Use it when you need the operator-facing entry pattern for one approved feature run.
 - It does not own the overall sequence model.
 - It does not own the Orchestrator role contract itself.
-- In a consuming repo, use `docs/agents/workflow.md` for the sequence model.
-- In a consuming repo, use `docs/agents/orchestrator.md` for loop-control responsibilities and routing logic.
+- In a consuming repo, use `docs/agents/flow/workflow.md` for the sequence model.
+- In a consuming repo, use `docs/agents/role/orchestrator.md` for loop-control responsibilities and routing logic.
 
 ## When To Use
 - A feature document has already been approved.
@@ -21,6 +21,9 @@
 - Start execution from the approved feature and parent PRD, not from the original request.
 - Treat this document as the operator-facing execution entry guide.
 - Do not generate ad hoc startup flows per run unless the project explicitly needs them.
+- Treat one run as an automated unit.
+- Do not assume the human owner will interrupt a normal active run.
+- If the result should go back to spec or planning, report that at run completion so the human owner can make the next routing decision.
 
 ## Required Inputs
 - one approved feature document
@@ -60,9 +63,19 @@
   - active spec path once it exists
 - Keep the role prompt anchored to approved docs.
 - Do not restate the original request as the primary source once the feature is approved.
-- If a role reports `spec gap` or `planning gap`, stop normal execution and route upward.
+- If a role reports `spec gap` or `planning gap`, record it as a result for the run report unless a technical blocker prevents further continuation.
+- After post-run human review sends work upward and that layer is corrected, start a new run from the corrected layer rather than continuing as if the earlier attempt remained valid.
 - After the run exists, prefer continuing from the run document plus active spec and latest reports instead of re-invoking only from the feature path.
 - Direct role invocation without `Orchestrator` is an exception path for tightly controlled continuation work, not the default operating pattern.
+
+## Default Closing Sequence
+- When all related runs for the active feature or PRD increment are complete, do not jump straight to acceptance.
+- First summarize any reusable `design` or `interaction` evaluation candidates discovered during the run set.
+- Ask the human owner whether each candidate should be added or discarded.
+- After that decision, report that the related runs are complete and ask for:
+  - PRD or feature acceptance when relevant
+  - run acceptance
+  - final close or follow-up direction
 
 ## Prompt Frame
 Use this frame for every execution-role prompt in a consuming repo:

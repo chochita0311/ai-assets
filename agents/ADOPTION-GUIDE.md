@@ -18,9 +18,9 @@
 After export, the consuming repo should normally own:
 
 - `docs/agents/`
-  - role contracts
-  - workflow
-  - runner
+  - `role/`
+  - `flow/`
+  - `operation/`
 - `docs/plans/`
   - `prd/`
   - `feature/`
@@ -37,8 +37,12 @@ After export, the consuming repo should normally own:
 ## Export Mapping
 Use this mapping when exporting from the shared package into a consuming repo:
 
-- `../ai-assets/agents/*.md`
-  -> `docs/agents/*.md`
+- `../ai-assets/agents/role/*.md`
+  -> `docs/agents/role/*.md`
+- `../ai-assets/agents/flow/*.md`
+  -> `docs/agents/flow/*.md`
+- `../ai-assets/agents/operation/*.md`
+  -> `docs/agents/operation/*.md`
 - `../ai-assets/agents/templates/prd.md`
   -> `docs/plans/prd/template-prd.md`
 - `../ai-assets/agents/templates/feature.md`
@@ -70,6 +74,9 @@ Export the agent system from `../ai-assets/agents/` into this repo.
 Install it as a local docs-owned system, not as a runtime dependency.
 Map the shared package into:
 - `docs/agents/`
+  - `role/`
+  - `flow/`
+  - `operation/`
 - `docs/plans/`
 - `docs/policies/harness/`
 - `docs/policies/design/`

@@ -6,7 +6,7 @@
 
 ## Ownership
 - This document owns execution-loop rules.
-- In a consuming repo, use `docs/agents/workflow.md` for sequence examples.
+- In a consuming repo, use `docs/agents/flow/workflow.md` for sequence examples.
 - In a consuming repo, use `docs/policies/harness/prd-feature-management.md` for planning-layer rules and approval criteria.
 
 ## Execution Artifacts

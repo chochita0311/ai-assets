@@ -34,12 +34,22 @@
 - Next role:
 - Current blocker classification:
 - Return path if blocked:
+- Post-run recommendation for human review:
 
 ## Attempts
 - Attempt 1:
   - status:
   - outcome:
   - notes:
+
+## Contract Regression Check
+- Needed:
+- Result:
+- Notes:
+
+## Human Review
+- Outcome:
+- Follow-up run:
 
 ## Continuity Notes
 - `YYYY-MM-DD`: run initialized

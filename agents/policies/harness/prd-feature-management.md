@@ -9,7 +9,7 @@
 - This document owns rules.
 - Use it to understand what PRDs and features are, what they must contain, what may remain open, what must be clear before approval, and how traceability and change control work.
 - It does not own the full step-by-step baton sequence.
-- In a consuming repo, use `docs/agents/workflow.md` for the ordered flow, pause points, and handoff timing between planning and execution.
+- In a consuming repo, use `docs/agents/flow/workflow.md` for the ordered flow, pause points, and handoff timing between planning and execution.
 
 ## Planning Layers
 - In a consuming repo, `docs/plans/prd/` owns bounded PRD documents.
@@ -203,8 +203,8 @@ Split a product feature when one or more of these become true:
 - the feature repeatedly fails to converge within one to three loops
 
 ## Relationship To Agent Roles
-- In a consuming repo, `docs/agents/prd-normalizer.md` defines how to stabilize raw inputs into a bounded PRD.
-- In a consuming repo, `docs/agents/feature-planner.md` defines how to decompose an approved PRD into loop-sized features.
-- In a consuming repo, `docs/agents/spec-agent.md` defines how to convert one approved feature into a build-ready spec.
+- In a consuming repo, `docs/agents/role/prd-normalizer.md` defines how to stabilize raw inputs into a bounded PRD.
+- In a consuming repo, `docs/agents/role/feature-planner.md` defines how to decompose an approved PRD into loop-sized features.
+- In a consuming repo, `docs/agents/role/spec-agent.md` defines how to convert one approved feature into a build-ready spec.
 - In a consuming repo, `docs/policies/harness/execution-loop-governance.md` defines how approved features move through execution loops and how failures route upward.
 - This guide defines where those outputs live and how they stay traceable over time.

@@ -7,8 +7,8 @@
 
 ## Ownership
 - This document owns reusable interaction-evaluation checks and cautions.
-- Use [../../agents/functional-evaluator.md](../../agents/functional-evaluator.md) for the functional evaluation role contract.
-- Use [../../agents/ux-heuristic-evaluator.md](../../agents/ux-heuristic-evaluator.md) for the UX heuristic evaluation role contract.
+- Use [../../role/functional-evaluator.md](../../role/functional-evaluator.md) for the functional evaluation role contract.
+- Use [../../role/ux-heuristic-evaluator.md](../../role/ux-heuristic-evaluator.md) for the UX heuristic evaluation role contract.
 - Use [../project/execution-loop-governance.md](../project/execution-loop-governance.md) for fail routing and loop handling.
 
 ## Use
@@ -39,6 +39,16 @@
 - If a surface rebuild replaces buttons, links, or controls with new nodes or components, the system must preserve or rebind the intended interactions as part of the same change.
 - Re-rendering markup without restoring event behavior is a blocking defect, not an acceptable implementation detail.
 - Pagination, mode toggles, navigation controls, and repeated actions should be explicitly rechecked after any interactive-surface replacement strategy.
+
+### 5. Scope Transition Reset Rule
+- When a scope change redefines the result set, explicit reset is usually safer than carrying forward the previous search or filter state.
+- If global filtering and scoped search would conflict, the interaction should clear one state before entering the other instead of leaving both implicitly active.
+- Evaluators should check whether query, tag, category, collection, or similar browse states are reset or preserved intentionally rather than by accident.
+
+### 6. Immediate Dropdown Dismissal
+- Hover-driven dropdowns should close immediately after the user makes a selection.
+- Leaving the dropdown open after selection slows recognition of the newly loaded destination state.
+- Evaluators should verify both the selected result and the menu-dismiss behavior, not just the navigation target.
 
 ## Classification Guidance
 - Usually classify as `implementation bug` when the spec already requires stable transitions, continuity, or no-leak behavior.

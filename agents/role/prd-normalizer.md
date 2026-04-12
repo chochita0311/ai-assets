@@ -37,6 +37,8 @@
 - Mark ambiguity as `uncertain` instead of resolving it silently.
 - Preserve explicit non-goals and exclusions.
 - Prefer conservative normalization when the sources conflict.
+- When a requested change could target either source-of-truth data or derived or generated output, keep that distinction explicit instead of collapsing the two.
+- Do not silently reinterpret a source-of-truth request as a generated-output-only adjustment.
 
 ## Required Output
 Produce a normalized PRD package with these sections:

@@ -8,8 +8,8 @@
 - This document owns the Orchestrator role contract.
 - It does not own the whole workflow sequence.
 - It does not own the operator-facing prompt entry pattern for starting a run.
-- In a consuming repo, use `docs/agents/workflow.md` for the sequence model.
-- In a consuming repo, use `docs/agents/runner.md` for run-start and run-continuation invocation prompts.
+- In a consuming repo, use `docs/agents/flow/workflow.md` for the sequence model.
+- In a consuming repo, use `docs/agents/operation/runner.md` for run-start and run-continuation invocation prompts.
 
 ## When To Use
 - A feature has been approved and is ready to enter execution.
@@ -30,6 +30,8 @@
   - planning gap -> planning review
 - Do not let heuristic suggestions silently enter build or fix work.
 - End the loop only on pass, explicit escalation, or explicit return to planning/spec.
+- Treat one run as an automated execution unit.
+- Human review normally happens after the run reports its result, not as an in-progress interruption path.
 
 ## Decision Rules
 
@@ -50,9 +52,9 @@
 - `FAIL` with `implementation bug`:
   - continue builder or fix loop
 - `FAIL` with `spec gap`:
-  - return to spec review
+  - report the result for post-run human routing to spec review
 - `FAIL` with `planning gap`:
-  - return to planning review
+  - report the result for post-run human routing to planning review
 
 ### Retry Escalation
 - If the same failure class repeats twice without meaningful progress, escalate instead of continuing the same loop shape blindly.
@@ -71,6 +73,7 @@ Produce or update:
 4. fail classification when the loop blocks
 5. next role to run
 6. termination reason when the loop stops
+7. post-run recommendation for human review when the correct next step is accept, return to spec, or return to planning
 
 ## Non-Goals
 - redefining scope

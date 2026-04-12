@@ -11,7 +11,7 @@
 - It does not own the operator-facing run-start prompts.
 - In a consuming repo, use `docs/policies/harness/prd-feature-management.md` for required document content, approval criteria, traceability rules, allowed ambiguity, and change control.
 - In a consuming repo, use `docs/policies/harness/execution-loop-governance.md` for fail classification, execution routing, heuristic handling, and execution-artifact ownership.
-- In a consuming repo, use `docs/agents/runner.md` when you need to actually start or continue one run through prompts.
+- In a consuming repo, use `docs/agents/operation/runner.md` when you need to actually start or continue one run through prompts.
 
 ## Workflow Assembly
 - Workflows are composable, not universal.
@@ -63,6 +63,9 @@
    - Fix only the approved feature defects surfaced by evaluators.
 17. Re-evaluate
    - Repeat the needed evaluator and fix steps until pass or until the work must return to planning or spec review.
+18. Post-run human review
+   - After the automated run reports its result, the human owner decides whether to accept, return to spec, or return to planning.
+   - Start a new run from the corrected layer instead of treating that return as an in-progress interruption to the earlier run.
 
 ## Role Boundaries
 - Human:
@@ -134,7 +137,8 @@ Process:
   - design-sensitive `product` features may need design, functional, and heuristic evaluation
   - `foundation` features usually need functional evaluation only
 - `Fix Agent` should consume findings from the active evaluator set and preserve the same feature boundary.
-- If any evaluator finds what is really a planning or spec gap, pause the loop and return to the owning layer instead of normalizing the gap as a defect.
+- If any evaluator finds what is really a planning or spec gap, report that result for post-run human routing instead of normalizing the gap as a defect.
+- If execution changes a source-of-truth contract, identity model, or generated-data contract, add a stale-assumption check before closing the run.
 - `UX Heuristic Evaluator` should operate as a side-channel by default:
   - `PASS WITH SUGGESTIONS` does not block the loop
   - only severe blocking UX contradictions should stop execution
