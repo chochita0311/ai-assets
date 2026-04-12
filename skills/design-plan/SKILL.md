@@ -15,7 +15,7 @@ Use this skill when the problem is no longer "define the design system from a ba
 - The user explicitly asks for a design plan, design consistency plan, UX consistency plan, BX plan, or phased design refactor.
 
 ## Do Not Use This Skill When
-- The main task is to derive durable design law from a first artifact. Use `init-design` instead.
+- The main task is to derive durable design law from a first artifact. If `init-design` is available, that skill is usually a better fit.
 - The user only wants a constitution or a one-shot design baseline.
 - The issue is a single isolated component polish with no broader planning need.
 

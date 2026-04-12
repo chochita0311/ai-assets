@@ -10,7 +10,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## How To Navigate
 - Start with [AGENTS.md](AGENTS.md) for the operational repo map and working rules.
-- Read [skills/skill-quality.md](skills/skill-quality.md) for the quality bar for reusable skills.
+- Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
 - Read [agents/README.md](agents/README.md) for the shared agent-role package.
 
 - Use each skill package's `SKILL.md` as the entry contract for that skill.

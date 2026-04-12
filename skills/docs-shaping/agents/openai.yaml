@@ -1,0 +1,7 @@
+interface:
+  display_name: "Docs Shaping"
+  short_description: "Non-destructively reshape document composition"
+  default_prompt: "Use $docs-shaping to reorganize the selected document(s) or source material into a clearer, more seamless composition while preserving substance, constraints, and intent; default to one primary shaped artifact, change only what is necessary, and report the main before-to-after moves."
+
+policy:
+  allow_implicit_invocation: true
