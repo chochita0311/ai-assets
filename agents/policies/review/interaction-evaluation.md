@@ -50,6 +50,16 @@
 - Leaving the dropdown open after selection slows recognition of the newly loaded destination state.
 - Evaluators should verify both the selected result and the menu-dismiss behavior, not just the navigation target.
 
+### 7. Compact Control Menu Placement
+- Compact controls such as page-size or sort menus should open in a way that preserves nearby content readability rather than covering the primary browse surface unnecessarily.
+- The expanded menu should feel attached to its trigger through aligned width, boundary, and placement instead of appearing as a detached floating box.
+- Evaluators should test both the closed and expanded states and verify that the chosen direction, spacing, and attachment do not create avoidable overlap with cards or other active content.
+
+### 8. Click-Affordance Match
+- Pointer, hover, and focus affordances should appear only on the part of a surface that is actually interactive.
+- If only a title, summary, or other sub-area opens a destination, the surrounding card body must not advertise clickability through pointer cursor or full-surface hover treatment.
+- Evaluators should compare real click targets with visible affordances and flag any surface that still feels clickable after the interactive area has been narrowed.
+
 ## Classification Guidance
 - Usually classify as `implementation bug` when the spec already requires stable transitions, continuity, or no-leak behavior.
 - Usually classify as `spec gap` when the spec failed to define how view changes, loading behavior, or navigation continuity should work.
