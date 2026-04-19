@@ -18,80 +18,88 @@
 
 ## Reusable Evaluation Notes
 
-### 1. Card Content Containment
+### Layout Containment And Readability
+
+#### 1. Card Content Containment
 - Text must not escape card bounds.
 - Tags must wrap or truncate without spilling outside the card.
 - Metadata and footer content must remain contained inside the card.
 - Long titles, dense tags, or narrow widths must not break the card box.
 
-### 2. Breakpoint Containment Stability
+#### 2. Breakpoint Containment Stability
 - Grid cards must preserve containment across supported breakpoints.
 - Responsive column changes must not cause content overlap, spill, or collapse.
 - A layout that works only at one width is not a pass.
 
-### 3. Shell Boundary Preservation
-- Visual inspiration from a source artifact must not override the current approved shell boundaries.
-- When a feature is scoped to one surface, unchanged shell regions must remain visually intact unless the approved feature explicitly includes them.
-- Local surface redesign must not quietly restyle the left, top, or bottom shell.
-
-### 4. Source-Use Discipline
-- A source artifact may guide layout direction inside the approved surface.
-- A source artifact must not justify importing new controls, data, or shell behavior that the approved feature did not include.
-- Visual borrowing is valid only inside the approved boundary.
-
-### 5. Readability Before Density
+#### 5. Readability Before Density
 - Browse surfaces must stay readable under realistic content length.
 - When density rises, the system should preserve hierarchy and containment before adding more visible information.
 - A visually compact layout that causes clipping, overlap, or scan breakdown is a failure, not a stylistic preference.
 
-### 6. Topbar Parity Drift Check
+### Boundary And Scope Discipline
+
+#### 3. Shell Boundary Preservation
+- Visual inspiration from a source artifact must not override the current approved shell boundaries.
+- When a feature is scoped to one surface, unchanged shell regions must remain visually intact unless the approved feature explicitly includes them.
+- Local surface redesign must not quietly restyle the left, top, or bottom shell.
+
+#### 4. Source-Use Discipline
+- A source artifact may guide layout direction inside the approved surface.
+- A source artifact must not justify importing new controls, data, or shell behavior that the approved feature did not include.
+- Visual borrowing is valid only inside the approved boundary.
+
+### Typography, Alignment, And Accent Consistency
+
+#### 6. Topbar Parity Drift Check
 - When matching or preserving an existing topbar, evaluators should compare typography and spacing tokens before comparing copy or menu structure.
 - Visual drift often appears first in `font-size`, `line-height`, `letter-spacing`, and reserved icon spacing rather than in the text labels themselves.
 - Hidden or conditional icons must not leave idle-state spacing that makes one navigation item look wider or visually misaligned than its peers.
 
-### 7. Card Footer Baseline Consistency
-- Repeated cards in the same grid should keep footer metadata on the same visual levels even when title or summary length differs.
-- Tag rows, collection labels, dates, or similar footer metadata must align card-to-card instead of drifting with content height.
-- If footer content belongs to a fixed metadata zone, that zone should be anchored to the card box rather than to the variable text block above it.
-
-### 8. Metadata Layer Separation
-- Distinct metadata layers inside a compact card should not visually occupy the same horizontal band.
-- Tag chips and collection or locator labels should read as separate rows or clearly separated zones, not as partially overlapping content.
-- Evaluators should check long-content cases, multi-tag cases, and short-summary cases to confirm the metadata hierarchy still reads cleanly.
-
-### 9. Single Boundary Ownership
-- When two stacked surfaces meet, only one of them should own the boundary line unless a double-divider effect is explicitly intended.
-- Repeated items may keep internal separators, but the final item before a footer or next section should usually drop its divider if the following surface already provides the section boundary.
-- Evaluators should check last-item states, pagination edges, and empty states rather than validating only repeated middle items.
-
-### 10. Small Accent Token Consistency
+#### 10. Small Accent Token Consistency
 - Small accent surfaces such as category labels, chips, and compact action buttons should stay inside the approved token family before introducing custom in-between hex values.
 - When tone tuning is needed, prefer existing foreground and container tokens that already belong to the active palette over ad hoc near-matches.
 - Evaluators should compare compact accents against nearby chips, labels, and control states to catch subtle tonal drift that makes the interface feel less system-driven.
 
-### 11. Footer Control Row Separation
+### Card Metadata And Footer Structure
+
+#### 7. Card Footer Baseline Consistency
+- Repeated cards in the same grid should keep footer metadata on the same visual levels even when title or summary length differs.
+- Tag rows, collection labels, dates, or similar footer metadata must align card-to-card instead of drifting with content height.
+- If footer content belongs to a fixed metadata zone, that zone should be anchored to the card box rather than to the variable text block above it.
+
+#### 8. Metadata Layer Separation
+- Distinct metadata layers inside a compact card should not visually occupy the same horizontal band.
+- Tag chips and collection or locator labels should read as separate rows or clearly separated zones, not as partially overlapping content.
+- Evaluators should check long-content cases, multi-tag cases, and short-summary cases to confirm the metadata hierarchy still reads cleanly.
+
+#### 9. Single Boundary Ownership
+- When two stacked surfaces meet, only one of them should own the boundary line unless a double-divider effect is explicitly intended.
+- Repeated items may keep internal separators, but the final item before a footer or next section should usually drop its divider if the following surface already provides the section boundary.
+- Evaluators should check last-item states, pagination edges, and empty states rather than validating only repeated middle items.
+
+#### 11. Footer Control Row Separation
 - Footer control rows and footer credit or attribution rows should be evaluated as separate information layers when they serve different purposes.
 - Pagination, page-size, page labels, or similar active controls should not be compressed into the same visual row as passive credit text if that reduces scan clarity.
 - Evaluators should confirm that row separation remains readable across desktop and smaller breakpoints.
 
-### 12. Width-Based Title Truncation Consistency
+#### 12. Width-Based Title Truncation Consistency
 - In repeated card grids, title truncation should respond to real card width rather than to the longest content in the dataset.
 - Short titles should keep their natural width, while long titles should truncate cleanly with ellipsis once they exceed the available title band.
 - Evaluators should check mixed-length title sets to confirm the title row reads as one consistent horizontal band across the grid.
 
-### 13. Overflow Metadata Reveal Shape
+#### 13. Overflow Metadata Reveal Shape
 - Hover or focus disclosure for overflow metadata should preserve the compact default card while revealing hidden items in a readable expanded panel.
 - The expanded panel should align to its trigger in a predictable direction and should not imply a different disclosure direction than the control actually uses.
 - Hidden metadata chips shown in the disclosure should size to their own content unless a stronger system rule explicitly requires uniform widths.
 
+### First-State And Viewport Checks
 
-### 14. First-State Surface Separation
+#### 14. First-State Surface Separation
 - When a feature introduces a landing-first or overlay-first entry state inside an existing shell, the first-state surface should read as the primary canvas until the handoff completes.
 - Downstream browse or read surfaces may remain technically mounted, but they should not visually compete so strongly that the first state feels like a weak layer floating over the real screen.
 - Evaluators should inspect initial load, mid-transition, and handoff moments separately rather than judging only the static landing composition.
 
-
-### 15. Viewport-Range Hero Anchor Stability
+#### 15. Viewport-Range Hero Anchor Stability
 - When a hero or first-state surface intentionally anchors primary copy to a specific vertical band, that anchor should remain perceptually stable across common laptop and desktop viewport ranges rather than drifting because of mixed `vh` and `vw` tuning.
 - Headline scale should also stay proportionate across those same ranges; smaller laptop widths should not make the same title feel meaningfully larger or heavier than intended when the surrounding shell typography remains stable.
 - Evaluators should compare at least one narrower laptop-sized viewport and one wider desktop viewport and confirm both the copy position and headline scale still match the intended composition.
