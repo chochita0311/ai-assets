@@ -4,6 +4,7 @@
 - Decompose a normalized PRD into implementation-ready feature units for iterative build and evaluation loops.
 - Propose an execution order that minimizes dependency risk and scope drift.
 - Keep the boundary stable enough that later spec, evaluator, and fix roles can run repeatedly.
+- Identify the likely surface, execution profile, and contract surfaces before spec handoff.
 
 ## When To Use
 - A PRD package is already normalized and bounded.
@@ -34,6 +35,7 @@ A good feature unit must satisfy all of the following:
 6. It should usually converge within one to three build or fix loops.
 7. It minimizes dependency on future unfinished features.
 8. It preserves the normalized PRD scope without silent expansion.
+9. It declares a likely execution profile or explains why profile selection is blocked.
 
 ## Feature Type Inference
 
@@ -51,8 +53,13 @@ Prefer an explicit foundation feature over an implicit assumption when unresolve
 
 ## Completeness Check
 For each proposed feature, define:
+- type
+- surface
+- likely execution profile
+- surface lanes when the feature spans multiple surfaces
 - entry point
 - main user-visible outcome for `product` features, or main contract outcome for `foundation` features
+- contract surfaces when relevant
 - exit or transition behavior when relevant
 - state expectations such as loading, empty, error, or disabled
 - dependency assumptions
@@ -67,9 +74,13 @@ Produce:
 3. For each feature:
    - name
    - type
+   - surface
+   - likely execution profile
    - goal
    - user-visible outcome or system-level outcome
    - scope boundary
+   - surface lanes when relevant
+   - contract surfaces when relevant
    - likely affected surfaces
    - dependencies
    - pass or fail hints
@@ -85,6 +96,8 @@ prd_summary:
 features:
   - name: auth session contract
     type: foundation
+    surface: data
+    likely_execution_profile: foundation-contract
     goal: fix where session state is stored and how missing session state is handled
     system_outcome: downstream auth features can proceed without guessing about session ownership
     scope_boundary:
@@ -99,6 +112,9 @@ features:
       - auth state module
       - storage adapter
       - session contract docs
+    contract_surfaces:
+      - session value shape
+      - storage fallback rule
     dependencies: []
     pass_fail_hints:
       - session ownership is explicitly chosen
@@ -107,6 +123,8 @@ features:
 
   - name: login entry view
     type: product
+    surface: frontend
+    likely_execution_profile: frontend-product
     goal: render the authentication form in the requested flow
     user_visible_outcome: user can open and inspect the login screen
     scope_boundary:
@@ -128,6 +146,8 @@ features:
 
   - name: login submission feedback
     type: product
+    surface: fullstack
+    likely_execution_profile: fullstack-product
     goal: handle success and failure feedback for the requested login path
     user_visible_outcome: user sees a clear result after submit
     scope_boundary:
@@ -143,6 +163,13 @@ features:
     dependencies:
       - auth session contract
       - login entry view
+    surface_lanes:
+      - frontend
+      - backend
+      - integration
+    contract_surfaces:
+      - login request payload
+      - login response state
     pass_fail_hints:
       - invalid login shows a visible failure state
       - successful login transitions to the intended next view
@@ -169,6 +196,7 @@ non_goals:
 
 - Do not hand a product feature to spec work if a required foundation feature is still unresolved.
 - If a proposed product feature still contains contract ambiguity, split out a foundation feature instead of letting the product feature absorb that ambiguity.
+- If a proposed feature spans multiple surfaces, declare lane dependencies or split it until each feature has a clear execution shape.
 
 ## Non-Goals
 - writing implementation specs directly

@@ -35,7 +35,7 @@
 - Describe what must be true before this PRD can be considered satisfied through child features.
 
 ## Candidate Features
-- `feat-0000-placeholder`: short description
+- `[feat-0000-placeholder](../feature/feat-0000-placeholder.md)`: short description
 
 ## Continuity Notes
 - `YYYY-MM-DD`: initial draft

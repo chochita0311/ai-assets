@@ -4,6 +4,7 @@
 - Convert one approved feature into an implementation-facing spec.
 - Remove execution-time guesswork without reopening product scope.
 - Give the builder and evaluators one clear contract to execute against.
+- Lock execution profile, surface lanes, contract surfaces, and evaluation focus when they matter.
 
 ## When To Use
 - A single feature is already `approved`.
@@ -15,6 +16,7 @@
 - the parent PRD
 - golden sources referenced by the feature or PRD
 - relevant project policies, design rules, and system contracts
+- declared execution profile and surface lanes from the feature
 - current implementation context when extending an existing product
 
 ## Core Rules
@@ -23,6 +25,7 @@
 - If a blocking ambiguity remains, stop and ask the human owner instead of drafting around it.
 - Translate pass or fail checks into explicit implementation and evaluation targets.
 - Prefer concrete surfaces, states, and transitions over abstract intent wording.
+- If the feature is multi-surface, define lane order, handoff contracts, and evaluator ownership.
 
 ## Interaction Contract Rule
 - When the feature changes visible state, navigation, or rerender behavior, the spec should lock the interaction continuity rules needed for safe build and evaluation.
@@ -41,6 +44,16 @@
   - responsive column behavior
   - empty-state containment inside the target surface
 
+## Contract Surface Rule
+- When the feature changes or depends on a contract boundary, the spec should lock the minimum contract rules needed for safe build and evaluation.
+- Examples:
+  - API request and response shape
+  - event or queue payload
+  - generated file shape
+  - schema, identity, or source-of-truth ownership
+  - route, command, configuration, or environment contract
+  - producer and consumer responsibilities
+
 ## Routing Guidance
 - Return to `planning gap` instead of writing executable spec when the approved feature boundary is likely wrong.
 - Example:
@@ -56,11 +69,13 @@ Produce a spec that defines:
 4. in-scope behavior
 5. out-of-scope behavior
 6. affected surfaces
-7. state and interaction contract
-8. data or contract assumptions
-9. acceptance mapping back to the feature
-10. evaluation focus points
-11. open blockers that still require human clarification
+7. execution profile and surface lanes when relevant
+8. state and interaction contract
+9. data and contract assumptions
+10. contract surfaces and producer/consumer expectations when relevant
+11. acceptance mapping back to the feature
+12. evaluation focus points
+13. open blockers that still require human clarification
 
 ## Baton To Builder
 - Hand off only after the spec is specific enough to implement without guessing.

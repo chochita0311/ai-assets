@@ -12,15 +12,17 @@
 ## Shared Source Package
 - Shared source lives in `../ai-assets/agents/`.
 - Shared harness governance lives in `../ai-assets/agents/policies/`.
+- Shared execution profiles live in `../ai-assets/agents/profiles/`.
 - Shared templates live in `../ai-assets/agents/templates/`.
 
 ## Target Shape In A Consuming Repo
 After export, the consuming repo should normally own:
 
 - `docs/agents/`
-  - `role/`
-  - `flow/`
-  - `operation/`
+  - `roles/`
+  - `flows/`
+  - `operations/`
+  - `profiles/`
 - `docs/plans/`
   - `prd/`
   - `feature/`
@@ -30,19 +32,21 @@ After export, the consuming repo should normally own:
   - `fix/`
   - `heuristic/`
 - `docs/policies/harness/`
-  - planning and execution governance
+  - planning, execution, profile, and traceability governance
 - `docs/policies/design/` and `docs/policies/experience/`
   - review assets when the consuming repo wants durable visual and interaction evaluation rules
 
 ## Export Mapping
 Use this mapping when exporting from the shared package into a consuming repo:
 
-- `../ai-assets/agents/role/*.md`
-  -> `docs/agents/role/*.md`
-- `../ai-assets/agents/flow/*.md`
-  -> `docs/agents/flow/*.md`
-- `../ai-assets/agents/operation/*.md`
-  -> `docs/agents/operation/*.md`
+- `../ai-assets/agents/roles/*.md`
+  -> `docs/agents/roles/*.md`
+- `../ai-assets/agents/flows/*.md`
+  -> `docs/agents/flows/*.md`
+- `../ai-assets/agents/operations/*.md`
+  -> `docs/agents/operations/*.md`
+- `../ai-assets/agents/profiles/*.md`
+  -> `docs/agents/profiles/*.md`
 - `../ai-assets/agents/templates/prd.md`
   -> `docs/plans/prd/template-prd.md`
 - `../ai-assets/agents/templates/feature.md`
@@ -89,9 +93,10 @@ Export the agent system from `../ai-assets/agents/` into this repo.
 Install it as a local docs-owned system, not as a runtime dependency.
 Map the shared package into:
 - `docs/agents/`
-  - `role/`
-  - `flow/`
-  - `operation/`
+  - `roles/`
+  - `flows/`
+  - `operations/`
+  - `profiles/`
 - `docs/plans/`
 - `docs/policies/harness/`
 - `docs/policies/design/`
@@ -106,7 +111,7 @@ Update local entrance docs and references so the resulting layout is coherent.
 Refresh the local agent system in this repo from `../ai-assets/agents/`.
 
 Keep repo-specific policy or product docs that are not part of the shared harness package.
-Update only the shared role, template, and harness-policy layer.
+Update only the shared role, profile, template, and harness-policy layer.
 If local docs have drifted, reconcile references and ownership cleanly instead of duplicating guidance.
 ```
 
@@ -117,10 +122,23 @@ Adopt the shared agent system from `../ai-assets/agents/`, but merge it into the
 Preserve repo-specific architecture, product policy, and content contracts.
 Replace or align only the reusable harness layer:
 - role docs
+- profile docs
 - templates
 - harness governance
 - review assets
 ```
+
+## Promotion From Consuming Repos
+When a consuming repo improves the agent system:
+
+1. Compare local docs against `../ai-assets/agents/`.
+2. Classify each difference as:
+   - `promote`: general reusable rule
+   - `local`: project-specific rule
+   - `discard`: historical note, accidental drift, or obsolete wording
+3. Promote only general reusable rules into `ai-assets`.
+4. Generalize examples before promotion so they do not depend on one product, framework, language, or local filesystem path.
+5. Refresh consuming repos from the canonical package after promotion.
 
 ## Post-Export Checks
 After export into a consuming repo:
@@ -130,7 +148,8 @@ After export into a consuming repo:
 3. Check whether review assets belong under local `design/` and `experience/` policy owners.
 4. Add a short execution gate to the consuming repo's `AGENTS.md` so planning requests stop at PRD or feature review instead of being reinterpreted as implementation approval.
 5. Keep repo-specific rules outside the shared role package.
-6. Commit the imported harness layer separately from unrelated product work when possible.
+6. Confirm that generated planning docs use repo-relative links instead of local absolute paths.
+7. Commit the imported harness layer separately from unrelated product work when possible.
 
 ## Local AGENTS Gate
 When a consuming repo uses the shared planning workflow, its local `AGENTS.md` should restate the stop conditions that must be visible at task start:

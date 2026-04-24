@@ -9,8 +9,9 @@
 - Use it when you need the operator-facing entry pattern for one approved feature run.
 - It does not own the overall sequence model.
 - It does not own the Orchestrator role contract itself.
-- In a consuming repo, use `docs/agents/flow/workflow.md` for the sequence model.
-- In a consuming repo, use `docs/agents/role/orchestrator.md` for loop-control responsibilities and routing logic.
+- In a consuming repo, use `docs/agents/flows/workflow.md` for the sequence model.
+- In a consuming repo, use `docs/agents/roles/orchestrator.md` for loop-control responsibilities and routing logic.
+- In a consuming repo, use `docs/policies/harness/execution-profiles.md` for profile and lane routing rules.
 
 ## When To Use
 - A feature document has already been approved.
@@ -28,6 +29,7 @@
 ## Required Inputs
 - one approved feature document
 - its parent PRD
+- execution profile and surface lanes when already declared
 - relevant golden sources
 - relevant project policies and contracts
 - current implementation context
@@ -47,11 +49,12 @@
 1. Orchestrator
 2. Spec Agent
 3. Builder
-4. Design Evaluator when the feature is visually sensitive
-5. Functional Evaluator
-6. UX Heuristic Evaluator when the feature is user-facing
-7. Fix Agent
-8. Re-run the needed evaluators
+4. Contract Evaluator when contract surfaces matter
+5. Design Evaluator when the feature is visually sensitive
+6. Functional Evaluator
+7. UX Heuristic Evaluator when the feature is user-facing
+8. Fix Agent
+9. Re-run the needed evaluators
 
 ## Invocation Rules
 - Fresh execution should start with `Orchestrator`, not directly with `Builder`, evaluators, or `Fix Agent`.
@@ -61,6 +64,8 @@
   - active feature path
   - active PRD path
   - active spec path once it exists
+  - execution profile
+  - surface lane when relevant
 - Keep the role prompt anchored to approved docs.
 - Do not restate the original request as the primary source once the feature is approved.
 - If a role reports `spec gap` or `planning gap`, record it as a result for the run report unless a technical blocker prevents further continuation.
@@ -78,7 +83,7 @@
   - final close or follow-up direction
 
 ## Prompt Frame
-Use this frame for every execution-role prompt in a consuming repo:
+Use this base frame for every execution-role prompt in a consuming repo. For `Orchestrator` and initial `Spec Agent` prompts, set `Active spec` to `none yet` when the spec has not been created.
 
 ```text
 Run ID:
@@ -93,6 +98,12 @@ Parent PRD:
 Active spec:
 - docs/plans/spec/spec-####-slug.md
 
+Execution profile:
+- profile-name
+
+Surface lane:
+- lane-name or none
+
 Task:
 - perform only this role
 - do not redefine scope
@@ -105,6 +116,9 @@ Task:
 ```text
 Run the execution loop for the approved feature below.
 
+Role contract:
+- docs/agents/roles/orchestrator.md
+
 Run ID:
 - run-YYYYMMDD-##
 
@@ -116,15 +130,20 @@ Parent PRD:
 
 Task:
 1. Confirm feature type.
-2. Confirm the evaluator set.
-3. Confirm the next role to run.
-4. Classify any immediate blocker as implementation bug, spec gap, or planning gap.
-5. Do not redefine scope.
+2. Confirm execution profile.
+3. Confirm surface lanes and lane order when relevant.
+4. Confirm the evaluator set.
+5. Confirm the next role to run.
+6. Classify any immediate blocker as implementation bug, spec gap, or planning gap.
+7. Do not redefine scope.
 ```
 
 ### Spec Agent
 ```text
 Read and execute as Spec Agent.
+
+Role contract:
+- docs/agents/roles/spec-agent.md
 
 Run ID:
 - run-YYYYMMDD-##
@@ -135,9 +154,11 @@ Inputs:
 - relevant golden sources
 - relevant implementation files
 - relevant policy docs
+- relevant execution profile docs
 
 Task:
 Write the executable spec for this approved feature.
+Define execution profile, surface lanes, contract surfaces, and evaluator focus when relevant.
 Do not expand scope.
 Write to:
 - docs/plans/spec/spec-####-slug.md
@@ -147,22 +168,56 @@ Write to:
 ```text
 Read and execute as Builder.
 
+Role contract:
+- docs/agents/roles/builder.md
+
 Run ID:
 - run-YYYYMMDD-##
 
 Inputs:
 - docs/plans/feature/feat-####-slug.md
 - docs/plans/spec/spec-####-slug.md
+- Execution profile: profile-name
+- Surface lane: lane-name or none
 
 Task:
 Implement exactly the active spec.
 Do not broaden scope.
+Stay inside the assigned surface lane when one is declared.
 Report changed files and blocker classification if needed.
+```
+
+### Contract Evaluator
+```text
+Read and execute as Contract Evaluator.
+
+Role contract:
+- docs/agents/roles/contract-evaluator.md
+
+Run ID:
+- run-YYYYMMDD-##
+
+Inputs:
+- docs/plans/feature/feat-####-slug.md
+- docs/plans/spec/spec-####-slug.md
+- Execution profile: profile-name
+- Surface lane: lane-name or none
+- relevant schemas, payloads, generated artifacts, fixtures, commands, route contracts, config, or policy docs
+- current implementation
+
+Task:
+Evaluate only the approved contract surfaces.
+Classify blockers as implementation bug, spec gap, or planning gap.
+Write findings to:
+- docs/plans/evaluation/eval-####-contract-slug.md
 ```
 
 ### Design Evaluator
 ```text
 Read and execute as Design Evaluator.
+
+Role contract:
+- docs/agents/roles/design-evaluator.md
 
 Run ID:
 - run-YYYYMMDD-##
@@ -172,6 +227,7 @@ Inputs:
 - docs/plans/spec/spec-####-slug.md
 - relevant golden sources
 - relevant design policies
+- active execution profile and surface lane when relevant
 - current implementation
 
 Task:
@@ -184,6 +240,9 @@ Write findings to:
 ```text
 Read and execute as Functional Evaluator.
 
+Role contract:
+- docs/agents/roles/functional-evaluator.md
+
 Run ID:
 - run-YYYYMMDD-##
 
@@ -191,10 +250,11 @@ Inputs:
 - docs/plans/feature/feat-####-slug.md
 - docs/plans/spec/spec-####-slug.md
 - relevant architecture and contract docs
+- active execution profile and surface lane when relevant
 - current implementation
 
 Task:
-Check behavior, state handling, and regression surfaces.
+Check runtime behavior, state handling, workflows, and regression surfaces.
 Write findings to:
 - docs/plans/evaluation/eval-####-functional-slug.md
 ```
@@ -203,12 +263,17 @@ Write findings to:
 ```text
 Read and execute as UX Heuristic Evaluator.
 
+Role contract:
+- docs/agents/roles/ux-heuristic-evaluator.md
+
 Run ID:
 - run-YYYYMMDD-##
 
 Inputs:
 - docs/plans/feature/feat-####-slug.md
 - docs/plans/spec/spec-####-slug.md
+- Execution profile: profile-name
+- Surface lane: lane-name or none
 - current implementation
 
 Task:
@@ -224,12 +289,17 @@ Write to:
 ```text
 Read and execute as Fix Agent.
 
+Role contract:
+- docs/agents/roles/fix-agent.md
+
 Run ID:
 - run-YYYYMMDD-##
 
 Inputs:
 - docs/plans/feature/feat-####-slug.md
 - docs/plans/spec/spec-####-slug.md
+- Execution profile: profile-name
+- Surface lane: lane-name or none
 - relevant evaluator reports
 - current implementation
 
@@ -267,6 +337,7 @@ Parent PRD:
 Task:
 - start the execution loop from the approved feature
 - run only the Orchestrator role first
+- confirm execution profile and surface lanes
 - confirm the evaluator set
 - do not redefine scope
 ```
@@ -288,6 +359,7 @@ Active spec:
 - docs/plans/spec/spec-0001-example-feature.md
 
 Latest reports:
+- docs/plans/evaluation/eval-0001-contract-example-feature.md
 - docs/plans/evaluation/eval-0001-design-example-feature.md
 - docs/plans/evaluation/eval-0001-functional-example-feature.md
 
@@ -295,6 +367,7 @@ Task:
 - continue the same run as Fix Agent
 - fix only reported defects
 - keep the same approved feature boundary
+- keep the same execution profile and surface lane unless the Orchestrator changes routing
 ```
 
 ### Continue From Run Record

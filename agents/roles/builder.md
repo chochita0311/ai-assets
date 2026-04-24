@@ -12,6 +12,7 @@
 ## Input Contract
 - one approved feature document
 - one active spec document
+- active execution profile and assigned surface lane when relevant
 - relevant project policies and system contracts
 - current codebase state
 
@@ -21,6 +22,8 @@
 - If the spec is insufficient, stop and report the blocker instead of improvising.
 - Preserve existing regression surfaces named by the feature and spec.
 - Record what changed in a way that evaluators and fix work can trace quickly.
+- Stay inside the assigned surface lane unless the orchestrator or spec explicitly authorizes cross-lane work.
+- When changing a contract surface, update the producer, consumer, generated artifact, or policy surfaces named by the spec.
 - Do not use destructive replacement of active interactive surfaces unless the spec clearly allows it and the resulting controls remain fully functional.
 - If implementation recreates interactive controls during rerender, rehydration, or state rebuild, verify that navigation, repeated actions, and other required interactions still work after the replacement.
 
@@ -28,10 +31,12 @@
 Report:
 
 1. changed surfaces
-2. implementation notes that matter for evaluation
-3. tests or verification performed
-4. blockers or deferred issues
-5. any spec mismatch discovered during build
+2. changed contract surfaces when relevant
+3. assigned lane and any cross-lane touch points
+4. implementation notes that matter for evaluation
+5. tests or verification performed
+6. blockers or deferred issues
+7. any spec mismatch discovered during build
 
 ## Baton To Evaluators
 - Hand off a build summary tied to the active feature and spec IDs.

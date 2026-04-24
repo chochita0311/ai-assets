@@ -5,8 +5,10 @@
 - Status: `draft`
 - Run ID:
 - Attempt:
-- Feature: `[feat-0000-title](./feature.md)`
-- Spec: `[spec-0000-title](./spec.md)`
+- Feature: `[feat-0000-title](../feature/feat-0000-title.md)`
+- Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
+- Execution Profile:
+- Surface Lane:
 - Created: `YYYY-MM-DD`
 - Updated: `YYYY-MM-DD`
 
@@ -18,6 +20,11 @@
 
 ## Changes Applied
 - Summarize the code or contract surfaces changed.
+
+## Contract Or Lane Impact
+- Contract surfaces touched:
+- Surface lanes touched:
+- Stale-assumption check needed:
 
 ## Remaining Issues
 - Record unresolved findings, if any.

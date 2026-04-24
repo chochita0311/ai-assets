@@ -3,12 +3,14 @@
 ## Metadata
 - ID: `eval-0000`
 - Status: `draft`
-- Evaluator Type: `design` | `functional` | `ux-heuristic`
+- Evaluator Type: `contract` | `design` | `functional` | `ux-heuristic`
 - Result: `PASS` | `PASS WITH SUGGESTIONS` | `FAIL`
 - Run ID:
 - Attempt:
-- Feature: `[feat-0000-title](./feature.md)`
-- Spec: `[spec-0000-title](./spec.md)`
+- Feature: `[feat-0000-title](../feature/feat-0000-title.md)`
+- Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
+- Execution Profile:
+- Surface Lane:
 - Created: `YYYY-MM-DD`
 
 ## Scope
@@ -18,6 +20,13 @@
 
 ## Checks
 - List the checks actually performed.
+
+## Contract Evidence
+- Use when evaluator type is `contract`.
+- Producer surfaces:
+- Consumer surfaces:
+- Schemas, payloads, generated artifacts, commands, routes, config, or policy docs checked:
+- Stale-assumption check:
 
 ## Findings
 - For each finding, record:

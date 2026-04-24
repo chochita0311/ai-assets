@@ -8,8 +8,9 @@
 
 ## Codebase Map
 - Scan the repo root before assuming structure.
-- `agents/` holds reusable harness role contracts.
+- `agents/` holds reusable harness roles, flows, operations, profiles, policies, and templates.
 - `agents/templates/` holds shared planning and execution templates for consuming repos.
+- `agents/profiles/` holds reusable execution-profile presets for consuming repos.
 - `skills/` holds the reusable skill packages.
 - `SKILL.md` is the entry contract for a skill.
 - Within each skill package, `agents/` holds UI-facing skill metadata.

@@ -4,7 +4,10 @@
 - ID: `feat-0000`
 - Status: `draft`
 - Type: `product` | `foundation`
-- Parent PRD: `[prd-0000-title](./prd.md)`
+- Surface: `frontend` | `backend` | `fullstack` | `data` | `infra` | `docs` | `mixed`
+- Execution Profile:
+- Required Evaluators:
+- Parent PRD: `[prd-0000-title](../prd/prd-0000-title.md)`
 - Created: `YYYY-MM-DD`
 - Updated: `YYYY-MM-DD`
 
@@ -33,6 +36,23 @@
 ## Scope Boundary
 - In:
 - Out:
+
+## Surface Lanes
+- Use only when the feature spans multiple surfaces.
+- Lane:
+  - path roots:
+  - dependencies:
+  - expected evidence:
+  - evaluator ownership:
+
+## Contract Surfaces
+- APIs, schemas, messages, generated outputs, routes, commands, config, source-of-truth ownership, or integration boundaries that must remain stable.
+
+## Required Evaluators
+- `contract` when contract surfaces, generated outputs, source-of-truth ownership, or integration boundaries matter.
+- `design` when visible presentation changes.
+- `functional` when runtime behavior changes.
+- `ux-heuristic` when interaction clarity or friction should be inspected.
 
 ## User-Visible Outcome
 - Required for `product` features.
@@ -64,13 +84,20 @@
 - No unresolved value-shape questions remain.
 - Downstream spec can proceed without guessing.
 
+### Contract Guidance
+- Contract surfaces are explicitly defined.
+- Producer and consumer expectations are clear.
+- Generated artifacts are marked as derived output unless the project policy says otherwise.
+
 ## Regression Surfaces
 - Existing flows or features that must remain intact.
 
 ## Harness Trace
-- Active spec doc:
-- Latest evaluator report:
-- Latest fix note:
+- Active spec doc: `[spec-0000-title](../spec/spec-0000-title.md)`
+- Active run: `[run-YYYYMMDD-01](../run/run-YYYYMMDD-01-title.md)`
+- Execution profile:
+- Latest evaluator report: `[eval-0000-title](../evaluation/eval-0000-title.md)`
+- Latest fix note: `[fix-0000-title](../fix/fix-0000-title.md)`
 
 ## Continuity Notes
 - `YYYY-MM-DD`: initial draft

@@ -13,11 +13,13 @@
 - one approved feature document
 - one active spec document
 - evaluator findings tied to that feature
+- active execution profile and assigned surface lane when relevant
 - current implementation state
 
 ## Core Rules
 - Fix only confirmed issues tied to the approved feature.
 - Do not absorb speculative improvements just because the code is already open.
+- Stay inside the evaluator finding and assigned lane unless the orchestrator routes a broader fix.
 - If evaluator findings imply missing scope or a bad spec assumption, stop and return to spec or planning.
 - Preserve already-passing behaviors while fixing the current issue set.
 
@@ -25,9 +27,10 @@
 Report:
 
 1. findings addressed
-2. code or surface areas changed
-3. remaining unresolved findings
-4. any issue that must return to spec or planning
+2. code, contract, or document surfaces changed
+3. lane touched when relevant
+4. remaining unresolved findings
+5. any issue that must return to spec or planning
 
 ## Baton Back To Evaluators
 - Return the work for re-evaluation against the same feature and spec unless the fix uncovered a planning blocker.
