@@ -42,6 +42,18 @@
 - Temporary copy, debug-facing labels, or source-oriented state descriptions should not leak into the user-visible surface.
 - If loading or recovery states are required, they should appear intentional and bounded rather than as raw implementation leakage.
 
+#### Staged Handoff Timing
+
+- Outgoing surface exit, incoming surface entry, and persistent-shell state changes should be timed as separate parts of one handoff.
+- Destination disclosures, dropdowns, or contextual panels should not appear before the destination shell or content is ready enough to own them.
+- Evaluators should sample early, middle, and late transition frames and verify computed durations or animation names when timing is part of the fix.
+
+#### Deferred Interaction Reconciliation
+
+- When hover, focus, or disclosure behavior is intentionally deferred during a transition, evaluators should test interactions that happen during the deferred window, not only before and after it.
+- A deferred interaction gate should re-read current hover or focus ownership when it opens; otherwise the UI can end in a highlighted-but-not-interactive state.
+- Evaluators should verify both paths: pointer leaves during the transition and the state clears, and pointer returns during the transition and the intended interaction becomes available after the destination can own it.
+
 ### Binding, Scope, And Responsive State Ownership
 
 #### Interaction Binding Preservation
@@ -71,6 +83,12 @@
 - A hidden control must not leave the user stranded in a now-invisible or no-longer-supported mode merely because URL state, previous viewport state, or persisted runtime state still points there.
 - Evaluators should resize into and out of the affected breakpoint and also test direct-link entry with stateful query parameters to confirm that the visible controls and active runtime mode still match.
 
+#### Component Interaction Ownership Boundary
+
+- Component-level interaction code should own local affordances, visible state, and emitted intents; route delays, shell classes, global storage, and cross-surface animation timing should belong to an explicit shell or navigation coordinator.
+- If a component accumulates route-specific timers, body classes, storage markers, and unrelated surface checks, evaluators should flag the ownership drift even when the visible behavior currently passes.
+- A component may expose a small controller or event surface for orchestration, but evaluators should confirm that the component can still be understood as the owner of its own interaction contract rather than the owner of the page transition.
+
 ### Menus, Disclosures, And Affordances
 
 #### Immediate Dropdown Dismissal
@@ -78,6 +96,18 @@
 - Hover-driven dropdowns should close immediately after the user makes a selection.
 - Leaving the dropdown open after selection slows recognition of the newly loaded destination state.
 - Evaluators should verify both the selected result and the menu-dismiss behavior, not just the navigation target.
+
+#### Data-Ready Disclosure Gate
+
+- Async dropdowns should not expose placeholder markup, loading copy, or skeletal internal menus merely because hover or focus CSS can open the panel before data is ready.
+- Panels should have an explicit readiness gate; if data is pending, keep the disclosure closed unless an intentional, styled loading menu is part of the approved behavior.
+- Evaluators should test delayed or failed data fetch paths and confirm that final unavailable states are bounded and intentional.
+
+#### Hover Focus Handoff And Release
+
+- Pointer clicks can leave keyboard focus on a trigger; evaluators should test click-then-mouseleave to confirm highlight and expanded states clear unless keyboard focus intentionally remains.
+- Temporary handoff locks used to bridge route transitions should be released once real hover or focus can own the state.
+- Same-route navigation clicks should avoid both reload flicker and stale open or highlighted menu states.
 
 #### Compact Control Menu Placement
 

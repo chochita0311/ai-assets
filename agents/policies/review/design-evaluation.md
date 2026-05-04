@@ -50,6 +50,12 @@
 - When a feature is scoped to one surface, unchanged shell regions must remain visually intact unless the approved feature explicitly includes them.
 - Local surface redesign must not quietly restyle the left, top, or bottom shell.
 
+#### Shell Handoff Visual Continuity
+
+- When navigation changes the active surface while keeping a shared shell, evaluate outgoing, mid-handoff, incoming, and settled frames separately.
+- Persistent shell regions such as topbars, sidebars, reserved action slots, and search areas should not visibly jump, resize, or disappear unless the feature intentionally stages that change.
+- If a control is hidden on one surface, preserve or intentionally animate its layout footprint when removing it would make the shell feel reloaded instead of continuous.
+
 #### Source-Use Discipline
 
 - A source artifact may guide layout direction inside the approved surface.
@@ -81,6 +87,12 @@
 - When matching or preserving an existing topbar, evaluators should compare typography and spacing tokens before comparing copy or menu structure.
 - Visual drift often appears first in `font-size`, `line-height`, `letter-spacing`, and reserved icon spacing rather than in the text labels themselves.
 - Hidden or conditional icons must not leave idle-state spacing that makes one navigation item look wider or visually misaligned than its peers.
+
+#### Conditional Topbar Affordance Parity
+
+- Topbar items that sometimes own dropdowns, icons, or active states should still read as the same navigation family across surfaces.
+- If a surface suppresses a dropdown, the hover and focus styling should match plain navigation items and should not leak reserved icon spacing or disclosure affordance.
+- Evaluators should compare both idle and hovered states on each surface, including route-entry hold states.
 
 #### Small Text Role Legibility
 
