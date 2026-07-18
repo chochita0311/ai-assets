@@ -1,5 +1,24 @@
 # Screen Alignment Method
 
+## Contents
+
+- [Goal](#goal)
+- [Select The Mode](#step-0-select-the-mode)
+- [Read Constitution First](#step-1-read-constitution-first)
+- [Compatibility Judgment](#step-15-compatibility-judgment)
+- [Collect Rendered Reference Surface](#step-2-collect-rendered-reference-surface)
+- [Inspect Target Or Family Pattern](#step-3-inspect-target-or-family-pattern)
+- [Inspect Current Screen Render](#step-4-inspect-current-screen-render)
+- [Build Mismatch Or Consistency List](#step-5-build-concrete-mismatch-or-consistency-list)
+- [Classify Issues](#step-6-classify-issues)
+- [Edit Only The Owning Layer](#step-7-edit-only-the-owning-layer)
+- [Match By Mode](#step-8-match-by-mode)
+- [Verify After Each Narrow Pass](#step-9-verify-after-each-narrow-pass)
+- [Browser-Level Verification](#step-10-browser-level-verification)
+- [Control Caching](#step-11-control-caching)
+- [Separate Style Drift From Data Drift](#step-12-separate-style-drift-from-data-drift)
+- [Escalate If Convergence Stops](#step-13-escalate-if-convergence-stops)
+
 ## Goal
 
 Keep a current implementation visually aligned with an existing design system without silently redesigning it.

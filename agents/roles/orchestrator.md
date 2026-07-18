@@ -79,7 +79,12 @@
 
 ### Loop Termination
 - `PASS`:
-  - terminate the active loop
+  - terminate the active loop only when required evaluator reports are present and their evidence gaps do not block acceptance under the owning feature, spec, or profile
+- `PASS WITH SUGGESTIONS`:
+  - route non-blocking suggestions to the heuristic backlog and terminate under the same evidence-coverage condition as `PASS`
+- `PASS` or `PASS WITH SUGGESTIONS` with a blocking evidence gap:
+  - keep the evaluator result unchanged
+  - continue bounded evidence collection when safe, or mark the run blocked when the required evidence cannot be collected safely
 - `FAIL` with `implementation bug`:
   - continue builder or fix loop
 - `FAIL` with `spec gap`:
@@ -107,6 +112,7 @@ Produce or update:
 7. next role to run
 8. termination reason when the loop stops
 9. post-run recommendation for human review when the correct next step is accept, return to spec, or return to planning
+10. evaluator result, evidence coverage, and acceptance impact when an evidence gap exists
 
 ## Non-Goals
 - redefining scope

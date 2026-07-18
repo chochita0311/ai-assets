@@ -1,5 +1,15 @@
 # Refine Skill
 
+## Contents
+
+- [Purpose](#purpose)
+- [Core Principle](#core-principle)
+- [Acceptable Evidence](#acceptable-evidence)
+- [Common Contract Failures](#common-contract-failures)
+- [File Ownership During Refinement](#file-ownership-during-refinement)
+- [Refinement Cycle](#refinement-cycle)
+- [Exit Criterion](#exit-criterion)
+
 ## Purpose
 - This document owns the full refinement procedure.
 - Use it to decide what evidence is valid, how to diagnose failures, which file should be edited, and when the refinement loop can stop.

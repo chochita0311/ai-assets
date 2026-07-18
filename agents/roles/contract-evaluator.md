@@ -46,6 +46,7 @@ Produce:
 4. stale-assumption risks found or ruled out
 5. defects classified as `implementation bug`, `spec gap`, or `planning gap`
 6. recommended next route: `fix`, `spec-review`, `planning-review`, or `pass`
+7. evidence environments, coverage, and any unverified contract claims
 
 ## Baton To Fix Agent
 - Hand off only concrete contract defects tied to the approved feature and active spec.

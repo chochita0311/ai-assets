@@ -50,6 +50,18 @@ Produce a documentation system with these properties:
 6. Track the changes explicitly as `before -> after`.
 7. Validate the result with the checklist.
 
+## Operating Modes
+
+- Use `incremental` by default when the repository already has a mostly workable documentation tree; focus on stale, overlapping, or misowned material and preserve stable areas.
+- Use `restructure` only when ownership is broadly mixed, duplication is widespread, or the entrance and navigation layers are no longer usable.
+- Choose the mode from the current documentation state, not from a preference for a cleaner-looking tree.
+
+## Approval Boundary
+
+- Apply clear ownership fixes, obvious deduplication, entrance-doc tightening, useful cross-links, and safe re-homing directly.
+- Suggest optional file splits, new folder hierarchies, and navigation-changing reorganizations first, then wait for approval.
+- Leave already stable documents and package-local guidance unchanged unless a concrete ownership or navigation problem justifies intervention.
+
 ## Rules
 
 - Keep `AGENTS.md` short, stable, and operational.
@@ -72,6 +84,7 @@ Produce a documentation system with these properties:
 Read [references/method.md](references/method.md) for the full procedure, decision logic, and approval boundaries.
 Read [references/layer-model.md](references/layer-model.md) when you need a concise model for assigning document ownership.
 Read [references/checklist.md](references/checklist.md) before finalizing a documentation reorganization.
+Read [references/example-output.md](references/example-output.md) when you need the reporting shape for a full pass.
 
 ## Output Format
 

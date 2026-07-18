@@ -2,6 +2,19 @@
 
 Use this checklist for refactoring work intended to preserve behavior unless explicitly noted.
 
+## Contents
+
+- [Planning and Organization Rules](#0-planning-and-organization-rules)
+- [Define Invariants Up Front](#1-define-invariants-up-front)
+- [Classify Diff Scope](#2-classify-diff-scope)
+- [Define Phase Semantics Explicitly](#3-define-phase-semantics-explicitly)
+- [Review for Behavior Parity](#4-review-for-behavior-parity)
+- [Validation Gates](#5-validation-gates)
+- [Refactoring Anti-Patterns](#6-refactoring-anti-patterns)
+- [Clean Tree and Merge Scope Gate](#7-clean-tree-and-merge-scope-gate)
+- [Decision and Merge Report Template](#8-decision-and-merge-report-template)
+- [Optional Branch Wrap-Up Addendum](#9-optional-branch-wrap-up-addendum)
+
 ## 0) Planning and Organization Rules
 
 - Start by deciding whether the work is:

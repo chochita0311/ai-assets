@@ -11,6 +11,7 @@
 - Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
 - Execution Profile:
 - Surface Lane:
+- Evidence Coverage: `complete` | `partial` | `unavailable`
 - Created: `YYYY-MM-DD`
 
 ## Scope
@@ -20,6 +21,17 @@
 
 ## Checks
 - List the checks actually performed.
+
+## Evidence
+- Environments checked: source inspection, automated tests, fresh isolated runtime, active long-running runtime, rendered browser, or another relevant surface.
+- Record only directly observed evidence and identify synthetic fixtures or approved runtime data boundaries.
+
+## Evidence Gaps
+- List required but unavailable evidence and the claims that remain unverified.
+- Owning requirement: feature acceptance point, spec requirement, or profile evidence rule.
+- Acceptance impact: `blocking` | `non-blocking` | `not applicable`.
+- Keep `Result` for the evaluator outcome; do not invent a new result label to encode evidence coverage.
+- A `PASS` with partial or unavailable evidence must state whether the gap blocks acceptance under the owning feature, spec, or profile.
 
 ## Contract Evidence
 - Use when evaluator type is `contract`.

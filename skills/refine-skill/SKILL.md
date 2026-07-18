@@ -31,15 +31,15 @@ Use this skill to tighten an existing skill after real runs have exposed weaknes
 - `Use $refine-skill to rerun and compare this skill across multiple passes until the outputs stabilize.`
 
 ## Workflow
-1. Read `references/method.md` for the full refinement procedure.
+1. Read [references/method.md](references/method.md) for the full refinement procedure.
 2. Confirm and state the `v1` baseline evidence before changing anything.
 3. Compare the baseline against the current pass and isolate concrete contract failures.
 4. Fix only the owning file:
    - `SKILL.md` for trigger, scope, package boundaries, and response expectations
-   - `references/method.md` for procedure, decision logic, and failure diagnosis
-   - `references/checklist.md` for the final yes-or-no validation pass
+   - [references/method.md](references/method.md) for procedure, decision logic, and failure diagnosis
+   - [references/checklist.md](references/checklist.md) for the final yes-or-no validation pass
 5. Treat the current pass as rerun evidence only when it rechecks the same target skill on a comparable input; otherwise record the validation gap explicitly.
-6. Finish with `references/checklist.md`.
+6. Finish with [references/checklist.md](references/checklist.md).
 
 ## Output Handling
 - Keep temporary comparison outputs under `docs/tmp/` only when needed.

@@ -36,6 +36,7 @@ Produce findings grouped by:
 2. moderate friction issues
 3. non-blocking polish suggestions
 4. questions that actually indicate planning ambiguity instead of UX defects
+5. evidence coverage and any interaction or comprehension claims that were not directly observed
 
 ## Baton To Fix Agent
 - Send only in-scope UX findings that can be corrected without redefining the feature.

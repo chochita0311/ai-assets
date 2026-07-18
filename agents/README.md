@@ -7,49 +7,49 @@
 
 ## Roles Package
 ### Planning Roles
-- `agents/roles/prd-normalizer.md`: normalize chaotic product inputs into a bounded PRD package
-- `agents/roles/feature-planner.md`: decompose a normalized PRD into loop-sized product and foundation features
+- [agents/roles/prd-normalizer.md](roles/prd-normalizer.md): normalize chaotic product inputs into a bounded PRD package
+- [agents/roles/feature-planner.md](roles/feature-planner.md): decompose a normalized PRD into loop-sized product and foundation features
 
 ### Execution Roles
-- `agents/roles/orchestrator.md`: control one bounded execution loop, select the execution profile, and route failures to the right layer
-- `agents/roles/spec-agent.md`: translate one approved feature into an implementation-facing spec
-- `agents/roles/builder.md`: implement one approved spec without expanding scope
-- `agents/roles/contract-evaluator.md`: evaluate APIs, schemas, generated artifacts, source-of-truth ownership, and integration boundaries
-- `agents/roles/design-evaluator.md`: evaluate visual and design-surface correctness against sources and spec
-- `agents/roles/functional-evaluator.md`: evaluate runtime behavior, state handling, workflows, and regressions
-- `agents/roles/ux-heuristic-evaluator.md`: evaluate interaction clarity and friction without inventing new scope
-- `agents/roles/fix-agent.md`: apply targeted corrections from approved evaluator findings
+- [agents/roles/orchestrator.md](roles/orchestrator.md): control one bounded execution loop, select the execution profile, and route failures to the right layer
+- [agents/roles/spec-agent.md](roles/spec-agent.md): translate one approved feature into an implementation-facing spec
+- [agents/roles/builder.md](roles/builder.md): implement one approved spec without expanding scope
+- [agents/roles/contract-evaluator.md](roles/contract-evaluator.md): evaluate APIs, schemas, generated artifacts, source-of-truth ownership, and integration boundaries
+- [agents/roles/design-evaluator.md](roles/design-evaluator.md): evaluate visual and design-surface correctness against sources and spec
+- [agents/roles/functional-evaluator.md](roles/functional-evaluator.md): evaluate runtime behavior, state handling, workflows, and regressions
+- [agents/roles/ux-heuristic-evaluator.md](roles/ux-heuristic-evaluator.md): evaluate interaction clarity and friction without inventing new scope
+- [agents/roles/fix-agent.md](roles/fix-agent.md): apply targeted corrections from approved evaluator findings
 
 ## Flows Package
-- `agents/flows/workflow.md`: define the baton flow, stop points, and role composition options
+- [agents/flows/workflow.md](flows/workflow.md): define the baton flow, stop points, and role composition options
 
 ## Operations Package
-- `agents/operations/runner.md`: define how a human or harness starts and continues one run using prompts
-- `agents/ADOPTION-GUIDE.md`: explain how to export this shared package into a consuming repo and align it as local docs
+- [agents/operations/runner.md](operations/runner.md): define how a human or harness starts and continues one run using prompts
+- [agents/ADOPTION-GUIDE.md](ADOPTION-GUIDE.md): explain how to export this shared package into a consuming repo and align it as local docs
 
 ## Profiles Package
-- `agents/profiles/README.md`: explain reusable execution profiles
-- `agents/profiles/frontend-product.md`: user-facing screen, route, component, and interaction work
-- `agents/profiles/backend-product.md`: service, API, job, command, persistence, and message behavior work
-- `agents/profiles/fullstack-product.md`: coordinated multi-surface product work
-- `agents/profiles/foundation-contract.md`: contract, invariant, ownership, identity, and generated-output foundation work
-- `agents/profiles/infra-devtool.md`: infrastructure, tooling, scripts, CI, and local workflow work
-- `agents/profiles/docs-content.md`: documentation, content, policy, guide, and information-architecture work
+- [agents/profiles/README.md](profiles/README.md): explain reusable execution profiles
+- [agents/profiles/frontend-product.md](profiles/frontend-product.md): user-facing screen, route, component, and interaction work
+- [agents/profiles/backend-product.md](profiles/backend-product.md): service, API, job, command, persistence, and message behavior work
+- [agents/profiles/fullstack-product.md](profiles/fullstack-product.md): coordinated multi-surface product work
+- [agents/profiles/foundation-contract.md](profiles/foundation-contract.md): contract, invariant, ownership, identity, and generated-output foundation work
+- [agents/profiles/infra-devtool.md](profiles/infra-devtool.md): infrastructure, tooling, scripts, CI, and local workflow work
+- [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
 ## Related Shared Docs
-- `agents/policies/harness/prd-feature-management.md`: planning-governance rule for PRDs, features, approval, and traceability
-- `agents/policies/harness/execution-loop-governance.md`: execution-loop rules, fail classification, routing, and artifact ownership
-- `agents/policies/harness/execution-profiles.md`: profile selection, surface-lane, and evaluator routing rules
-- `agents/policies/harness/traceability-and-link-hygiene.md`: portable path, link, and source-of-truth reference rules
-- `agents/policies/review/design-evaluation.md`: reusable visual evaluation assets
-- `agents/policies/review/interaction-evaluation.md`: reusable interaction-quality evaluation assets
-- `agents/templates/prd.md`: reusable PRD template
-- `agents/templates/feature.md`: reusable feature template
-- `agents/templates/spec.md`: reusable spec template
-- `agents/templates/run.md`: reusable run template
-- `agents/templates/evaluation.md`: reusable evaluation template
-- `agents/templates/fix-log.md`: reusable fix-log template
-- `agents/templates/heuristic-backlog.md`: reusable heuristic backlog template
+- [agents/policies/harness/prd-feature-management.md](policies/harness/prd-feature-management.md): planning-governance rule for PRDs, features, approval, and traceability
+- [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
+- [agents/policies/harness/execution-profiles.md](policies/harness/execution-profiles.md): profile selection, surface-lane, and evaluator routing rules
+- [agents/policies/harness/traceability-and-link-hygiene.md](policies/harness/traceability-and-link-hygiene.md): portable path, link, and source-of-truth reference rules
+- [agents/policies/review/design-evaluation.md](policies/review/design-evaluation.md): reusable visual evaluation assets
+- [agents/policies/review/interaction-evaluation.md](policies/review/interaction-evaluation.md): reusable interaction-quality evaluation assets
+- [agents/templates/prd.md](templates/prd.md): reusable PRD template
+- [agents/templates/feature.md](templates/feature.md): reusable feature template
+- [agents/templates/spec.md](templates/spec.md): reusable spec template
+- [agents/templates/run.md](templates/run.md): reusable run template
+- [agents/templates/evaluation.md](templates/evaluation.md): reusable evaluation template
+- [agents/templates/fix-log.md](templates/fix-log.md): reusable fix-log template
+- [agents/templates/heuristic-backlog.md](templates/heuristic-backlog.md): reusable heuristic backlog template
 
 ## Consumer Repo Placement
 - This package is a shared source set, not a consumer repo by itself.

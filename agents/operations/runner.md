@@ -68,6 +68,7 @@
   - surface lane when relevant
 - Keep the role prompt anchored to approved docs.
 - Do not restate the original request as the primary source once the feature is approved.
+- Evaluator outputs must record `Result` and `Evidence Coverage` separately, name unverified claims, and state whether each gap blocks acceptance under the owning feature, spec, or profile.
 - If a role reports `spec gap` or `planning gap`, record it as a result for the run report unless a technical blocker prevents further continuation.
 - After post-run human review sends work upward and that layer is corrected, start a new run from the corrected layer rather than continuing as if the earlier attempt remained valid.
 - After the run exists, prefer continuing from the run document plus active spec and latest reports instead of re-invoking only from the feature path.
@@ -75,6 +76,7 @@
 
 ## Default Closing Sequence
 - When all related runs for the active feature or PRD increment are complete, do not jump straight to acceptance.
+- Confirm that required evaluator reports are present and that any partial or unavailable evidence is recorded with its acceptance impact.
 - First summarize any reusable `design` or `interaction` evaluation candidates discovered during the run set.
 - Ask the human owner whether each candidate should be added or discarded.
 - After that decision, report that the related runs are complete and ask for:

@@ -33,7 +33,7 @@ Use this skill to turn an initial source set into a stable design starting point
 - `Use $init-design to analyze these HTML files plus DESIGN.md and derive one design constitution.`
 
 ## Workflow
-1. Read `references/method.md` for the full workflow.
+1. Read [references/method.md](references/method.md) for the full workflow.
 2. Identify the starting source-set type:
    - `single-screen artifact`
    - `multi-screen source set`
@@ -52,9 +52,9 @@ Use this skill to turn an initial source set into a stable design starting point
    - roles
    - states
    - device priority
-7. Write or update the constitution with `templates/design-constitution.md`.
-8. Write or update design document governance with `templates/design-document-governance.md`.
-9. Use `references/checklist.md` as the final quick validation pass.
+7. Write or update the constitution with [templates/design-constitution.md](templates/design-constitution.md).
+8. Write or update design document governance with [templates/design-document-governance.md](templates/design-document-governance.md).
+9. Use [references/checklist.md](references/checklist.md) as the final quick validation pass.
 
 ## Package Layout
 - `references/`

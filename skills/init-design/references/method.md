@@ -1,5 +1,28 @@
 # Init Design
 
+## Contents
+
+- [Purpose](#purpose)
+- [What `init-design` Is](#what-init-design-is)
+- [What Problem `init-design` Solves](#what-problem-init-design-solves)
+- [General Operating Rule](#the-general-operating-rule)
+- [When To Run `init-design`](#when-to-run-init-design)
+- [Starting Artifact Types](#starting-artifact-types)
+- [Expected Output](#expected-output-of-init-design)
+- [Source Detection And Priority](#creative-source-detection)
+- [Source-Set Extraction Rules](#source-set-extraction-rules)
+- [Screen Expansion Rules](#screen-expansion-rules)
+- [Drafting And Evaluation Model](#drafting-agent-and-evaluator-model)
+- [Department Structure](#department-structure)
+- [Constitution vs Plan](#constitution-vs-plan)
+- [Property Definition Guidance](#how-each-property-should-be-defined)
+- [Concrete Example](#concrete-example-using-this-repo)
+- [Design Terms](#design-terms-for-backend-minded-builders)
+- [Workflow](#workflow-of-init-design)
+- [Non-Goals](#what-init-design-must-not-do)
+- [Output Format](#suggested-init-design-output-format)
+- [Quality Checklist](#quality-checklist)
+
 ## Purpose
 - This document explains how `init-design` should work as a reusable startup workflow for design.
 - It is written for solo builders who may start from:

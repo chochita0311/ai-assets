@@ -26,6 +26,8 @@
 - Distinguish direct spec failures from optional improvement ideas.
 - Treat missing visual states as findings only if the feature or spec required them.
 - Report concrete mismatches with enough detail for targeted fixes.
+- Compare internal geometry such as text insets, indicator bounds, and content-relative padding when parity is required; matching only the outer control size is insufficient.
+- Use rendered evidence for geometry, overflow, focus, contrast, and responsive claims that source inspection cannot establish. Record partial evidence instead of claiming an unobserved visual pass.
 
 ## Blocking Layout Integrity Checks
 - Treat these as blocking failures, not optional polish:
@@ -49,6 +51,7 @@ Produce findings grouped by:
 2. responsive or state-specific issues
 3. regressions against existing visual surfaces
 4. optional observations that should not block pass
+5. rendered-evidence coverage and any unverified visual claims
 
 ## Baton To Fix Agent
 - Pass only actionable findings tied to the feature and spec.

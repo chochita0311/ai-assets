@@ -36,6 +36,18 @@
 - Responsive column changes must not cause content overlap, spill, or collapse.
 - A layout that works only at one width is not a pass.
 
+#### Scrollable Disclosure Frame Integrity
+
+- A bounded disclosure, menu, or popover with a long list should keep one stable outer frame for background, border, radius, shadow, and clipping.
+- Vertical scrolling should normally belong to an inner content region so scrollbars and overflowing children do not erase, split, or square off the visible frame.
+- Evaluators should inspect short, threshold, and long-list states and compare all four edges, corner radii, and overflow behavior.
+
+#### Composite Record State Continuity
+
+- A repeated record split into sibling interactive regions may use one continuous hover or focus-within surface so the regions still read as one record.
+- Shared visual feedback must not merge distinct destinations or make non-clickable space advertise the wrong action.
+- Evaluators should compare the full row tone, individual focus targets, pointer cursor, and click boundaries together.
+
 #### Readability Before Density
 
 - Browse surfaces must stay readable under realistic content length.
@@ -88,6 +100,12 @@
 - Visual drift often appears first in `font-size`, `line-height`, `letter-spacing`, and reserved icon spacing rather than in the text labels themselves.
 - Hidden or conditional icons must not leave idle-state spacing that makes one navigation item look wider or visually misaligned than its peers.
 
+#### Reference Geometry Uses Internal Insets
+
+- When a control must match a reference, compare text-relative padding, content width, selected-surface bounds, and indicator position in addition to the outer width and height.
+- Equal outer tracks can still fail parity when labels have different lengths or the reference sizes segments from their content.
+- Evaluators should test short and long labels and measure the selected geometry rather than inferring parity from one shared minimum width.
+
 #### Conditional Topbar Affordance Parity
 
 - Topbar items that sometimes own dropdowns, icons, or active states should still read as the same navigation family across surfaces.
@@ -138,6 +156,15 @@
 - The expanded panel should align to its trigger in a predictable direction and should not imply a different disclosure direction than the control actually uses.
 - Hidden metadata chips shown in the disclosure should size to their own content unless a stronger system rule explicitly requires uniform widths.
 
+### Stateful Navigation And Selection
+
+#### Visible And Programmatic Selection Parity
+
+- A visible active or selected treatment should have the matching programmatic current or selected state when the control represents navigation or selection; color or background treatment alone is not sufficient evidence.
+- The current item should remain visibly reachable after navigation. In hierarchical surfaces, required ancestors should expose the item rather than leaving an active descendant hidden inside a collapsed group.
+- Compact and narrow states should preserve the consuming product's approved target geometry, contrast, and readable state labels without forcing desktop density rules into touch-oriented layouts.
+- Evaluators should compare visible selection, accessibility semantics, focus treatment, ancestor disclosure, and narrow-screen reachability as one state contract.
+
 ### First-State And Viewport Checks
 
 #### First-State Surface Separation
@@ -151,6 +178,15 @@
 - When a hero or first-state surface intentionally anchors primary copy to a specific vertical band, that anchor should remain perceptually stable across common laptop and desktop viewport ranges rather than drifting because of mixed `vh` and `vw` tuning.
 - Headline scale should also stay proportionate across those same ranges; smaller laptop widths should not make the same title feel meaningfully larger or heavier than intended when the surrounding shell typography remains stable.
 - Evaluators should compare at least one narrower laptop-sized viewport and one wider desktop viewport and confirm both the copy position and headline scale still match the intended composition.
+
+### Evaluation Evidence
+
+#### Rendered State And Viewport Evidence
+
+- Claims about geometry, overflow, contrast, selection visibility, focus, or responsive composition should use rendered evidence when those properties cannot be established from source inspection alone.
+- Broad screen-family work should sample the consuming product's supported viewport boundaries and representative long-content, empty, unavailable, error, and active-interaction states. Exact widths and required states belong to the consuming product's contract.
+- Use synthetic or explicitly approved content when captures, fixtures, or audit artifacts could otherwise expose private runtime data.
+- If the required rendered evidence cannot be collected, record the evidence gap explicitly and do not describe unobserved runtime behavior as a verified pass. The owning feature, active spec, or selected profile decides whether that gap blocks acceptance.
 
 ## Classification Guidance
 

@@ -2,6 +2,16 @@
 
 Use this file for the full document-structuring procedure.
 
+## Contents
+
+- [Purpose](#purpose)
+- [Working Sequence](#working-sequence)
+- [Entrance-Doc Handling](#entrance-doc-handling)
+- [Restructure Boundaries](#restructure-boundaries)
+- [Writing Standard](#writing-standard)
+- [Change Tracking](#change-tracking)
+- [Finish Pass](#finish-pass)
+
 ## Purpose
 - audit the current documentation set
 - classify ownership and layering

@@ -48,6 +48,14 @@
 - Fix log: `[fix-0000-title](../fix/fix-0000-title.md)`
 - Heuristic backlog: `[heur-0000-title](../heuristic/heur-0000-title.md)`
 
+## Evaluation Coverage
+- Evaluator:
+  - Result: `PASS` | `PASS WITH SUGGESTIONS` | `FAIL`
+  - Evidence Coverage: `complete` | `partial` | `unavailable`
+  - Environments or states checked:
+  - Unverified claims:
+  - Acceptance impact: `blocking` | `non-blocking` | `not applicable`
+
 ## Current Route
 - Next role:
 - Current blocker classification:

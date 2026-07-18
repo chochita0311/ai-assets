@@ -29,6 +29,17 @@
 - Human review normally happens after the run reports its result, unless the run is technically blocked and cannot continue.
 - Scope, spec, or planning returns should be recorded as post-run routing decisions, not hidden in-run redirects.
 
+## Evaluation Result And Evidence Coverage
+
+- Keep evaluator outcome separate from evidence coverage.
+- `Result` uses `PASS`, `PASS WITH SUGGESTIONS`, or `FAIL` and describes the evaluator's conclusion for the checks actually performed.
+- `Evidence Coverage` uses `complete`, `partial`, or `unavailable` and describes whether the required environments and states were directly observed.
+- Judge evidence coverage against the evidence required by the approved feature, active spec, and selected execution profile rather than against every theoretically possible environment.
+- Do not invent compound result labels such as `PASS WITH BROWSER GAP`; record `Result: PASS`, `Evidence Coverage: partial`, and name the unverified claims instead.
+- Partial or unavailable evidence does not automatically convert a result to `FAIL`, but the owning feature, active spec, or selected profile decides whether the gap blocks run or human acceptance.
+- An evaluator must not describe an unobserved rendered, runtime, interaction, migration, or integration state as verified merely because source inspection or a narrower automated check passed.
+- Before terminating a run, the Orchestrator must inspect evidence gaps and their acceptance impact; keep the evaluator result unchanged when an evidence gap requires more collection or blocks acceptance.
+
 ## Execution Return Model
 The normal operating structure is:
 

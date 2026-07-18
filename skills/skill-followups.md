@@ -23,9 +23,6 @@
 - `design-plan`:
   - add explicit source-priority guidance for constitution, current screens, and user direction
   - add a clearer stop/handoff boundary so design planning does not drift into constitution rewriting or implementation work
-- `docs-structuring`:
-  - evaluate whether it should state its default operating mode more explicitly when both incremental cleanup and larger restructure are possible
-  - evaluate whether a short approval-boundary summary should appear earlier in `SKILL.md`, not only in deeper references
 
 ## Notes
 - Keep this file concise and durable.

@@ -1,5 +1,23 @@
 # Init Design Checklist
 
+## Contents
+
+- [Identify The Start](#1-identify-the-start)
+- [Confirm Product Reality](#2-confirm-product-reality)
+- [Check Compatibility](#3-check-compatibility)
+- [Evaluate The Source Set](#4-evaluate-the-source-set)
+- [Lock Design DNA](#5-lock-design-dna)
+- [Lock Primitive Tokens](#6-lock-primitive-tokens)
+- [Lock Semantic Tokens](#7-lock-semantic-tokens)
+- [Lock Layout Rules](#8-lock-layout-rules)
+- [Lock Core Components](#9-lock-core-components)
+- [Define Screen Families](#10-define-screen-families)
+- [Check Stability](#11-check-stability)
+- [Define Guardrails](#12-define-guardrails)
+- [Output Required](#13-output-required)
+- [Pass / Fail Checks](#14-pass--fail-checks)
+- [Final Question](#15-final-question)
+
 ## Purpose
 - Use this as the quick execution sheet for `init-design`.
 - This is the short version of the full guide.

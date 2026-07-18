@@ -2,6 +2,14 @@
 
 Use this file for the full document-shaping procedure.
 
+## Contents
+
+- [Purpose](#purpose)
+- [Working Sequence](#working-sequence)
+- [Handoff Logic](#handoff-logic)
+- [Reporting Standard](#reporting-standard)
+- [Finish Pass](#finish-pass)
+
 ## Purpose
 - preserve the substance of one or more documents
 - improve internal composition only when needed
