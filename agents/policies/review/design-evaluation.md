@@ -54,6 +54,50 @@
 - When density rises, the system should preserve hierarchy and containment before adding more visible information.
 - A visually compact layout that causes clipping, overlap, or scan breakdown is a failure, not a stylistic preference.
 
+#### Long Technical Asset Containment
+
+- Commands, code, schemas, diagrams, traces, and similarly wide technical assets must remain inside a bounded presentation region rather than widening the outer document.
+- Choose the internal scrolling axis from the content shape, and keep the asset's label, purpose, and any essential instruction or action readable without requiring the user to traverse the full overflow region first.
+- Evaluators should exercise representative maximum-length content at supported viewport boundaries and verify both that the asset remains keyboard- and touch-reachable without hover dependence and that the outer document does not acquire unintended overflow.
+
+#### Scrollable Table Frame And Fill
+
+- A table that scrolls locally should keep overflow and outer frame ownership in a wrapper while retaining native table layout inside it. When columns are narrower than the reading region, header and row surfaces should fill that region instead of ending at intrinsic cell width.
+- Evaluators should compare short or two-column tables with wide multi-column tables. Check the wrapper edge, table edge, final header-cell edge, border and radius continuity, local overflow, and outer-document overflow rather than accepting the presence of a scrollbar as sufficient evidence.
+- If one renderer or table primitive serves several reading surfaces, apply [Shared Owner And Propagation Evidence](#shared-owner-and-propagation-evidence) instead of treating the reported document or route as the entire defect scope.
+
+#### Technical Reading Surface Role Separation
+
+- Code embedded in a reading surface does not automatically share the visual role of a terminal, Run console, status panel, brand accent, or provenance marker merely because both use monospace text.
+- Evaluators should inspect whether background, border, label, default text, and syntax colors express sustained reading without borrowing semantic roles that imply execution or status. Dedicated semantic reading roles are preferable when existing console or feedback roles create the wrong meaning or an unnecessarily harsh tone.
+- A visual reference may calibrate hierarchy, contrast, and palette variety, but it does not require importing the reference theme, decorative chrome, gradients, or shell. Compare generic and highlighted code across every shared reading consumer in scope.
+
+### Information Hierarchy And Metric Meaning
+
+#### Presentation Eligibility Is A Separate Contract
+
+- Persisted evidence is not automatically eligible for a user-facing metric, rank, date range, or category row.
+- Diagnostic, synthetic, fallback, or error records may remain valuable for traceability while being excluded from ordinary analytical presentation when they do not represent the measured concept.
+- Evaluators should confirm that summary, history, composition, coverage, and linked counts use one coherent eligible set so an excluded record does not leak through a secondary consumer.
+
+#### Secondary Metric Explanatory Burden
+
+- A derived or supporting metric should earn its space by improving a decision or interpretation beyond the primary observed values.
+- If a secondary value needs extensive qualification, provenance, coverage, state, and timestamp copy but still adds little practical value, removing it may preserve hierarchy better than explaining it more loudly.
+- Evaluators should compare information value, false-precision risk, and explanatory burden before accepting another KPI block or repeated estimate.
+
+#### Adjacent Metric Denominator Clarity
+
+- Adjacent totals, costs, counts, and activity metrics may legitimately use different eligible populations, but the layout and labels must not imply that they reconcile one-to-one.
+- When one metric includes background or child activity while another counts only primary work, the distinction should be visible at the point of comparison or in a bounded trust explanation.
+- Evaluators should inspect denominator definitions together with hierarchy and supporting copy rather than assuming shared placement means shared scope.
+
+#### User-Facing Terminology Boundary And Consistency
+
+- Internal storage, schema, or type names do not automatically own the user-facing vocabulary; visible labels should express the user's concept without requiring the internal contract to be renamed.
+- Once a user-facing term is chosen, apply it consistently across summaries, details, empty or unavailable states, errors, trust or calculation explanations, and accessibility text, including singular, plural, and number formatting.
+- Evaluators should confirm that nearby labels still distinguish the concept from adjacent records or events and that internal aliases do not leak through secondary presentation consumers.
+
 ### Boundary And Scope Discipline
 
 #### Shell Boundary Preservation
@@ -187,6 +231,18 @@
 - Broad screen-family work should sample the consuming product's supported viewport boundaries and representative long-content, empty, unavailable, error, and active-interaction states. Exact widths and required states belong to the consuming product's contract.
 - Use synthetic or explicitly approved content when captures, fixtures, or audit artifacts could otherwise expose private runtime data.
 - If the required rendered evidence cannot be collected, record the evidence gap explicitly and do not describe unobserved runtime behavior as a verified pass. The owning feature, active spec, or selected profile decides whether that gap blocks acceptance.
+
+#### Shared Owner And Propagation Evidence
+
+- A mismatch first observed in one record, route, or fixture may belong to a shared renderer, component, token, or layout primitive. Evaluators should identify that owning layer before describing the finding as instance-specific.
+- When the owner is shared, evidence should include the reported exemplar plus representative peer content or consumer surfaces, including narrow and wide states when geometry is involved. A one-record patch is not sufficient evidence for a shared-owner defect.
+- Record the propagation boundary explicitly: which consumers receive the correction, which remain intentionally outside it, and whether already mounted pages require reload or asset refresh before comparison.
+
+#### Positive-State Suppression Evidence
+
+- When a change removes, hides, or excludes previously eligible content, an empty fixture is not sufficient evidence that the presentation boundary works.
+- Evaluators should exercise a positive producer or read-model state that would have rendered the content before the change and verify that the current consumer still suppresses it.
+- When storage retention is intentional, evidence should confirm both sides of the boundary: the record remains inspectable at its owning layer and does not leak into the excluded presentation consumers.
 
 ## Classification Guidance
 

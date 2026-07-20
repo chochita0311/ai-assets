@@ -11,12 +11,13 @@
 - [agents/](agents/) holds reusable harness roles, flows, operations, profiles, policies, and templates.
 - [agents/templates/](agents/templates/) holds shared planning and execution templates for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
+- [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets.
 - [skills/](skills/) holds the reusable skill packages.
 - Each skill package's `SKILL.md` is its entry contract.
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.
 - Within each skill package, `templates/` holds output scaffolds.
-- [agents/policies/](agents/policies/) holds the shared harness governance package.
+- [agents/policies/](agents/policies/) holds shared harness and evaluation governance.
 
 ## Source Of Truth
 - Keep `AGENTS.md` short and operational.

@@ -75,13 +75,25 @@
 - Endpoint success alone is insufficient evidence for a click-driven action because stale assets can leave new markup visible but inert.
 - When progressive enhancement is part of the approved contract, the underlying form or link should remain a safe executable path and preserve the relevant user scope.
 
-#### Scope Transition Reset Rule
+#### Scope Transition State Contract
 
-- When a scope change redefines the result set, explicit reset is usually safer than carrying forward the previous search or filter state.
+- When a scope change redefines the result set, define preservation or reset per state owner instead of treating the whole page as one state. Query, filter, selection, disclosure, pane geometry, outer page scroll, and nested result or tree scroll may need different outcomes.
 - If global filtering and scoped search would conflict, the interaction should clear one state before entering the other instead of leaving both implicitly active.
-- Evaluators should check whether query, tag, category, collection, or similar browse states are reset or preserved intentionally rather than by accident.
-- If a scope change replaces the visible result set after the user has scrolled, the destination scope should start at an intentional anchor, usually the top of the new result list.
-- Carrying the previous scroll depth into a different category, collection, or result scope is usually a continuity failure because it hides the beginning of the newly selected content.
+- A destination scope should normally start its own result-local, tree-local, or preview-local state at an intentional anchor. Carrying hidden local scroll depth, disclosure, selection, or layout state from an unrelated scope is usually a continuity failure.
+- Preserving the outer document position can still be intentional when it keeps the scope control or current task anchor stable; it is not automatically equivalent to inheriting the destination's local result state. Full-page versus partial navigation is an implementation detail and does not decide this contract by itself.
+- Evaluators should exercise the transition after scrolling, across multiple scope choices, with shorter and longer destinations, and through back, forward, refresh, and direct entry as applicable. Verify each scroll container and state owner separately.
+
+#### Equivalent Scope Consistency
+
+- A problem reported for one tab, root, category, collection, or similar scope option should be traced to the shared control and state owner before it is treated as data-specific.
+- When the behavior is shared, evaluators should sample multiple equivalent options and include selected, unselected, empty, or unavailable states that materially change disclosure or orientation.
+- A fix should not hard-code the reported example when the approved behavior belongs to the whole scope family; evidence should state the family-wide rule and the representative cases used to verify it.
+
+#### In-Place Analytical Switch Continuity
+
+- Not every query-backed control changes the user's task scope. Switching metric units, aggregation, or composition inside the same analytical surface should usually preserve the surrounding document position and stable control anchors.
+- Evaluators should distinguish a new result destination that has a meaningful beginning from an in-place re-expression of the same selected data. The former may reset to an intentional anchor; the latter should not make the page jump merely because the URL or server-rendered region changed.
+- Test analytical switches after scrolling, with back and forward navigation, and across partial or full rendering paths. Verify page scroll, local scrollers, focus, selected state, and sticky regions rather than checking only the final values.
 
 #### Action And Status Scope Parity
 
@@ -104,6 +116,12 @@
 - Rapid consecutive selections should cancel or ignore superseded work so stale responses cannot overwrite the latest choice. Normal destination links should remain available as a no-script or failed-enhancement fallback when the product supports progressive enhancement.
 - Evaluators should test deep selection, repeated sibling selection, preserved scroll and disclosure, back and forward restoration, rapid input, and failed-update fallback instead of validating only the final preview content.
 
+#### Contextual Selection Focus And Scroll
+
+- When a nested selection reveals or replaces a meaningful content region, focus and scroll should move to the most specific newly selected destination that establishes context, not to a generic page heading or shared ancestor.
+- The destination should remain visible below sticky shell regions and use the nearest reachable document position when the exact offset cannot be attained near a scroll boundary.
+- Click-driven selection, back or forward restoration, and initial direct entry should have explicit, separately tested focus and scroll behavior rather than sharing one unconditional jump routine.
+
 #### Breakpoint Control-State Compatibility
 
 - If a responsive breakpoint hides or removes a mode switch, toggle, or similar state-changing control, the interface must also normalize into a state that remains supported without that control.
@@ -115,6 +133,21 @@
 - Component-level interaction code should own local affordances, visible state, and emitted intents; route delays, shell classes, global storage, and cross-surface animation timing should belong to an explicit shell or navigation coordinator.
 - If a component accumulates route-specific timers, body classes, storage markers, and unrelated surface checks, evaluators should flag the ownership drift even when the visible behavior currently passes.
 - A component may expose a small controller or event surface for orchestration, but evaluators should confirm that the component can still be understood as the owner of its own interaction contract rather than the owner of the page transition.
+
+### Execution Confirmation And Action Ownership
+
+#### Effective Execution Input Confirmation
+
+- When a product offers pre-execution confirmation for a command, job, or mutation, show the effective base request, user-supplied additions, executable invocation, and relevant input-channel boundaries such as arguments, standard input, environment, or files at the level needed for an informed decision.
+- Distinguish base input from optional additions and make append, replace, or override semantics explicit; changes made in the form should update the confirmation coherently.
+- The confirmation should derive from the same execution source as the real action rather than from a separately maintained approximation, while masking credentials or other values the user should not need to inspect.
+- Evaluators should compare the visible confirmation with captured execution input for the normal path and each in-scope optional-input path.
+
+#### Single Execution-Path Ownership
+
+- One user task at one lifecycle stage should normally have one primary initiation action.
+- A marker, preparation, or alternate run control that produces the same practical outcome should be consolidated or removed unless its distinct side effects and lifecycle are clear to the user.
+- Evaluators should confirm that action labels, progress, errors, cancellation or retry, and resulting history all belong to the same visible execution path.
 
 ### Menus, Disclosures, And Affordances
 
