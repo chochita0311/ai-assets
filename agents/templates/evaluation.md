@@ -26,6 +26,7 @@
 - Environments checked: source inspection, automated tests, fresh isolated runtime, active long-running runtime, rendered browser, or another relevant surface.
 - Record only directly observed evidence and identify synthetic fixtures or approved runtime data boundaries.
 - Record whether each reported exemplar is instance-specific or exercises a shared renderer, component, token, control, or state owner; for shared owners, name the representative peer consumers or equivalent scopes checked.
+- For a remote, costly, destructive, or multi-target action, record preview or preflight evidence separately from execution evidence, including scope, target or operation counts, readiness gating, and any verified no-side-effect path.
 
 ## Evidence Gaps
 - List required but unavailable evidence and the claims that remain unverified.

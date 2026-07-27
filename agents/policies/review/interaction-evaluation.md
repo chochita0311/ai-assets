@@ -136,12 +136,27 @@
 
 ### Execution Confirmation And Action Ownership
 
+#### Preflight And Execution Separation
+
+- A preview or preflight for a remote, costly, destructive, or multi-target action should establish the exact known scope, selected targets, expected operation count or limit, and user-visible consequence without performing the action it is meant to confirm.
+- Readiness failures such as a missing connection, capability, executor, permission, or runtime dependency should gate execution rather than erase the preview. Preserve the user's inputs and target selection, explain the recovery path, and keep safe local navigation or organization work available.
+- Defaults should be inspectable and overridable before submission. Page load, ordinary browse, search, setup, or preview must not silently become execution merely because the required dependency is available.
+- Evaluators should test preview with execution ready and unavailable, positive target data, zero targets, limit boundaries, partial failure, selected-only retry, and no-script fallback where progressive enhancement is part of the contract.
+
 #### Effective Execution Input Confirmation
 
 - When a product offers pre-execution confirmation for a command, job, or mutation, show the effective base request, user-supplied additions, executable invocation, and relevant input-channel boundaries such as arguments, standard input, environment, or files at the level needed for an informed decision.
 - Distinguish base input from optional additions and make append, replace, or override semantics explicit; changes made in the form should update the confirmation coherently.
 - The confirmation should derive from the same execution source as the real action rather than from a separately maintained approximation, while masking credentials or other values the user should not need to inspect.
 - Evaluators should compare the visible confirmation with captured execution input for the normal path and each in-scope optional-input path.
+
+#### First-Use Prerequisite Recovery
+
+- When the primary task requires a registered connection, account, tenant, workspace, or similar prerequisite, the first-use path should offer an in-context way to reuse or create it instead of ending at an instruction-only dead end.
+- Derive safe local facts from the user's input before requesting configuration, but do not infer a trust boundary, credential source, or access provider from a resource locator alone. Reuse may be automatic only when the match is unambiguous; multiple matches require an explicit choice.
+- When prerequisite choices are dependent, establish the target scope before the connection, provider, or executor. Filter downstream choices to compatible options, and clear or reject an incompatible downstream selection when the target changes.
+- Prerequisite creation should be atomic with the initiating local action. Validation failure must retain correctable input and leave no partial identity, while an intentionally unbound or local-only result must state that it is not yet ready for remote execution.
+- Evaluators should test zero, one, and multiple prerequisite matches, target changes after downstream selection, optional later binding, invalid input, late failure rollback, direct entry, and the server-executable path when JavaScript is unavailable.
 
 #### Single Execution-Path Ownership
 
@@ -188,6 +203,20 @@
 - Evaluators should check both closed and expanded states and confirm that the visual cue, placement, and expanded panel all tell the same directional story.
 
 ### Repeated Controls And State Anchoring
+
+#### Technical Canvas Input Ownership
+
+- Gesture shortcuts for a diagram or technical canvas should supplement visible controls rather than replace them. Users need a deterministic way to inspect the current scale, reach supported bounds, reset to a known baseline, and fit the canvas when that behavior is offered.
+- Ordinary wheel or trackpad scrolling should remain owned by the page or bounded viewport unless the approved modifier or pinch gesture is active. Zoom should preserve the pointer or viewport neighborhood closely enough that users do not lose the content they were inspecting.
+- Rerendered or replaced canvases need one current interaction binding and an explicit reset-or-preserve rule. Render failure and no-script states must retain the approved textual or navigational fallback instead of leaving inert controls.
+- Evaluators should test plain scrolling, modifier gestures, visible buttons, keyboard focus, bounds, reset, fit, repeated replacement, narrow layouts, and unavailable rendering separately.
+
+#### In-Place Utility Action Continuity
+
+- An auxiliary action inside a repeated record or detail heading should update only the state it owns and must not activate the surrounding destination link or unrelated row action.
+- Successful in-place mutation should preserve the current query, filter, page, outer and nested scroll positions, and a meaningful focus target. Replacing state must not resize the control box, shift sibling metadata, or reorder the record unless ordering is an explicit consequence.
+- Failure should preserve or restore the prior visible state and place bounded feedback beside the owning action without replacing the primary task.
+- Evaluators should test rows with and without optional child controls, list and detail entry points, parent-link isolation, idle/hover/focus/pressed presentation, mutation failure, and the exact scroll and focus positions before and after activation.
 
 #### Repeated Footer Action Anchoring
 
