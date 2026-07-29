@@ -34,12 +34,14 @@ Map the required information into repository-owned headings, checklists, and met
 ### 1. Gather evidence
 
 - Read applicable `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, PR templates, and release instructions
-- Inspect the base and head branches, current diff, changed-file summary, commits, issue context, existing PR text, and user-provided notes
-- Treat the final head as the PR subject; use reverted or test-only commits only as historical or validation context
-- Preserve explicit user-provided validation evidence unless stronger evidence contradicts it
+- Freeze the artifact snapshot before broader inspection: use the committed base-to-head diff for an existing PR, or the committed merge-base-to-`HEAD` diff for a branch draft
+- Inspect the snapshot, changed-file summary, commits, issue context, existing PR text, and notes explicitly supplied for the current artifact
+- Treat the frozen head as the PR subject; use reverted or test-only commits only as historical or validation context
+- Treat earlier session details, discarded approaches, dirty working-tree changes, and untracked files as out-of-snapshot context unless the user explicitly asks to describe an intended future head
+- Preserve validation evidence explicitly provided for the current artifact unless stronger evidence contradicts it
 - Avoid reproducing secrets, credentials, tokens, or unnecessary sensitive values
 
-Read [evidence-model.md](references/evidence-model.md) for claim provenance, the concern ledger, validation acquisition, and deployment or rollback wording. Do not claim a motivation, behavior change, test result, deployment result, or risk reduction unless its evidence state permits that wording.
+Read [evidence-model.md](references/evidence-model.md) for snapshot boundaries, source priority, claim provenance, the concern ledger, validation acquisition, and deployment or rollback wording. Do not claim a motivation, behavior change, test result, deployment result, or risk reduction unless its evidence state permits that wording.
 
 ### 2. Build an internal concern ledger
 
@@ -75,7 +77,7 @@ Use this structure when no mandatory repository template overrides it:
 ```markdown
 ## Summary
 
-<State what changed and why in one to three complete sentences.>
+<State what changed and why using the selected language's Summary form.>
 
 ## Changes
 
@@ -88,7 +90,7 @@ Use this structure when no mandatory repository template overrides it:
 
 Apply these boundaries:
 
-- `Summary`: explain what changed and why in exactly one prose paragraph of one to three complete sentences; do not use lists, subheadings, tables, code blocks, or fragments
+- `Summary`: explain what changed and why in exactly one prose paragraph; use one to three complete sentences in English or one to three concise report-style clauses in Korean; do not use lists, subheadings, tables, or code blocks
 - `Changes`: state supported current-head behavior and decisions; group by concern and avoid exhaustive file narration
 - `Validation`: state only completed checks and explicit evidence gaps; never turn a recommended check into a completed result
 
@@ -121,8 +123,9 @@ Do not omit `Impact`, `Deployment and Rollback`, or `Review Guide` merely to sho
 
 - Write in a direct, professional, evidence-based tone
 - Avoid conversational filler, self-reference, promotional language, and generated-by-AI commentary
-- Use complete sentences with terminal punctuation in prose paragraphs
-- Use concise, parallel noun or verb phrases without terminal periods in bullet and numbered lists
+- Use complete sentences with terminal punctuation in English prose paragraphs
+- For Korean `Summary` text, use concise parallel report-style endings such as `추가`, `변경`, `정리`, `유지`, or `확인`; avoid polite narrative endings such as `-했습니다` or `-합니다` and omit terminal periods
+- Use concise, parallel noun or verb phrases without terminal punctuation in bullet and numbered lists
 - Split a list item that needs multiple sentences
 - Wrap code identifiers, file paths, commands, configuration keys, and literal values in backticks
 - Prefer reviewer-relevant behavior and decisions over exhaustive implementation narration
@@ -140,14 +143,17 @@ Do not omit `Impact`, `Deployment and Rollback`, or `Review Guide` merely to sho
 
 ## Check before returning
 
-- `Summary` communicates both what and why in one prose paragraph
+- `Summary` communicates both what and why in one prose paragraph and follows the selected language's ending rule
+- Every named change, file, and validation item belongs to the frozen snapshot or was explicitly supplied for the current artifact
 - Every material claim has an appropriate evidence state
+- Negative or exclusive claims such as `no impact`, `unchanged`, `not included`, or `only` have evidence covering the relevant scope
 - Concern labels and order remain aligned across applicable sections
 - Every material concern has completed validation or an explicit unverified status
 - Completed, not-run, provided-manual, inferred, and unknown information are not conflated
 - Conditional sections are present in the required order and keep distinct roles
 - Deployment and rollback bullets disclose whether they are confirmed, recommended, or unverified
 - Links, facts, file guidance, and reviewer actions are not duplicated across sections
+- No bullet or numbered item ends with prose terminal punctuation
 - Language, list form, and punctuation are consistent
 - No sensitive value is exposed unnecessarily
 - The response contains only the requested artifact and any explicitly requested separate notes

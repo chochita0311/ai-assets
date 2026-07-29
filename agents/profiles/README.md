@@ -11,12 +11,12 @@
 - Use the Orchestrator role contract for the role responsible for selecting and applying a profile during a run.
 
 ## Profile Set
-- `frontend-product.md`: user-facing screen, component, route, interaction, or presentation work.
-- `backend-product.md`: service, API, job, command, persistence, message, or server-side behavior work.
-- `fullstack-product.md`: product work spanning two or more coupled surfaces.
-- `foundation-contract.md`: contract, invariant, ownership, schema, identity, or generated-output foundation work.
-- `infra-devtool.md`: infrastructure, tooling, scripts, CI, local workflow, or operational developer-surface work.
-- `docs-content.md`: documentation, content, policy, guide, or information-architecture work.
+- [frontend-product.md](frontend-product.md): user-facing screen, component, route, interaction, or presentation work.
+- [backend-product.md](backend-product.md): service, API, job, command, persistence, message, or server-side behavior work.
+- [fullstack-product.md](fullstack-product.md): product work spanning two or more coupled surfaces.
+- [foundation-contract.md](foundation-contract.md): contract, invariant, ownership, schema, identity, or generated-output foundation work.
+- [infra-devtool.md](infra-devtool.md): infrastructure, tooling, scripts, CI, local workflow, or operational developer-surface work.
+- [docs-content.md](docs-content.md): documentation, content, policy, guide, or information-architecture work.
 
 ## Use Rule
 - Profiles are presets, not new role systems.

@@ -1,16 +1,28 @@
-workflow root:
+current goal:
+invocation origin: explicit|implicit
+creation authority: granted|not granted
+
+working root:
 current repo:
 related repos:
-shared context path:
-follow context:
+
+context home:
+context namespace:
+canonical context target:
+target kind: document set|dedicated workflow context|unresolved
+mode: none (session-only)|maintain|initialize|consolidate
+requested durability: session-only acceptable|durable outcome requested|unspecified
+persistence disposition: session-only|maintain existing|propose persistence|initialize after approval
+persistence rationale:
+proposed target and kind:
 
 sources in scope:
 - id:
   type:
   location:
+
 source relationships:
 
 known facts:
-current goal:
 approval mode: strict
 pause after reconciliation: yes

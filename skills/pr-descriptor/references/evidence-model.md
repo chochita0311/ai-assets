@@ -4,6 +4,7 @@ Use this reference to decide what can be stated as fact, how validation should b
 
 ## Contents
 
+- Artifact snapshot and source priority
 - Evidence states
 - Concern ledger
 - Validation acquisition
@@ -12,12 +13,31 @@ Use this reference to decide what can be stated as fact, how validation should b
 - Operational provenance
 - Sensitive information
 
+## Artifact snapshot and source priority
+
+Freeze the PR subject before classifying claims:
+
+- For an existing PR, use its committed base and head plus the resulting base-to-head diff
+- For a local branch draft, use the committed merge base and `HEAD`
+- Include working-tree or untracked changes only when the user explicitly asks for an artifact describing the intended future head
+
+Apply source priority in this order:
+
+1. The frozen current-head snapshot for claims about what the PR changes
+2. Notes explicitly supplied for the current artifact, including scoped manual validation and motivation
+3. Committed repository documentation, CI records, logs, and issue context that can be tied to the snapshot
+4. Clearly labeled inference or an explicit unknown state
+
+Earlier session details, local scratch files, discarded approaches, dirty working-tree changes, and untracked helpers are background rather than PR evidence. Do not name them in the artifact or use checks that depend on them as validation. Repository files outside the diff may explain a current-head change, but do not list them as changes.
+
+If ambient context conflicts with the frozen snapshot, the snapshot wins for `Changes`. If a user-provided result applies to a materially different temporary setup, omit it unless the user explicitly asks to preserve that difference.
+
 ## Evidence states
 
 Assign each material claim one internal state before drafting:
 
-- `Observed`: directly supported by the current diff, repository files, or final head
-- `Provided`: explicitly supplied by the user, an issue, an existing PR, a runbook, or another identified source
+- `Observed`: directly supported by the frozen snapshot, or by a committed repository file used to interpret that snapshot
+- `Provided`: explicitly supplied for the current artifact by the user, an issue, an existing PR, a runbook, or another identified source
 - `Verified`: supported by an executed command, CI result, log, screenshot, or observed manual outcome
 - `Inferred`: a reasonable consequence, risk, recommendation, or proposed follow-up derived from the evidence
 - `Unknown`: not established by the available evidence
@@ -31,6 +51,8 @@ Use the state to control wording:
 - State material `Unknown` validation or operational gaps explicitly
 
 Never strengthen a source while paraphrasing it. A routing diagram proves intended topology, not a successful request. A commit message mentioning tests is not equivalent to an observed passing command or CI job.
+
+Negative and exclusive claims require evidence across the relevant scope. Do not state `no impact`, `unchanged`, `not included`, `only`, or an equivalent absolute merely because no contradiction appeared in the inspected subset. Qualify the scope or mark the claim as unverified.
 
 ## Concern ledger
 
@@ -50,7 +72,7 @@ Concern | Current-head change | Why | Validation | Impact | Transition | Rollout
 
 Use evidence in this order:
 
-1. Explicit user-provided results and current PR evidence
+1. Results explicitly supplied for the current artifact and evidence from the frozen PR snapshot
 2. Repository CI records, test reports, logs, screenshots, and documented commands already available locally
 3. Fast, bounded, read-only local checks that are relevant and already supported by the environment
 4. Explicit unverified status
@@ -64,7 +86,7 @@ When local repository inspection is authorized:
 - Record the exact command and observed outcome when reproducibility is useful
 - If a command is unavailable, incomplete, or fails, report that state without converting it into a pass
 
-Do not discard valid user-provided manual evidence because it is absent from Git history. Preserve its scope and avoid extending it to unexercised paths.
+Do not discard valid manual evidence explicitly provided for the current artifact merely because it is absent from Git history. Preserve its scope and avoid extending it to unexercised paths. A check that requires uncommitted helper code, temporary local configuration, or another artifact absent from the frozen head is not reproducible PR validation and should be omitted unless the user explicitly asks to preserve that setup difference.
 
 ## Validation alignment
 
@@ -93,7 +115,7 @@ A manual validation statement must contain:
 - the observable outcome
 - any material difference between the tested setup and final head
 
-Treat setup instructions, hosts mappings, routing diagrams, and intended flows as context unless an observed outcome is also supplied. If temporary configuration was reverted, credit only the behavior actually exercised and disclose the final-head difference.
+Treat setup instructions, hosts mappings, routing diagrams, and intended flows as context unless an observed outcome is also supplied. If temporary configuration was reverted, credit only behavior explicitly supplied for the current artifact and disclose the final-head difference.
 
 ## Operational provenance
 

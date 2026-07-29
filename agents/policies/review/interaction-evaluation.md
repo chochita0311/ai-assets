@@ -19,6 +19,17 @@
 - Add new entries when the same class of interaction failure proves reusable beyond one feature.
 - Promote an entry elsewhere only when it becomes broader product law rather than an evaluation asset.
 
+## Category Index
+
+- [Transition Stability And Continuity](#transition-stability-and-continuity)
+- [Binding, Scope, And Responsive State Ownership](#binding-scope-and-responsive-state-ownership)
+- [Execution Confirmation And Action Ownership](#execution-confirmation-and-action-ownership)
+- [Menus, Disclosures, And Affordances](#menus-disclosures-and-affordances)
+- [Repeated Controls And State Anchoring](#repeated-controls-and-state-anchoring)
+- [Reading Surface Link Integrity](#reading-surface-link-integrity)
+- [First-State Isolation And Handoff](#first-state-isolation-and-handoff)
+- [Classification Guidance](#classification-guidance)
+
 ## Reusable Evaluation Notes
 
 ### Transition Stability And Continuity

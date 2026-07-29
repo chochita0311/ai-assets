@@ -19,6 +19,18 @@
 - Add new entries when the same class of design failure proves reusable beyond one feature.
 - Promote an entry into the constitution only when it becomes a broader product-wide visual law.
 
+## Category Index
+
+- [Layout Containment And Readability](#layout-containment-and-readability)
+- [Information Hierarchy And Metric Meaning](#information-hierarchy-and-metric-meaning)
+- [Boundary And Scope Discipline](#boundary-and-scope-discipline)
+- [Typography, Alignment, And Accent Consistency](#typography-alignment-and-accent-consistency)
+- [Card Metadata And Footer Structure](#card-metadata-and-footer-structure)
+- [Stateful Navigation And Selection](#stateful-navigation-and-selection)
+- [First-State And Viewport Checks](#first-state-and-viewport-checks)
+- [Evaluation Evidence](#evaluation-evidence)
+- [Classification Guidance](#classification-guidance)
+
 ## Reusable Evaluation Notes
 
 ### Layout Containment And Readability

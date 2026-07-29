@@ -11,42 +11,12 @@ This skill is general-purpose. It should travel well across repositories, stacks
 
 ## Workflow
 
-1. Gather planning context before proposing steps.
-   - Read the bundled checklist in [references/checklist.md](references/checklist.md).
-   - Inspect any repository-specific guidance already present in the target codebase.
-   - List existing refactor plans, architecture notes, or tracking files and inspect the ones closest in scope.
-   - Anchor the plan in actual files, modules, interfaces, data contracts, and runtime behavior.
-
-2. Classify the refactor before designing phases.
-   - Mark the work as primarily `Structural`, `Behavioral`, or `Semantic`.
-   - State whether the goal is behavior-preserving parity or intentional semantic change.
-   - If merge safety or parity judgment is in scope, plan explicit parity-audit evidence requirements up front.
-   - Separate non-goals so unrelated infrastructure churn, package churn, and semantic redesign do not get mixed casually.
-
-3. Decide whether to extend or create a tracking document.
-   - Extend an existing plan when the new work is a direct continuation of that track.
-   - Create a new numbered or named plan when the work starts a distinct new track.
-   - Do not overwrite historical rationale from earlier plan files; preserve continuity and add explicit handoff notes when scope moves.
-   - By default, place refactor tracking files under `./docs/plans/refactoring/`.
-   - If the project already uses another folder for refactor plans, follow that existing convention instead of forcing a new one.
-
-4. Build the plan in bounded slices.
-   - Define baseline compare target and invariants first.
-   - Split work into steps/phases/batches with clear boundaries.
-   - For each step, define goal, why the grouping is safe, representative targets, validation, and exit gate.
-   - Keep risky interface, persistence, deployment, concurrency, or messaging changes late unless they are the direct objective.
-   - Make each step small enough that completion can be proven, reviewed, and reverted without ambiguity.
-
-5. Use architecture boundaries deliberately when planning semantic refactors.
-   - Prefer clearer separation between entrypoints, orchestration, domain logic, and infrastructure concerns where that separation exists or is desired.
-   - Keep externally visible contracts and operational behavior stable unless intentional deltas are explicitly approved.
-
-6. Make the output immediately usable.
-   - If asked to create the plan, write or update the actual tracking file.
-   - Prefer `./docs/plans/refactoring/` as the default location for refactor schemes, plans, and handoff notes.
-   - Prefer `./docs/plans/refactoring/logs/` as the default location for refactor logs.
-   - If the project already uses a different planning folder, continue there rather than splitting refactor history across multiple locations.
-   - If only asked for planning guidance, provide a concise draft using the same canonical structure without unnecessary prose.
+1. Read [references/method.md](references/method.md) and the target repository's guidance, nearby plans, architecture notes, and actual code boundaries.
+2. Classify the work as `Structural`, `Behavioral`, or `Semantic`, and separate parity-preserving work from intentional deltas.
+3. Extend the existing track or create a new one according to the method's ownership and continuity rules.
+4. Build bounded steps around an explicit baseline, invariants, targets, validation, and exit gates.
+5. Write only the requested plan, log, or merge-check artifact using the routed template.
+6. Finish with [references/checklist.md](references/checklist.md) as the short final validation pass.
 
 ## General Rules
 
@@ -74,7 +44,8 @@ This skill is general-purpose. It should travel well across repositories, stacks
 
 ## Bundled References
 
-- Use the reusable checklist in [references/checklist.md](references/checklist.md).
+- Use the detailed planning and parity method in [references/method.md](references/method.md).
+- Use the final validator in [references/checklist.md](references/checklist.md).
 - Use the plan template in [templates/plan.md](templates/plan.md).
 - Use the log template in [templates/log.md](templates/log.md).
 - Use the merge-check template in [templates/merge-check.md](templates/merge-check.md).
@@ -122,39 +93,10 @@ Use this stricter structure by default. Do not omit sections just because the an
 
 ## Log Guidance
 
-Write refactor logs as durable execution records, not casual notes.
-
-- When tracked refactor execution changes code, write a step or batch log unless the repository already records the same event in an equivalent durable form.
-- Do not complete refactor work silently. Completed steps, confirmed blockers, runtime verification, and merge judgments should leave a durable log record.
-- Use logs to capture:
-  - step completion
-  - blocker discovery
-  - runtime smoke results
-  - merge or parity checks
-  - wrap-up and handoff outcomes
-- Prefer one log per meaningful event or batch.
-- Keep logs factual and scoped:
-  - what was attempted
-  - what changed
-  - what was validated
-  - what remains risky
-  - what comes next
-- Do not mix multiple unrelated events into one log just because they happened on the same day.
-- When a log is tied to a plan track, link the active tracking file near the top.
-- Prefer `./docs/plans/refactoring/logs/` as the default log folder unless the project already uses a different established location.
-
-Unless the project already has a stronger mandatory format, generate logs in one of these canonical shapes:
-- Step log
-- Blocker log
-- Runtime smoke log
-- Wrap-up or handoff log
-- Merge check log
-
-Use the shared template and adapt the optional sections to the log type instead of inventing a new structure each time.
-For merge or parity judgment logs, prefer the dedicated merge-check template instead of the general log form.
-Use a merge-check log when the main question is whether a specific step, batch, or track is safe to merge, parity-safe against a baseline, or still blocked by missing proof.
-Do not require a merge-check log for every execution step; use it when merge safety or parity judgment is the active decision.
-When baseline or parity expectations are not obvious from the project context, ask for the missing comparison target if needed; otherwise proceed with an explicit provisional assumption and record it in the merge check.
+- Treat logs as durable event records rather than casual notes.
+- Use the general log for step, batch, blocker, runtime-smoke, wrap-up, and handoff events.
+- Use the dedicated merge-check only when parity or merge safety is the active decision.
+- Read [references/method.md](references/method.md) for log selection, adaptation, naming, and evidence rules.
 
 ## Output Standard
 
@@ -180,32 +122,7 @@ Activation boundary:
 Required behavior:
 - Pin an explicit compare baseline (branch/commit/release target) and record an immutable reference (resolved commit SHA) when available.
 - Build a source mapping of affected old-path to new-path for the full execution flow.
-- Perform file-by-file and logic-unit comparison before parity conclusions (branches, predicates, mappings, and side-effect paths).
-- Compare query semantics explicitly:
-  - selected tables
-  - join type and predicates
-  - where predicates
-  - group/order/limit behavior
-  - null/default/fallback behavior
-  - status/filter conditions
-- Compare write-path semantics explicitly:
-  - write targets and predicates
-  - upsert/update/insert behavior
-  - timestamps, actor/source, and idempotency-relevant fields
-- Compare mapping/output construction explicitly:
-  - field-by-field payload population
-  - defaults, fallbacks, and exception behavior
-  - ordering and dedupe semantics
-- Compare side-effect semantics explicitly:
-  - events/messages emitted
-  - audit/history writes
-  - cache invalidation
-  - notifications
-  - security/authorization outcomes
-- Compare failure-mode semantics explicitly:
-  - exception propagation/translation
-  - retry/rollback/compensation behavior
-  - transaction boundary and partial-failure behavior
+- Apply the strict baseline audit in [references/method.md](references/method.md), including relevant query, write, output, side-effect, and failure-mode semantics.
 
 Claim rules:
 - If any relevant path is not audited, parity status must be `Unknown/Provisional`.

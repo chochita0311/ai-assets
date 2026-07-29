@@ -1,5 +1,22 @@
 # Runner
 
+## Contents
+
+- [Purpose](#purpose)
+- [Ownership](#ownership)
+- [When To Use](#when-to-use)
+- [Core Rule](#core-rule)
+- [Required Inputs](#required-inputs)
+- [Run Artifact](#run-artifact)
+- [Default Invocation Order](#default-invocation-order)
+- [Invocation Rules](#invocation-rules)
+- [Default Closing Sequence](#default-closing-sequence)
+- [Prompt Frame](#prompt-frame)
+- [Role Prompts](#role-prompts)
+- [Invocation Examples](#invocation-examples)
+- [Environment Rule](#environment-rule)
+- [Continuation Rule](#continuation-rule)
+
 ## Purpose
 - Define how a human or harness starts and continues one execution run using prompts.
 - Keep execution startup and continuation consistent without requiring repo-local automation scripts.

@@ -2,35 +2,7 @@
 
 Use this form when creating a new refactor tracking file or reshaping an existing one.
 
-Keep the file practical. It should guide execution, review, and merge decisions, not narrate the entire history.
-
-## Decision Rules
-
-### When to create a new plan
-
-Create a new plan when at least one of these is true:
-- the goal changes from structural parity to semantic redesign
-- the dominant risk shifts to a new layer, such as runtime, platform, persistence, or domain behavior
-- the previous track is complete and the next work needs a new scope boundary
-- the old file would become confusing if the new work were appended
-
-### When to extend an existing plan
-
-Extend the current file when:
-- the work is the next batch in the same initiative
-- the same baseline, goals, and risk model still apply
-- the file remains readable after adding the next step or handoff note
-
-### How to organize steps well
-
-Prefer step boundaries that follow one or more of these:
-- blast radius
-- dependency order
-- runtime criticality
-- contract surface
-- validation strategy
-
-Avoid steps that are only "misc cleanup" buckets.
+Use [../references/method.md](../references/method.md) for create-versus-extend, phase, parity, and artifact-selection decisions.
 
 ## Standard Template
 
@@ -130,14 +102,3 @@ Exit gate:
 
 - [Only include when work is intentionally deferred or handed off]
 ```
-
-## Usage Notes
-
-- Default location for generated plans:
-  - `./docs/plans/refactoring/`
-- If the repository already uses a numbered scheme such as `REFACTOR-0001`, keep that naming convention.
-- If it does not, adapt the structure to the local planning style rather than forcing a new naming system.
-- If the project already stores refactor plans in another folder, keep using that folder instead of introducing `./docs/plans/refactoring/` in parallel.
-- Leave handoff snapshots when work moves into a later track instead of silently deleting context.
-- Do not describe intentional behavior changes as refactoring unless the plan explicitly marks them as intentional deltas.
-- Use the section order exactly unless the repository has an explicitly stronger required format.

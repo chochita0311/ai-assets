@@ -7,20 +7,6 @@ description: Use when a current screen must stay visually consistent with an exi
 
 Use this skill when the task is to keep a current implementation visually aligned with an existing design system.
 
-This skill supports four modes:
-
-1. `match`
-Match a specific target screen as literally as possible without violating durable design rules.
-
-2. `adapt`
-Use a target as directional input while preserving current product contents, constitution, and core screen family.
-
-3. `extend`
-Add or revise screen areas when no exact target exists, while keeping results native to the current constitution and family patterns.
-
-4. `reframe`
-Stop parity work when the request is actually redesign or constitution-revision work.
-
 ## Quick Mode Map
 
 - Use `match` when the target is the visual contract.
@@ -115,99 +101,14 @@ If target conflicts with constitution, do not silently copy target styling. Pres
 - treating target export code as production-ready instead of separating reusable structure from foreign styling assumptions
 - treating structurally foreign redesign work as normal parity work
 
-## Mode Contracts
-
-### `match`
-
-Inputs:
-
-- current screen
-- target screen
-- constitution, if it exists
-- user screenshots or marked comparisons, when available
-
-Output expectation:
-
-- current screen reads materially closer to target
-- constitutional rules are still honored
-
-### `adapt`
-
-Inputs:
-
-- current screen
-- target screen
-- constitution
-- explicit preservation constraints from user
-- related family screens, when useful
-
-Output expectation:
-
-- directional qualities from target are borrowed intentionally
-- current content, sourcing model, supported behavior, and screen family remain honest
-- no target-only fields or controls are added unless the current repo actually supports them
-- no target-only interactions, workflows, or stateful controls are added unless the current repo actually supports them
-- current repo content instances are preserved unless the user explicitly asks to rewrite content or map to a different dataset
-- target is directional input, not literal copy contract
-
-### `extend`
-
-Inputs:
-
-- current screen
-- constitution
-- related family screens
-- user direction for new area or behavior
-
-Output expectation:
-
-- new or revised areas read native to the existing system
-- no foreign component language or visual drift is introduced
-
-### `reframe`
-
-Use when parity cannot be honest because target and constitution are too far apart.
-
-Typical signs:
-
-- different product framing rather than same screen family
-- materially different navigation model
-- materially different visual language
-- change requires constitution revision to be coherent
-
-Output expectation:
-
-- task is explicitly reframed as redesign, constitution revision, or narrower constitution-preserving adaptation before implementation continues
-
 ## Workflow
 
-- Read [references/method.md](./references/method.md) before substantial parity work.
+- Read [references/method.md](./references/method.md) for full mode contracts, compatibility judgment, rendered comparison, browser verification, and failure diagnosis.
 - Use [references/checklist.md](./references/checklist.md) as final closure validation.
 
 ## Optional Tool Integration
 
-Browser automation is optional. Use it when rendered comparison, screenshot capture, or computed-style verification is required.
-
-### Playwright MCP (Optional)
-
-Codex MCP integration file:
-`~/.codex/config.toml`
-
-Example:
-
-```toml
-[mcp_servers.playwright]
-command = "npx"
-args = ["@playwright/mcp@latest"]
-```
-
-Use Playwright selectively for:
-
-- opening current and target screens
-- taking comparison screenshots
-- checking computed styles
-- validating geometry (width, height, spacing, radius)
-- verifying that narrow parity edits landed
+Browser automation is optional. Use it when rendered comparison, screenshot capture, computed-style inspection, or repeatable geometry verification is required. Keep setup and browser-level procedure in [references/method.md](./references/method.md).
 
 ## Expected Result
 

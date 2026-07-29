@@ -1,4 +1,0 @@
-interface:
-  display_name: "Init Serena"
-  short_description: "Initialize Serena project onboarding"
-  default_prompt: "Use $init-serena to initialize Serena on a project."

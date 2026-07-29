@@ -52,24 +52,35 @@ The normal operating structure is:
 
 Use this model instead of ambiguous phrases such as "go back", "resolve", or "fix" without classification.
 
-### Continue In Loop
-- Use this when the issue is an `implementation bug`.
+### Continue In Loop: `implementation bug`
+- Use this when the approved spec is clear and the implementation does not satisfy it.
 - The approved feature and active spec are still valid.
 - Stay inside the current execution loop.
 - Apply targeted fixes.
 - Re-run only the needed evaluators.
+- Examples:
+  - an API response omits a field required by the active spec
+  - a generated artifact has the right contract but is not regenerated after source changes
+  - an approved interaction stops working even though the spec defines the expected behavior
 
-### Post-Run Return To Spec
-- Use this when the approved feature boundary is still valid, but the active spec is too weak, contradictory, or underspecified.
+### Post-Run Return To Spec: `spec gap`
+- Use this when the approved feature boundary is still valid, but the active spec is too weak, contradictory, or underspecified to execute safely.
 - Record the run result and post-run recommendation.
 - Update the spec first.
 - Start a new run from build or targeted fix work against the corrected spec.
+- Examples:
+  - a feature needs a schema or payload rule, but the spec does not define the value shape
+  - a multi-surface feature does not define which lane owns the shared contract
+  - a UI feature changes rerender behavior without defining whether controls must survive or be rebound
 
-### Post-Run Return To Planning
-- Use this when the problem changes approved scope, mode meaning, dependency meaning, contract ownership, or user-visible intent.
+### Post-Run Return To Planning: `planning gap`
+- Use this when the problem changes approved scope, unresolved dependency meaning, mode meaning, contract ownership, or user-visible intent.
 - Return to feature review or PRD review.
 - Re-approve the corrected boundary before resuming spec or build.
 - Start a new run after the corrected planning artifact is trustworthy.
+- Examples:
+  - execution reveals that one feature combined foundation and product outcomes that should have been split
+  - execution reveals a missing mode, ownership decision, or dependency order that should have been resolved before spec
 
 ### Technical Block Exception
 - A run may stop early only when it is technically blocked and cannot continue safely.
@@ -120,45 +131,6 @@ Route based on the first broken layer:
   - UX Heuristic Evaluator as side-channel
   - Fix Agent
   - re-evaluate
-
-## Fail Classification
-Every blocking finding should be classified as one of:
-
-- `implementation bug`
-  - the approved spec is clear and the implementation does not satisfy it
-- `spec gap`
-  - the feature is approved, but the active spec is too weak or contradictory to execute safely
-- `planning gap`
-  - the issue changes approved scope, unresolved dependency meaning, contract ownership, or product-boundary intent
-
-## Classification Examples
-- `implementation bug`
-  - an API response omits a field required by the active spec
-  - a generated artifact has the right contract but is not regenerated after source changes
-  - an approved interaction stops working even though the spec defines the expected behavior
-- `spec gap`
-  - a feature needs a schema or payload rule, but the spec does not define the value shape
-  - a multi-surface feature does not define which lane owns the shared contract
-  - a UI feature changes rerender behavior, but the spec does not define whether controls must survive or be rebound after rebuild
-- `planning gap`
-  - execution reveals that the approved feature combined foundation and product outcomes that should have been split
-  - execution reveals a missing mode, ownership decision, or dependency order that should have been resolved before spec
-
-## Return Path
-- `implementation bug`:
-  - continue in loop
-  - apply targeted fix
-  - re-evaluate as needed
-- `spec gap`:
-  - finish the current automated run unless a technical blocker prevents continuation
-  - report to the human owner
-  - return to spec review only after human decision
-  - start a new run from build or targeted fix work after spec correction
-- `planning gap`:
-  - finish the current automated run unless a technical blocker prevents continuation
-  - report to the human owner
-  - return to feature or PRD review only after human decision
-  - re-approve before starting a new run into spec or build
 
 ## Heuristic Side-Channel Rule
 - `UX Heuristic Evaluator` is a signal emitter, not a default blocking gate.
@@ -223,16 +195,6 @@ Do not start executable spec work when:
   - mark the run or continuity notes so the earlier pass is explicitly invalidated or replaced
   - preserve the correction path clearly enough that later readers can see why the current truth changed
 - Normal project work should prefer explicit attempt history over rewriting the same pass invisibly.
-
-## Compact Mental Model
-- `implementation bug`:
-  - fix here
-- `spec gap`:
-  - report, then human may send back to spec
-- `planning gap`:
-  - report, then human may send back to feature or PRD
-- after correction:
-  - start a new run from the corrected layer
 
 ## Termination Conditions
 - The loop may end with:

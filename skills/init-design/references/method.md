@@ -10,18 +10,19 @@
 - [Starting Artifact Types](#starting-artifact-types)
 - [Expected Output](#expected-output-of-init-design)
 - [Source Detection And Priority](#creative-source-detection)
+- [Workflow](#workflow-of-init-design)
 - [Source-Set Extraction Rules](#source-set-extraction-rules)
 - [Screen Expansion Rules](#screen-expansion-rules)
+- [Output Rule](#output-rule)
 - [Drafting And Evaluation Model](#drafting-agent-and-evaluator-model)
 - [Department Structure](#department-structure)
 - [Constitution vs Plan](#constitution-vs-plan)
+- [Writing And Pass/Fail Rules](#writing-rule)
+- [Screen Scope Rule](#screen-scope-rule)
 - [Property Definition Guidance](#how-each-property-should-be-defined)
-- [Concrete Example](#concrete-example-using-this-repo)
+- [Concrete Token Example](#concrete-token-example)
 - [Design Terms](#design-terms-for-backend-minded-builders)
-- [Workflow](#workflow-of-init-design)
 - [Non-Goals](#what-init-design-must-not-do)
-- [Output Format](#suggested-init-design-output-format)
-- [Quality Checklist](#quality-checklist)
 
 ## Purpose
 - This document explains how `init-design` should work as a reusable startup workflow for design.
@@ -142,6 +143,61 @@ Rules:
   - the anchor source with the strongest structural authority
   - repeated patterns across sources
   - contradictions that should be resolved explicitly instead of blended silently
+
+## Workflow Of `init-design`
+
+### Step 1. Read Project Inputs
+- Read:
+  - context docs
+  - project guidance
+  - existing schema docs
+  - existing screens
+  - token files if they exist
+
+### Step 2. Identify Starting Source-Set Type
+- classify:
+  - single-screen artifact
+  - multi-screen source set
+  - screen-plus-context
+
+### Step 3. Build Compatibility View
+- identify:
+  - entities
+  - roles
+  - states
+  - expected device usage
+  - future expansion pressure
+
+### Step 4. Evaluate Initial Source Set
+- if one or more visual artifacts exist, extract:
+  - tone
+  - hierarchy
+  - navigation assumptions
+  - layout density
+  - list/detail/edit implications
+
+### Step 5. Convert Artifact Into Constitution
+- write:
+  - design DNA
+  - visual principles
+  - anti-principles
+  - token draft
+  - semantic draft
+  - layout rules
+  - component rules
+
+### Step 6. Write Outputs To Project Docs
+- Default output locations:
+  - `./docs/policies/design/design-constitution.md`
+  - `./docs/policies/design/design-document-governance.md`
+- If the project already uses another established design-doc folder, follow that local convention instead of creating a second parallel location.
+- If `DESIGN.md` or another creative-source doc exists, wire that actual file into the governance output instead of leaving the source unnamed.
+
+### Step 7. Add Guardrails
+- explicitly define:
+  - what may not change casually
+  - what requires versioning
+  - what AI should not invent
 
 ## Source-Set Extraction Rules
 Use these rules as general extraction guidance. They are heuristic, not parser-level guarantees.
@@ -382,6 +438,8 @@ Use these rules as general extraction guidance. They are heuristic, not parser-l
 - If the starting input only supports one or two families, record only those.
 - If more families are already clearly required, record them.
 - Put durable screen families in the constitution.
+- Treat list, detail, and create/edit as common examples, not mandatory slots.
+- The selected family set is stable only when shared tokens, layout rules, and components can support it without page-specific visual invention.
 
 ## How Each Property Should Be Defined
 
@@ -480,32 +538,13 @@ Use these rules as general extraction guidance. They are heuristic, not parser-l
 ### Primitive Tokens
 - Primitive tokens are raw constants.
 - They should not know what a card or topbar is.
-- Example:
-```css
-:root {
-  --color-primary: #144bb8;
-  --color-bg-light: #fdfcf9;
-  --color-text-strong: #111827;
-  --radius-md: 12px;
-  --space-4: 16px;
-}
-```
+- Use [Concrete Token Example](#concrete-token-example) for the complete raw-token example.
 
 ### Semantic Tokens
 - Semantic tokens describe role, not raw value.
 - They should answer:
   - what this value is used for in the product
-- Example:
-```css
-:root {
-  --page-bg: var(--color-bg-light);
-  --page-heading: var(--color-text-strong);
-  --surface-card: var(--color-surface-light);
-  --interactive-primary-bg: var(--color-primary);
-  --radius-card: var(--radius-md);
-  --radius-panel: var(--radius-lg);
-}
-```
+- Use [Concrete Token Example](#concrete-token-example) for the complete role-mapping example.
 
 ### Layout Rules
 - Layout rules decide where structure lives.
@@ -533,7 +572,7 @@ Use these rules as general extraction guidance. They are heuristic, not parser-l
   - primary button uses primary accent, bold label, modest lift
   - ghost button uses soft border and quiet surface
 
-## Concrete Example Using This Repo
+## Concrete Token Example
 
 ### Primitive Token Example
 - Example:
@@ -612,119 +651,10 @@ Use these rules as general extraction guidance. They are heuristic, not parser-l
 - Rule:
   - components should use only approved distances
 
-## Workflow Of `init-design`
-
-### Step 1. Read Project Inputs
-- Read:
-  - context docs
-  - project guidance
-  - existing schema docs
-  - existing screens
-  - token files if they exist
-
-### Step 2. Identify Starting Source-Set Type
-- classify:
-  - single-screen artifact
-  - multi-screen source set
-  - screen-plus-context
-
-### Step 3. Build Compatibility View
-- identify:
-  - entities
-  - roles
-  - states
-  - expected device usage
-  - future expansion pressure
-
-### Step 4. Evaluate Initial Source Set
-- if one or more visual artifacts exist, extract:
-  - tone
-  - hierarchy
-  - navigation assumptions
-  - layout density
-  - list/detail/edit implications
-
-### Step 5. Convert Artifact Into Constitution
-- write:
-  - design DNA
-  - visual principles
-  - anti-principles
-  - token draft
-  - semantic draft
-  - layout rules
-  - component rules
-
-### Step 6. Write Outputs To Project Docs
-- Default output locations:
-  - `./docs/policies/design/design-constitution.md`
-  - `./docs/policies/design/design-document-governance.md`
-- If the project already uses another established design-doc folder, follow that local convention instead of creating a second parallel location.
-- If `DESIGN.md` or another creative-source doc exists, wire that actual file into the governance output instead of leaving the source unnamed.
-
-### Step 7. Add Guardrails
-- explicitly define:
-  - what may not change casually
-  - what requires versioning
-  - what AI should not invent
-
 ## What `init-design` Must Not Do
 - It must not create many screens before defining rules
 - It must not treat one AI-generated page as final truth
 - It must not ignore roles, states, and validation constraints
 - It must not recommend visual changes without explaining system impact
 - It must not optimize implementation style before design boundaries are clear
-
-## First 3-Screen Rule
-- Every project should stabilize around:
-  - entry/list screen
-  - detail/read screen
-  - create/edit screen
-- Reason:
-  - if the same design system can support these three, it usually has real reuse potential
-
-## What To Lock Early
-- color hierarchy
-- typography hierarchy
-- spacing categories
-- radius scale
-- shell structure
-- navigation model
-- state model
-- component naming
-
-## What To Delay
-- complex animation systems
-- large screen counts
-- rare feature variants
-- decorative experimentation
-- new accent colors
-
-## Suggested `init-design` Output Format
-- `Summary`
-- `Starting Artifact`
-- `Compatibility Constraints`
-- `Design DNA`
-- `Primitive Tokens`
-- `Semantic Tokens`
-- `Layout Rules`
-- `Core Components`
-- `First 3 Screens`
-- `Known Risks`
-- `Next Actions`
-
-## Quality Checklist
-- Can a new screen be built without inventing a new color?
-- Can a new screen be built without inventing a new radius?
-- Do backend states map to UI states?
-- Do roles map to navigation or action differences?
-- Can AI be instructed to reuse the system instead of creating new tone?
-- If the product changes, is there a place to update the constitution first?
-
-## Simple Success Test
-- After a long break, you should be able to reopen the project and answer:
-  - what kind of product this is
-  - what kind of UI tone it has
-  - which values are locked
-  - which components already exist
-  - what should be built next
-- If not, the `init-design` workflow is still incomplete.
+- It must not add complex animation systems, rare variants, decorative experiments, or new accent families before the core system is stable

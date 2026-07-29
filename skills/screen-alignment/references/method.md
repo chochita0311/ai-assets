@@ -4,6 +4,7 @@
 
 - [Goal](#goal)
 - [Select The Mode](#step-0-select-the-mode)
+- [Mode Input And Outcome Contracts](#mode-input-and-outcome-contracts)
 - [Read Constitution First](#step-1-read-constitution-first)
 - [Compatibility Judgment](#step-15-compatibility-judgment)
 - [Collect Rendered Reference Surface](#step-2-collect-rendered-reference-surface)
@@ -73,6 +74,62 @@ If work mixes intents, run in order:
 2. extend under constitution
 
 If no honest alignment/adaptation path exists, stop and mark `reframe`.
+
+## Mode Input And Outcome Contracts
+
+### `match`
+
+Inputs:
+
+- current screen
+- target screen
+- constitution, if it exists
+- user screenshots or marked comparisons, when available
+
+Expected outcome:
+
+- current screen reads materially closer to target
+- constitutional rules remain honored
+
+### `adapt`
+
+Inputs:
+
+- current screen
+- target screen
+- constitution
+- explicit preservation constraints
+- related family screens when useful
+
+Expected outcome:
+
+- target direction is borrowed intentionally without replacing current product truth
+- current content instances, sourcing model, supported behavior, and screen family remain honest
+- target-only fields, controls, interactions, and workflows remain excluded unless the current repo supports them
+- current content changes only when the user explicitly requests rewriting or another dataset
+
+### `extend`
+
+Inputs:
+
+- current screen
+- constitution
+- related family screens
+- user direction for the new area or behavior
+
+Expected outcome:
+
+- new or revised areas read as native to the existing system
+- no foreign component language or visual drift is introduced
+
+### `reframe`
+
+Use when the target would materially change product framing, navigation, visual language, or constitution.
+
+Expected outcome:
+
+- stop implementation
+- reframe the task as redesign, constitution revision, or a narrower constitution-preserving adaptation
 
 ## Step 1: Read Constitution First
 
@@ -277,6 +334,18 @@ Use rendered verification, not source-only review:
 - typography, color, border, and shadow checks
 
 Automation is optional; use it when repeatability helps.
+
+### Optional Playwright MCP Setup
+
+When the environment uses Codex MCP configuration, Playwright may be configured in `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest"]
+```
+
+Use it selectively for opening current and target screens, taking comparison screenshots, checking computed styles and geometry, and confirming that narrow parity edits landed.
 
 ## Step 11: Control Caching
 

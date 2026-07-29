@@ -10,19 +10,10 @@
 ### Cross-skill
 - Decide whether there should be one shared handoff vocabulary for `docs-structuring`, `docs-shaping`, and `refine-skill`.
 - Revisit whether the repo wants a lightweight convention for cross-skill follow-up statuses such as `proposed`, `ready`, and `deferred`.
-- Evaluate whether skill-discovery docs should point to this file explicitly or keep it as a maintainer-only backlog.
 - Revisit whether every reusable skill should expose a minimal common contract surface:
   - explicit trigger boundary
   - explicit output location or output handling
   - explicit stopping point or downstream handoff
-
-### Skill-specific
-- `init-serena`:
-  - add a minimal trigger and output contract so the skill is not just a workflow stub
-  - state what must be reported back after activation, onboarding check, and initial instruction load
-- `design-plan`:
-  - add explicit source-priority guidance for constitution, current screens, and user direction
-  - add a clearer stop/handoff boundary so design planning does not drift into constitution rewriting or implementation work
 
 ## Notes
 - Keep this file concise and durable.

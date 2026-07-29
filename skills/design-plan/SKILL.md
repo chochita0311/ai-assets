@@ -21,11 +21,24 @@ Use this skill when the problem is no longer "define the design system from a ba
 
 ## Output
 - Write or update a design planning track under `./docs/plans/design/` by default.
+- Use [templates/plan.md](templates/plan.md) as the default scaffold when the repository does not already have a stronger planning format.
 - Prefer a specific descriptive file name when the repository does not already have one:
   - `design-consistency-plan.md`
   - `bx-ux-alignment-plan.md`
   - `design-reconciliation-plan.md`
 - If the repo already has an active design plan, extend it instead of creating a parallel file.
+
+## Source Priority
+Use this order unless the repository defines a stricter owner:
+1. explicit user direction for the current planning scope
+2. the current design constitution and durable design policies
+3. accepted decisions in the active design plan
+4. current rendered screens and implementation as evidence of present state
+5. cautious inference
+
+- Record an explicit user-approved exception when current direction intentionally changes durable design law.
+- Treat implementation drift as a finding to reconcile, not as authority that silently overrides the constitution.
+- If the sources conflict and the conflict changes scope or durable law, keep it open rather than resolving it by preference.
 
 ## Core Rule
 - Treat this as a planning and reconciliation workflow, not as a second constitution.
@@ -86,3 +99,4 @@ Use this skill when the problem is no longer "define the design system from a ba
 ## Handoff Rule
 - If the outcome becomes stable design law, move it into `docs/policies/design/`.
 - If the outcome remains active cleanup or rollout work, keep it in the design plan.
+- Stop after creating or updating the planning track unless the user separately asks for constitution changes or implementation.

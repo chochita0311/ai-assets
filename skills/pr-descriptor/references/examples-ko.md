@@ -21,7 +21,7 @@ Title: 선택 배송지가 없는 주문의 조회 오류 수정
 
 ## Summary
 
-선택 배송지가 없는 주문을 조회할 때 발생하던 `500` 응답을 수정했습니다. 배송지 유무와 관계없이 주문 상세를 반환하도록 응답 변환 로직을 보완했습니다.
+선택 배송지가 없는 주문 조회 시 발생하던 `500` 응답 수정 및 배송지 유무와 관계없이 주문 상세를 반환하도록 응답 변환 로직 보완
 
 ## Changes
 
@@ -48,7 +48,7 @@ Title: 검색 결과의 빈 상태와 키보드 탐색 개선
 
 ## Summary
 
-검색 결과가 없을 때 사용자가 다음 행동을 이해할 수 있도록 빈 상태를 추가했습니다. 키보드 사용자가 결과 카드의 현재 포커스를 식별할 수 있도록 포커스 스타일도 개선했습니다.
+검색 결과가 없을 때 다음 행동을 안내하는 빈 상태 추가 및 키보드 사용자가 현재 결과 카드를 식별할 수 있도록 포커스 스타일 개선
 
 ## Changes
 
@@ -81,7 +81,7 @@ Title: 릴리스 브랜치로 운영 배포 단계 제한
 
 ## Summary
 
-운영 배포 단계가 릴리스 브랜치에서만 실행되도록 Jenkins 조건을 강화했습니다. Pull request와 일반 브랜치 빌드가 운영 배포 스크립트에 진입하지 않도록 실행 경로를 분리했습니다.
+운영 배포 단계를 릴리스 브랜치로 제한하도록 Jenkins 조건 강화 및 pull request와 일반 브랜치 빌드의 운영 배포 스크립트 진입 차단
 
 ## Changes
 
@@ -114,7 +114,7 @@ Title: 애플리케이션 서브넷의 NAT gateway 구성 분리
 
 ## Summary
 
-애플리케이션 서브넷의 외부 통신을 전용 NAT gateway로 분리했습니다. 공유 gateway 장애의 영향 범위를 줄이고 환경별 네트워크 구성을 독립적으로 관리하기 위한 변경입니다.
+애플리케이션 서브넷의 외부 통신을 전용 NAT gateway로 분리해 공유 gateway 장애의 영향 범위 축소 및 환경별 네트워크 구성의 독립 관리
 
 ## Changes
 
@@ -149,7 +149,7 @@ Title: 주문 처리 채널 컬럼과 단계적 backfill 추가
 
 ## Summary
 
-주문 생성 경로를 식별할 수 있도록 `order_channel` 컬럼을 추가했습니다. 기존 데이터와 배포 중인 애플리케이션의 호환성을 유지하도록 nullable 컬럼 추가, 애플리케이션 배포, backfill 순서로 적용합니다.
+주문 생성 경로 식별을 위한 `order_channel` 컬럼 추가 및 기존 데이터와 배포 중인 애플리케이션의 호환성을 유지하도록 nullable 컬럼, 애플리케이션, backfill 순서로 단계적 적용
 
 ## Changes
 
@@ -188,7 +188,7 @@ Title: HTTP client retry 설정 API 통합
 
 ## Summary
 
-분산된 retry 인자를 `RetryPolicy` 설정 객체로 통합했습니다. 기존 overload는 호환성을 위해 유지하면서 신규 소비자가 일관된 retry 설정을 사용하도록 API를 정리했습니다.
+분산된 retry 인자를 `RetryPolicy` 설정 객체로 통합하고 기존 overload 호환성을 유지하면서 신규 소비자의 retry 설정 경로 정리
 
 ## Changes
 
@@ -222,7 +222,7 @@ Title: SSO 전환과 운영 logging 및 browser dependency 보안 개선
 
 ## Summary
 
-SAFE 요구사항에 대응하기 위해 기존 LDAP 인증을 SSO로 전환하고 운영 logging 경로를 구조화했습니다. 취약한 browser dependency를 교체하고 관련 출력 처리를 보완해 인증과 web 보안 변경을 함께 적용합니다.
+SAFE 요구사항 대응을 위한 LDAP 인증의 SSO 전환, 운영 logging 경로 구조화, 취약한 browser dependency 교체 및 관련 출력 처리 보완
 
 ## Changes
 
