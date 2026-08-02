@@ -37,6 +37,7 @@
 - Judge evidence coverage against the evidence required by the approved feature, active spec, and selected execution profile rather than against every theoretically possible environment.
 - Do not invent compound result labels such as `PASS WITH BROWSER GAP`; record `Result: PASS`, `Evidence Coverage: partial`, and name the unverified claims instead.
 - Partial or unavailable evidence does not automatically convert a result to `FAIL`, but the owning feature, active spec, or selected profile decides whether the gap blocks run or human acceptance.
+- Before classifying required rendered, runtime, interaction, migration, or integration evidence as unavailable, inspect the relevant automation and inspection capabilities actually available in the current environment. A missing preferred skill, tool, or adapter does not by itself prove that every valid evidence path is unavailable.
 - An evaluator must not describe an unobserved rendered, runtime, interaction, migration, or integration state as verified merely because source inspection or a narrower automated check passed.
 - Before terminating a run, the Orchestrator must inspect evidence gaps and their acceptance impact; keep the evaluator result unchanged when an evidence gap requires more collection or blocks acceptance.
 

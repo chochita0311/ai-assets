@@ -106,6 +106,12 @@
 - If a secondary value needs extensive qualification, provenance, coverage, state, and timestamp copy but still adds little practical value, removing it may preserve hierarchy better than explaining it more loudly.
 - Evaluators should compare information value, false-precision risk, and explanatory burden before accepting another KPI block or repeated estimate.
 
+#### Instructional Copy Entitlement And Redundancy
+
+- Persistent helper or explanatory copy should earn its place by adding a consequence, decision boundary, validation rule, recovery path, or other information not already conveyed by the field label, status, control state, bounded preview, or nearby feedback.
+- When a heading, badge, helper, preview, and validation region repeat the same fact, keep one clear owning explanation instead of distributing near-equivalent prose across the task. Optional setup should not appear required merely because its explanation is louder or repeated more often than the primary action; use the consuming repo's `interaction-evaluation.md` section `Optional Setup Must Not Become A Prerequisite` as the canonical interaction contract for required fields, validation, submission, and success conditions.
+- When copy is removed, evaluators should confirm that required labels, errors, recovery guidance, and accessibility semantics remain discoverable and that the layout closes the vacated space without leaving a dead band or breaking responsive rhythm.
+
 #### Adjacent Metric Denominator Clarity
 
 - Adjacent totals, costs, counts, and activity metrics may legitimately use different eligible populations, but the layout and labels must not imply that they reconcile one-to-one.
@@ -182,6 +188,7 @@
 - When a control must match a reference, compare text-relative padding, content width, selected-surface bounds, and indicator position in addition to the outer width and height.
 - Equal outer tracks can still fail parity when labels have different lengths or the reference sizes segments from their content.
 - Evaluators should test short and long labels and measure the selected geometry rather than inferring parity from one shared minimum width.
+- For controls with a disclosure indicator, including native selects, measure the selected-text reserve, indicator bounds, and indicator-to-edge inset as separate relationships. Verify that one indicator remains legible without duplication and that focus, disabled, invalid, compact, narrow, and touch states preserve the intended alignment.
 
 #### Conditional Topbar Affordance Parity
 
@@ -262,6 +269,7 @@
 
 - Claims about geometry, overflow, contrast, selection visibility, focus, or responsive composition should use rendered evidence when those properties cannot be established from source inspection alone.
 - Broad screen-family work should sample the consuming product's supported viewport boundaries and representative long-content, empty, unavailable, error, and active-interaction states. Exact widths and required states belong to the consuming product's contract.
+- Record the effective viewport rendered by the page rather than assuming that a requested window size was applied exactly. Browser minimum-window constraints, device-pixel ratio, zoom, or tool clamping can change the observed width; use viewport or device emulation when needed to reach a required minimum boundary.
 - Use synthetic or explicitly approved content when captures, fixtures, or audit artifacts could otherwise expose private runtime data.
 - If the required rendered evidence cannot be collected, record the evidence gap explicitly and do not describe unobserved runtime behavior as a verified pass. The owning feature, active spec, or selected profile decides whether that gap blocks acceptance.
 

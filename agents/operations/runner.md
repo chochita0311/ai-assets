@@ -297,7 +297,6 @@ Inputs:
 
 Task:
 Check clarity and friction within the approved scope.
-Use browser automation or runtime inspection tools when available.
 Record non-blocking suggestions separately from blocking failures.
 Write to:
 - docs/plans/evaluation/eval-####-ux-slug.md

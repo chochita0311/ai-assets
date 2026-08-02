@@ -19,7 +19,11 @@
 - If a relevant local skill is installed, use it before ad hoc evaluation.
 - Recommended example:
   - use `screen-alignment` when golden-source comparison or visual parity is part of the acceptance contract
-- If the skill is not installed in the current environment, continue as a normal role and evaluate from the available sources directly.
+- If a recommended local skill is unavailable, continue with the sources and tools that are available.
+- When rendered claims are in scope, prefer an appropriate available browser tool over pure source reasoning for live geometry, state, and responsive checks.
+- Common examples when installed:
+  - use Playwright-compatible tooling to render and capture approved user-flow and interaction states that affect the visual contract
+  - use Chrome DevTools-compatible tooling for runtime layout, computed-style, viewport, and accessibility-tree inspection
 
 ## Core Rules
 - Evaluate against the approved feature and source set, not personal taste.

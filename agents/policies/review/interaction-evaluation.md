@@ -169,6 +169,12 @@
 - Prerequisite creation should be atomic with the initiating local action. Validation failure must retain correctable input and leave no partial identity, while an intentionally unbound or local-only result must state that it is not yet ready for remote execution.
 - Evaluators should test zero, one, and multiple prerequisite matches, target changes after downstream selection, optional later binding, invalid input, late failure rollback, direct entry, and the server-executable path when JavaScript is unavailable.
 
+#### Optional Setup Must Not Become A Prerequisite
+
+- Before applying a prerequisite-recovery pattern, establish whether the primary user task actually requires the connection, account, provider, executor, or other setup. A locator, import, draft, local save, or preview may remain valid without remote access even when a later task needs it.
+- Optional setup should remain a distinct secondary task and must not participate in the primary action's required fields, validation, submission, or success condition. Copy, status badges, grouping, and visual emphasis should not imply that the primary task is incomplete when the optional setup is absent.
+- Responsive composition should preserve primary-task-first reading and focus order when the tasks move from adjacent regions into a stack. Evaluators should test the primary task with zero configuration, later binding, independent validation failure, direct entry, and successful completion without unintended remote work or placeholder configuration.
+
 #### Single Execution-Path Ownership
 
 - One user task at one lifecycle stage should normally have one primary initiation action.
