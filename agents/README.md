@@ -36,7 +36,12 @@
 - [agents/profiles/infra-devtool.md](profiles/infra-devtool.md): infrastructure, tooling, scripts, CI, and local workflow work
 - [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
+## Runtime Adapters Package
+- [agents/adapters/codex/README.md](adapters/codex/README.md): install the shared competence-first delegation policy and named worker bindings into a personal Codex runtime
+- Keep portable delegation policy outside adapters; adapters own only platform-specific fragments, concrete model bindings, and installation guidance.
+
 ## Related Shared Docs
+- [agents/policies/harness/competence-first-delegation.md](policies/harness/competence-first-delegation.md): platform-neutral admission, capability, fallback, context-transfer, and final-ownership rules for delegated work
 - [agents/policies/harness/prd-feature-management.md](policies/harness/prd-feature-management.md): planning-governance rule for PRDs, features, approval, and traceability
 - [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
 - [agents/policies/harness/execution-profiles.md](policies/harness/execution-profiles.md): profile selection, surface-lane, and evaluator routing rules

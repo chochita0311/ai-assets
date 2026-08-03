@@ -3,6 +3,7 @@
 ## Purpose
 - Explain how to adopt this shared harness package into a consuming repo.
 - Keep the export pattern repeatable without turning the package into repo-specific automation.
+- Keep personal Codex runtime installation separate; use [adapters/codex/README.md](adapters/codex/README.md) for global Codex policy and custom-agent bindings.
 
 ## When To Use This Guide
 - A consuming repo does not yet have the harness package.

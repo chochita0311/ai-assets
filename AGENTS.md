@@ -9,6 +9,7 @@
 ## Codebase Map
 - Scan the repo root before assuming structure.
 - [agents/](agents/) holds reusable harness roles, flows, operations, profiles, policies, and templates.
+- [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installable policy fragments derived from shared policy.
 - [agents/templates/](agents/templates/) holds shared planning and execution templates for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
 - [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets.
@@ -23,6 +24,7 @@
 - Keep `AGENTS.md` short and operational.
 - Keep [README.md](README.md) as the overview and navigation doc for humans entering the repo.
 - Keep shared harness and evaluation governance under [agents/policies/](agents/policies/) rather than scattering it across role files.
+- Keep platform-neutral delegation rules under [agents/policies/](agents/policies/) and concrete runtime model bindings under [agents/adapters/](agents/adapters/).
 - Keep the repository-wide skill acceptance bar in [Skill Quality Guide](skills/SKILL-QUALITY.md).
 - Let each skill package own its own domain instructions; do not duplicate skill-local rules in `AGENTS.md`.
 

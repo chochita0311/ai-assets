@@ -4,7 +4,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
-- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, and execution templates
+- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, runtime adapters, and execution templates
 - [agents/policies/](agents/policies/): reusable harness governance and evaluation assets shared with the agent package
 - [pets/](pets/): reusable Codex-compatible pet packages and runtime assets
 
