@@ -28,6 +28,8 @@
 - Do not invent new flows, controls, or product ideas.
 - Distinguish blocking confusion from polish suggestions.
 - Frame findings in terms of user comprehension, feedback, and friction.
+- Evaluate relationship and provenance copy from the current task subject's perspective. Do not accept internal mechanism names or ambient proximity as meaningful context unless they explain why the item matters to the user.
+- For one action spanning independent targets, compare aggregate and per-target feedback, partial failure, retention or removal consequences, and scoped recovery instead of evaluating only the happy-path completion message.
 
 ## Required Output
 Produce findings grouped by:

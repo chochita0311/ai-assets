@@ -154,6 +154,13 @@
 - Defaults should be inspectable and overridable before submission. Page load, ordinary browse, search, setup, or preview must not silently become execution merely because the required dependency is available.
 - Evaluators should test preview with execution ready and unavailable, positive target data, zero targets, limit boundaries, partial failure, selected-only retry, and no-script fallback where progressive enhancement is part of the contract.
 
+#### Multi-Target Action Outcome Legibility
+
+- When one action operates across independent sources, accounts, targets, or partitions, preserve a distinct outcome for each target and an honest aggregate result. An overall success message must not hide a skipped or failed target, and one failure must not visually erase completed peers.
+- Distinguish `not attempted`, `unavailable or invalid configuration`, `completed with zero results`, and `completed with removals` when those states have different consequences. If prior indexed or saved data is retained after a readiness failure, say so at the point of feedback so the user does not infer silent deletion.
+- Retry, reload, and recovery guidance should stay scoped to the failed target or clearly state when the only available action repeats the whole batch. Preserve the user's current filter, source selection, and readable successful results while recovery is pending.
+- Evaluators should exercise all-success, partial-success, all-failed, missing or invalid target, valid empty target, and successful reconciliation states when they belong to the approved contract. Confirm both the visible summary and the per-target consequence.
+
 #### Effective Execution Input Confirmation
 
 - When a product offers pre-execution confirmation for a command, job, or mutation, show the effective base request, user-supplied additions, executable invocation, and relevant input-channel boundaries such as arguments, standard input, environment, or files at the level needed for an informed decision.

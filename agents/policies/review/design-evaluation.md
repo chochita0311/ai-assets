@@ -73,6 +73,14 @@
 - Commands, code, schemas, diagrams, traces, and similarly wide technical assets must remain inside a bounded presentation region rather than widening the outer document.
 - Choose the internal scrolling axis from the content shape, and keep the asset's label, purpose, and any essential instruction or action readable without requiring the user to traverse the full overflow region first.
 - Evaluators should exercise representative maximum-length content at supported viewport boundaries and verify both that the asset remains keyboard- and touch-reachable without hover dependence and that the outer document does not acquire unintended overflow.
+- Locate overflow ownership at the document, outer surface, reading body, generated wrapper, and leaf asset. Intentional horizontal overflow should belong to one bounded local owner; an equal document `clientWidth` and `scrollWidth` alone does not prove that intermediate cards or transformed leaves are contained.
+
+#### Content-Triggered Rendering Evidence
+
+- Technical prose, logs, paths, identifiers, URLs, stack traces, and code-like output must remain literal unless they unambiguously match an approved rich-content syntax. A punctuation pair such as dollar signs, brackets, backticks, angle brackets, or underscores must not silently convert unrelated text into math, links, emphasis, or another semantic element.
+- A generic long string or lorem-ipsum fixture is not equivalent evidence for a content-triggered defect. Preserve the reported trigger's structural shape in a privacy-safe witness, including the relevant punctuation, indentation, line breaks, nesting, and unbroken-token behavior.
+- Inspect the produced semantic DOM as well as the screenshot. Unexpected `math`, anchor, `pre`, `code`, table, or other generated elements can change sizing and accessibility even when the visible text initially looks plausible.
+- After a correction, retain a deterministic regression at the lowest shared renderer or component that owns the trigger and render at least one representative consumer when the failure depends on browser layout.
 
 #### Technical Canvas Control And Fallback Legibility
 
@@ -130,6 +138,19 @@
 - Cached or last-known external facts must not visually imply a live read. Local notes or classifications must not look provider-owned, and evidence or execution status must not compete with the primary record as if it were current source content.
 - A related or contextual item should state why it appears and where it came from; global proximity or recency alone should not look like an explained relationship.
 - Evaluators should inspect fully populated, partially available, stale, failed, and secondary-panel error states together. Headings, provenance, timestamps, relationship reasons, status copy, and explicit external-navigation or refresh actions should make each authority and its update path understandable without relying on color alone.
+
+#### Subject-Relative Relationship Evidence
+
+- A relationship label should describe the observed evidence from the current record's perspective, not reuse an external resource title, transport name, parser label, or storage relation merely because that value is available.
+- Distinguish direct evidence such as mention, lookup, attachment, or explicit reference from ambient coincidence such as a shared folder, workspace, tenant, or recent activity. Weak proximity should be omitted when it adds volume without helping the current task.
+- Failed attempts may remain useful evidence, but they should be labeled as failed rather than presented as a successful relationship or silently removed from a group whose purpose includes traceability.
+- When direct evidence is numerous, keep an intentionally bounded initial slice per semantic group, preserve the true total, and provide reversible disclosure. One noisy group should not consume the visibility budget of another.
+
+#### Source Identity Cue Propagation And Redundancy
+
+- A stable source identity should produce the same compact cue across inventory rows, pinned or saved views, detail headers, and parent-owned child rows. Derived child presentation should follow the owning record's source instead of falling back to a provider-wide default.
+- Compact lettermarks, icons, and color accents require an accessible text identity; color alone must not distinguish sources that otherwise share a parser or visual family.
+- Do not repeat a full provider or source label in every card, heading, badge, and child row when one nearby cue already establishes identity. Evaluators should remove redundant visible copy only after confirming that direct entry, mixed-source lists, assistive output, and narrow layouts remain understandable.
 
 #### Independent State-Axis Legibility
 

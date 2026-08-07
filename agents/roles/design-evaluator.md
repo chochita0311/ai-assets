@@ -32,6 +32,8 @@
 - Report concrete mismatches with enough detail for targeted fixes.
 - Compare internal geometry such as text insets, indicator bounds, and content-relative padding when parity is required; matching only the outer control size is insufficient.
 - Use rendered evidence for geometry, overflow, focus, contrast, and responsive claims that source inspection cannot establish. Record partial evidence instead of claiming an unobserved visual pass.
+- For content-dependent rendering failures, reproduce a privacy-safe structural witness of the reported trigger instead of substituting generic long content. Inspect generated DOM semantics and overflow ownership from the document through intermediate containers to the leaf asset.
+- When source identity or another inherited cue appears on several surfaces, compare list, saved or pinned, direct-detail, and parent-owned child presentation before accepting a shared-owner fix; remove repeated visible labels only when orientation and accessible identity remain intact.
 
 ## Blocking Layout Integrity Checks
 - Treat these as blocking failures, not optional polish:

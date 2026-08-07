@@ -26,6 +26,9 @@
 - Environments checked: source inspection, automated tests, fresh isolated runtime, active long-running runtime, rendered browser, or another relevant surface.
 - Record only directly observed evidence and identify synthetic fixtures or approved runtime data boundaries.
 - Record whether each reported exemplar is instance-specific or exercises a shared renderer, component, token, control, or state owner; for shared owners, name the representative peer consumers or equivalent scopes checked.
+- For a content-triggered presentation defect, record the privacy-safe witness shape, generated semantic DOM, overflow owner at relevant container levels, and the deterministic regression retained at the shared owner. Generic long-content evidence is not a substitute when punctuation, indentation, nesting, or transformation caused the failure.
+- For inherited identity cues, record the cross-surface states checked, including direct entry and parent-owned child presentation when applicable.
+- For multi-target actions, record the per-target states and outcomes checked, including partial outcomes and user-visible consequences when applicable.
 - For a remote, costly, destructive, or multi-target action, record preview or preflight evidence separately from execution evidence, including scope, target or operation counts, readiness gating, and any verified no-side-effect path.
 
 ## Evidence Gaps
