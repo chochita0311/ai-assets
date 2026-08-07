@@ -115,23 +115,10 @@ Route based on the first broken layer:
   - or split the feature or contract work before execution continues
 - Treat this as a warning rule, not a hard universal ban.
 
-## Feature-Type-Aware Loops
-- `foundation` feature default loop:
-  - Spec Agent
-  - Builder or contract updater
-  - Contract Evaluator
-  - Functional Evaluator only when runtime behavior also changes
-  - Fix Agent
-  - re-evaluate
-- `product` feature default loop:
-  - Spec Agent
-  - Builder
-  - Contract Evaluator when contracts, generated artifacts, source-of-truth ownership, or integration boundaries matter
-  - Design Evaluator when visual surfaces matter
-  - Functional Evaluator
-  - UX Heuristic Evaluator as side-channel
-  - Fix Agent
-  - re-evaluate
+## Profile-Aware Loop Assembly
+- Use the consuming repo's execution-profile policy as the single owner for profile selection, surface lanes, and evaluator routing.
+- Once the evaluator set is selected, apply this policy's result, evidence-gap, return, and termination rules to every report.
+- Record any run-specific evaluator addition or omission in the active run artifact instead of changing the shared matrix locally.
 
 ## Heuristic Side-Channel Rule
 - `UX Heuristic Evaluator` is a signal emitter, not a default blocking gate.

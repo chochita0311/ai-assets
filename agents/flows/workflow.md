@@ -136,23 +136,12 @@ Process:
 
 ## Execution Loop Guidance
 - `Orchestrator` should keep only one feature in active loop unless the human owner explicitly opts into parallel execution.
-- `Orchestrator` should choose one execution profile for the run and declare surface lanes when the feature spans multiple surfaces.
+- Select the execution profile, surface lanes, and evaluator set through the consuming repo's execution-profile policy; this flow does not redefine that matrix.
 - `Spec Agent` is the first execution role and should create one spec per active feature.
 - `Builder` should work from the active spec, not directly from rough feature prose.
-- Use only the evaluators needed by the feature:
-  - `foundation` features usually need contract evaluation, with functional evaluation only when runtime behavior also changes
-  - product features with contract surfaces need contract evaluation
-  - design-sensitive product features may need design, functional, and heuristic evaluation
 - `Fix Agent` should consume findings from the active evaluator set and preserve the same feature boundary.
-- If any evaluator finds what is really a planning or spec gap, report that result for post-run human routing instead of normalizing the gap as a defect.
-- If execution changes a source-of-truth contract, identity model, or generated-data contract, add a stale-assumption check before closing the run.
-- `UX Heuristic Evaluator` should operate as a side-channel by default:
-  - `PASS WITH SUGGESTIONS` does not block the loop
-  - only severe blocking UX contradictions should stop execution
-- Every blocking finding should be classified as:
-  - implementation bug
-  - spec gap
-  - planning gap
+- Classify evidence gaps, failures, and return paths through the consuming repo's execution-loop governance policy instead of restating those rules here.
+- Apply the execution-loop governance policy's post-contract regression check before closing a run when its stated boundary applies.
 
 ## Example Variations
 - Planning-only:
