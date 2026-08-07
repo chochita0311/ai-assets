@@ -1,0 +1,7 @@
+interface:
+  display_name: "Maintain Context Freshness"
+  short_description: "Audit and safely maintain context over time"
+  default_prompt: "Use $maintain-context-freshness to audit this context against current evidence, separate current state from history, and propose safe cleanup without deleting unique information."
+
+policy:
+  allow_implicit_invocation: true
