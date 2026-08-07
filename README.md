@@ -19,6 +19,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - [design-plan](skills/design-plan/SKILL.md): plan multi-screen design consistency and reconciliation work
 - [docs-shaping](skills/docs-shaping/SKILL.md): reshape document composition while preserving meaning
 - [docs-structuring](skills/docs-structuring/SKILL.md): organize layered repository documentation and ownership
+- [gh-review-pr](skills/gh-review-pr/SKILL.md): review, draft, audit, refresh, or publish frozen-snapshot GitHub PR reviews with verified inline threads
 - [init-design](skills/init-design/SKILL.md): derive a durable design constitution from an initial source set
 - [pr-descriptor](skills/pr-descriptor/SKILL.md): create evidence-based pull request titles and descriptions
 - [refactor-plan](skills/refactor-plan/SKILL.md): plan bounded refactors with parity and merge-safety gates

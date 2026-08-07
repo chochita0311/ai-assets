@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub PR Reviewer"
+  short_description: "Review and safely publish GitHub PR feedback"
+  default_prompt: "Use $gh-review-pr to review a GitHub pull request from a frozen base/head snapshot and publish one concise summary with verified inline threads."
