@@ -143,6 +143,8 @@
 - Prefer strengthening existing criteria over adding parallel categories that say nearly the same thing.
 - Prefer adding one reusable rule after repeated evidence instead of front-loading speculative governance.
 - When a new criterion is added, make sure it can be checked from skill files or realistic outputs rather than conversation memory alone.
+- Keep this guide as one document unless growth creates a concrete navigation or ownership problem; do not split it only for symmetry with skill packages.
+- Record unresolved repository-wide and package-specific improvement work in [skill-followups.md](skill-followups.md) instead of keeping a second backlog here.
 
 ## Common Failure Patterns
 - The body contains detailed `When To Use` guidance, but the frontmatter `description` is too vague to trigger the skill correctly.
@@ -196,12 +198,6 @@ Mark every applicable gate `yes` or `no`. Mark a gate `not applicable` only with
 - Were only approved installation targets updated and compared with the canonical source afterward?
 - Are target-specific differences and running-session cache limits stated instead of hidden?
 - Would the same skill still make sense in another repository of the intended class?
-
-## Suggested-Only Follow-Ups
-- Decide whether every reusable package should require `agents/openai.yaml`; it remains optional until supported target requirements justify a repository-wide mandate.
-- Consider a dedicated skill adoption guide or automated sync tooling only after canonical-source transitions, target-specific file rules, and deletion behavior are agreed.
-- Consider a shared benchmark suite only after comparable task corpora and risk-based forward-test thresholds exist.
-- Keep this guide as one document unless growth creates a concrete navigation or ownership problem; do not split it only for symmetry with skill packages.
 
 ## Practical Summary
 - A good skill is reusable.

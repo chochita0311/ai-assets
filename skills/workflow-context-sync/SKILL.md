@@ -1,6 +1,6 @@
 ---
 name: workflow-context-sync
-description: Reconcile and maintain explicitly located workflow context across repositories, tickets, docs, notes, and runtime signals, while deciding whether the result should remain session-only, update an existing target, or be proposed for new persistence. Use when work spans multiple sources, source-of-truth conflicts or cross-session drift must be resolved, an existing local context target should be refreshed, or duplicate temporary contexts need consolidation without guessing a storage path from the current working directory.
+description: Reconcile and maintain workflow context across repositories, tickets, docs, notes, and runtime signals while resolving canonical targets, persistence disposition, cross-session handoff, source-of-truth conflicts, or duplicate context locations. Use when work spans multiple sources or locations and the context target, durability, or handoff must be coordinated without guessing a storage path from the current working directory. Do not use when the target and durability are already resolved and the task is limited to claim-level temporal correctness, lifecycle classification, or safe historical cleanup.
 ---
 
 # Workflow Context Sync
@@ -12,7 +12,7 @@ Preserve automatic source-integration behavior while separating invocation autho
 ## Use This Skill When
 
 - several repos, tickets, docs, notes, runbooks, or runtime signals must be reconciled
-- an existing local context document or document set should be refreshed
+- an existing local context target must be refreshed as part of multi-source reconciliation or cross-session handoff
 - source-of-truth conflicts or stale assumptions must be made explicit
 - a workflow needs a restart-ready handoff across sessions
 - duplicate or misplaced context files need to be consolidated into a chosen target
@@ -22,6 +22,7 @@ Do not use this skill when:
 - the user only wants to capture a standalone memo or rough note
 - one source can answer the task without reconciliation or cross-session maintenance
 - the task only needs an answer from already available context and no reconciliation or maintenance is needed
+- the target and durability are already resolved and the task is limited to claim-level temporal correctness, lifecycle classification, or safe historical cleanup
 
 ## Invocation And Persistence Boundary
 

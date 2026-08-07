@@ -1,6 +1,6 @@
 interface:
   display_name: "Workflow Context Sync"
   short_description: "Reconcile context across repos, tickets, docs, and runtime"
-  default_prompt: "Use $workflow-context-sync to reconcile code, tickets, docs, notes, and runtime signals, state whether session-only handling or persistence is appropriate, and ask for approval before initializing any new context artifact."
+  default_prompt: "Use $workflow-context-sync to resolve and reconcile canonical workflow context across code, tickets, docs, notes, and runtime signals, state whether session-only handling or persistence is appropriate, and ask for approval before initializing any new context artifact."
 policy:
   allow_implicit_invocation: true
