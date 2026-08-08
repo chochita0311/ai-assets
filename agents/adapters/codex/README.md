@@ -4,13 +4,16 @@
 - Adapt the shared competence-first delegation policy to a personal Codex runtime.
 - Keep stable role names separate from replaceable model bindings.
 - Provide installable custom-agent files and a model-neutral managed section for the global Codex `AGENTS.md`.
+- Provide an optional operator-context recognition hook without moving repo-local continuity policy into the personal runtime.
 - Provide a root-only, read-only lifecycle audit and a terminal-native weekly runner without making the audit a source of replacement authority.
 
 ## Ownership
 - [Competence-First Delegation](../../policies/harness/competence-first-delegation.md) owns the platform-neutral policy.
+- [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md) owns detailed continuity triggers, output semantics, and non-interference rules.
+- [Operator Briefing Template](../../templates/operator-briefing.md) owns the non-persistent response scaffold.
 - [custom-agents/](custom-agents/) owns the canonical Codex custom-agent files and their concrete model bindings.
 - [profiles/](profiles/) owns canonical non-interactive root-agent profiles and their concrete model bindings.
-- [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy section.
+- [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks; it recognizes operator-context triggers but does not own or install the detailed policy.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
 - [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) and [the LaunchAgent plist](launchd/com.jungcho.codex-model-binding-audit.plist) own the canonical terminal runner and macOS schedule definition. Installed runtime links do not become parallel sources of truth.
 - A target under `~/.codex/` or another explicitly selected Codex home is an installed runtime view, not a parallel source of truth.
@@ -58,6 +61,8 @@ Do not replace the whole global `AGENTS.md` or `config.toml`; they may own unrel
 
 The audit runner executes from its canonical path under `scripts/`; it is not copied into a runtime home.
 
+This mapping installs personal runtime assets only. It does not export the shared operator policy or template into a consuming repo. Follow [Agent System Adoption Guide](../../ADOPTION-GUIDE.md) for that repository-local installation.
+
 ## Model Binding Lifecycle
 
 The `model` value in each custom-agent or root-profile TOML is the sole canonical binding for that role. The global `AGENTS.md` section intentionally contains no concrete model names or binding table; it routes by stable worker role and competence constraints instead.
@@ -92,7 +97,7 @@ This package does not install itself automatically. Installation changes persona
 
 For an approved installation:
 
-1. Merge the content between the managed section's markers into each distinct target `AGENTS.md`. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
+1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat the competence-routing and operator-context blocks as independent managed regions. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
 2. Create the target `agents/` directory when absent.
 3. Create one symlink per named TOML from the target `agents/` directory to the canonical file under this adapter.
 4. Create one profile symlink from each approved Codex home to the canonical audit profile.
@@ -138,3 +143,11 @@ Do not add an automatically invoked code-writing worker until real runs show tha
 - Add an optional Codex config fragment only when a shared concurrency or hook rule has been proven necessary.
 - Add a sync script only after merge behavior for pre-existing personal files is explicitly specified and tested.
 - Keep role contracts stable when replacing model generations.
+
+## Operator Context Continuity
+
+The managed AGENTS fragment includes a low-noise operator-context recognition hook. It lets imported Codex agents notice relevant ordinary-language triggers without requiring a skill command.
+
+The hook is supported only when the current consuming repo exposes [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md). Target activation or resumption produces a Work Briefing only when prior context materially affects understanding or execution. If the policy is unavailable or no meaningful delta exists, the hook preserves the normal response without creating a substitute artifact.
+
+Install the detailed policy and template through the repository-local [Agent System Adoption Guide](../../ADOPTION-GUIDE.md), not under `~/.codex/`. The personal adapter remains an entrance-level recognition layer and never becomes a second source of continuity truth.

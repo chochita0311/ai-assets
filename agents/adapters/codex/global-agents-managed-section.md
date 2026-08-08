@@ -18,3 +18,18 @@
 - Worker output is evidence, not an implicit implementation, persistence, merge, or completion approval.
 
 <!-- ai-assets:competence-routing:end -->
+
+<!-- ai-assets:operator-context-continuity:start -->
+
+## Operator Context Continuity
+
+- The user does not need to invoke a briefing command. Detect orientation requests, new or resumed canonical targets, handoffs, planning returns, material direction changes, partial-evidence review, and meaningful completion boundaries from normal conversation.
+- When the current repo exposes the detailed operator-briefing policy, load it only after such a trigger. If no resolvable policy exists, do not synthesize a substitute or create continuity artifacts; keep the normal response unchanged.
+- On target activation or resumption, provide at most one self-contained Work Briefing for the unchanged work episode only when prior context materially affects understanding or execution. Explain the objective, causal history, current boundary, next action, and human review need without requiring the user to open links.
+- Do not repeat unchanged briefing content on same-target follow-ups. Emit a Direction Alert only for a material conflict or change.
+- Emit a Review Receipt only when direction, assumptions, open points, evidence scope, human review, blocking, handoff, or another durable continuity concern materially changed.
+- Use plain-language names before IDs, define material internal terms, and treat links as audit evidence rather than a substitute for explanation.
+- Briefings and receipts are projections only. They must not create state, alter routing or approvals, duplicate canonical facts, or create permanent artifacts solely for presentation.
+- If no relevant context or meaningful delta exists, remain silent and continue the normal response.
+
+<!-- ai-assets:operator-context-continuity:end -->

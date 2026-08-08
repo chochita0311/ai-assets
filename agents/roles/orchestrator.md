@@ -67,3 +67,11 @@ Produce or update:
 - redefining scope
 - code changes
 - evaluator-specific defect analysis
+
+## Operator Context Continuity
+
+- Apply [Operator Briefing And Review Receipts](../policies/harness/operator-briefing-and-review-receipts.md) as an additive user-facing projection.
+- Resolve the canonical target, authority, and persistence disposition before producing a briefing.
+- Emit the shortest self-contained explanation that lets the operator understand the causal context without opening linked artifacts.
+- Do not repeat a full briefing for an unchanged target, and do not emit a receipt when no meaningful direction, open-point, assumption, or review delta exists.
+- Keep routing, approvals, artifact ownership, and lifecycle state unchanged; a briefing or receipt never authorizes work or becomes a source of truth.

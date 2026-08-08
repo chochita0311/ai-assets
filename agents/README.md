@@ -37,7 +37,7 @@
 - [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
 ## Runtime Adapters Package
-- [agents/adapters/codex/README.md](adapters/codex/README.md): install the shared competence-first delegation policy and named worker bindings into a personal Codex runtime
+- [agents/adapters/codex/README.md](adapters/codex/README.md): install competence-first delegation, named worker bindings, and an optional operator-context recognition hook into a personal Codex runtime
 - Keep portable delegation policy outside adapters; adapters own only platform-specific fragments, concrete model bindings, and installation guidance.
 
 ## Related Shared Docs
@@ -46,6 +46,7 @@
 - [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
 - [agents/policies/harness/execution-profiles.md](policies/harness/execution-profiles.md): profile selection, surface-lane, and evaluator routing rules
 - [agents/policies/harness/traceability-and-link-hygiene.md](policies/harness/traceability-and-link-hygiene.md): portable path, link, and source-of-truth reference rules
+- [agents/policies/harness/operator-briefing-and-review-receipts.md](policies/harness/operator-briefing-and-review-receipts.md): low-noise operator context, lifecycle triggers, repetition limits, and non-interference rules
 - [agents/policies/review/design-evaluation.md](policies/review/design-evaluation.md): reusable visual evaluation assets
 - [agents/policies/review/interaction-evaluation.md](policies/review/interaction-evaluation.md): reusable interaction-quality evaluation assets
 - [agents/templates/prd.md](templates/prd.md): reusable PRD template
@@ -55,6 +56,13 @@
 - [agents/templates/evaluation.md](templates/evaluation.md): reusable evaluation template
 - [agents/templates/fix-log.md](templates/fix-log.md): reusable fix-log template
 - [agents/templates/heuristic-backlog.md](templates/heuristic-backlog.md): reusable heuristic backlog template
+- [agents/templates/operator-briefing.md](templates/operator-briefing.md): non-persistent response scaffolds for operator briefings, alerts, and receipts
+
+## Operator Context Continuity
+
+Long-running imported harnesses can provide automatic, low-noise user context through [Operator Briefing And Review Receipts](policies/harness/operator-briefing-and-review-receipts.md). The policy adds explanatory Work Briefings and Review Receipts at relevant target and lifecycle boundaries without adding a source of truth, workflow stage, status, or approval gate.
+
+Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persistent output scaffold. Repository-local adoption owns the detailed policy and template; the Codex adapter carries only a small recognition hook and remains silent when the current repo does not expose the policy.
 
 ## Consumer Repo Placement
 - This package is a shared source set, not a consumer repo by itself.
@@ -63,6 +71,7 @@
   - flow docs under `docs/agents/flows/`
   - operation docs under `docs/agents/operations/`
   - profile docs under `docs/agents/profiles/`
+  - non-persistent agent response scaffolds under `docs/agents/templates/`
   - PRD and execution templates under `docs/plans/`
   - governance and review assets under `docs/policies/`
 - Keep the rules for those artifacts in the consuming repo's policy layer instead of repeating them in folder README files.

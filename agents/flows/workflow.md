@@ -70,6 +70,16 @@
    - After the automated run reports its result, the human owner decides whether to accept, return to spec, or return to planning.
    - Start a new run from the corrected layer instead of treating that return as an in-progress interruption to the earlier run.
 
+## Operator Briefing Hooks
+
+The workflow may expose user-facing continuity without adding a workflow phase.
+
+- On orientation requests, explain the active destination, current position, available next work, and material blockers.
+- After canonical target resolution and before work begins, emit one target-specific Work Briefing when prior context materially affects understanding or execution.
+- During work, emit a Direction Alert only when direction, scope, evidence, safety, authority, or review obligations materially change.
+- At completion, planning return, block, handoff, or approval boundary, emit a Review Receipt only when the operator has a meaningful delta to understand.
+- Apply [Operator Briefing And Review Receipts](../policies/harness/operator-briefing-and-review-receipts.md); these hooks do not change workflow routing or state transitions.
+
 ## Role Boundaries
 - Human:
   - sets product direction
