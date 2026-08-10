@@ -164,7 +164,3 @@ Process:
   - Human -> PRD Normalizer -> Feature Planner -> Orchestrator -> Spec Agent -> Builder or contract updater -> Contract Evaluator -> Fix Agent
 - Multi-surface product loop:
   - Human -> PRD Normalizer -> Feature Planner -> Orchestrator -> Spec Agent -> ordered or parallel surface lanes -> Contract Evaluator -> needed evaluator set -> Fix Agent
-
-## Design Note
-- A single golden screen can be enough to bootstrap later work if it yields a stable design grammar.
-- If later features introduce patterns that the sources do not cover, treat them as uncertainty and request more source material instead of improvising.

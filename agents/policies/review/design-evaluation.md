@@ -177,6 +177,8 @@
 - A source artifact may guide layout direction inside the approved surface.
 - A source artifact must not justify importing new controls, data, or shell behavior that the approved feature did not include.
 - Visual borrowing is valid only inside the approved boundary.
+- A single golden screen may bootstrap later work only when it yields a stable design grammar.
+- When later features require patterns the approved sources do not cover, record the gap as uncertainty and request additional source material instead of improvising.
 
 #### Single Boundary Ownership
 
