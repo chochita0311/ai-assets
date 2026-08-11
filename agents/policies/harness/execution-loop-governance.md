@@ -20,7 +20,7 @@
 - In a consuming repo, `docs/plans/heuristic/` owns heuristic backlog records.
 
 ## Core Operating Rules
-- Only one feature should normally be `in-loop` at a time.
+- Only one feature should normally be `in-loop` at a time unless the human owner explicitly approves parallel execution.
 - Do not execute from raw planner output.
 - Do not silently expand scope during build, evaluation, or fix.
 - Every execution artifact must reference the active feature ID, active spec ID, run ID, execution profile, and relevant attempt.

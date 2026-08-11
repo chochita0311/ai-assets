@@ -29,6 +29,7 @@
 - In a consuming repo, use `docs/agents/flows/workflow.md` for the sequence model.
 - In a consuming repo, use `docs/agents/roles/orchestrator.md` for loop-control responsibilities and routing logic.
 - In a consuming repo, use `docs/policies/harness/execution-profiles.md` for profile and lane routing rules.
+- In a consuming repo, use `docs/policies/harness/execution-loop-governance.md` for run-unit boundaries, active-feature concurrency, return timing, and post-run review.
 
 ## When To Use
 - A feature document has already been approved.
@@ -39,9 +40,7 @@
 - Start execution from the approved feature and parent PRD, not from the original request.
 - Treat this document as the operator-facing execution entry guide.
 - Do not generate ad hoc startup flows per run unless the project explicitly needs them.
-- Treat one run as an automated unit.
-- Do not assume the human owner will interrupt a normal active run.
-- If the result should go back to spec or planning, report that at run completion so the human owner can make the next routing decision.
+- Apply the execution-loop governance policy instead of redefining lifecycle, return, or review timing in invocation guidance.
 
 ## Required Inputs
 - one approved feature document

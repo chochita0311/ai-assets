@@ -26,12 +26,8 @@
 - relevant execution-profile rules
 
 ## Core Rules
-- Keep only one feature `in-loop` unless the human owner explicitly wants parallel execution.
 - Apply the execution-profile policy to choose the smallest fitting profile, declare any surface lanes, and select only the required evaluators.
-- Apply the execution-loop governance policy to evidence gaps, failure classification, returns, and termination.
-- Do not let heuristic suggestions silently enter build or fix work.
-- Treat one run as an automated execution unit.
-- Human review normally happens after the run reports its result, not as an in-progress interruption path.
+- Apply the execution-loop governance policy to active-feature concurrency, run-unit boundaries, heuristic handling, evidence gaps, failure classification, return and review timing, and termination.
 
 ## Decision Rules
 

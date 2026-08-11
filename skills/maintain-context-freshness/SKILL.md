@@ -91,11 +91,14 @@ Keep run-control state separate from document content.
 8. apply only the smallest approved maintenance or disposal actions
 9. validate the requested mode, target outcome, evidence coverage, historical traceability, links, and remaining uncertainty
 
-Read [references/method.md](references/method.md) for the full procedure, evidence gates, maintenance sequence, and failure diagnosis.
+## Reference Routing
 
-Read [references/indicators.md](references/indicators.md) before classifying freshness; use only the domain sections relevant to the target.
-
-Read [references/checklist.md](references/checklist.md) before finalizing any audit, maintenance, or disposal pass.
+- For `audit`, read steps 1 through 8 and step 11 under [Detailed Procedure](references/method.md#detailed-procedure).
+- For `maintain`, use the `audit` route, then read [Apply Maintenance Safely](references/method.md#9-apply-maintenance-safely) and only the relevant [Maintenance Patterns](references/method.md#maintenance-patterns).
+- For `dispose`, use the `audit` route, then read [Disposal Proof](references/method.md#disposal-proof) and [Apply Disposal Exactly](references/method.md#10-apply-disposal-exactly).
+- Read [Failure Diagnosis](references/method.md#failure-diagnosis) only when the pass encounters one of its failure signals.
+- Before freshness classification, read [Universal Indicator Principles](references/indicators.md#universal-indicator-principles), [Strong Freshness Signals](references/indicators.md#strong-freshness-signals), and [Weak Or Misleading Signals](references/indicators.md#weak-or-misleading-signals), then load only the relevant domain subsection under [Cross-Domain Indicator Families](references/indicators.md#cross-domain-indicator-families).
+- Use [references/checklist.md](references/checklist.md) before finalizing any audit, maintenance, or disposal pass.
 
 ## Disposal Proof Gate
 

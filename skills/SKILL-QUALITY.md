@@ -9,6 +9,7 @@
 
 ## Scope And Ownership
 - This guide owns the repository-wide acceptance bar for reusable skill packages under `skills/`.
+- Keep this guide self-contained as the canonical single-page contract; its normative meaning must not depend on another repository document.
 - Treat active target-platform rules for package anatomy, frontmatter, metadata, and baseline validation as compatibility requirements without copying version-specific mechanics into this guide.
 - Keep package-local domain procedure in the package that uses it; do not move it into this guide merely because it is important.
 - Keep temporary findings, run evidence, and unresolved follow-up work outside this guide; only accepted reusable quality rules belong here.

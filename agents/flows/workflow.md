@@ -145,13 +145,11 @@ Process:
 ```
 
 ## Execution Loop Guidance
-- `Orchestrator` should keep only one feature in active loop unless the human owner explicitly opts into parallel execution.
+- Apply the consuming repo's execution-loop governance policy for active-feature concurrency, evidence gaps, failure classification, return paths, and post-contract regression checks; this flow does not redefine those rules.
 - Select the execution profile, surface lanes, and evaluator set through the consuming repo's execution-profile policy; this flow does not redefine that matrix.
 - `Spec Agent` is the first execution role and should create one spec per active feature.
 - `Builder` should work from the active spec, not directly from rough feature prose.
 - `Fix Agent` should consume findings from the active evaluator set and preserve the same feature boundary.
-- Classify evidence gaps, failures, and return paths through the consuming repo's execution-loop governance policy instead of restating those rules here.
-- Apply the execution-loop governance policy's post-contract regression check before closing a run when its stated boundary applies.
 
 ## Example Variations
 - Planning-only:

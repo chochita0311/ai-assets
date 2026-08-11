@@ -12,8 +12,9 @@
 - [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installable policy fragments derived from shared policy.
 - [agents/templates/](agents/templates/) holds shared planning and execution templates for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
-- [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets.
+- [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets; use [Pet Package Guide](pets/README.md) for the package contract.
 - [skills/](skills/) holds the reusable skill packages.
+- [skills/skill-followups.md](skills/skill-followups.md) owns durable unresolved work that spans skill packages; it is not a skill entry contract.
 - Each skill package's `SKILL.md` is its entry contract.
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.

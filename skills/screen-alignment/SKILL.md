@@ -101,9 +101,12 @@ If target conflicts with constitution, do not silently copy target styling. Pres
 - treating target export code as production-ready instead of separating reusable structure from foreign styling assumptions
 - treating structurally foreign redesign work as normal parity work
 
-## Workflow
+## Reference Routing
 
-- Read [references/method.md](./references/method.md) for full mode contracts, compatibility judgment, rendered comparison, browser verification, and failure diagnosis.
+- Always read [Goal](./references/method.md#goal), [Select The Mode](./references/method.md#step-0-select-the-mode), the selected mode subsection under [Mode Input And Outcome Contracts](./references/method.md#mode-input-and-outcome-contracts), [Read Constitution First](./references/method.md#step-1-read-constitution-first), and [Compatibility Judgment](./references/method.md#step-15-compatibility-judgment).
+- Read steps 2 through 4 when the pass requires rendered target, family, or current-screen comparison.
+- Before editing and closure, read steps 5 through 9 plus [Separate Style Drift From Data Drift](./references/method.md#step-12-separate-style-drift-from-data-drift) and [Escalate If Convergence Stops](./references/method.md#step-13-escalate-if-convergence-stops).
+- Read [Browser-Level Verification](./references/method.md#step-10-browser-level-verification) and [Control Caching](./references/method.md#step-11-control-caching) only when browser evidence or cache control is relevant.
 - Use [references/checklist.md](./references/checklist.md) as final closure validation.
 
 ## Optional Tool Integration

@@ -25,7 +25,7 @@
 - Example:
   - when user switches display mode, the active surface changes and the selected mode remains clear
 
-### Foundation Feature Guidance
+### Foundation Acceptance Guidance
 - Define the system-level contract that must hold.
 - Example:
   - media source ownership is fixed
@@ -79,7 +79,7 @@
 - Checks must map directly to the Acceptance Contract.
 - Checks must be testable without interpretation.
 
-### Foundation Feature Guidance
+### Foundation Validation Guidance
 - No unresolved ownership questions remain.
 - No unresolved value-shape questions remain.
 - Downstream spec can proceed without guessing.

@@ -32,33 +32,43 @@ Use this skill to turn an initial source set into a stable design starting point
 - `Use $init-design to reset the design baseline for this app using the current main screen and the existing product constraints.`
 - `Use $init-design to analyze these HTML files plus DESIGN.md and derive one design constitution.`
 
+## Reference Routing
+
+- For every run, read [Source Priority](references/method.md#source-priority), [Workflow Of `init-design`](references/method.md#workflow-of-init-design), [Output Rule](references/method.md#output-rule), and [Constitution vs Plan](references/method.md#constitution-vs-plan).
+- Read [Starting Artifact Types](references/method.md#starting-artifact-types) when the source-set type is unclear.
+- Read [Source-Set Extraction Rules](references/method.md#source-set-extraction-rules) when extracting rules from several artifacts or reconciling source differences.
+- Read [Screen Expansion Rules](references/method.md#screen-expansion-rules) only when the constitution needs durable screen-family guidance.
+- Read [constitution-content-guide.md](references/constitution-content-guide.md) only when detailed property definitions, token examples, the department model, or design terminology are needed.
+- Use [references/checklist.md](references/checklist.md) as the final quick validation pass.
+
 ## Workflow
-1. Read [references/method.md](references/method.md) for the full workflow.
-2. Identify the starting source-set type:
+1. Identify the starting source-set type:
    - `single-screen artifact`
    - `multi-screen source set`
    - `screen-plus-context`
-3. Resolve source priority before writing:
+2. Resolve source priority before writing:
    - current visual source set or committed base artifact(s)
    - existing creative-source document such as `DESIGN.md`
    - repository constraints and docs
    - explicit user notes or clarifications
    - only then inference
-4. Identify whether a creative-source document already exists, such as `DESIGN.md`, and treat it as source material rather than as durable law.
-5. Evaluate the artifact as design input, not as the final system.
-6. Check compatibility against:
+3. Identify whether a creative-source document already exists, such as `DESIGN.md`, and treat it as source material rather than as durable law.
+4. Evaluate the artifact as design input, not as the final system.
+5. Check compatibility against:
    - product goals
    - entities
    - roles
    - states
    - device priority
-7. Write or update the constitution with [templates/design-constitution.md](templates/design-constitution.md).
-8. Write or update design document governance with [templates/design-document-governance.md](templates/design-document-governance.md).
-9. Use [references/checklist.md](references/checklist.md) as the final quick validation pass.
+6. Write or update the constitution with [templates/design-constitution.md](templates/design-constitution.md).
+7. Write or update design document governance with [templates/design-document-governance.md](templates/design-document-governance.md).
+8. Complete the routed final validation pass.
 
 ## Package Layout
 - `references/`
-  - workflow and explanatory material to read while thinking
+  - `method.md`: procedural workflow and ownership decisions
+  - `constitution-content-guide.md`: optional property, token, and terminology guidance
+  - `checklist.md`: final binary validation
 - `templates/`
   - reusable output scaffolds to copy or adapt for constitutions and governance docs
 - `agents/openai.yaml`

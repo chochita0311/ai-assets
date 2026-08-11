@@ -65,7 +65,7 @@ Not every feature serves the same role in the harness workflow.
 - PRD review must stop until confirmed scope, exclusions, uncertainty, constraints, and acceptance envelope are acceptable.
 - Feature planning starts only from an approved PRD.
 - Feature review must stop until the chosen feature boundary, dependencies, execution profile, surface, and pass/fail checks are concrete enough for spec handoff.
-- Execution starts only from one approved feature at a time unless the human owner explicitly approves parallel execution.
+- Execution starts only after a feature is approved; active-feature concurrency is governed by `execution-loop-governance.md`.
 
 ## PRD Rules
 - Create a new PRD when the requested increment introduces a new upper scope boundary.
@@ -205,7 +205,6 @@ Use these statuses for PRD and feature documents:
 
 ## Minimal Operating Pattern
 - One PRD can yield several feature documents.
-- Only one feature should normally be `in-loop` at a time unless the user explicitly wants parallel execution.
 - Previous passed features become regression surfaces for later features.
 
 ## Split Trigger For Product Features
