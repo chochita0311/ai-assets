@@ -24,7 +24,8 @@
 ### `gh-review-pr`
 - Decide and test the same-snapshot amendment contract for a submitted skill-owned review when the user requests a summary replacement or a newly verified inline finding. If GitHub cannot amend it atomically, define the safe stop and handoff instead of permitting ad hoc standalone writes.
 - Repeat `draft` mode with findings and require publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, and category. Tighten the draft output contract if omission repeats.
-- Complete a real fresh-snapshot `publish` run with at least one inline finding through the bundled transaction, then rerun the exact snapshot to verify duplicate no-op behavior.
+- Rerun an exactly published snapshot through the bundled transaction to verify `noop-existing-snapshot` behavior in a real session; unit coverage exists, but the live duplicate no-op remains unproven.
+- Forward-test `reply` on a submitted skill-owned finding after the PR head advances, and verify that the result distinguishes the original review head from the current head without permitting a preparation-time race.
 - Run matched `draft` reruns against the same frozen snapshots across intended harness and model combinations—at least one security-sensitive PR and one ordinary PR—to distinguish model variance from a reusable review-criteria gap before changing severity or security rules.
 - Forward-test an unavailable named-worker case and confirm that evidence collection returns to the primary agent without generic-worker substitution or weakened publication gates.
 

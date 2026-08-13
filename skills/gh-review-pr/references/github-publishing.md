@@ -1,6 +1,6 @@
 # GitHub Publishing Protocol
 
-Use this reference for `audit`, `validate`, `publish`, `refresh`, and recovery. The bundled script is the sole write path for skill-owned GitHub reviews.
+Use this reference for `audit`, `validate`, `publish`, `refresh`, `amend`, `reply`, and recovery. The bundled script is the sole write path for skill-owned GitHub reviews.
 
 ## Contents
 
@@ -11,15 +11,17 @@ Use this reference for `audit`, `validate`, `publish`, `refresh`, and recovery. 
 - Statuses and exit behavior
 - Refresh and duplicate handling
 - Failure recovery
+- Owned finding amendments
+- Owned finding replies
 - Safety boundaries
 
 ## Requirements
 
 - Install and authenticate the `gh` CLI for the PR host
 - Use a full `https://<host>/<owner>/<repo>/pull/<number>` URL
-- Keep the plan in a temporary local file and remove it after use
+- Keep each review plan, amendment, or reply in a temporary local file through verification and any failure reconciliation; remove it after a verified result unless the user asks to retain it
 - Resolve the directory containing `SKILL.md` and use the transaction script's absolute path; never assume the current working directory is the skill package
-- Use the full 40- or 64-character base and head SHAs returned by the same `audit`
+- For a review plan, use the current full base/head pair returned by the same `audit`. For an amendment or reply, use the target review marker's full pair from that audit. An amendment also requires the marker pair to match the current PR pair; a reply does not.
 - Ensure every plan comment has a stable semantic `finding_id` and an exact changed-line anchor
 
 The script sets `GH_HOST` and passes `--hostname` from the PR URL. It never sends the plan to another provider.
@@ -110,7 +112,7 @@ The script performs this transaction:
 3. Add stable hidden run and finding markers to the payload
 4. Create one review in `PENDING` state with all inline comments in one JSON request
 5. Re-fetch the pending review and its comments
-6. Verify state, commit, marker ownership, count, path, line, side, body, and the unchanged base/head pair
+6. Verify state, commit, marker ownership, count, path, exact frozen-diff anchor, body, and the unchanged base/head pair. Prefer returned `line` and `side`; only when both are absent, accept the exact legacy `original_position` computed from the same complete frozen patch and bound to the planned head commit.
 7. Delete the owned pending review and stop if pre-submit verification fails
 8. Submit the verified pending review with the requested event and summary
 9. Read after write and verify final state, markers, count, and anchors
@@ -127,6 +129,11 @@ Successful JSON statuses include:
 - `noop-existing-snapshot`: a submitted skill-owned review already exists for this exact base/head pair
 - `published`: creation, submission, and read-after-write verification completed
 - `published-reconciled`: a write response was ambiguous, but remote reconciliation proved the intended final review exists
+- `amended`: one submitted skill-owned finding was updated and verified
+- `amended-reconciled`: the amendment response was ambiguous, but read-after-write verification proved the requested body exists
+- `replied`: one reply to a submitted skill-owned finding was created and verified
+- `replied-reconciled`: the reply response was ambiguous, but reconciliation proved exactly one requested reply exists
+- `noop-existing-reply`: an identical authenticated-user reply already exists on the owned finding, so no write occurred
 
 Command errors, including invalid CLI usage, are emitted as sanitized JSON on stderr with a nonzero exit code. An `invalid-plan` or preflight `safety-stop` occurs before review creation; correct the input and run `validate` again. `validate` itself is read-only. After any nonzero `publish` result that may follow a write—especially `github-error`, `verification-failed`, timeout, or create/submit uncertainty—run a fresh `audit` before retrying.
 
@@ -144,16 +151,68 @@ An exact owned pending transaction may be resumed after verification. A differen
 - Invalid or missing anchor: correct the plan from the frozen diff; do not move the comment to a nearby context line
 - Permission denied: report the `gh` error; do not use another API, browser, issue comment, or summary-only fallback
 - Create or submit response ambiguous: run `audit`; the script itself reconciles markers once and never blindly retries
+- Amendment or reply result remains ambiguous after the script's reconciliation: keep the mutation file, inspect the target comment or thread through authorized read-only GitHub tooling, and do not retry until the intended remote state is conclusively present or absent
+- Amendment read-after-write verification fails: do not blindly restore the prior body or issue another patch; report the target review and finding identifiers and reconcile the current comment first
 - Pending verification failed: the script deletes the pending review only when its marker and every present comment prove exclusive skill ownership
 - Final verification failed after submission: report the review ID and observed state; do not add a replacement review
 - Human pending review present: leave it untouched and ask the user to submit or discard it before publishing
 
 If safe deletion cannot be proven or confirmed, report the pending review ID and stop. Never delete a review merely because it is pending.
 
+## Owned finding amendments
+
+When the user explicitly asks to correct the wording of a submitted skill-owned finding, use `amend` rather than an ad hoc API call. The amendment file uses this exact schema; `base_sha` and `head_sha` identify the submitted review snapshot, and `body` omits the hidden marker.
+
+```json
+{
+  "schema_version": 1,
+  "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "head_sha": "0123456789abcdef0123456789abcdef01234567",
+  "review_id": 456,
+  "finding_id": "retain-permission-on-empty-update",
+  "body": "issue (blocking, high, security): 빈 권한 목록의 실패 경로를 명확히 합니다\n\n변경된 분기가 기존 권한을 유지하는 조건과 영향, 최소 수정 경로를 정확히 설명합니다."
+}
+```
+
+```bash
+python3 "$GH_REVIEW_TRANSACTION" amend \
+  --pr https://github.example.com/owner/repo/pull/123 \
+  --amendment /tmp/gh-review-amendment.json
+```
+
+The script permits wording-only corrections after proving the review and comment are submitted, authored by the authenticated user, owned by matching review/finding markers, and still bound to the current frozen base/head pair. The replacement header's disposition, severity, and category must exactly match the submitted finding so the review summary counts remain valid. It preserves the original run marker, performs one PATCH, and reads the comment back. It never moves the anchor or changes human-authored material. If classification or summary must change, stop; that requires a separately designed review-level amendment contract.
+
+A successful result reports the status, PR, frozen base/head pair, review ID, comment ID, finding ID, and comment URL. Remove the temporary amendment file after the verified result unless the user asks to retain it.
+
+## Owned finding replies
+
+When the user explicitly asks to respond to a submitted skill-owned finding, use `reply`. The reply file uses this exact schema. Its `base_sha` and `head_sha` identify the original submitted review snapshot, not necessarily the current PR snapshot, and `body` is a plain response without a skill marker.
+
+```json
+{
+  "schema_version": 1,
+  "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "head_sha": "0123456789abcdef0123456789abcdef01234567",
+  "review_id": 456,
+  "finding_id": "retain-permission-on-empty-update",
+  "body": "수정 커밋 89abcde에서 빈 목록도 명시적 교체로 처리했습니다."
+}
+```
+
+```bash
+python3 "$GH_REVIEW_TRANSACTION" reply \
+  --pr https://github.example.com/owner/repo/pull/123 \
+  --reply /tmp/gh-review-reply.json
+```
+
+The script proves ownership of the original target finding without requiring the current PR head to equal the review head. It prevents an identical reply from being posted twice, re-reads the current base/head pair immediately before a new write to stop a preparation-time race, performs one reply write, and reads the created reply back. It never replies to human-authored review material.
+
+A reply result reports both the original `review_base_sha` / `review_head_sha` and the pre-write `current_base_sha` / `current_head_sha`; the legacy `base_sha` / `head_sha` fields also identify the original review snapshot. It also reports the review, target comment, reply comment, and finding IDs plus the comment URL. Remove the temporary reply file after the verified result unless the user asks to retain it.
+
 ## Safety boundaries
 
 - Do not hand-build `comments[][line]` fields; use the JSON plan
-- Do not accept `line: null`, legacy `position`, file-level comments, or context-only anchors
+- Do not accept `line: null`, legacy `position`, file-level comments, or context-only anchors in a plan or write payload. A read-back response may be verified through its legacy `original_position` only under the exact frozen-patch and planned-head checks in the atomic protocol.
 - Do not copy review text into the summary when an inline anchor fails
 - Do not retry a timeout by creating another review
 - Do not edit, dismiss, resolve, reply to, or delete human review material

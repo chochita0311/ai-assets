@@ -1,4 +1,4 @@
 interface:
   display_name: "PR Descriptor"
-  short_description: "Draft consistent, review-ready PR descriptions"
+  short_description: "Draft, evaluate, and safely update PR descriptions"
   default_prompt: "Use $pr-descriptor to draft a paste-ready pull request title and description from the committed base-to-head snapshot and supported validation evidence."

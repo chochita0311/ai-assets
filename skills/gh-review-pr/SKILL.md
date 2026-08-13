@@ -1,11 +1,11 @@
 ---
 name: gh-review-pr
-description: Review, draft, publish, audit, or refresh GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a concise review summary and high-confidence inline threads while preventing duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, post inline code-review findings, rerun an automated review, inspect an existing skill-owned review, or safely reconcile review publication; do not use for editing PR titles or descriptions or for general local code review without a PR.
+description: Review, draft, publish, audit, refresh, amend, or reply to skill-owned GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a concise review summary and high-confidence inline threads while preventing duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, post inline code-review findings, rerun an automated review, inspect or reconcile an existing skill-owned review, correct the wording of a skill-owned finding, or respond to a skill-owned finding; do not use for editing PR titles or descriptions, replying to human-authored review threads, or general local code review without a PR.
 ---
 
 # GitHub PR Reviewer
 
-Produce one review for one immutable PR `(base SHA, head SHA)` snapshot: a short coverage summary plus only verified, actionable inline findings. Keep semantic judgment separate from the GitHub write transaction.
+Produce one review for one immutable PR `(base SHA, head SHA)` snapshot, or safely maintain that review's skill-owned findings after submission. Keep semantic judgment separate from every GitHub write transaction.
 
 ## Choose the operating mode
 
@@ -13,8 +13,10 @@ Produce one review for one immutable PR `(base SHA, head SHA)` snapshot: a short
 - `draft`: use when the user says draft, preview, or do not post; return the summary and proposed threads without any GitHub write
 - `audit`: inspect existing reviews, duplicate state, anchors, or a prior run without writing
 - `refresh`: re-review an explicitly requested snapshot whose base or head changed; never add a second skill-owned review to the same base/head pair
+- `amend`: correct only the wording of one submitted skill-owned finding after an explicit request; preserve its classification, anchor, marker, and review summary
+- `reply`: respond to one submitted skill-owned finding after an explicit request; target the original review snapshot even when the current PR head has advanced, and never use this mode for human-authored threads
 
-The operating `audit` mode is a complete read-only review task. The transaction script's `audit` subcommand is only the snapshot and ownership preflight required before semantic work in every mode; it does not perform the review itself.
+The operating `audit` mode is a complete read-only review task. The transaction script's `audit` subcommand is only the snapshot and ownership preflight required before semantic work in the review-building modes; it does not perform the review itself.
 
 Treat a full PR URL as the canonical target. Resolve a missing URL only when the current repository and branch identify exactly one PR. A generic request to inspect code without an identifiable PR is outside this skill.
 
@@ -28,12 +30,14 @@ The transaction accepts `APPROVE` only with zero blocking findings and `REQUEST_
 - Review the committed base-to-head diff; exclude dirty and untracked working-tree state
 - Cover every human-authored changed line or name every generated, vendored, binary, truncated, or otherwise unreviewed gap
 - Publish at most one skill-owned review per PR base/head snapshot and at most eight inline findings
-- Anchor every inline thread to an exact added or deleted line in the frozen diff
+- Anchor every inline thread to the exact added or deleted line that introduces or materially worsens the trigger or impact; never move it to merely reachable nearby code
 - Publish only current-snapshot, reachable findings with `critical`, `high`, or `medium` severity and `high` confidence
 - Keep low-confidence possibilities, style-only preferences, and mechanical lint in private analysis unless a repository rule makes them material
 - Never expose literal secrets; describe the class, location, and remediation without repeating the value
 - Never convert a failed inline thread into an issue comment, summary detail, or unanchored fallback
 - Never retry an ambiguous write until remote state has been reconciled
+- Never use an amendment to change a finding's disposition, severity, category, anchor, marker, or summary counts
+- Never reply outside a verified skill-owned finding; re-read the current PR pair immediately before a new reply and report both the review head and current head
 - Never edit or delete a human-authored review, thread, or pending review
 
 ## Review the PR
@@ -115,8 +119,18 @@ Pass `--event APPROVE` or `--event REQUEST_CHANGES` only for the user's explicit
 
 After publication, report the final review URL or ID, bound base/head SHAs, event, inline count, and any evidence gap. Delete the temporary plan unless the user explicitly asks to retain it.
 
+## Maintain a submitted skill-owned finding
+
+Use `amend` or `reply` only when the user explicitly requests that mutation. Do not rerun the semantic review unless the user also asks for a refresh.
+
+For `amend`, require the current PR base/head pair to still match the submitted review's frozen pair and preserve the existing finding classification. If the correction would change disposition, severity, category, anchor, or summary counts, stop: body-only amendment cannot keep the review artifact internally consistent.
+
+For `reply`, bind the target fields to the original review marker. A newer current PR head is allowed because fixes are normally pushed before a response, but the transaction must prove the owned target and re-read the current PR pair before writing. Follow the amendment and reply schemas, commands, status meanings, and reconciliation rules in [github-publishing.md](references/github-publishing.md). Keep the temporary mutation file until the result is verified or a failed write is reconciled; remove it afterward unless the user asks to retain it.
+
+After an amendment, report its status, review and comment IDs, finding ID, and comment URL. After a reply, also distinguish the original `review_head_sha` from `current_head_sha`.
+
 ## Keep adjacent work separate
 
-This skill owns reviewer artifacts only. It does not edit source code, PR titles, PR descriptions, issues, or human review threads. Use `$pr-descriptor` separately when the user requests the PR title or body; when both skills apply, bind both artifacts to the same frozen base/head snapshot without making either skill a dependency of the other.
+This skill owns reviewer artifacts only. It does not edit source code, PR titles, PR descriptions, issues, or human review threads. Treat requested PR title or body work as a separate task governed by whatever available capability explicitly owns PR metadata; do not assume a named companion skill is installed. When both artifacts are produced, bind them to the same frozen base/head snapshot without making either workflow a dependency of the other.
 
-Stop without publishing when the target is ambiguous, either frozen SHA changes, required diff data is truncated at a proposed anchor, permissions fail, a human pending review could be affected, duplicate state cannot be resolved, or read-after-write verification is incomplete.
+Stop without writing when the target is ambiguous, a review-building mode's frozen SHA changes, an amendment no longer matches the current PR pair, a reply's current PR pair changes while the write is being prepared, required diff data is truncated at a proposed anchor, permissions fail, a human pending review could be affected, duplicate state cannot be resolved, or read-after-write verification is incomplete.

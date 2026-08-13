@@ -24,6 +24,36 @@ PATCH = """@@ -1,2 +1,3 @@
 +replacement
  retained
 """
+MULTI_HUNK_PATCH = """@@ -3,6 +3,7 @@
+ context 1
+ context 2
+ context 3
++addition 1
+ context 4
+ context 5
+ context 6
+@@ -14,8 +15,8 @@
+ context 7
+ context 8
+ context 9
+-deletion 1
+ context 10
++addition 2
+ context 11
+ context 12
+ context 13
+@@ -53,7 +54,9 @@
+ context 14
+ context 15
+ context 16
+-deletion 2
++addition 3
++addition 4
++target
+ context 17
+ context 18
+ context 19
+"""
 
 
 def make_plan(*, line: int = 2, comments: bool = True) -> transaction.ReviewPlan:
@@ -60,6 +90,33 @@ def make_plan(*, line: int = 2, comments: bool = True) -> transaction.ReviewPlan
     )
 
 
+def make_amendment(
+    review_id: int, *, body: str | None = None
+) -> transaction.AmendmentPlan:
+    return transaction.AmendmentPlan(
+        base_sha=BASE_SHA,
+        head_sha=HEAD_SHA,
+        review_id=review_id,
+        finding_id="preserve-existing-state",
+        body=body
+        or (
+            "issue (blocking, high, data-integrity): Clarify the failure path\n\n"
+            "The changed exception propagation makes the failure reachable. "
+            "Close the application context when initialization fails."
+        ),
+    )
+
+
+def make_reply(review_id: int, *, body: str | None = None) -> transaction.ReplyPlan:
+    return transaction.ReplyPlan(
+        base_sha=BASE_SHA,
+        head_sha=HEAD_SHA,
+        review_id=review_id,
+        finding_id="preserve-existing-state",
+        body=body or "Applied the bounded startup fix.",
+    )
+
+
 class FakeGitHubClient:
     def __init__(self) -> None:
         self.base_sha = BASE_SHA
@@ -73,10 +130,15 @@ class FakeGitHubClient:
         self.next_review_id = 101
         self.next_comment_id = 501
         self.post_calls: list[str] = []
+        self.patch_calls: list[str] = []
         self.delete_calls: list[str] = []
         self.create_failure: str | None = None
         self.submit_failure_after_apply = False
         self.head_after_create: str | None = None
+        self.created_comment_overrides: dict[str, Any] = {}
+        self.patch_failure_after_apply = False
+        self.reply_failure_after_apply = False
+        self.head_after_comment_list: str | None = None
 
     @staticmethod
     def pull_endpoint() -> str:
@@ -96,6 +158,13 @@ class FakeGitHubClient:
             return {"login": self.login}
         if endpoint == self.pull_endpoint():
             return self.pull()
+        comment_prefix = "repos/octo/widgets/pulls/comments/"
+        if endpoint.startswith(comment_prefix) and endpoint[len(comment_prefix) :].isdigit():
+            comment_id = int(endpoint[len(comment_prefix) :])
+            for comment in self.comments:
+                if comment["id"] == comment_id:
+                    return dict(comment)
+            raise transaction.GitHubError(f"comment {comment_id} not found")
         prefix = f"{self.pull_endpoint()}/reviews/"
         if endpoint.startswith(prefix) and endpoint[len(prefix) :].isdigit():
             review_id = int(endpoint[len(prefix) :])
@@ -121,7 +190,11 @@ class FakeGitHubClient:
         if endpoint == f"{self.pull_endpoint()}/reviews":
             return [dict(value) for value in self.reviews]
         if endpoint == f"{self.pull_endpoint()}/comments":
-            return [dict(value) for value in self.comments]
+            comments = [dict(value) for value in self.comments]
+            if self.head_after_comment_list:
+                self.head_sha = self.head_after_comment_list
+                self.head_after_comment_list = None
+            return comments
         raise AssertionError(f"unexpected paginated endpoint: {endpoint}")
 
     def post(self, endpoint: str, payload: Mapping[str, Any]) -> Any:
@@ -144,7 +217,9 @@ class FakeGitHubClient:
                     "id": self.next_comment_id,
                     "pull_request_review_id": review["id"],
                     "html_url": f"https://github.example.com/comment/{self.next_comment_id}",
+                    "user": {"login": self.login},
                     **comment_payload,
+                    **self.created_comment_overrides,
                 }
                 self.next_comment_id += 1
                 self.comments.append(comment)
@@ -165,7 +240,35 @@ class FakeGitHubClient:
             if self.submit_failure_after_apply:
                 raise transaction.GitHubError("connection reset", ambiguous_write=True)
             return dict(review)
+        reply_suffix = "/replies"
+        if endpoint.startswith(f"{self.pull_endpoint()}/comments/") and endpoint.endswith(reply_suffix):
+            target_comment_id = int(endpoint.split("/")[-2])
+            target = next(
+                value for value in self.comments if value["id"] == target_comment_id
+            )
+            comment = {
+                "id": self.next_comment_id,
+                "pull_request_review_id": target["pull_request_review_id"],
+                "in_reply_to_id": target_comment_id,
+                "body": payload["body"],
+                "html_url": f"https://github.example.com/comment/{self.next_comment_id}",
+                "user": {"login": self.login},
+            }
+            self.next_comment_id += 1
+            self.comments.append(comment)
+            if self.reply_failure_after_apply:
+                raise transaction.GitHubError("connection reset", ambiguous_write=True)
+            return dict(comment)
         raise AssertionError(f"unexpected POST endpoint: {endpoint}")
+
+    def patch(self, endpoint: str, payload: Mapping[str, Any]) -> Any:
+        self.patch_calls.append(endpoint)
+        comment_id = int(endpoint.split("/")[-1])
+        comment = next(value for value in self.comments if value["id"] == comment_id)
+        comment["body"] = payload["body"]
+        if self.patch_failure_after_apply:
+            raise transaction.GitHubError("connection reset", ambiguous_write=True)
+        return dict(comment)
 
     def delete(self, endpoint: str) -> None:
         self.delete_calls.append(endpoint)
@@ -200,6 +303,7 @@ class FakeGitHubClient:
                     "side": finding.side,
                     "body": finding.rendered_body(plan),
                     "html_url": f"https://github.example.com/comment/{self.next_comment_id}",
+                    "user": {"login": self.login},
                 }
             )
             self.next_comment_id += 1
@@ -232,6 +336,12 @@ class TransactionTests(unittest.TestCase):
         self.assertNotIn((2, "LEFT"), anchors)
         self.assertNotIn((1, "RIGHT"), anchors)
 
+    def test_legacy_position_counts_later_hunk_headers(self) -> None:
+        self.assertEqual(
+            transaction.legacy_position_for_anchor(MULTI_HUNK_PATCH, 59, "RIGHT"),
+            25,
+        )
+
     def test_plan_loader_accepts_the_documented_schema(self) -> None:
         plan = make_plan()
         raw = {
@@ -247,6 +357,23 @@ class TransactionTests(unittest.TestCase):
             loaded = transaction.load_plan(path)
         self.assertEqual(loaded, plan)
 
+    def test_reply_loader_returns_a_distinct_reply_plan(self) -> None:
+        reply = make_reply(456)
+        raw = {
+            "schema_version": transaction.SCHEMA_VERSION,
+            "base_sha": reply.base_sha,
+            "head_sha": reply.head_sha,
+            "review_id": reply.review_id,
+            "finding_id": reply.finding_id,
+            "body": reply.body,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "reply.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            loaded = transaction.load_reply(path)
+        self.assertIsInstance(loaded, transaction.ReplyPlan)
+        self.assertEqual(loaded, reply)
+
     def test_documented_plan_example_matches_the_loader(self) -> None:
         reference = (
             Path(__file__).parent.parent / "references" / "github-publishing.md"
@@ -259,6 +386,44 @@ class TransactionTests(unittest.TestCase):
             loaded = transaction.load_plan(path)
         self.assertEqual(loaded.base_sha, "a" * 40)
         self.assertEqual(len(loaded.comments), 1)
+
+    def test_documented_mutation_examples_match_the_loaders(self) -> None:
+        reference = (
+            Path(__file__).parent.parent / "references" / "github-publishing.md"
+        ).read_text(encoding="utf-8")
+        examples = re.findall(r"```json\n(?P<plan>.*?)\n```", reference, re.DOTALL)
+        self.assertEqual(len(examples), 3)
+        with tempfile.TemporaryDirectory() as directory:
+            amendment_path = Path(directory) / "amendment.json"
+            amendment_path.write_text(examples[1], encoding="utf-8")
+            reply_path = Path(directory) / "reply.json"
+            reply_path.write_text(examples[2], encoding="utf-8")
+            amendment = transaction.load_amendment(amendment_path)
+            reply = transaction.load_reply(reply_path)
+        self.assertIsInstance(amendment, transaction.AmendmentPlan)
+        self.assertIsInstance(reply, transaction.ReplyPlan)
+        self.assertEqual(amendment.finding_id, reply.finding_id)
+
+    def test_documented_statuses_cover_all_success_results(self) -> None:
+        reference = (
+            Path(__file__).parent.parent / "references" / "github-publishing.md"
+        ).read_text(encoding="utf-8")
+        statuses = (
+            "audit",
+            "valid",
+            "resume-ready",
+            "noop-existing-snapshot",
+            "published",
+            "published-reconciled",
+            "amended",
+            "amended-reconciled",
+            "replied",
+            "replied-reconciled",
+            "noop-existing-reply",
+        )
+        for status in statuses:
+            with self.subTest(status=status):
+                self.assertIn(f"- `{status}`:", reference)
 
     def test_plan_loader_rejects_incorrect_summary_counts(self) -> None:
         plan = make_plan()
@@ -299,6 +464,170 @@ class TransactionTests(unittest.TestCase):
         self.assertEqual(result["status"], "noop-existing-snapshot")
         self.assertEqual(result["review_id"], review_id)
         self.assertEqual(client.post_calls, [])
+
+    def test_owned_finding_body_can_be_amended_without_changing_marker(self) -> None:
+        client = FakeGitHubClient()
+        plan = make_plan()
+        review_id = client.add_review(plan)
+        original_marker = transaction.finding_marker_data(client.comments[0]["body"])
+
+        result = transaction.amend_comment(
+            client, self.ref, make_amendment(review_id)
+        )
+
+        self.assertEqual(result["status"], "amended")
+        self.assertEqual(len(client.patch_calls), 1)
+        self.assertEqual(
+            transaction.finding_marker_data(client.comments[0]["body"]),
+            original_marker,
+        )
+        self.assertEqual(
+            transaction.without_marker(
+                client.comments[0]["body"], transaction.FINDING_MARKER_RE
+            ),
+            make_amendment(review_id).body,
+        )
+
+    def test_ambiguous_amendment_reconciles_without_retry(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.patch_failure_after_apply = True
+
+        result = transaction.amend_comment(
+            client, self.ref, make_amendment(review_id)
+        )
+
+        self.assertEqual(result["status"], "amended-reconciled")
+        self.assertEqual(len(client.patch_calls), 1)
+
+    def test_human_comment_cannot_be_amended(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.comments[0]["body"] = "Human-authored note"
+
+        with self.assertRaises(transaction.SafetyError):
+            transaction.amend_comment(
+                client, self.ref, make_amendment(review_id)
+            )
+
+        self.assertEqual(client.patch_calls, [])
+
+    def test_amendment_cannot_change_finding_classification(self) -> None:
+        replacements = (
+            (
+                "disposition",
+                "issue (non-blocking, high, data-integrity): "
+                "Clarify the failure path\n\n"
+                "The changed exception propagation makes the failure reachable.",
+            ),
+            (
+                "severity",
+                "issue (blocking, medium, data-integrity): Clarify the failure path\n\n"
+                "The changed exception propagation makes the failure reachable.",
+            ),
+            (
+                "category",
+                "issue (blocking, high, reliability): Clarify the failure path\n\n"
+                "The changed exception propagation makes the failure reachable.",
+            ),
+        )
+        for label, body in replacements:
+            with self.subTest(label=label):
+                client = FakeGitHubClient()
+                review_id = client.add_review(make_plan())
+
+                with self.assertRaises(transaction.SafetyError):
+                    transaction.amend_comment(
+                        client, self.ref, make_amendment(review_id, body=body)
+                    )
+
+                self.assertEqual(client.patch_calls, [])
+
+    def test_amendment_stops_when_current_head_changes_before_write(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.head_after_comment_list = NEW_HEAD_SHA
+
+        with self.assertRaises(transaction.SafetyError):
+            transaction.amend_comment(
+                client, self.ref, make_amendment(review_id)
+            )
+
+        self.assertEqual(client.patch_calls, [])
+
+    def test_owned_finding_can_receive_one_verified_reply(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        reply = make_reply(review_id)
+
+        result = transaction.reply_to_owned_finding(client, self.ref, reply)
+        second = transaction.reply_to_owned_finding(client, self.ref, reply)
+
+        self.assertEqual(result["status"], "replied")
+        self.assertEqual(second["status"], "noop-existing-reply")
+        self.assertEqual(result["review_head_sha"], HEAD_SHA)
+        self.assertEqual(result["current_head_sha"], HEAD_SHA)
+        reply_calls = [
+            value for value in client.post_calls if value.endswith("/replies")
+        ]
+        self.assertEqual(len(reply_calls), 1)
+
+    def test_ambiguous_owned_reply_reconciles_without_retry(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.reply_failure_after_apply = True
+        reply = make_reply(review_id)
+
+        result = transaction.reply_to_owned_finding(client, self.ref, reply)
+
+        self.assertEqual(result["status"], "replied-reconciled")
+        reply_calls = [
+            value for value in client.post_calls if value.endswith("/replies")
+        ]
+        self.assertEqual(len(reply_calls), 1)
+
+    def test_owned_finding_reply_allows_a_newer_pr_head(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.head_sha = NEW_HEAD_SHA
+
+        result = transaction.reply_to_owned_finding(
+            client, self.ref, make_reply(review_id)
+        )
+
+        self.assertEqual(result["status"], "replied")
+        self.assertEqual(result["review_head_sha"], HEAD_SHA)
+        self.assertEqual(result["current_head_sha"], NEW_HEAD_SHA)
+
+    def test_reply_stops_when_current_head_changes_before_write(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.head_after_comment_list = NEW_HEAD_SHA
+
+        with self.assertRaises(transaction.SafetyError):
+            transaction.reply_to_owned_finding(
+                client, self.ref, make_reply(review_id)
+            )
+
+        reply_calls = [
+            value for value in client.post_calls if value.endswith("/replies")
+        ]
+        self.assertEqual(reply_calls, [])
+
+    def test_human_comment_cannot_receive_an_owned_finding_reply(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.comments[0]["body"] = "Human-authored note"
+
+        with self.assertRaises(transaction.SafetyError):
+            transaction.reply_to_owned_finding(
+                client, self.ref, make_reply(review_id)
+            )
+
+        reply_calls = [
+            value for value in client.post_calls if value.endswith("/replies")
+        ]
+        self.assertEqual(reply_calls, [])
 
     def test_multiple_same_snapshot_reviews_stop_without_another_write(self) -> None:
         client = FakeGitHubClient()
@@ -350,6 +679,64 @@ class TransactionTests(unittest.TestCase):
         self.assertEqual(len(client.delete_calls), 1)
         self.assertEqual(client.reviews, [])
         self.assertEqual(client.comments, [])
+
+    def test_legacy_position_is_verified_when_line_and_side_are_null(self) -> None:
+        client = FakeGitHubClient()
+        client.created_comment_overrides = {
+            "line": None,
+            "original_line": 2,
+            "side": None,
+            "position": 2,
+            "original_position": 2,
+            "commit_id": HEAD_SHA,
+            "original_commit_id": HEAD_SHA,
+        }
+
+        result = transaction.publish(client, self.ref, make_plan(), "COMMENT")
+
+        self.assertEqual(result["status"], "published")
+        self.assertEqual(result["inline_count"], 1)
+        self.assertEqual(client.delete_calls, [])
+
+    def test_wrong_legacy_position_reports_locators_and_deletes_pending(self) -> None:
+        client = FakeGitHubClient()
+        client.created_comment_overrides = {
+            "line": None,
+            "original_line": None,
+            "side": None,
+            "position": 4,
+            "original_position": 4,
+            "commit_id": HEAD_SHA,
+            "original_commit_id": HEAD_SHA,
+        }
+
+        with self.assertRaises(transaction.VerificationError) as raised:
+            transaction.publish(client, self.ref, make_plan(), "COMMENT")
+
+        message = str(raised.exception)
+        self.assertIn('"line":null', message)
+        self.assertIn('"original_position":4', message)
+        self.assertNotIn("Preserve existing state", message)
+        self.assertEqual(len(client.delete_calls), 1)
+        self.assertEqual(client.reviews, [])
+        self.assertEqual(client.comments, [])
+
+    def test_legacy_position_from_another_commit_is_rejected(self) -> None:
+        client = FakeGitHubClient()
+        client.created_comment_overrides = {
+            "line": None,
+            "side": None,
+            "position": 2,
+            "original_position": 2,
+            "commit_id": NEW_HEAD_SHA,
+            "original_commit_id": NEW_HEAD_SHA,
+        }
+
+        with self.assertRaises(transaction.VerificationError):
+            transaction.publish(client, self.ref, make_plan(), "COMMENT")
+
+        self.assertEqual(len(client.delete_calls), 1)
+        self.assertEqual(client.reviews, [])
 
     def test_permission_failure_has_no_fallback_write(self) -> None:
         client = FakeGitHubClient()

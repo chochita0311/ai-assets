@@ -34,10 +34,12 @@ Report material non-reviewed classes in the summary. Never translate incomplete 
 Keep this internal ledger before writing review artifacts:
 
 ```text
-finding_id | concern | path | line | side | severity | confidence | disposition | category | current-snapshot evidence | reachability | impact | counterevidence | safe path | duplicate state
+finding_id | concern | path | line | side | severity | confidence | disposition | category | current-snapshot evidence | causal delta | anchor rationale | reachability | impact | counterevidence | safe path | duplicate state
 ```
 
 Use a stable lowercase hyphenated `finding_id` that names the semantic concern rather than its wording or line number. Reuse it while reconciling the same concern; never mint a new identifier merely to bypass duplicate detection.
+
+Record `causal delta` as the exact behavior this PR introduces or materially worsens. Record `anchor rationale` as why the selected changed line is the causal review location rather than merely nearby reachable code.
 
 ## Publication gates
 
@@ -48,11 +50,13 @@ Publish a candidate only when every answer is `yes`:
 3. Does direct code, test, runtime, or protocol evidence support the claim?
 4. Has relevant counterevidence been inspected and resolved?
 5. Is the severity at least `medium` and confidence `high`?
-6. Is an exact added (`RIGHT`) or deleted (`LEFT`) line available as the anchor?
+6. Is an exact added (`RIGHT`) or deleted (`LEFT`) line that introduces or materially worsens the trigger or impact available as the anchor?
 7. Is the concern absent from existing review threads and skill markers?
 8. Can the thread state impact and a minimal safe path without prescribing a broad redesign?
 
 Omit pre-existing defects unless this PR makes them reachable, more severe, or harder to recover from. Do not report speculative future misuse, purely aesthetic preferences, or issues a deterministic check already communicates better.
+
+A changed line is not a valid anchor merely because execution passes through it. Anchor the causal delta itself. If the provider cannot represent that exact changed line, fix the publication transport or omit the finding; never move the thread to a semantically weaker line to make publication succeed.
 
 ## Severity and disposition
 

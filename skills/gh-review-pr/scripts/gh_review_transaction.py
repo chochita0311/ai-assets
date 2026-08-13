@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate and atomically publish one skill-owned GitHub PR review."""
+"""Validate, publish, and safely maintain one skill-owned GitHub PR review."""
 
 from __future__ import annotations
 
@@ -28,6 +28,10 @@ EVENT_STATES = {
 SHA_RE = re.compile(r"^[0-9a-f]{40}(?:[0-9a-f]{24})?$")
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{2,79}$")
+ISSUE_HEADER_RE = re.compile(
+    r"^issue \((blocking|non-blocking|question), "
+    r"(critical|high|medium), ([a-z0-9][a-z0-9-]{2,79})\): \S.+$"
+)
 HUNK_RE = re.compile(r"^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@")
 REVIEW_MARKER_RE = re.compile(
     r"<!--\s*gh-review-pr:review\s+v=(?P<version>\d+)\s+"
@@ -175,6 +179,24 @@ class ReviewPlan:
 
     def rendered_summary(self) -> str:
         return f"{self.summary}\n\n{review_marker(self)}"
+
+
+@dataclass(frozen=True)
+class AmendmentPlan:
+    base_sha: str
+    head_sha: str
+    review_id: int
+    finding_id: str
+    body: str
+
+
+@dataclass(frozen=True)
+class ReplyPlan:
+    base_sha: str
+    head_sha: str
+    review_id: int
+    finding_id: str
+    body: str
 
 
 @dataclass
@@ -375,6 +397,123 @@ def load_plan(path: Path) -> ReviewPlan:
     return ReviewPlan(base_sha, head_sha, summary, comments)
 
 
+def validate_amendment_body(value: Any) -> str:
+    body = require_string(value, "amendment.body")
+    if len(body) > 4000:
+        raise PlanError("amendment.body must be at most 4000 characters")
+    if "gh-review-pr:" in body.lower():
+        raise PlanError("amendment.body must not contain a skill marker")
+    if not ISSUE_HEADER_RE.fullmatch(body.splitlines()[0]):
+        raise PlanError(
+            "amendment.body must start with a valid issue disposition, severity, "
+            "and category"
+        )
+    if len([line for line in body.splitlines() if line.strip()]) < 2:
+        raise PlanError("amendment.body must include evidence, impact, or a safe path")
+    reject_secret_literals(body, "amendment.body")
+    return body
+
+
+def issue_classification(value: Any) -> tuple[str, str, str] | None:
+    if not isinstance(value, str) or not value.splitlines():
+        return None
+    match = ISSUE_HEADER_RE.fullmatch(value.splitlines()[0])
+    if not match:
+        return None
+    disposition, severity, category = match.groups()
+    return disposition, severity, category
+
+
+def load_amendment(path: Path) -> AmendmentPlan:
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as error:
+        raise PlanError(f"cannot read amendment file: {error}") from error
+    except json.JSONDecodeError as error:
+        raise PlanError(
+            f"amendment is not valid JSON: line {error.lineno}, column {error.colno}"
+        ) from error
+    if not isinstance(raw, Mapping):
+        raise PlanError("amendment root must be an object")
+    ensure_exact_keys(
+        raw,
+        {
+            "schema_version",
+            "base_sha",
+            "head_sha",
+            "review_id",
+            "finding_id",
+            "body",
+        },
+        "amendment",
+    )
+    if raw["schema_version"] != SCHEMA_VERSION:
+        raise PlanError(f"schema_version must be {SCHEMA_VERSION}")
+    review_id = raw["review_id"]
+    if isinstance(review_id, bool) or not isinstance(review_id, int) or review_id < 1:
+        raise PlanError("amendment.review_id must be a positive integer")
+    finding_id = require_string(raw["finding_id"], "amendment.finding_id").lower()
+    if not SLUG_RE.fullmatch(finding_id):
+        raise PlanError("amendment.finding_id must be a lowercase slug")
+    return AmendmentPlan(
+        validate_sha(raw["base_sha"], "base_sha"),
+        validate_sha(raw["head_sha"], "head_sha"),
+        review_id,
+        finding_id,
+        validate_amendment_body(raw["body"]),
+    )
+
+
+def validate_reply_body(value: Any) -> str:
+    body = require_string(value, "reply.body")
+    if len(body) > 4000:
+        raise PlanError("reply.body must be at most 4000 characters")
+    if "gh-review-pr:" in body.lower():
+        raise PlanError("reply.body must not contain a skill marker")
+    reject_secret_literals(body, "reply.body")
+    return body
+
+
+def load_reply(path: Path) -> ReplyPlan:
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as error:
+        raise PlanError(f"cannot read reply file: {error}") from error
+    except json.JSONDecodeError as error:
+        raise PlanError(
+            f"reply is not valid JSON: line {error.lineno}, column {error.colno}"
+        ) from error
+    if not isinstance(raw, Mapping):
+        raise PlanError("reply root must be an object")
+    ensure_exact_keys(
+        raw,
+        {
+            "schema_version",
+            "base_sha",
+            "head_sha",
+            "review_id",
+            "finding_id",
+            "body",
+        },
+        "reply",
+    )
+    if raw["schema_version"] != SCHEMA_VERSION:
+        raise PlanError(f"schema_version must be {SCHEMA_VERSION}")
+    review_id = raw["review_id"]
+    if isinstance(review_id, bool) or not isinstance(review_id, int) or review_id < 1:
+        raise PlanError("reply.review_id must be a positive integer")
+    finding_id = require_string(raw["finding_id"], "reply.finding_id").lower()
+    if not SLUG_RE.fullmatch(finding_id):
+        raise PlanError("reply.finding_id must be a lowercase slug")
+    return ReplyPlan(
+        validate_sha(raw["base_sha"], "base_sha"),
+        validate_sha(raw["head_sha"], "head_sha"),
+        review_id,
+        finding_id,
+        validate_reply_body(raw["body"]),
+    )
+
+
 def validate_summary_facts(
     summary: str, head_sha: str, comments: Sequence[CommentPlan]
 ) -> None:
@@ -465,6 +604,38 @@ def changed_anchors(patch: str) -> set[tuple[int, str]]:
     return anchors
 
 
+def legacy_position_for_anchor(patch: str, line: int, side: str) -> int | None:
+    """Map an exact blob-line anchor to GitHub's legacy diff position."""
+    old_line = 0
+    new_line = 0
+    position = 0
+    in_hunk = False
+    for patch_line in patch.splitlines():
+        hunk = HUNK_RE.match(patch_line)
+        if hunk:
+            if in_hunk:
+                position += 1
+            old_line = int(hunk.group(1))
+            new_line = int(hunk.group(2))
+            in_hunk = True
+            continue
+        if not in_hunk:
+            continue
+        position += 1
+        if patch_line.startswith("+"):
+            if side == "RIGHT" and new_line == line:
+                return position
+            new_line += 1
+        elif patch_line.startswith("-"):
+            if side == "LEFT" and old_line == line:
+                return position
+            old_line += 1
+        elif patch_line.startswith(" "):
+            old_line += 1
+            new_line += 1
+    return None
+
+
 def nested_string(value: Mapping[str, Any], *keys: str) -> str:
     current: Any = value
     for key in keys:
@@ -551,6 +722,9 @@ class GitHubClient:
 
     def post(self, endpoint: str, payload: Mapping[str, Any]) -> Any:
         return self.request("POST", endpoint, payload)
+
+    def patch(self, endpoint: str, payload: Mapping[str, Any]) -> Any:
+        return self.request("PATCH", endpoint, payload)
 
     def delete(self, endpoint: str) -> Any:
         return self.request("DELETE", endpoint)
@@ -813,6 +987,86 @@ def create_payload(plan: ReviewPlan) -> Mapping[str, Any]:
     }
 
 
+def rendered_comment_location(comment: Mapping[str, Any]) -> str:
+    """Return only non-content fields needed to diagnose an anchor mismatch."""
+    fields = (
+        "line",
+        "original_line",
+        "side",
+        "start_line",
+        "original_start_line",
+        "start_side",
+        "position",
+        "original_position",
+        "commit_id",
+        "original_commit_id",
+    )
+    observed = {field: comment.get(field) for field in fields}
+    return json.dumps(observed, sort_keys=True, separators=(",", ":"))
+
+
+def verify_comment_anchor(
+    plan: ReviewPlan,
+    expected: CommentPlan,
+    remote_comment: Mapping[str, Any],
+    legacy_files: Sequence[Mapping[str, Any]] | None,
+) -> None:
+    finding_id = expected.finding_id
+    observed_line = remote_comment.get("line")
+    observed_side = remote_comment.get("side")
+    if observed_line is not None or observed_side is not None:
+        if (
+            observed_line == expected.line
+            and str(observed_side or "").upper() == expected.side
+        ):
+            return
+        raise VerificationError(
+            f"finding {finding_id} anchor differs from the plan: "
+            f"expected line={expected.line}, side={expected.side}; "
+            f"observed {rendered_comment_location(remote_comment)}"
+        )
+
+    original_commit_id = remote_comment.get("original_commit_id")
+    original_position = remote_comment.get("original_position")
+    if original_commit_id is None and original_position is None:
+        original_commit_id = remote_comment.get("commit_id")
+        original_position = remote_comment.get("position")
+    if original_commit_id != plan.head_sha or not isinstance(
+        original_position, int
+    ):
+        raise VerificationError(
+            f"finding {finding_id} has no verifiable line or legacy position: "
+            f"expected line={expected.line}, side={expected.side}; "
+            f"observed {rendered_comment_location(remote_comment)}"
+        )
+
+    if legacy_files is None:
+        raise VerificationError(
+            f"finding {finding_id} requires legacy position verification but no patches were loaded"
+        )
+    matching_files = [
+        file_value
+        for file_value in legacy_files
+        if file_value.get("filename") == expected.path
+    ]
+    if len(matching_files) != 1 or not isinstance(
+        matching_files[0].get("patch"), str
+    ):
+        raise VerificationError(
+            f"finding {finding_id} legacy position cannot be checked against one complete patch"
+        )
+    expected_position = legacy_position_for_anchor(
+        matching_files[0]["patch"], expected.line, expected.side
+    )
+    if expected_position is None or original_position != expected_position:
+        raise VerificationError(
+            f"finding {finding_id} legacy position differs from the frozen anchor: "
+            f"expected line={expected.line}, side={expected.side}, "
+            f"position={expected_position}; "
+            f"observed {rendered_comment_location(remote_comment)}"
+        )
+
+
 def verify_review(
     client: GitHubClient,
     ref: PullRequestRef,
@@ -846,6 +1100,13 @@ def verify_review(
         )
     expected_by_id = {comment.finding_id: comment for comment in plan.comments}
     observed_ids: set[str] = set()
+    legacy_files: list[Mapping[str, Any]] | None = None
+    if any(
+        remote_comment.get("line") is None
+        and remote_comment.get("side") is None
+        for remote_comment in comments
+    ):
+        legacy_files = client.paginate(f"{ref.endpoint}/files")
     for remote_comment in comments:
         marker = finding_marker_data(remote_comment.get("body"))
         if not marker or not same_run(marker, plan):
@@ -861,10 +1122,7 @@ def verify_review(
         observed_ids.add(finding_id)
         if remote_comment.get("path") != expected.path:
             raise VerificationError(f"finding {finding_id} path differs from the plan")
-        if remote_comment.get("line") != expected.line:
-            raise VerificationError(f"finding {finding_id} line differs from the plan")
-        if str(remote_comment.get("side", "")).upper() != expected.side:
-            raise VerificationError(f"finding {finding_id} side differs from the plan")
+        verify_comment_anchor(plan, expected, remote_comment, legacy_files)
         if (
             without_marker(remote_comment.get("body"), FINDING_MARKER_RE)
             != expected.body
@@ -1100,6 +1358,353 @@ def publication_result(
     }
 
 
+def rendered_existing_finding_marker(marker: Mapping[str, str]) -> str:
+    return (
+        f"<!-- gh-review-pr:finding v={marker['version']} base={marker['base']} "
+        f"head={marker['head']} run={marker['run']} id={marker['finding']} -->"
+    )
+
+
+def locate_owned_finding(
+    state: RemoteState,
+    *,
+    base_sha: str,
+    head_sha: str,
+    review_id: int,
+    finding_id: str,
+    operation: str,
+) -> tuple[Mapping[str, Any], Mapping[str, str]]:
+    matching_reviews = [
+        review
+        for review in state.reviews
+        if review.get("id") == review_id
+    ]
+    if len(matching_reviews) != 1:
+        raise SafetyError(
+            f"the {operation} review_id does not identify one current review"
+        )
+    review = matching_reviews[0]
+    owned_review_marker = review_marker_data(review.get("body"))
+    if (
+        not owned_review_marker
+        or owned_review_marker.get("base") != base_sha
+        or owned_review_marker.get("head") != head_sha
+        or nested_string(review, "user", "login") != state.current_login
+        or str(review.get("state", "")).upper() not in FINAL_STATES
+    ):
+        raise SafetyError("the target review is not a submitted skill-owned review")
+    matching_comments = []
+    for comment in state.comments:
+        marker = finding_marker_data(comment.get("body"))
+        if (
+            marker
+            and comment.get("pull_request_review_id") == review_id
+            and marker.get("finding") == finding_id
+        ):
+            matching_comments.append((comment, marker))
+    if len(matching_comments) != 1:
+        raise SafetyError("the finding_id does not identify one comment in the review")
+    comment, marker = matching_comments[0]
+    if (
+        marker.get("version") != str(SCHEMA_VERSION)
+        or marker.get("base") != base_sha
+        or marker.get("head") != head_sha
+        or marker.get("run") != owned_review_marker.get("run")
+        or nested_string(comment, "user", "login") != state.current_login
+    ):
+        raise SafetyError("the target comment is not exclusively skill-owned")
+    return comment, marker
+
+
+def current_pr_pair(client: GitHubClient, ref: PullRequestRef) -> tuple[str, str]:
+    pull = client.get(ref.endpoint)
+    if not isinstance(pull, Mapping):
+        raise GitHubError("GitHub returned malformed PR metadata")
+    base_sha = nested_string(pull, "base", "sha")
+    head_sha = nested_string(pull, "head", "sha")
+    if not SHA_RE.fullmatch(base_sha) or not SHA_RE.fullmatch(head_sha):
+        raise GitHubError("GitHub returned missing or non-full base/head SHAs")
+    return base_sha, head_sha
+
+
+def verify_amendment_target(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    amendment: AmendmentPlan,
+) -> tuple[int, Mapping[str, str], str]:
+    state = fetch_state(client, ref, include_files=False)
+    if state.base_sha != amendment.base_sha or state.head_sha != amendment.head_sha:
+        raise SafetyError(
+            "the frozen base/head no longer matches the PR; discard the amendment"
+        )
+    comment, marker = locate_owned_finding(
+        state,
+        base_sha=amendment.base_sha,
+        head_sha=amendment.head_sha,
+        review_id=amendment.review_id,
+        finding_id=amendment.finding_id,
+        operation="amendment",
+    )
+    existing_classification = issue_classification(comment.get("body"))
+    replacement_classification = issue_classification(amendment.body)
+    if existing_classification is None:
+        raise SafetyError("the target finding classification could not be verified")
+    if replacement_classification != existing_classification:
+        raise SafetyError(
+            "an amendment may change wording only; disposition, severity, and category "
+            "must match the submitted finding"
+        )
+    comment_id = integer_id(comment, "amendment comment")
+    rendered_body = (
+        f"{amendment.body}\n\n{rendered_existing_finding_marker(marker)}"
+    )
+    return comment_id, marker, rendered_body
+
+
+def verify_reply_target(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    reply: ReplyPlan,
+) -> tuple[int, str, str, str]:
+    state = fetch_state(client, ref, include_files=False)
+    comment, _marker = locate_owned_finding(
+        state,
+        base_sha=reply.base_sha,
+        head_sha=reply.head_sha,
+        review_id=reply.review_id,
+        finding_id=reply.finding_id,
+        operation="reply",
+    )
+    return (
+        integer_id(comment, "reply target comment"),
+        state.current_login,
+        state.base_sha,
+        state.head_sha,
+    )
+
+
+def verify_amended_comment(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    amendment: AmendmentPlan,
+    comment_id: int,
+    expected_body: str,
+) -> Mapping[str, Any]:
+    comment = client.get(
+        f"repos/{ref.owner}/{ref.repo}/pulls/comments/{comment_id}"
+    )
+    if not isinstance(comment, Mapping):
+        raise VerificationError("amended comment returned malformed metadata")
+    marker = finding_marker_data(comment.get("body"))
+    if (
+        comment.get("id") != comment_id
+        or comment.get("pull_request_review_id") != amendment.review_id
+        or not marker
+        or marker.get("base") != amendment.base_sha
+        or marker.get("head") != amendment.head_sha
+        or marker.get("finding") != amendment.finding_id
+        or comment.get("body") != expected_body
+        or nested_string(comment, "user", "login") != authenticated_login(client)
+    ):
+        raise VerificationError(
+            "amended comment did not match the requested owned finding"
+        )
+    return comment
+
+
+def amend_comment(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    amendment: AmendmentPlan,
+) -> Mapping[str, Any]:
+    comment_id, _marker, rendered_body = verify_amendment_target(
+        client, ref, amendment
+    )
+    current_base_sha, current_head_sha = current_pr_pair(client, ref)
+    if (
+        current_base_sha != amendment.base_sha
+        or current_head_sha != amendment.head_sha
+    ):
+        raise SafetyError(
+            "the PR base/head changed while preparing the amendment; discard it"
+        )
+    endpoint = f"repos/{ref.owner}/{ref.repo}/pulls/comments/{comment_id}"
+    status = "amended"
+    try:
+        client.patch(endpoint, {"body": rendered_body})
+    except GitHubError as error:
+        try:
+            comment = verify_amended_comment(
+                client, ref, amendment, comment_id, rendered_body
+            )
+        except TransactionError as reconciliation_error:
+            raise GitHubError(
+                "comment amendment failed and the requested body was not proven; "
+                f"no retry was attempted. {error}; reconciliation: {reconciliation_error}",
+                ambiguous_write=True,
+            ) from error
+        status = "amended-reconciled"
+    else:
+        comment = verify_amended_comment(
+            client, ref, amendment, comment_id, rendered_body
+        )
+    return {
+        "status": status,
+        "pr": ref.url,
+        "base_sha": amendment.base_sha,
+        "head_sha": amendment.head_sha,
+        "review_id": amendment.review_id,
+        "comment_id": comment_id,
+        "finding_id": amendment.finding_id,
+        "comment_url": comment.get("html_url"),
+    }
+
+
+def find_matching_replies(
+    comments: Iterable[Mapping[str, Any]],
+    target_comment_id: int,
+    body: str,
+    login: str,
+) -> list[Mapping[str, Any]]:
+    return [
+        comment
+        for comment in comments
+        if comment.get("in_reply_to_id") == target_comment_id
+        and comment.get("body") == body
+        and nested_string(comment, "user", "login") == login
+    ]
+
+
+def verify_owned_reply(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    target_comment_id: int,
+    body: str,
+    comment_id: int,
+) -> Mapping[str, Any]:
+    comment = client.get(
+        f"repos/{ref.owner}/{ref.repo}/pulls/comments/{comment_id}"
+    )
+    if (
+        not isinstance(comment, Mapping)
+        or comment.get("id") != comment_id
+        or comment.get("in_reply_to_id") != target_comment_id
+        or comment.get("body") != body
+        or nested_string(comment, "user", "login") != authenticated_login(client)
+    ):
+        raise VerificationError(
+            "reply did not match the requested owned finding response"
+        )
+    return comment
+
+
+def owned_reply_result(
+    status: str,
+    ref: PullRequestRef,
+    reply: ReplyPlan,
+    target_comment_id: int,
+    reply_comment_id: int,
+    comment: Mapping[str, Any],
+    current_base_sha: str,
+    current_head_sha: str,
+) -> Mapping[str, Any]:
+    return {
+        "status": status,
+        "pr": ref.url,
+        "base_sha": reply.base_sha,
+        "head_sha": reply.head_sha,
+        "review_base_sha": reply.base_sha,
+        "review_head_sha": reply.head_sha,
+        "current_base_sha": current_base_sha,
+        "current_head_sha": current_head_sha,
+        "review_id": reply.review_id,
+        "target_comment_id": target_comment_id,
+        "reply_comment_id": reply_comment_id,
+        "finding_id": reply.finding_id,
+        "comment_url": comment.get("html_url"),
+    }
+
+
+def reply_to_owned_finding(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    reply: ReplyPlan,
+) -> Mapping[str, Any]:
+    (
+        target_comment_id,
+        login,
+        initial_current_base_sha,
+        initial_current_head_sha,
+    ) = verify_reply_target(client, ref, reply)
+    existing = find_matching_replies(
+        client.paginate(f"{ref.endpoint}/comments"),
+        target_comment_id,
+        reply.body,
+        login,
+    )
+    if len(existing) > 1:
+        raise SafetyError("multiple identical owned replies already exist")
+    if existing:
+        comment = existing[0]
+        current_base_sha, current_head_sha = current_pr_pair(client, ref)
+        return owned_reply_result(
+            "noop-existing-reply",
+            ref,
+            reply,
+            target_comment_id,
+            integer_id(comment, "existing reply"),
+            comment,
+            current_base_sha,
+            current_head_sha,
+        )
+
+    current_base_sha, current_head_sha = current_pr_pair(client, ref)
+    if (
+        current_base_sha != initial_current_base_sha
+        or current_head_sha != initial_current_head_sha
+    ):
+        raise SafetyError(
+            "the PR base/head changed while preparing the reply; re-run against the "
+            "same owned finding"
+        )
+
+    endpoint = f"{ref.endpoint}/comments/{target_comment_id}/replies"
+    status = "replied"
+    try:
+        created = client.post(endpoint, {"body": reply.body})
+        if not isinstance(created, Mapping):
+            raise VerificationError("create reply returned malformed metadata")
+        reply_comment_id = integer_id(created, "created reply")
+    except TransactionError as error:
+        matches = find_matching_replies(
+            client.paginate(f"{ref.endpoint}/comments"),
+            target_comment_id,
+            reply.body,
+            login,
+        )
+        if len(matches) != 1:
+            raise GitHubError(
+                "reply creation failed and one exact response was not proven; "
+                f"no retry was attempted. {error}",
+                ambiguous_write=True,
+            ) from error
+        reply_comment_id = integer_id(matches[0], "reconciled reply")
+        status = "replied-reconciled"
+    comment = verify_owned_reply(
+        client, ref, target_comment_id, reply.body, reply_comment_id
+    )
+    return owned_reply_result(
+        status,
+        ref,
+        reply,
+        target_comment_id,
+        reply_comment_id,
+        comment,
+        current_base_sha,
+        current_head_sha,
+    )
+
+
 def validation_result(
     ref: PullRequestRef, plan: ReviewPlan, result: Preflight
 ) -> Mapping[str, Any]:
@@ -1124,18 +1729,32 @@ def validation_result(
 
 def parser() -> argparse.ArgumentParser:
     root = JsonArgumentParser(
-        description="Audit, validate, and atomically publish a gh-review-pr review"
+        description="Audit, validate, publish, amend, or reply to a gh-review-pr review"
     )
     subparsers = root.add_subparsers(dest="command", required=True)
-    for name in ("audit", "validate", "publish"):
+    for name in ("audit", "validate", "publish", "amend", "reply"):
         command = subparsers.add_parser(name)
         command.add_argument("--pr", required=True, help="full GitHub pull request URL")
         command.add_argument(
             "--timeout", type=int, default=60, help="per-request timeout in seconds"
         )
-        if name != "audit":
+        if name in {"validate", "publish"}:
             command.add_argument(
                 "--plan", required=True, type=Path, help="review plan JSON"
+            )
+        if name == "amend":
+            command.add_argument(
+                "--amendment",
+                required=True,
+                type=Path,
+                help="owned finding amendment JSON",
+            )
+        if name == "reply":
+            command.add_argument(
+                "--reply",
+                required=True,
+                type=Path,
+                help="owned finding reply JSON",
             )
         if name == "publish":
             command.add_argument(
@@ -1161,6 +1780,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         client = GitHubClient(ref.host, timeout=args.timeout)
         if args.command == "audit":
             result = audit_result(ref, fetch_state(client, ref, include_files=False))
+        elif args.command == "amend":
+            result = amend_comment(client, ref, load_amendment(args.amendment))
+        elif args.command == "reply":
+            result = reply_to_owned_finding(client, ref, load_reply(args.reply))
         else:
             plan = load_plan(args.plan)
             if args.command == "validate":

@@ -1,5 +1,19 @@
 # Skill Quality Guide
 
+## Contents
+
+- [Purpose](#purpose)
+- [Scope And Ownership](#scope-and-ownership)
+- [How To Use This Guide](#how-to-use-this-guide)
+- [What A Good Skill Is](#what-a-good-skill-is)
+- [Core Quality Criteria](#core-quality-criteria)
+- [When To Update This Guide](#when-to-update-this-guide)
+- [What This Guide Should Not Become](#what-this-guide-should-not-become)
+- [Maintenance Bias](#maintenance-bias)
+- [Common Failure Patterns](#common-failure-patterns)
+- [Review Gates](#review-gates)
+- [Practical Summary](#practical-summary)
+
 ## Purpose
 - Define what makes a good skill in this repo.
 - Keep skill quality standards reusable across domains, not tied to one project.
@@ -116,7 +130,7 @@
   - `Result`: `PASS`, `PASS WITH SUGGESTIONS`, or `FAIL` for the checks actually performed
   - `Evidence Coverage`: `complete`, `partial`, or `unavailable` for the required environments, scenarios, and reruns actually observed
 - Use the following evidence ladder and report the highest level actually reached:
-  1. static validation: frontmatter, package naming, links, referenced files, and metadata when present
+  1. static validation: frontmatter, package naming, links, referenced files, metadata, and named cross-skill references when present
   2. resource execution: relevant scripts, templates, parsers, or other deterministic resources exercised with representative inputs
   3. fresh forward-test: a fresh agent performs a realistic task from the skill and raw task artifacts without receiving the intended answer, suspected failure, or proposed fix
   4. comparable rerun: the revised skill is rerun on the same task class and contract failure closely enough to show whether that failure reappears
@@ -217,6 +231,7 @@ Mark every applicable gate `yes` or `no`. Mark a gate `not applicable` only with
 - Is the canonical source explicit, and were adjacent metadata, references, templates, and resources reviewed for drift?
 - Were only approved installation targets updated and compared with the canonical source afterward?
 - Are target-specific differences and running-session cache limits stated instead of hidden?
+- Is every reference to another named skill explicitly availability-qualified, or covered by a mandatory integration contract that distributes both packages together?
 - Would the same skill still make sense in another repository of the intended class?
 
 ## Practical Summary

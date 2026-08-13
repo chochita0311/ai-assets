@@ -1,6 +1,6 @@
 ---
 name: pr-descriptor
-description: Create, rewrite, normalize, or evaluate consistent, review-ready pull request titles and descriptions from repository context, diffs, commits, issues, and validation evidence. Use when Codex needs a Korean or English PR artifact for frontend, web, backend, API, library, data, CI/CD, Jenkins, scripting, infrastructure, configuration, dependency, security, migration, test, or documentation changes.
+description: Create, rewrite, normalize, or evaluate consistent, review-ready pull request titles and descriptions from repository context, diffs, commits, issues, and validation evidence, and safely publish a description to an actual pull request only when explicitly requested in the current turn. Use when Codex needs a Korean or English PR artifact or an explicitly requested PR-description update for frontend, web, backend, API, library, data, CI/CD, Jenkins, scripting, infrastructure, configuration, dependency, security, migration, test, or documentation changes.
 ---
 
 # PR Descriptor
@@ -19,6 +19,8 @@ Match the response to the user's request:
 
 For a complete PR draft, place `Title: <title>` before the body. Otherwise do not add an unrequested title, rationale, or commentary.
 
+Treat publication as a separate delivery action layered onto the selected composition mode, not as an implied result of drafting, rewriting, normalizing, evaluating, or refining an artifact.
+
 ## Follow instruction precedence
 
 Apply rules in this order:
@@ -28,6 +30,36 @@ Apply rules in this order:
 3. Apply this skill's default structure and style contract
 
 Map the required information into repository-owned headings, checklists, and metadata instead of duplicating them.
+
+## Separate composition from publication
+
+Treat PR-description publication as an overwrite-capable external mutation.
+
+### Authorization boundary
+
+- This skill composes or evaluates a PR artifact; invoking it does not by itself authorize publication
+- Publish only when the user explicitly requests writing, updating, or applying the actual PR description in the current turn, or when a higher-priority instruction requires direct publication for that explicit request
+- Do not infer publication authorization from requests to summarize work, organize or refresh documentation, audit drift, update a ticket, or otherwise clean up context; prior authorization does not carry forward
+- Stop before mutation if the exact PR target or a safe publication procedure cannot be resolved
+
+### Safe publication sequence
+
+When publication is authorized, follow the applicable local or repository procedure while preserving these minimum safeguards:
+
+When `gh` is supported, run [pr_description_transaction.py](scripts/pr_description_transaction.py); pass its publication flag only for current-turn authorization and its clear flag only for a current-turn explicit clear request.
+
+1. Resolve the exact PR and the supported mutation mechanism
+2. Capture the current body and a concurrency marker such as `updatedAt`, and keep the body as a separate backup
+3. Write the complete candidate body to a different file, then verify that the file exists, contains the intended artifact, and is non-empty unless the user explicitly asked in the current turn to clear the description
+4. Re-read the concurrency marker immediately before publishing and stop without writing if it changed
+5. Publish from the candidate file; never use stdin such as `--body-file -`, an inline body argument, command substitution, or another mechanism that can silently turn missing input into an empty description
+6. Fetch the published body and verify that it matches the candidate before reporting success
+
+### Failure and recovery
+
+- Keep the captured prior body until post-publication verification succeeds
+- On failure, concurrency mismatch, or body mismatch, do not claim success or perform a blind follow-up write
+- Restore the prior body only when the just-completed write is known to be the cause and no concurrent update occurred; otherwise report the state and request direction
 
 ## Build the description
 
@@ -134,10 +166,11 @@ Do not omit `Impact`, `Deployment and Rollback`, or `Review Guide` merely to sho
 - Preserve established terminology rather than translating identifiers or product names
 - Scale detail with risk: keep small PRs compact and use concern subheadings plus `Review Guide` for large or mixed PRs
 
-## Return a paste-ready artifact
+## Deliver the artifact
 
-- Return Markdown without an outer code fence unless the user asks for one
-- Return only the artifact required by the selected output mode
+- For composition-only work, return Markdown without an outer code fence unless the user asks for one
+- For composition-only work, return only the artifact required by the selected output mode
+- After verified publication, report the exact PR target and verification result; return the body as well only when requested
 - Preserve correct facts from an existing description while normalizing structure and style
 - Keep requested audit or refinement notes visibly separate from the PR body
 
@@ -156,6 +189,6 @@ Do not omit `Impact`, `Deployment and Rollback`, or `Review Guide` merely to sho
 - No bullet or numbered item ends with prose terminal punctuation
 - Language, list form, and punctuation are consistent
 - No sensitive value is exposed unnecessarily
-- The response contains only the requested artifact and any explicitly requested separate notes
+- The response matches the delivery path: return only the requested artifact and explicitly requested separate notes for composition-only work; after publication, report the exact target and observed verification result, and include the body only when requested
 
 Read [examples-ko.md](references/examples-ko.md) for Korean calibration or [examples-en.md](references/examples-en.md) for English calibration when an example is needed. Use examples for structure and tone, never as factual evidence.
