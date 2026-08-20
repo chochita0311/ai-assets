@@ -2,6 +2,11 @@
 
 This directory owns reusable pet metadata and spritesheet assets for Codex-compatible pet packages.
 
+## Current Packages
+
+- [Baylo](baylo/pet.json): a curious eBay puppy with colorful ears and a rainbow tail
+- [태양](tae-yang/pet.json): a cheerful black-and-tan puppy carrying a colorful ball
+
 ## Package Contract
 
 Each package uses this shape:

@@ -1,6 +1,6 @@
 ---
 name: gh-review-pr
-description: Review, draft, publish, audit, refresh, amend, or reply to skill-owned GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a concise review summary and high-confidence inline threads while preventing duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, post inline code-review findings, rerun an automated review, inspect or reconcile an existing skill-owned review, correct the wording of a skill-owned finding, or respond to a skill-owned finding; do not use for editing PR titles or descriptions, replying to human-authored review threads, or general local code review without a PR.
+description: Review, draft, publish, audit, refresh, amend, or reply to skill-owned GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a useful review summary and high-confidence inline threads while preventing duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, post inline code-review findings, rerun an automated review, audit existing human or skill-owned review feedback, correct the wording of a skill-owned finding, or respond to a skill-owned finding; do not use for editing PR titles or descriptions, posting replies to human-authored review threads, or general local code review without a PR.
 ---
 
 # GitHub PR Reviewer
@@ -11,7 +11,7 @@ Produce one review for one immutable PR `(base SHA, head SHA)` snapshot, or safe
 
 - `publish`: use for an explicit `$gh-review-pr <PR URL>` invocation or a clear request to review and post; publish one review after all gates pass
 - `draft`: use when the user says draft, preview, or do not post; return the summary and proposed threads without any GitHub write
-- `audit`: inspect existing reviews, duplicate state, anchors, or a prior run without writing
+- `audit`: inspect existing reviews, duplicate state, anchors, a prior run, or human-authored feedback without writing
 - `refresh`: re-review an explicitly requested snapshot whose base or head changed; never add a second skill-owned review to the same base/head pair
 - `amend`: correct only the wording of one submitted skill-owned finding after an explicit request; preserve its classification, anchor, marker, and review summary
 - `reply`: respond to one submitted skill-owned finding after an explicit request; target the original review snapshot even when the current PR head has advanced, and never use this mode for human-authored threads
@@ -33,6 +33,7 @@ The transaction accepts `APPROVE` only with zero blocking findings and `REQUEST_
 - Anchor every inline thread to the exact added or deleted line that introduces or materially worsens the trigger or impact; never move it to merely reachable nearby code
 - Publish only current-snapshot, reachable findings with `critical`, `high`, or `medium` severity and `high` confidence
 - Keep low-confidence possibilities, style-only preferences, and mechanical lint in private analysis unless a repository rule makes them material
+- Never force an inline finding to make a review look useful; make a zero-finding result earn its conclusion through explicit negative evidence
 - Never expose literal secrets; describe the class, location, and remediation without repeating the value
 - Never convert a failed inline thread into an issue comment, summary detail, or unanchored fallback
 - Never retry an ambiguous write until remote state has been reconciled
@@ -70,27 +71,21 @@ Use this source priority when inputs disagree:
 5. PR body and commits as claimed intent
 6. Existing comments as discussion and duplicate context, not behavioral truth
 
-Use a local checkout only when it can represent the exact frozen base and head commits; otherwise inspect immutable remote content. Read [review-criteria.md](references/review-criteria.md) before classifying or publishing findings. It owns coverage, severity, confidence, causality, reachability, counterevidence, and the internal finding ledger.
+Use a local checkout only when it can represent the exact frozen base and head commits; otherwise inspect immutable remote content. Read [review-criteria.md](references/review-criteria.md) before classifying or publishing findings. It owns [review depth and independence](references/review-criteria.md#review-depth-and-independence), [change mapping and review passes](references/review-criteria.md#change-map-and-review-passes), severity, confidence, causality, reachability, counterevidence, the internal finding ledger, [zero-finding adjudication](references/review-criteria.md#zero-finding-gate), and [human-feedback audits](references/review-criteria.md#human-feedback-audits).
 
-When the runtime provides suitable named workers, `evidence_scout` may gather bounded multi-file call-path or test evidence and `bounded_verifier` may run an exact validation packet. Pass only frozen task artifacts. The primary agent must retain scope, security judgment, final adjudication, publication, and completion approval. The skill does not require or bind a model.
+Classify the semantic pass as `fresh-review` or `self-review`. If the active session authored or extensively designed the change, treat its earlier explanations only as claimed intent and run a clean-room adversarial pass from the frozen artifacts. For security-sensitive, cross-service, behavior-removal, migration, or otherwise complex changes, obtain a quality-first semantic pass and, when the runtime and user authority permit it, a separate no-history omission challenge before publication—even when the first pass found issues. Reconcile the union through the same publication gates. If adequate depth or independence is unavailable, stop in `draft` with that gap; never treat one discovered finding as proof that coverage is complete.
+
+When the runtime provides suitable named workers, `evidence_scout` may gather bounded multi-file call-path or test evidence and `bounded_verifier` may run an exact validation packet. A separately configured review-capable worker may challenge candidate coverage only when its competence and no-history input meet the repository's delegation rules. Pass only frozen task artifacts. The primary agent must retain scope, security judgment, final adjudication, publication, and completion approval. The skill does not bind a model name.
 
 ### 3. Adjudicate before composing
 
-For each candidate, verify all of the following:
+Build the change map and complete the boundary, behavioral-delta, integration, test, design, and adversarial passes before applying publication gates. Do not begin with the question “what can I comment on?”; first establish what changed, which invariant it can break, and which concrete evidence disproves each serious candidate. A zero-finding result requires the [zero-finding gate](references/review-criteria.md#zero-finding-gate).
 
-- The current PR introduces or materially worsens the behavior
-- A concrete runtime, data, security, compatibility, or maintenance path reaches it
-- Counterevidence and relevant tests do not invalidate it
-- The impact meets the publication threshold
-- One exact changed line is a valid anchor
-- No existing thread already covers the same concern
-- A minimal safe correction or decision path can be stated
-
-Do not publish first and investigate later. If material uncertainty remains, gather more evidence or omit the inline finding. A question disposition still requires high confidence that the ambiguity creates a material review risk.
+Apply every authoritative [publication gate](references/review-criteria.md#publication-gates), including its counterfactual current-delta and exact-anchor checks. If any gate fails, omit the candidate or record a material evidence gap instead of publishing it. Do not publish first and investigate later. A question disposition still requires high confidence that the ambiguity creates a material review risk.
 
 ### 4. Compose separate artifacts
 
-Create the summary as exactly one paragraph under `## Review summary`. Include the abbreviated head SHA, reviewed file count, exact numeric counts, and any material coverage gap. Use language-appropriate order: `blocking N`, `non-blocking N`, and `question N` in Korean, or `N blocking`, `N non-blocking`, and `N question` findings in English. Do not repeat thread titles, evidence, or remediation. For zero findings, say that no high-confidence finding was found within the stated coverage; do not claim the change is safe or defect-free.
+Create the summary as exactly one paragraph under `## Review summary`. Give a concise change-and-risk synopsis and name the main review focus, then include the abbreviated head SHA, reviewed file count, exact numeric counts, and any material coverage, independence, or review-depth gap. Use language-appropriate order: `blocking N`, `non-blocking N`, and `question N` in Korean, or `N blocking`, `N non-blocking`, and `N question` findings in English. Do not repeat thread titles, detailed evidence, or remediation. For zero findings, say that no high-confidence finding was found within the stated coverage; do not claim the change is safe or defect-free.
 
 Write one concern per inline thread. Start it with:
 
@@ -100,11 +95,11 @@ issue (<blocking|non-blocking|question>, <critical|high|medium>, <category>): <c
 
 Then state the triggering behavior, impact, and smallest safe correction or decision. Do not add praise, nits, generic review advice, or duplicated summary prose. Read [examples-ko.md](references/examples-ko.md) or [examples-en.md](references/examples-en.md) only when language calibration is useful.
 
-### 5. Validate and publish atomically
+### 5. Complete the selected mode safely
 
-For `audit`, return the frozen base/head pair, ownership and duplicate state, pending-review state, the requested review or anchor findings, and material evidence gaps. Stop without creating or submitting a review.
+For `audit`, return the frozen base/head pair, ownership and duplicate state, pending-review state, the requested review or anchor findings, and material evidence gaps. When auditing human feedback, classify each concern and provide evidence, the smallest recommended action, and a concise response draft, but never post the response. Stop without creating or submitting a review.
 
-For `draft`, stop after returning the proposed summary, threads, frozen base/head pair, and coverage gaps.
+For `draft`, stop after returning the proposed summary, frozen base/head pair, coverage and review-depth gaps, plus publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, category, and body. With zero proposed threads, also return the compact [session-only evidence receipt](references/review-criteria.md#artifact-writing); keep it outside the GitHub summary and JSON plan.
 
 For `publish` or `refresh`, create a temporary JSON plan and follow [github-publishing.md](references/github-publishing.md). It owns the plan schema, commands, status meanings, pending-review protocol, reconciliation rules, and failure handling.
 
@@ -117,7 +112,7 @@ python3 "$GH_REVIEW_TRANSACTION" publish --pr <full-pr-url> --plan <plan-json>
 
 Pass `--event APPROVE` or `--event REQUEST_CHANGES` only for the user's explicit decision request. Do not reconstruct the write with ad hoc `gh api`, GraphQL, MCP, `curl`, browser actions, or individual comment calls if the script stops. If `gh` fails, report its sanitized error and the transaction status; do not switch providers.
 
-After publication, report the final review URL or ID, bound base/head SHAs, event, inline count, and any evidence gap. Delete the temporary plan unless the user explicitly asks to retain it.
+After publication, report the final review URL or ID, bound base/head SHAs, event, inline count, and any evidence gap. When the inline count is zero, also return the compact zero-finding evidence receipt in the session so the user can distinguish a supported empty review from a hollow summary. Delete the temporary plan unless the user explicitly asks to retain it.
 
 ## Maintain a submitted skill-owned finding
 
@@ -132,5 +127,9 @@ After an amendment, report its status, review and comment IDs, finding ID, and c
 ## Keep adjacent work separate
 
 This skill owns reviewer artifacts only. It does not edit source code, PR titles, PR descriptions, issues, or human review threads. Treat requested PR title or body work as a separate task governed by whatever available capability explicitly owns PR metadata; do not assume a named companion skill is installed. When both artifacts are produced, bind them to the same frozen base/head snapshot without making either workflow a dependency of the other.
+
+## Stop without an unsafe fallback
+
+If a later pass finds a material omission in an already submitted skill-owned review for the same snapshot, follow the [same-snapshot omission rule](references/github-publishing.md#refresh-and-duplicate-handling): return a corrected draft and stop without an ad hoc write.
 
 Stop without writing when the target is ambiguous, a review-building mode's frozen SHA changes, an amendment no longer matches the current PR pair, a reply's current PR pair changes while the write is being prepared, required diff data is truncated at a proposed anchor, permissions fail, a human pending review could be affected, duplicate state cannot be resolved, or read-after-write verification is incomplete.

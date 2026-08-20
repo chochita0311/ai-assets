@@ -4,16 +4,16 @@ Use this reference for `audit`, `validate`, `publish`, `refresh`, `amend`, `repl
 
 ## Contents
 
-- Requirements
-- Review plan schema
-- Read-only audit and validation
-- Atomic publish protocol
-- Statuses and exit behavior
-- Refresh and duplicate handling
-- Failure recovery
-- Owned finding amendments
-- Owned finding replies
-- Safety boundaries
+- [Requirements](#requirements)
+- [Read-only audit](#read-only-audit)
+- [Review plan schema](#review-plan-schema)
+- [Validate and publish atomically](#validate-and-publish-atomically)
+- [Statuses and exit behavior](#statuses-and-exit-behavior)
+- [Refresh and duplicate handling](#refresh-and-duplicate-handling)
+- [Failure recovery](#failure-recovery)
+- [Owned finding amendments](#owned-finding-amendments)
+- [Owned finding replies](#owned-finding-replies)
+- [Safety boundaries](#safety-boundaries)
 
 ## Requirements
 
@@ -32,6 +32,16 @@ Resolve the script once for all commands:
 GH_REVIEW_TRANSACTION="<absolute-gh-review-pr-skill-dir>/scripts/gh_review_transaction.py"
 ```
 
+## Read-only audit
+
+Audit before semantic review:
+
+```bash
+python3 "$GH_REVIEW_TRANSACTION" audit --pr https://github.example.com/owner/repo/pull/123
+```
+
+The JSON result includes the base/head SHAs, authenticated user, existing skill-owned reviews and findings, and pending-review conflicts. It is a snapshot and ownership preflight, not the semantic evidence bundle. It omits diff patches, commits, checks, the PR body, review bodies, inline-thread content, issue comments, and unresolved-thread state. Acquire those separately through authorized read-only GitHub tooling before semantic review; the sole-write-path restriction does not prohibit those reads.
+
 ## Review plan schema
 
 ```json
@@ -39,7 +49,7 @@ GH_REVIEW_TRANSACTION="<absolute-gh-review-pr-skill-dir>/scripts/gh_review_trans
   "schema_version": 1,
   "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "head_sha": "0123456789abcdef0123456789abcdef01234567",
-  "summary": "## Review summary\n\n`0123456` 기준 변경 파일 4개를 검토했으며 blocking 1건, non-blocking 0건, question 0건입니다. 생성 파일 1개는 source 기준으로 확인했습니다.",
+  "summary": "## Review summary\n\n이 PR은 빈 권한 목록의 갱신 의미를 변경하며, 권한 회수와 실패 원자성을 중심으로 `0123456` 기준 변경 파일 4개를 검토한 결과 blocking 1건, non-blocking 0건, question 0건입니다. 생성 파일 1개는 source 기준으로 확인했습니다.",
   "comments": [
     {
       "finding_id": "retain-permission-on-empty-update",
@@ -71,15 +81,7 @@ Rules enforced by the script:
 
 Use `RIGHT` only for an added line and `LEFT` only for a deleted line. The script rejects context-only, absent, binary, and truncated anchors.
 
-## Read-only audit and validation
-
-Audit before semantic review:
-
-```bash
-python3 "$GH_REVIEW_TRANSACTION" audit --pr https://github.example.com/owner/repo/pull/123
-```
-
-The JSON result includes the base/head SHAs, authenticated user, existing skill-owned reviews and findings, and pending-review conflicts. It is a snapshot and ownership preflight, not the semantic evidence bundle. It omits diff patches, commits, checks, the PR body, review bodies, inline-thread content, issue comments, and unresolved-thread state. Acquire those separately through authorized read-only GitHub tooling before semantic review; the sole-write-path restriction does not prohibit those reads.
+## Validate and publish atomically
 
 Validate the completed plan immediately before writing:
 
@@ -90,8 +92,6 @@ python3 "$GH_REVIEW_TRANSACTION" validate \
 ```
 
 `validate` reads current PR state, diff anchors, reviews, and comments. It performs no write. A no-op status means the exact base/head snapshot already has a skill-owned review; do not publish another one for that pair.
-
-## Atomic publish protocol
 
 Run only after `validate` succeeds:
 
@@ -142,6 +142,8 @@ Command errors, including invalid CLI usage, are emitted as sanitized JSON on st
 `refresh` is a semantic mode, not a force flag. When either base or head changes, audit the new pair, rebuild coverage and the ledger, retain existing threads as the discussion locations for old findings, and publish only genuinely new findings. The script permits one skill-owned review on the new snapshot but refuses a second one for the exact same pair.
 
 Do not alter `finding_id` to evade duplicate detection. If the same concern remains on a new snapshot, omit a new thread. If only the wording is similar but the trigger or impact is materially different, use a genuinely distinct semantic identifier.
+
+If a later semantic pass finds a material omission in an already submitted skill-owned review for the exact same base/head pair, return a corrected draft and stop. The current transaction cannot atomically replace the submitted summary and add new inline findings, so never work around the same-snapshot guard with a standalone comment or an altered `finding_id`.
 
 An exact owned pending transaction may be resumed after verification. A different owned pending transaction, a human pending review for the authenticated user, or mixed ownership stops the script for manual inspection.
 

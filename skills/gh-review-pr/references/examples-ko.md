@@ -7,7 +7,7 @@ Use these examples only for Korean tone and artifact separation. They are synthe
 ```markdown
 ## Review summary
 
-`8f31c2a` 기준 human-authored 변경 파일 6개를 검토했으며 blocking 1건, non-blocking 1건, question 0건입니다. 생성된 client 파일 2개는 generator와 schema 기준으로 확인했습니다.
+이 PR은 저장 상태 교체와 재시도 종료 기록을 변경하며, 실패 원자성과 관측성을 중심으로 `8f31c2a` 기준 human-authored 변경 파일 6개를 검토한 결과 blocking 1건, non-blocking 1건, question 0건입니다. 생성된 client 파일 2개는 generator와 schema 기준으로 확인했습니다.
 ```
 
 ```markdown
@@ -29,7 +29,7 @@ Summary는 finding의 제목이나 수정 방법을 반복하지 않습니다. T
 ```markdown
 ## Review summary
 
-`391ad76` 기준 human-authored 변경 파일 3개를 모두 검토했으며 blocking 0건, non-blocking 0건, question 0건입니다. 확인한 범위에서 게시 기준을 충족하는 high-confidence finding은 없었습니다.
+이 PR은 요청 검증을 영속화보다 앞 단계로 이동하며, 두 경계의 base/head 동작을 대조해 `391ad76` 기준 human-authored 변경 파일 3개를 모두 검토한 결과 blocking 0건, non-blocking 0건, question 0건입니다. 확인한 범위에서 게시 기준을 충족하는 high-confidence finding은 없었습니다.
 ```
 
 “문제없음”, “안전함”, “merge 가능”처럼 검토 범위를 넘어서는 결론을 쓰지 않습니다.
@@ -39,5 +39,5 @@ Summary는 finding의 제목이나 수정 방법을 반복하지 않습니다. T
 ```markdown
 ## Review summary
 
-`a91e65b` 기준 변경 파일 9개 중 7개를 검토했으며 blocking 0건, non-blocking 0건, question 0건입니다. provider가 patch를 생략한 binary 1개와 truncated diff 1개는 검토 범위에서 제외했습니다.
+이 PR은 인증 callback 검증과 배포 설정을 함께 변경하며, 해당 경로를 중심으로 `a91e65b` 기준 변경 파일 9개 중 7개를 검토한 결과 blocking 0건, non-blocking 0건, question 0건입니다. provider가 patch를 생략한 binary 1개와 truncated diff 1개는 검토 범위에서 제외했습니다.
 ```

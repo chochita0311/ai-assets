@@ -1,4 +1,4 @@
 interface:
   display_name: "GitHub PR Reviewer"
   short_description: "Review and safely maintain GitHub PR feedback"
-  default_prompt: "Use $gh-review-pr to review a GitHub pull request from a frozen base/head snapshot, or safely amend or reply to its skill-owned findings when explicitly requested."
+  default_prompt: "Use $gh-review-pr to review a frozen GitHub pull request snapshot with a useful change-and-risk summary, disciplined zero-finding evidence, and high-confidence inline findings, or safely maintain its skill-owned findings when explicitly requested."

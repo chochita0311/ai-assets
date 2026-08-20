@@ -8,11 +8,11 @@
 
 ## Current Follow-Ups
 
-### Repository-wide skill quality
+### [Repository-wide skill quality](SKILL-QUALITY.md)
 - Define a skill-specific adoption, synchronization, and removal contract before automating installation. Cover canonical symlinks versus copied targets, Codex and Claude discovery paths, target-specific metadata, pre-existing paths, cache refresh, and safe unlink behavior.
 - Consider a shared benchmark suite only after at least two skill families have reusable, privacy-safe task corpora and comparable pass/fail contracts; keep forward-tests skill-local until then.
 
-### `maintain-context-freshness`
+### [`maintain-context-freshness`](maintain-context-freshness/SKILL.md)
 - Repeat `maintain` in an independent post-creation run:
   - verify that only approved content-state changes reach the smallest owning documents; finding IDs, ledger rows, and review, approval, or action status must remain session-only unless the user explicitly requests a named durable audit artifact
   - confirm that historical markers, `as-of` dates, successor links, and any condensation preserve unique content, provenance, and discoverability
@@ -21,12 +21,11 @@
   - confirm that the session report distinguishes proposed, not applied, approved, and applied states plainly
 - Confirm in a fresh Claude session that the canonical symlinked package is discovered and can complete one standalone audit or maintain run.
 
-### `gh-review-pr`
-- Decide and test the same-snapshot amendment contract for a submitted skill-owned review when the user requests a summary replacement or a newly verified inline finding. If GitHub cannot amend it atomically, define the safe stop and handoff instead of permitting ad hoc standalone writes.
-- Repeat `draft` mode with findings and require publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, and category. Tighten the draft output contract if omission repeats.
+### [`gh-review-pr`](gh-review-pr/SKILL.md)
+- Forward-test the documented same-snapshot omission safe stop against a submitted skill-owned review: verify that a newly verified inline finding or summary-count change returns a corrected draft without mutating GitHub or bypassing the snapshot guard.
 - Rerun an exactly published snapshot through the bundled transaction to verify `noop-existing-snapshot` behavior in a real session; unit coverage exists, but the live duplicate no-op remains unproven.
 - Forward-test `reply` on a submitted skill-owned finding after the PR head advances, and verify that the result distinguishes the original review head from the current head without permitting a preparation-time race.
-- Run matched `draft` reruns against the same frozen snapshots across intended harness and model combinations—at least one security-sensitive PR and one ordinary PR—to distinguish model variance from a reusable review-criteria gap before changing severity or security rules.
+- Convert the adjudicated behavior-removal, security, and cross-boundary consumer-frontier cases into privacy-safe semantic fixtures; add a legitimate zero-finding control; then run matched self-review versus fresh-review and latency-first versus quality-first evaluations without revealing the expected findings.
 - Forward-test an unavailable named-worker case and confirm that evidence collection returns to the primary agent without generic-worker substitution or weakened publication gates.
 
 ## Notes

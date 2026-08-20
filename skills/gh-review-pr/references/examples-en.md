@@ -7,7 +7,7 @@ Use these examples only to calibrate English tone and artifact separation. They 
 ```markdown
 ## Review summary
 
-Reviewed six human-authored files at `8f31c2a`; the review found 1 blocking, 1 non-blocking, and 0 question findings. Two generated client files were covered through their generator and schema.
+This PR replaces stored state in one operation and adds terminal retry reporting; the review focused on failure atomicity and observability across six human-authored files at `8f31c2a` and found 1 blocking, 1 non-blocking, and 0 question findings. Two generated client files were covered through their generator and schema.
 ```
 
 ```markdown
@@ -29,7 +29,7 @@ The summary does not repeat finding titles or fixes. Each thread contains the ob
 ```markdown
 ## Review summary
 
-Reviewed all three human-authored changed files at `391ad76`; the review found 0 blocking, 0 non-blocking, and 0 question findings. No high-confidence finding met the publication threshold within that coverage.
+This PR moves request validation ahead of persistence; the review compared both boundaries across all three human-authored changed files at `391ad76` and found 0 blocking, 0 non-blocking, and 0 question findings. No high-confidence finding met the publication threshold within that coverage.
 ```
 
 Do not expand this into “safe,” “defect-free,” or “ready to merge.”
@@ -39,5 +39,5 @@ Do not expand this into “safe,” “defect-free,” or “ready to merge.”
 ```markdown
 ## Review summary
 
-Reviewed seven of nine changed files at `a91e65b`; the review found 0 blocking, 0 non-blocking, and 0 question findings. One binary file and one provider-truncated diff remain outside the reviewed coverage.
+This PR changes authentication callback validation and its deployment configuration; the review covered those paths across seven of nine files at `a91e65b` and found 0 blocking, 0 non-blocking, and 0 question findings. One binary file and one provider-truncated diff remain outside the reviewed coverage.
 ```

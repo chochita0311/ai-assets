@@ -142,7 +142,7 @@ Route based on the first broken layer:
 
 ## Spec Readiness Gate
 Do not start executable spec work when:
-- a required foundation feature is not `passed`
+- a required foundation feature is not `approved`
 - an open PRD item still changes the active feature
 - the user-visible outcome or contract outcome is still ambiguous
 - required fallback behavior is still undefined

@@ -127,7 +127,7 @@ Update local entrance docs and references so the resulting layout is coherent.
 Refresh the local agent system in this repo from `../ai-assets/agents/`.
 
 Keep repo-specific policy or product docs that are not part of the shared harness package.
-Update only the shared role, profile, template, and harness-policy layer.
+Update only the shared role, flow, operation, profile, template, and harness-policy layers.
 If local docs have drifted, reconcile references and ownership cleanly instead of duplicating guidance.
 ```
 
@@ -138,6 +138,8 @@ Adopt the shared agent system from `../ai-assets/agents/`, but merge it into the
 Preserve repo-specific architecture, product policy, and content contracts.
 Replace or align only the reusable harness layer:
 - role docs
+- flow docs
+- operation docs
 - profile docs
 - templates
 - harness governance
