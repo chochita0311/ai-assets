@@ -54,6 +54,13 @@
 - Vertical scrolling should normally belong to an inner content region so scrollbars and overflowing children do not erase, split, or square off the visible frame.
 - Evaluators should inspect short, threshold, and long-list states and compare all four edges, corner radii, and overflow behavior.
 
+#### Parallel Reading Region Scroll Ownership
+
+- A secondary reference, navigation, or context region used for independent lookup should not require the user to traverse the full depth of a much longer primary reading surface merely to reach the secondary region's later items.
+- When long primary and secondary regions remain side by side, keep the primary task's document scroll distinct from any intentionally viewport-bounded secondary scroll. Keep persistent orientation such as the secondary title outside the inner scroller when that title must remain visible, and preserve frame clipping, usable inner insets, scrollbar gutter, sticky offsets, and intentional scroll chaining.
+- When the regions stack at a narrower breakpoint, release desktop-only maximum height and nested scrolling unless the narrow-layout contract explicitly retains them. A responsive reflow must not leave an unnecessary scroll trap inside the document.
+- Evaluators should exercise short-primary/long-secondary, long-primary/short-secondary, and long-both combinations at wide and narrow viewports. Check top, middle, and end reachability with wheel, trackpad, keyboard, and touch as applicable, along with focus visibility, overscroll behavior, and both content-facing edges of the secondary frame.
+
 #### Composite Record State Continuity
 
 - A repeated record split into sibling interactive regions may use one continuous hover or focus-within surface so the regions still read as one record.
@@ -139,6 +146,13 @@
 - A related or contextual item should state why it appears and where it came from; global proximity or recency alone should not look like an explained relationship.
 - Evaluators should inspect fully populated, partially available, stale, failed, and secondary-panel error states together. Headings, provenance, timestamps, relationship reasons, status copy, and explicit external-navigation or refresh actions should make each authority and its update path understandable without relying on color alone.
 
+#### Imported Transcript Provenance And Conservative Normalization
+
+- Imported transcript, history, audit, or activity surfaces should keep user-authored content, provider- or system-injected context, and tool or command output in their truthful roles. Generated scaffolding must not impersonate a user message merely because the source format stores both through one message-shaped envelope.
+- Source retention and user-facing presentation are separate decisions. A valid record may remain visible when it is sparse, command-only, or not safely normalized, while generated context may remain retained as provenance without becoming a visible title, message, search term, or derived reference.
+- Normalize only source envelopes with a stable, recognized contract. Preserve the raw source, and render an unknown or ambiguous envelope literally, escaped, or with a truthful source label instead of guessing its meaning, dropping the record, or reattributing its content.
+- Evaluators should compare a visible prompt paired with generated context, a command-only record, an unknown envelope, and a source-version change. Confirm both that retained evidence remains inspectable at its owning layer and that the presentation projection preserves authored content and role boundaries.
+
 #### Subject-Relative Relationship Evidence
 
 - A relationship label should describe the observed evidence from the current record's perspective, not reuse an external resource title, transport name, parser label, or storage relation merely because that value is available.
@@ -151,6 +165,13 @@
 - A stable source identity should produce the same compact cue across inventory rows, pinned or saved views, detail headers, and parent-owned child rows. Derived child presentation should follow the owning record's source instead of falling back to a provider-wide default.
 - Compact lettermarks, icons, and color accents require an accessible text identity; color alone must not distinguish sources that otherwise share a parser or visual family.
 - Do not repeat a full provider or source label in every card, heading, badge, and child row when one nearby cue already establishes identity. Evaluators should remove redundant visible copy only after confirming that direct entry, mixed-source lists, assistive output, and narrow layouts remain understandable.
+
+#### Nested Collection Hierarchy And Ordering
+
+- A region title, semantic group, subgroup or kind, and repeated item should not collapse into one undifferentiated typographic tone. Use role-appropriate combinations of size, weight, spacing, and boundary strength so hierarchy remains legible without relying on color alone.
+- When one category applies to a contiguous run of items, prefer one owning group heading over repeating the same category label in every row. Group boundaries should read more strongly than item separation; repeated row rules should remain lighter or give way to spacing so they do not compete with the semantic grouping. Apply [Single Boundary Ownership](#single-boundary-ownership) where adjacent regions meet.
+- Define ordering independently at each hierarchy level. A stable categorical order may support predictable scanning while source occurrence, chronology, priority, or task order may better preserve meaning within a group; one global sort rule should not be assumed to serve both.
+- Evaluators should compare single- and multi-group states, single- and multi-item groups, intentional empty orientation groups, retained overflow, and narrow layouts. Confirm that pagination or disclosure does not duplicate headings, split boundaries ambiguously, or reorder items against the approved per-level contract.
 
 #### Independent State-Axis Legibility
 

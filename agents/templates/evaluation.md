@@ -27,9 +27,13 @@
 - Record only directly observed evidence and identify synthetic fixtures or approved runtime data boundaries.
 - Record whether each reported exemplar is instance-specific or exercises a shared renderer, component, token, control, or state owner; for shared owners, name the representative peer consumers or equivalent scopes checked.
 - For a content-triggered presentation defect, record the privacy-safe witness shape, generated semantic DOM, overflow owner at relevant container levels, and the deterministic regression retained at the shared owner. Generic long-content evidence is not a substitute when punctuation, indentation, nesting, or transformation caused the failure.
+- For parallel or nested scrolling regions, record the document and local scroll owners at each relevant breakpoint, the short and long content combinations exercised, and the input, focus, edge-inset, and scroll-chaining behavior observed.
+- For imported transcript, history, audit, or activity normalization, record the source roles or envelopes, retained raw evidence, visible projection, unknown-envelope fallback, and sparse or command-only cases exercised.
+- For grouped, nested, or sequentially disclosed collections, record the semantic levels, owning headings, per-level ordering rules, overflow or disclosure boundaries, control placement in closed and expanded states, visual and DOM order, keyboard focus order, any deliberate focus handoff, and representative single, multiple, and narrow-layout states.
 - For inherited identity cues, record the cross-surface states checked, including direct entry and parent-owned child presentation when applicable.
 - For multi-target actions, record the per-target states and outcomes checked, including partial outcomes and user-visible consequences when applicable.
 - For a remote, costly, destructive, or multi-target action, record preview or preflight evidence separately from execution evidence, including scope, target or operation counts, readiness gating, and any verified no-side-effect path.
+- For a long-running action, record the observed phase sequence, progress unit and denominator when determinate, exceptional-run reason, interruption or fallback path, and terminal handoff.
 
 ## Evidence Gaps
 - List required but unavailable evidence and the claims that remain unverified.

@@ -188,6 +188,13 @@
 - A marker, preparation, or alternate run control that produces the same practical outcome should be consolidated or removed unless its distinct side effects and lifecycle are clear to the user.
 - Evaluators should confirm that action labels, progress, errors, cancellation or retry, and resulting history all belong to the same visible execution path.
 
+#### Long-Running Action Progress Legibility
+
+- A noticeably long action should keep feedback beside its initiating path and explain both the current activity and any exceptional reason, such as repair, migration, rebuild, or recovery, that makes this run differ from the ordinary path.
+- Separate meaningful phases such as preparation, bounded processing, and finalization. Show determinate counts or percentages only when their denominator and update semantics are trustworthy; otherwise use honest phase or indeterminate feedback rather than fabricated precision.
+- Progress feedback should preserve the action's established busy state, accessible status announcements, focus and retry behavior, and safe executable fallback. Do not expose private source paths, raw content, or internal diagnostics merely to make the operation appear informative.
+- Evaluators should exercise fast completion, delayed progress, zero work, phase transitions, partial and terminal failure, interrupted streaming or polling, fallback execution, retry, and the final refresh or result handoff. Confirm that the action never appears inert and that completion feedback does not overstate work that was skipped or retained.
+
 ### Menus, Disclosures, And Affordances
 
 #### Immediate Dropdown Dismissal
@@ -220,11 +227,13 @@
 - If only a title, summary, or other sub-area opens a destination, the surrounding card body must not advertise clickability through pointer cursor or full-surface hover treatment.
 - Evaluators should compare real click targets with visible affordances and flag any surface that still feels clickable after the interactive area has been narrowed.
 
-#### Disclosure Direction Consistency
+#### Disclosure Direction And Reading Order
 
 - A compact disclosure control should not visually imply one expansion direction while actually opening in another.
 - If a menu opens downward, its cue should remain stable or reinforce downward attachment rather than flipping into an upward state on open.
-- Evaluators should check both closed and expanded states and confirm that the visual cue, placement, and expanded panel all tell the same directional story.
+- A sequential `show more` control that extends a reading run should keep the collapse action at the boundary the user reaches after reading the revealed content. An accordion-style heading or native summary may instead remain before the content as its stable orientation anchor.
+- The rendered position and programmatic sequence should support the chosen pattern. When visual and DOM placement differ, define an intentional reading and focus handoff; CSS ordering alone is not evidence that newly revealed content remains discoverable and reachable.
+- Evaluators should check both closed and expanded states and confirm that the label, cue, control placement, revealed content, DOM order, and keyboard focus order remain coherent. In a sequential disclosure, the revealed content and collapse action should remain reachable without skipped targets or an unexplained reversal of visual progression; in an accordion, the stable heading should remain the anchor before its content. Collapsing should leave focus on a visible control.
 
 ### Repeated Controls And State Anchoring
 
