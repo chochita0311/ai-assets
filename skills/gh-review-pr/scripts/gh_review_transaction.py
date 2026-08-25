@@ -17,8 +17,18 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 from urllib.parse import urlparse
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+SUPPORTED_MARKER_VERSIONS = {"1", "2"}
 MAX_COMMENTS = 8
+REVIEW_PROFILES = {"focused", "balanced", "assertive"}
+MAX_REVIEW_NOTES = {"focused": 0, "balanced": 3, "assertive": 5}
+EVIDENCE_AREA_LABELS = {
+    "boundary-behavior": "Boundary / behavior",
+    "integration-consumers": "Integration / consumers",
+    "tests-validation": "Tests / validation",
+    "design-adversarial": "Design / adversarial",
+    "independence": "Independence",
+}
 FINAL_STATES = {"COMMENTED", "APPROVED", "CHANGES_REQUESTED"}
 EVENT_STATES = {
     "COMMENT": "COMMENTED",
@@ -28,9 +38,9 @@ EVENT_STATES = {
 SHA_RE = re.compile(r"^[0-9a-f]{40}(?:[0-9a-f]{24})?$")
 NAME_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{2,79}$")
-ISSUE_HEADER_RE = re.compile(
-    r"^issue \((blocking|non-blocking|question), "
-    r"(critical|high|medium), ([a-z0-9][a-z0-9-]{2,79})\): \S.+$"
+THREAD_HEADER_RE = re.compile(
+    r"^(issue|suggestion) \((blocking|non-blocking|question), "
+    r"(critical|high|medium|low), ([a-z0-9][a-z0-9-]{2,79})\): \S.+$"
 )
 HUNK_RE = re.compile(r"^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@")
 REVIEW_MARKER_RE = re.compile(
@@ -157,10 +167,49 @@ class CommentPlan:
 
 
 @dataclass(frozen=True)
+class ReviewNote:
+    label: str
+    text: str
+
+    def as_dict(self) -> Mapping[str, str]:
+        return {"label": self.label, "text": self.text}
+
+
+@dataclass(frozen=True)
+class ReviewEvidence:
+    area: str
+    detail: str
+
+    def as_dict(self) -> Mapping[str, str]:
+        return {"area": self.area, "detail": self.detail}
+
+
+@dataclass(frozen=True)
+class ReviewSummary:
+    overview: str
+    scope: str
+    focus: tuple[str, ...]
+    evidence: tuple[ReviewEvidence, ...]
+    coverage_gaps: tuple[str, ...]
+    review_notes: tuple[ReviewNote, ...]
+
+    def as_dict(self) -> Mapping[str, Any]:
+        return {
+            "overview": self.overview,
+            "scope": self.scope,
+            "focus": list(self.focus),
+            "evidence": [item.as_dict() for item in self.evidence],
+            "coverage_gaps": list(self.coverage_gaps),
+            "review_notes": [note.as_dict() for note in self.review_notes],
+        }
+
+
+@dataclass(frozen=True)
 class ReviewPlan:
     base_sha: str
     head_sha: str
-    summary: str
+    profile: str
+    summary: ReviewSummary
     comments: tuple[CommentPlan, ...]
 
     @property
@@ -169,7 +218,8 @@ class ReviewPlan:
             "schema_version": SCHEMA_VERSION,
             "base_sha": self.base_sha,
             "head_sha": self.head_sha,
-            "summary": self.summary,
+            "profile": self.profile,
+            "summary": self.summary.as_dict(),
             "comments": [comment.__dict__ for comment in self.comments],
         }
         encoded = json.dumps(
@@ -177,8 +227,73 @@ class ReviewPlan:
         ).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()[:24]
 
+    def summary_body(self) -> str:
+        counts = {
+            disposition: sum(
+                comment.disposition == disposition and comment.severity != "low"
+                for comment in self.comments
+            )
+            for disposition in ("blocking", "non-blocking", "question")
+        }
+        suggestion_count = sum(comment.severity == "low" for comment in self.comments)
+        finding_counts = " · ".join(
+            (
+                emphasized_count(counts["blocking"], "blocking"),
+                emphasized_count(counts["non-blocking"], "non-blocking"),
+                emphasized_count(counts["question"], "question", "questions"),
+                emphasized_count(suggestion_count, "suggestion", "suggestions"),
+            )
+        )
+        gap_count = len(self.summary.coverage_gaps)
+        lines = [
+            "## Review summary",
+            "",
+            self.summary.overview,
+            "",
+            "### Review receipt",
+            "",
+            "| Item | Result |",
+            "| --- | --- |",
+            f"| Profile | `{self.profile}` |",
+            f"| Snapshot | `{self.head_sha[:7]}` |",
+            f"| Scope | {markdown_table_cell(self.summary.scope)} |",
+            f"| Focus | {markdown_table_cell('; '.join(self.summary.focus))} |",
+            f"| Findings | {finding_counts} |",
+            "| Coverage gaps | "
+            + (
+                f"{gap_count} recorded; see warning below."
+                if gap_count
+                else "None recorded."
+            )
+            + " |",
+        ]
+        if gap_count:
+            gap_label = "Coverage gap" if gap_count == 1 else "Coverage gaps"
+            lines.extend(
+                (
+                    "",
+                    "> [!WARNING]",
+                    f"> **{gap_label}:**",
+                    ">",
+                )
+            )
+            lines.extend(f"> - {gap}" for gap in self.summary.coverage_gaps)
+        lines.extend(("", "### Review evidence", ""))
+        lines.extend(
+            f"- **{EVIDENCE_AREA_LABELS[item.area]}** — {item.detail}"
+            for item in self.summary.evidence
+        )
+        if self.summary.review_notes:
+            lines.extend(("", "### Review notes", ""))
+            labels = {"optional": "Optional", "fyi": "FYI", "positive": "Positive"}
+            lines.extend(
+                f"- **{labels[note.label]}** — {note.text}"
+                for note in self.summary.review_notes
+            )
+        return "\n".join(lines)
+
     def rendered_summary(self) -> str:
-        return f"{self.summary}\n\n{review_marker(self)}"
+        return f"{self.summary_body()}\n\n{review_marker(self)}"
 
 
 @dataclass(frozen=True)
@@ -249,26 +364,158 @@ def reject_secret_literals(text: str, label: str) -> None:
             raise PlanError(f"{label} appears to contain a secret literal; redact it")
 
 
-def validate_summary(value: Any) -> str:
-    summary = require_string(value, "summary")
-    if len(summary) > 1600:
-        raise PlanError("summary must be at most 1600 characters")
-    if "gh-review-pr:" in summary.lower():
-        raise PlanError("summary must not contain a pre-existing skill marker")
-    prefix = "## Review summary\n\n"
-    if not summary.startswith(prefix):
+def validate_profile(value: Any) -> str:
+    profile = require_string(value, "profile").lower()
+    if profile not in REVIEW_PROFILES:
+        raise PlanError("profile must be focused, balanced, or assertive")
+    return profile
+
+
+def markdown_table_cell(value: str) -> str:
+    """Keep validated one-line content inside one GitHub Markdown table cell."""
+    return value.replace("|", r"\|")
+
+
+def emphasized_count(count: int, singular: str, plural: str | None = None) -> str:
+    """Emphasize only nonzero finding counts so exceptions remain scannable."""
+    label = singular if count == 1 else plural or singular
+    rendered = f"{count} {label}"
+    return f"**{rendered}**" if count else rendered
+
+
+def validate_summary_text(value: Any, label: str, *, max_length: int) -> str:
+    text = require_string(value, label)
+    if "\n" in text:
+        raise PlanError(f"{label} must be one line")
+    if len(text) > max_length:
+        raise PlanError(f"{label} must be at most {max_length} characters")
+    if "gh-review-pr:" in text.lower():
+        raise PlanError(f"{label} must not contain a pre-existing skill marker")
+    if "<!--" in text or "-->" in text or re.match(
+        r"^(?:#{1,6}\s|[-*+>]\s|\d+\.\s|`{3,}|~{3,}|-{3,}|\*{3,}|_{3,}|</?[A-Za-z][^>]*>)",
+        text,
+    ):
+        raise PlanError(f"{label} must be plain one-line content")
+    reject_secret_literals(text, label)
+    return text
+
+
+def validate_summary_list(
+    value: Any,
+    label: str,
+    *,
+    minimum: int,
+    maximum: int,
+    item_max_length: int,
+) -> tuple[str, ...]:
+    if not isinstance(value, list):
+        raise PlanError(f"{label} must be an array")
+    if not minimum <= len(value) <= maximum:
         raise PlanError(
-            "summary must start with '## Review summary' and one blank line"
+            f"{label} must contain between {minimum} and {maximum} items"
         )
-    paragraph = summary[len(prefix) :].strip()
-    if not paragraph or re.search(r"\n\s*\n", paragraph):
-        raise PlanError("summary content must be exactly one paragraph")
-    if re.search(r"(?m)^\s*(?:[-*+]|\d+\.)\s+", paragraph):
-        raise PlanError("summary content must be prose, not a list")
-    if re.search(r"(?m)^#{1,6}\s+", paragraph):
-        raise PlanError("summary must not contain another heading")
-    reject_secret_literals(summary, "summary")
-    return summary
+    items = tuple(
+        validate_summary_text(item, f"{label}[{index}]", max_length=item_max_length)
+        for index, item in enumerate(value)
+    )
+    if len(items) != len(set(items)):
+        raise PlanError(f"{label} must not contain duplicate items")
+    return items
+
+
+def validate_review_notes(value: Any, profile: str) -> tuple[ReviewNote, ...]:
+    if not isinstance(value, list):
+        raise PlanError("summary.review_notes must be an array")
+    maximum = MAX_REVIEW_NOTES[profile]
+    if len(value) > maximum:
+        raise PlanError(
+            f"summary.review_notes may contain at most {maximum} items for {profile}"
+        )
+    notes = []
+    for index, raw_note in enumerate(value):
+        label = f"summary.review_notes[{index}]"
+        if not isinstance(raw_note, Mapping):
+            raise PlanError(f"{label} must be an object")
+        ensure_exact_keys(raw_note, {"label", "text"}, label)
+        note_label = require_string(raw_note["label"], f"{label}.label").lower()
+        if note_label not in {"optional", "fyi", "positive"}:
+            raise PlanError(f"{label}.label must be optional, fyi, or positive")
+        text = validate_summary_text(
+            raw_note["text"], f"{label}.text", max_length=240
+        )
+        if THREAD_HEADER_RE.fullmatch(text):
+            raise PlanError(f"{label}.text must not masquerade as an inline thread")
+        notes.append(ReviewNote(note_label, text))
+    if len({(note.label, note.text) for note in notes}) != len(notes):
+        raise PlanError("summary.review_notes must not contain duplicates")
+    return tuple(notes)
+
+
+def validate_review_evidence(value: Any) -> tuple[ReviewEvidence, ...]:
+    if not isinstance(value, list):
+        raise PlanError("summary.evidence must be an array")
+    if not 2 <= len(value) <= len(EVIDENCE_AREA_LABELS):
+        raise PlanError(
+            "summary.evidence must contain between 2 and "
+            f"{len(EVIDENCE_AREA_LABELS)} items"
+        )
+    evidence = []
+    for index, raw_item in enumerate(value):
+        label = f"summary.evidence[{index}]"
+        if not isinstance(raw_item, Mapping):
+            raise PlanError(f"{label} must be an object")
+        ensure_exact_keys(raw_item, {"area", "detail"}, label)
+        area = require_string(raw_item["area"], f"{label}.area").lower()
+        if area not in EVIDENCE_AREA_LABELS:
+            allowed = ", ".join(sorted(EVIDENCE_AREA_LABELS))
+            raise PlanError(f"{label}.area must be one of: {allowed}")
+        detail = validate_summary_text(
+            raw_item["detail"], f"{label}.detail", max_length=320
+        )
+        evidence.append(ReviewEvidence(area, detail))
+    areas = [item.area for item in evidence]
+    if len(areas) != len(set(areas)):
+        raise PlanError("summary.evidence areas must be unique")
+    return tuple(evidence)
+
+
+def validate_summary(value: Any, profile: str) -> ReviewSummary:
+    if not isinstance(value, Mapping):
+        raise PlanError("summary must be an object")
+    ensure_exact_keys(
+        value,
+        {
+            "overview",
+            "scope",
+            "focus",
+            "evidence",
+            "coverage_gaps",
+            "review_notes",
+        },
+        "summary",
+    )
+    return ReviewSummary(
+        overview=validate_summary_text(
+            value["overview"], "summary.overview", max_length=600
+        ),
+        scope=validate_summary_text(value["scope"], "summary.scope", max_length=400),
+        focus=validate_summary_list(
+            value["focus"],
+            "summary.focus",
+            minimum=1,
+            maximum=4,
+            item_max_length=120,
+        ),
+        evidence=validate_review_evidence(value["evidence"]),
+        coverage_gaps=validate_summary_list(
+            value["coverage_gaps"],
+            "summary.coverage_gaps",
+            minimum=0,
+            maximum=4,
+            item_max_length=240,
+        ),
+        review_notes=validate_review_notes(value["review_notes"], profile),
+    )
 
 
 def validate_sha(value: Any, label: str) -> str:
@@ -288,7 +535,7 @@ def validate_path(value: Any, label: str) -> str:
     return path
 
 
-def parse_comment(value: Any, index: int) -> CommentPlan:
+def parse_comment(value: Any, index: int, profile: str = "balanced") -> CommentPlan:
     label = f"comments[{index}]"
     if not isinstance(value, Mapping):
         raise PlanError(f"{label} must be an object")
@@ -315,8 +562,12 @@ def parse_comment(value: Any, index: int) -> CommentPlan:
     if side not in {"LEFT", "RIGHT"}:
         raise PlanError(f"{label}.side must be LEFT or RIGHT")
     severity = require_string(value["severity"], f"{label}.severity").lower()
-    if severity not in {"critical", "high", "medium"}:
-        raise PlanError(f"{label}.severity must be critical, high, or medium")
+    allowed_severities = {"critical", "high", "medium"}
+    if profile == "assertive":
+        allowed_severities.add("low")
+    if severity not in allowed_severities:
+        allowed = ", ".join(sorted(allowed_severities))
+        raise PlanError(f"{label}.severity must be one of: {allowed}")
     confidence = require_string(value["confidence"], f"{label}.confidence").lower()
     if confidence != "high":
         raise PlanError(f"{label}.confidence must be high for publication")
@@ -333,7 +584,12 @@ def parse_comment(value: Any, index: int) -> CommentPlan:
         raise PlanError(f"{label}.body must be at most 4000 characters")
     if "gh-review-pr:" in body.lower():
         raise PlanError(f"{label}.body must not contain a pre-existing skill marker")
-    expected_prefix = f"issue ({disposition}, {severity}, {category}): "
+    if severity == "low" and disposition != "non-blocking":
+        raise PlanError(
+            f"{label} low-severity suggestions must use non-blocking disposition"
+        )
+    thread_kind = "suggestion" if severity == "low" else "issue"
+    expected_prefix = f"{thread_kind} ({disposition}, {severity}, {category}): "
     first_line = body.splitlines()[0]
     if not first_line.startswith(expected_prefix) or len(first_line) == len(
         expected_prefix
@@ -370,7 +626,16 @@ def load_plan(path: Path) -> ReviewPlan:
     if not isinstance(raw, Mapping):
         raise PlanError("plan root must be an object")
     ensure_exact_keys(
-        raw, {"schema_version", "base_sha", "head_sha", "summary", "comments"}, "plan"
+        raw,
+        {
+            "schema_version",
+            "base_sha",
+            "head_sha",
+            "profile",
+            "summary",
+            "comments",
+        },
+        "plan",
     )
     if raw["schema_version"] != SCHEMA_VERSION:
         raise PlanError(f"schema_version must be {SCHEMA_VERSION}")
@@ -378,14 +643,16 @@ def load_plan(path: Path) -> ReviewPlan:
     head_sha = validate_sha(raw["head_sha"], "head_sha")
     if base_sha == head_sha:
         raise PlanError("base_sha and head_sha must differ")
-    summary = validate_summary(raw["summary"])
+    profile = validate_profile(raw["profile"])
+    summary = validate_summary(raw["summary"], profile)
     raw_comments = raw["comments"]
     if not isinstance(raw_comments, list):
         raise PlanError("comments must be an array")
     if len(raw_comments) > MAX_COMMENTS:
-        raise PlanError(f"comments must contain at most {MAX_COMMENTS} findings")
+        raise PlanError(f"comments must contain at most {MAX_COMMENTS} inline threads")
     comments = tuple(
-        parse_comment(value, index) for index, value in enumerate(raw_comments)
+        parse_comment(value, index, profile)
+        for index, value in enumerate(raw_comments)
     )
     finding_ids = [comment.finding_id for comment in comments]
     if len(finding_ids) != len(set(finding_ids)):
@@ -393,8 +660,9 @@ def load_plan(path: Path) -> ReviewPlan:
     anchors = [(comment.path, comment.line, comment.side) for comment in comments]
     if len(anchors) != len(set(anchors)):
         raise PlanError("each inline anchor may be used only once")
-    validate_summary_facts(summary, head_sha, comments)
-    return ReviewPlan(base_sha, head_sha, summary, comments)
+    plan = ReviewPlan(base_sha, head_sha, profile, summary, comments)
+    validate_summary_facts(plan)
+    return plan
 
 
 def validate_amendment_body(value: Any) -> str:
@@ -403,10 +671,10 @@ def validate_amendment_body(value: Any) -> str:
         raise PlanError("amendment.body must be at most 4000 characters")
     if "gh-review-pr:" in body.lower():
         raise PlanError("amendment.body must not contain a skill marker")
-    if not ISSUE_HEADER_RE.fullmatch(body.splitlines()[0]):
+    if issue_classification(body) is None:
         raise PlanError(
-            "amendment.body must start with a valid issue disposition, severity, "
-            "and category"
+            "amendment.body must start with a valid issue or suggestion "
+            "disposition, severity, and category"
         )
     if len([line for line in body.splitlines() if line.strip()]) < 2:
         raise PlanError("amendment.body must include evidence, impact, or a safe path")
@@ -414,14 +682,19 @@ def validate_amendment_body(value: Any) -> str:
     return body
 
 
-def issue_classification(value: Any) -> tuple[str, str, str] | None:
+def issue_classification(value: Any) -> tuple[str, str, str, str] | None:
     if not isinstance(value, str) or not value.splitlines():
         return None
-    match = ISSUE_HEADER_RE.fullmatch(value.splitlines()[0])
+    match = THREAD_HEADER_RE.fullmatch(value.splitlines()[0])
     if not match:
         return None
-    disposition, severity, category = match.groups()
-    return disposition, severity, category
+    kind, disposition, severity, category = match.groups()
+    if severity == "low":
+        if kind != "suggestion" or disposition != "non-blocking":
+            return None
+    elif kind != "issue":
+        return None
+    return kind, disposition, severity, category
 
 
 def load_amendment(path: Path) -> AmendmentPlan:
@@ -514,26 +787,40 @@ def load_reply(path: Path) -> ReplyPlan:
     )
 
 
-def validate_summary_facts(
-    summary: str, head_sha: str, comments: Sequence[CommentPlan]
-) -> None:
-    if head_sha[:7] not in summary:
-        raise PlanError("summary must contain the abbreviated frozen head SHA")
-    counts = {
-        disposition: sum(comment.disposition == disposition for comment in comments)
-        for disposition in ("blocking", "non-blocking", "question")
-    }
-    for disposition, count in counts.items():
-        label_first = rf"(?<![A-Za-z0-9-]){re.escape(disposition)}\s+{count}(?!\d)"
-        count_first = rf"(?<!\d){count}\s+{re.escape(disposition)}(?![A-Za-z0-9-])"
-        if not re.search(label_first, summary) and not re.search(count_first, summary):
-            raise PlanError(
-                "summary must contain the exact count "
-                f"'{disposition} {count}' or '{count} {disposition}'"
-            )
-    for comment in comments:
+def validate_summary_facts(plan: ReviewPlan) -> None:
+    has_material_finding = any(
+        comment.severity != "low" for comment in plan.comments
+    )
+    if not has_material_finding and len(plan.summary.evidence) < 3:
+        raise PlanError(
+            "summaries without material issue findings must contain at least "
+            "three evidence entries"
+        )
+    checkmark_count = json.dumps(
+        plan.summary.as_dict(), ensure_ascii=False
+    ).count("✅")
+    validation_evidence = next(
+        (
+            item.detail
+            for item in plan.summary.evidence
+            if item.area == "tests-validation"
+        ),
+        "",
+    )
+    if checkmark_count > 1 or (
+        checkmark_count == 1 and not validation_evidence.endswith("✅")
+    ):
+        raise PlanError(
+            "summary may contain at most one ✅, only as the final status cue "
+            "in tests-validation evidence"
+        )
+    rendered = plan.summary_body()
+    if len(rendered) > 5000:
+        raise PlanError("rendered summary must be at most 5000 characters")
+    reject_secret_literals(rendered, "rendered summary")
+    for comment in plan.comments:
         title = comment.body.splitlines()[0].split(": ", 1)[1]
-        if title in summary:
+        if title in rendered:
             raise PlanError(
                 f"summary must not repeat the inline title for {comment.finding_id}"
             )
@@ -568,6 +855,10 @@ def review_marker_data(body: Any) -> Mapping[str, str] | None:
 
 def finding_marker_data(body: Any) -> Mapping[str, str] | None:
     return marker_match(FINDING_MARKER_RE, body)
+
+
+def is_supported_marker(marker: Mapping[str, str] | None) -> bool:
+    return bool(marker and marker.get("version") in SUPPORTED_MARKER_VERSIONS)
 
 
 def without_marker(body: Any, pattern: re.Pattern[str]) -> str:
@@ -780,12 +1071,13 @@ def audit_result(ref: PullRequestRef, state: RemoteState) -> Mapping[str, Any]:
         marker = review_marker_data(review.get("body"))
         review_state = str(review.get("state", "")).upper()
         author = nested_string(review, "user", "login")
-        if marker:
+        if is_supported_marker(marker):
             owned_reviews.append(
                 {
                     "id": review.get("id"),
                     "state": review_state,
                     "author": author,
+                    "marker_version": marker["version"],
                     "base_sha": marker["base"],
                     "head_sha": marker["head"],
                     "run_id": marker["run"],
@@ -797,12 +1089,13 @@ def audit_result(ref: PullRequestRef, state: RemoteState) -> Mapping[str, Any]:
     owned_comments = []
     for comment in state.comments:
         marker = finding_marker_data(comment.get("body"))
-        if marker:
+        if is_supported_marker(marker):
             owned_comments.append(
                 {
                     "id": comment.get("id"),
                     "review_id": comment.get("pull_request_review_id"),
                     "finding_id": marker["finding"],
+                    "marker_version": marker["version"],
                     "base_sha": marker["base"],
                     "head_sha": marker["head"],
                     "run_id": marker["run"],
@@ -883,7 +1176,7 @@ def preflight(client: GitHubClient, ref: PullRequestRef, plan: ReviewPlan) -> Pr
     for review in state.reviews:
         marker = review_marker_data(review.get("body"))
         if (
-            not marker
+            not is_supported_marker(marker)
             or marker.get("base") != plan.base_sha
             or marker.get("head") != plan.head_sha
         ):
@@ -933,7 +1226,7 @@ def preflight(client: GitHubClient, ref: PullRequestRef, plan: ReviewPlan) -> Pr
         marker = review_marker_data(review.get("body"))
         if resume_id == review_id:
             continue
-        if marker:
+        if is_supported_marker(marker):
             raise SafetyError(
                 f"another skill-owned pending review exists for the authenticated user: {review_id}"
             )
@@ -947,14 +1240,18 @@ def preflight(client: GitHubClient, ref: PullRequestRef, plan: ReviewPlan) -> Pr
         remote_review_id = remote_comment.get("pull_request_review_id")
         marker = finding_marker_data(remote_comment.get("body"))
         plain_body = without_marker(remote_comment.get("body"), FINDING_MARKER_RE)
-        if marker and marker.get("finding") in planned_ids:
+        if is_supported_marker(marker) and marker.get("finding") in planned_ids:
             if resume_id == remote_review_id and same_run(marker, plan):
                 continue
             raise SafetyError(
                 f"finding_id already exists in review history: {marker.get('finding')}"
             )
         if plain_body in planned_bodies:
-            if resume_id == remote_review_id and marker and same_run(marker, plan):
+            if (
+                resume_id == remote_review_id
+                and is_supported_marker(marker)
+                and same_run(marker, plan)
+            ):
                 continue
             raise SafetyError("an existing inline comment has the same normalized body")
 
@@ -1092,7 +1389,7 @@ def verify_review(
         raise VerificationError(
             f"review {review_id} does not have the expected ownership marker"
         )
-    if without_marker(review.get("body"), REVIEW_MARKER_RE) != plan.summary:
+    if without_marker(review.get("body"), REVIEW_MARKER_RE) != plan.summary_body():
         raise VerificationError(f"review {review_id} summary differs from the plan")
     if len(comments) != len(plan.comments):
         raise VerificationError(
@@ -1350,6 +1647,7 @@ def publication_result(
         "pr": ref.url,
         "base_sha": plan.base_sha,
         "head_sha": plan.head_sha,
+        "profile": plan.profile,
         "event": event,
         "review_id": review_id,
         "review_url": review.get("html_url"),
@@ -1386,7 +1684,7 @@ def locate_owned_finding(
     review = matching_reviews[0]
     owned_review_marker = review_marker_data(review.get("body"))
     if (
-        not owned_review_marker
+        not is_supported_marker(owned_review_marker)
         or owned_review_marker.get("base") != base_sha
         or owned_review_marker.get("head") != head_sha
         or nested_string(review, "user", "login") != state.current_login
@@ -1406,7 +1704,8 @@ def locate_owned_finding(
         raise SafetyError("the finding_id does not identify one comment in the review")
     comment, marker = matching_comments[0]
     if (
-        marker.get("version") != str(SCHEMA_VERSION)
+        not is_supported_marker(marker)
+        or marker.get("version") != owned_review_marker.get("version")
         or marker.get("base") != base_sha
         or marker.get("head") != head_sha
         or marker.get("run") != owned_review_marker.get("run")
@@ -1499,7 +1798,7 @@ def verify_amended_comment(
     if (
         comment.get("id") != comment_id
         or comment.get("pull_request_review_id") != amendment.review_id
-        or not marker
+        or not is_supported_marker(marker)
         or marker.get("base") != amendment.base_sha
         or marker.get("head") != amendment.head_sha
         or marker.get("finding") != amendment.finding_id

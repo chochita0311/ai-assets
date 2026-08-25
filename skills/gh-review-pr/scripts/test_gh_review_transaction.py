@@ -56,7 +56,48 @@ MULTI_HUNK_PATCH = """@@ -3,6 +3,7 @@
 """
 
 
-def make_plan(*, line: int = 2, comments: bool = True) -> transaction.ReviewPlan:
+def make_summary(
+    *,
+    scope: str = "One human-authored changed file was reviewed end to end.",
+    focus: tuple[str, ...] = ("failure atomicity", "recovery behavior"),
+    evidence: tuple[transaction.ReviewEvidence, ...] | None = None,
+    coverage_gaps: tuple[str, ...] = (),
+    notes: tuple[transaction.ReviewNote, ...] = (),
+) -> transaction.ReviewSummary:
+    return transaction.ReviewSummary(
+        overview=(
+            "This PR replaces stored state and the review focused on failure "
+            "atomicity and recovery behavior."
+        ),
+        scope=scope,
+        focus=focus,
+        evidence=evidence
+        or (
+            transaction.ReviewEvidence(
+                "boundary-behavior",
+                "Compared the changed replacement boundary against the base behavior.",
+            ),
+            transaction.ReviewEvidence(
+                "integration-consumers",
+                "Traced the updated state through its durable consumer.",
+            ),
+            transaction.ReviewEvidence(
+                "tests-validation",
+                "Checked the failure-path test and adversarial recovery case.",
+            ),
+        ),
+        coverage_gaps=coverage_gaps,
+        review_notes=notes,
+    )
+
+
+def make_plan(
+    *,
+    line: int = 2,
+    comments: bool = True,
+    profile: str = "balanced",
+    summary: transaction.ReviewSummary | None = None,
+) -> transaction.ReviewPlan:
     findings: tuple[transaction.CommentPlan, ...]
     if comments:
         findings = (
@@ -81,13 +122,21 @@ def make_plan(*, line: int = 2, comments: bool = True) -> transaction.ReviewPlan
     return transaction.ReviewPlan(
         base_sha=BASE_SHA,
         head_sha=HEAD_SHA,
-        summary=(
-            "## Review summary\n\nReviewed one changed file at `bbbbbbb`; "
-            f"the review found {1 if comments else 0} blocking, 0 non-blocking, "
-            "and 0 question findings."
-        ),
+        profile=profile,
+        summary=summary or make_summary(),
         comments=findings,
     )
+
+
+def plan_payload(plan: transaction.ReviewPlan) -> dict[str, Any]:
+    return {
+        "schema_version": transaction.SCHEMA_VERSION,
+        "base_sha": plan.base_sha,
+        "head_sha": plan.head_sha,
+        "profile": plan.profile,
+        "summary": plan.summary.as_dict(),
+        "comments": [comment.__dict__ for comment in plan.comments],
+    }
 
 
 def make_amendment(
@@ -344,18 +393,106 @@ class TransactionTests(unittest.TestCase):
 
     def test_plan_loader_accepts_the_documented_schema(self) -> None:
         plan = make_plan()
-        raw = {
-            "schema_version": transaction.SCHEMA_VERSION,
-            "base_sha": plan.base_sha,
-            "head_sha": plan.head_sha,
-            "summary": plan.summary,
-            "comments": [comment.__dict__ for comment in plan.comments],
-        }
+        raw = plan_payload(plan)
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "plan.json"
             path.write_text(json.dumps(raw), encoding="utf-8")
             loaded = transaction.load_plan(path)
         self.assertEqual(loaded, plan)
+
+    def test_rendered_summary_contains_a_structured_visible_receipt(self) -> None:
+        summary = make_plan(
+            summary=make_summary(
+                notes=(
+                    transaction.ReviewNote(
+                        "positive", "The source and generated contract stay aligned."
+                    ),
+                )
+            )
+        ).summary_body()
+        self.assertEqual(
+            summary,
+            """## Review summary
+
+This PR replaces stored state and the review focused on failure atomicity and recovery behavior.
+
+### Review receipt
+
+| Item | Result |
+| --- | --- |
+| Profile | `balanced` |
+| Snapshot | `bbbbbbb` |
+| Scope | One human-authored changed file was reviewed end to end. |
+| Focus | failure atomicity; recovery behavior |
+| Findings | **1 blocking** · 0 non-blocking · 0 questions · 0 suggestions |
+| Coverage gaps | None recorded. |
+
+### Review evidence
+
+- **Boundary / behavior** — Compared the changed replacement boundary against the base behavior.
+- **Integration / consumers** — Traced the updated state through its durable consumer.
+- **Tests / validation** — Checked the failure-path test and adversarial recovery case.
+
+### Review notes
+
+- **Positive** — The source and generated contract stay aligned.""",
+        )
+        self.assertNotIn("[!WARNING]", summary)
+
+    def test_rendered_summary_highlights_each_coverage_gap_on_its_own_line(self) -> None:
+        summary = make_plan(
+            comments=False,
+            profile="focused",
+            summary=make_summary(
+                coverage_gaps=(
+                    "One binary file was not reviewable.",
+                    "The provider truncated one patch.",
+                )
+            ),
+        ).summary_body()
+        self.assertIn("| Coverage gaps | 2 recorded; see warning below. |", summary)
+        self.assertEqual(summary.count("> [!WARNING]"), 1)
+        self.assertIn(
+            "> **Coverage gaps:**\n"
+            ">\n"
+            "> - One binary file was not reviewable.\n"
+            "> - The provider truncated one patch.",
+            summary,
+        )
+        self.assertNotIn(".;", summary)
+
+    def test_rendered_summary_uses_a_singular_gap_label(self) -> None:
+        summary = make_plan(
+            comments=False,
+            profile="focused",
+            summary=make_summary(
+                coverage_gaps=("The runtime smoke test was not available.",)
+            ),
+        ).summary_body()
+        self.assertIn("| Coverage gaps | 1 recorded; see warning below. |", summary)
+        self.assertIn(
+            "> **Coverage gap:**\n"
+            ">\n"
+            "> - The runtime smoke test was not available.",
+            summary,
+        )
+        self.assertNotIn("> **Coverage gaps:**", summary)
+
+    def test_rendered_summary_escapes_table_cell_separators(self) -> None:
+        plan = make_plan(
+            summary=make_summary(
+                scope="Reviewed src/a.py | src/b.py end to end.",
+                focus=("read | write boundary",),
+            )
+        )
+        raw = plan_payload(plan)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "table-cell-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            loaded = transaction.load_plan(path)
+        summary = loaded.summary_body()
+        self.assertIn("Reviewed src/a.py \\| src/b.py end to end.", summary)
+        self.assertIn("read \\| write boundary", summary)
 
     def test_reply_loader_returns_a_distinct_reply_plan(self) -> None:
         reply = make_reply(456)
@@ -425,42 +562,223 @@ class TransactionTests(unittest.TestCase):
             with self.subTest(status=status):
                 self.assertIn(f"- `{status}`:", reference)
 
-    def test_plan_loader_rejects_incorrect_summary_counts(self) -> None:
-        plan = make_plan()
-        raw = {
-            "schema_version": transaction.SCHEMA_VERSION,
-            "base_sha": plan.base_sha,
-            "head_sha": plan.head_sha,
-            "summary": plan.summary.replace("1 blocking", "0 blocking"),
-            "comments": [comment.__dict__ for comment in plan.comments],
-        }
+    def test_zero_finding_summary_requires_three_evidence_entries(self) -> None:
+        plan = make_plan(
+            comments=False,
+            summary=make_summary(
+                evidence=(
+                    transaction.ReviewEvidence(
+                        "boundary-behavior", "Checked boundaries."
+                    ),
+                    transaction.ReviewEvidence(
+                        "tests-validation", "Checked tests."
+                    ),
+                )
+            ),
+        )
+        raw = plan_payload(plan)
         with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "bad-count-plan.json"
+            path = Path(directory) / "thin-zero-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaises(transaction.PlanError):
+                transaction.load_plan(path)
+
+    def test_plan_rejects_duplicate_evidence_areas(self) -> None:
+        raw = plan_payload(make_plan())
+        raw["summary"]["evidence"][1]["area"] = "boundary-behavior"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate-evidence-area-plan.json"
             path.write_text(json.dumps(raw), encoding="utf-8")
             with self.assertRaises(transaction.PlanError):
                 transaction.load_plan(path)
 
     def test_plan_loader_rejects_a_repeated_thread_title(self) -> None:
-        plan = make_plan()
-        title = plan.comments[0].body.splitlines()[0].split(": ", 1)[1]
-        raw = {
-            "schema_version": transaction.SCHEMA_VERSION,
-            "base_sha": plan.base_sha,
-            "head_sha": plan.head_sha,
-            "summary": plan.summary[:-1] + f"; {title}.",
-            "comments": [comment.__dict__ for comment in plan.comments],
-        }
+        original = make_plan()
+        title = original.comments[0].body.splitlines()[0].split(": ", 1)[1]
+        plan = make_plan(
+            summary=make_summary(
+                notes=(transaction.ReviewNote("optional", title),)
+            )
+        )
+        raw = plan_payload(plan)
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "duplicated-summary-plan.json"
             path.write_text(json.dumps(raw), encoding="utf-8")
             with self.assertRaises(transaction.PlanError):
                 transaction.load_plan(path)
 
+    def test_focused_profile_rejects_review_notes(self) -> None:
+        plan = make_plan(
+            profile="focused",
+            summary=make_summary(
+                notes=(transaction.ReviewNote("positive", "The rollback stays bounded."),)
+            ),
+        )
+        raw = plan_payload(plan)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "focused-notes-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaises(transaction.PlanError):
+                transaction.load_plan(path)
+
+    def test_plan_rejects_an_unknown_feedback_profile(self) -> None:
+        raw = plan_payload(make_plan())
+        raw["profile"] = "verbose"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "unknown-profile-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaises(transaction.PlanError):
+                transaction.load_plan(path)
+
+    def test_summary_fields_cannot_inject_markdown_structure(self) -> None:
+        injected_values = (
+            "### Replacement heading",
+            "```text",
+            "<details>",
+            "---",
+            "> Hidden receipt",
+        )
+        for injected in injected_values:
+            with self.subTest(injected=injected):
+                raw = plan_payload(make_plan())
+                raw["summary"]["overview"] = injected
+                with tempfile.TemporaryDirectory() as directory:
+                    path = Path(directory) / "injected-summary-plan.json"
+                    path.write_text(json.dumps(raw), encoding="utf-8")
+                    with self.assertRaises(transaction.PlanError):
+                        transaction.load_plan(path)
+
+    def test_summary_accepts_one_trailing_validation_checkmark(self) -> None:
+        raw = plan_payload(make_plan())
+        raw["summary"]["evidence"][2]["detail"] += " ✅"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "validation-checkmark-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            loaded = transaction.load_plan(path)
+        self.assertIn("✅", loaded.summary_body())
+
+    def test_summary_rejects_misplaced_or_repeated_checkmarks(self) -> None:
+        invalid_summaries = []
+
+        misplaced = plan_payload(make_plan())
+        misplaced["summary"]["overview"] += " ✅"
+        invalid_summaries.append(misplaced)
+
+        repeated = plan_payload(make_plan())
+        repeated["summary"]["evidence"][2]["detail"] += " ✅ ✅"
+        invalid_summaries.append(repeated)
+
+        leading = plan_payload(make_plan())
+        leading["summary"]["evidence"][2]["detail"] = "✅ Ran the focused tests."
+        invalid_summaries.append(leading)
+
+        for index, raw in enumerate(invalid_summaries):
+            with self.subTest(index=index), tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / "invalid-checkmark-plan.json"
+                path.write_text(json.dumps(raw), encoding="utf-8")
+                with self.assertRaises(transaction.PlanError):
+                    transaction.load_plan(path)
+
+    def test_assertive_profile_accepts_a_low_severity_suggestion(self) -> None:
+        plan = make_plan(profile="assertive")
+        raw = plan_payload(plan)
+        raw["comments"][0].update(
+            {
+                "severity": "low",
+                "disposition": "non-blocking",
+                "category": "maintainability",
+                "body": (
+                    "suggestion (non-blocking, low, maintainability): Name the rollback phase\n\n"
+                    "A named phase would make the recovery sequence easier to maintain."
+                ),
+            }
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "assertive-suggestion-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            loaded = transaction.load_plan(path)
+        self.assertEqual(loaded.comments[0].severity, "low")
+        self.assertIn(
+            "| Findings | 0 blocking · 0 non-blocking · 0 questions · "
+            "**1 suggestion** |",
+            loaded.summary_body(),
+        )
+
+    def test_suggestion_only_review_still_requires_zero_finding_evidence(self) -> None:
+        plan = make_plan(profile="assertive")
+        raw = plan_payload(plan)
+        raw["summary"]["evidence"] = raw["summary"]["evidence"][:2]
+        raw["comments"][0].update(
+            {
+                "severity": "low",
+                "disposition": "non-blocking",
+                "category": "maintainability",
+                "body": (
+                    "suggestion (non-blocking, low, maintainability): Name the rollback phase\n\n"
+                    "A named phase would make the recovery sequence easier to maintain."
+                ),
+            }
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "thin-suggestion-only-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaises(transaction.PlanError):
+                transaction.load_plan(path)
+
+    def test_balanced_profile_rejects_a_low_severity_suggestion(self) -> None:
+        raw = plan_payload(make_plan())
+        raw["comments"][0].update(
+            {
+                "severity": "low",
+                "disposition": "non-blocking",
+                "category": "maintainability",
+                "body": (
+                    "suggestion (non-blocking, low, maintainability): Name the rollback phase\n\n"
+                    "A named phase would make the recovery sequence easier to maintain."
+                ),
+            }
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "balanced-suggestion-plan.json"
+            path.write_text(json.dumps(raw), encoding="utf-8")
+            with self.assertRaises(transaction.PlanError):
+                transaction.load_plan(path)
+
+    def test_low_severity_suggestion_cannot_block(self) -> None:
+        raw = dict(make_plan().comments[0].__dict__)
+        raw.update(
+            {
+                "severity": "low",
+                "disposition": "blocking",
+                "category": "maintainability",
+                "body": (
+                    "suggestion (blocking, low, maintainability): Name the rollback phase\n\n"
+                    "A named phase would make the recovery sequence easier to maintain."
+                ),
+            }
+        )
+        with self.assertRaises(transaction.PlanError):
+            transaction.parse_comment(raw, 0, "assertive")
+
     def test_same_snapshot_rerun_is_a_noop(self) -> None:
         client = FakeGitHubClient()
         plan = make_plan()
         review_id = client.add_review(plan)
         result = transaction.publish(client, self.ref, plan, "COMMENT")
+        self.assertEqual(result["status"], "noop-existing-snapshot")
+        self.assertEqual(result["review_id"], review_id)
+        self.assertEqual(client.post_calls, [])
+
+    def test_version_one_review_marker_still_blocks_same_snapshot_repost(self) -> None:
+        client = FakeGitHubClient()
+        plan = make_plan()
+        review_id = client.add_review(plan)
+        client.reviews[0]["body"] = client.reviews[0]["body"].replace(
+            "gh-review-pr:review v=2", "gh-review-pr:review v=1"
+        )
+
+        result = transaction.publish(client, self.ref, plan, "COMMENT")
+
         self.assertEqual(result["status"], "noop-existing-snapshot")
         self.assertEqual(result["review_id"], review_id)
         self.assertEqual(client.post_calls, [])
@@ -487,6 +805,24 @@ class TransactionTests(unittest.TestCase):
             ),
             make_amendment(review_id).body,
         )
+
+    def test_version_one_markers_remain_maintainable(self) -> None:
+        client = FakeGitHubClient()
+        review_id = client.add_review(make_plan())
+        client.reviews[0]["body"] = client.reviews[0]["body"].replace(
+            "gh-review-pr:review v=2", "gh-review-pr:review v=1"
+        )
+        client.comments[0]["body"] = client.comments[0]["body"].replace(
+            "gh-review-pr:finding v=2", "gh-review-pr:finding v=1"
+        )
+
+        result = transaction.amend_comment(
+            client, self.ref, make_amendment(review_id)
+        )
+
+        self.assertEqual(result["status"], "amended")
+        marker = transaction.finding_marker_data(client.comments[0]["body"])
+        self.assertEqual(marker["version"], "1")
 
     def test_ambiguous_amendment_reconciles_without_retry(self) -> None:
         client = FakeGitHubClient()
@@ -650,7 +986,9 @@ class TransactionTests(unittest.TestCase):
     def test_same_head_with_a_different_base_is_a_new_snapshot(self) -> None:
         client = FakeGitHubClient()
         plan = make_plan(comments=False)
-        prior_plan = transaction.ReviewPlan("d" * 40, plan.head_sha, plan.summary, ())
+        prior_plan = transaction.ReviewPlan(
+            "d" * 40, plan.head_sha, plan.profile, plan.summary, ()
+        )
         client.add_review(prior_plan)
 
         result = transaction.publish(client, self.ref, plan, "COMMENT")
@@ -787,6 +1125,7 @@ class TransactionTests(unittest.TestCase):
         old_plan = transaction.ReviewPlan(
             BASE_SHA,
             NEW_HEAD_SHA,
+            make_plan().profile,
             make_plan().summary,
             make_plan().comments,
         )
@@ -801,6 +1140,7 @@ class TransactionTests(unittest.TestCase):
             client, self.ref, make_plan(comments=False), "COMMENT"
         )
         self.assertEqual(result["status"], "published")
+        self.assertEqual(result["profile"], "balanced")
         self.assertEqual(result["inline_count"], 0)
         self.assertEqual(client.comments, [])
 

@@ -1,6 +1,6 @@
 # Review Criteria
 
-Use this reference to decide what belongs in a GitHub review. The transaction script can validate structure and anchors; it cannot decide whether a finding is true or useful.
+Use this reference to decide what belongs in a GitHub review and how reviewer-supplied content should communicate it. The [GitHub publishing protocol](github-publishing.md) owns the exact plan schema, renderer behavior, transaction, and recovery; those deterministic checks cannot decide whether a finding is true or useful.
 
 ## Contents
 
@@ -17,6 +17,9 @@ Use this reference to decide what belongs in a GitHub review. The transaction sc
 - [Existing discussions and duplicates](#existing-discussions-and-duplicates)
 - [Human feedback audits](#human-feedback-audits)
 - [Artifact writing](#artifact-writing)
+  - [Summary content](#summary-content)
+  - [Zero-material-finding session receipt](#zero-material-finding-session-receipt)
+  - [Inline thread content](#inline-thread-content)
 - [Sensitive information](#sensitive-information)
 
 ## Coverage model
@@ -104,7 +107,7 @@ Assign severity by impact, not by fix size:
 - `critical`: credible compromise, irreversible loss, or broad production outage with no practical containment
 - `high`: material security, correctness, data, compatibility, or availability failure on a realistic path
 - `medium`: bounded but meaningful behavior, reliability, operability, or maintainability failure worth fixing in this PR
-- `low`: small improvement, style preference, local cleanup, or unlikely edge case; do not publish inline by default
+- `low`: small but concrete improvement, local cleanup, or unlikely edge case; keep it private in `focused`, use a PR-level note when appropriate in `balanced`, and publish it inline only as a high-confidence non-blocking `suggestion` in explicitly selected `assertive`
 
 Assign one disposition:
 
@@ -123,6 +126,8 @@ Use `high` only when the relevant execution or data path is directly supported a
 Use `medium` when the concern is likely but depends on an unverified caller, environment, or contract. Use `low` when it is primarily speculative. Gather more evidence when practical; otherwise keep medium- and low-confidence candidates out of inline publication and state only the resulting coverage gap when material.
 
 Repository silence is not proof that a framework, pinned dependency, base image, container, or platform does not provide a lifecycle behavior. When a finding depends on that behavior, inspect the exact pinned implementation through an authorized local artifact or primary documentation. If it remains unavailable, a competing explanation remains and the candidate cannot have `high` confidence.
+
+When dependency behavior is material, enumerate every plausible implementation that can reach the packaged or deployed runtime, including managed declarations, lockfile resolutions, vendored or shaded copies, application-server modules, and image-provided libraries. Prove which implementation wins with evidence such as the built artifact, dependency resolution output, classloader order, or authorized runtime provenance. If selection remains unresolved, rely only on behavior shared by every plausible implementation or record the ambiguity as a coverage gap; do not name one version as effective or assign `high` confidence from that version alone.
 
 ## Review categories
 
@@ -146,12 +151,14 @@ Testing is a finding category only when the missing or invalid test creates a co
 Keep this internal ledger before writing review artifacts:
 
 ```text
-finding_id | review lens | concern | path | line | side | severity | confidence | disposition | category | base behavior | head behavior | current-snapshot evidence | causal delta | anchor rationale | reachability | impact | counterevidence | safe path | duplicate state
+finding_id | review lens | concern | path | line | side | severity | confidence | disposition | category | artifact lane | base behavior | head behavior | current-snapshot evidence | causal delta | anchor rationale | reachability | impact | counterevidence | safe path | duplicate state
 ```
 
 Use a stable lowercase hyphenated `finding_id` that names the semantic concern rather than its wording or line number. Reuse it while reconciling the same concern; never mint a new identifier merely to bypass duplicate detection.
 
 Record `causal delta` as the exact behavior this PR introduces or materially worsens. Record `anchor rationale` as why the selected changed line is the causal review location rather than merely nearby reachable code.
+
+Choose `artifact lane` from `issue-thread`, `suggestion-thread`, `review-note`, or `private`. Treat this as routing: the [publication gates](#publication-gates) own thread eligibility, and [artifact writing](#artifact-writing) owns the visible form and note eligibility. Keep any candidate that does not qualify for a visible lane `private`.
 
 For a candidate centered on an unchanged caller, consumer, or sink, also record the same trigger's base barrier, the head enabling edge, endpoint-level versus product-flow reachability, the sink's observable impact, and the resulting net capability.
 
@@ -159,14 +166,14 @@ For a candidate centered on an unchanged caller, consumer, or sink, also record 
 
 Publish a candidate only when every answer is `yes`:
 
-1. Is the behavior introduced or materially worsened by the frozen base-to-head diff?
-2. Is there a concrete reachable trigger rather than a hypothetical possibility?
+1. Is the issue behavior introduced or materially worsened by the frozen base-to-head diff, or is the low suggestion attached to a concrete pattern introduced by that diff?
+2. For an issue, is there a concrete reachable trigger rather than a hypothetical possibility? For a suggestion, is there a bounded maintainability or clarity cost rather than a generic preference?
 3. Does direct code, test, runtime, or protocol evidence support the claim?
 4. Has relevant counterevidence been inspected and resolved?
-5. Is the severity at least `medium` and confidence `high`?
+5. Is confidence `high`, and is severity at least `medium` for an issue thread—or exactly `low` for an explicitly selected `assertive` non-blocking suggestion?
 6. Is an exact added (`RIGHT`) or deleted (`LEFT`) line that introduces or materially worsens the trigger or impact available as the anchor?
 7. Is the concern absent from existing review threads and skill markers?
-8. Can the thread state impact and a minimal safe path without prescribing a broad redesign?
+8. Can the thread state the impact or bounded benefit and a minimal safe path without prescribing a broad redesign?
 
 Omit pre-existing defects unless the counterfactual check proves that this PR makes them reachable, more severe, or harder to recover from. Do not report speculative future misuse, purely aesthetic preferences, or issues a deterministic check already communicates better.
 
@@ -176,7 +183,7 @@ When an opening and closing delimiter jointly define the faulty scope, prefer th
 
 ## Zero-finding gate
 
-Zero inline findings can be the correct result. Do not invent a nit, praise comment, or speculative question to avoid it. Before returning or publishing zero findings, verify all of the following:
+Zero material issue findings can be the correct result. Do not invent a nit, praise comment, or speculative question to avoid it. Review notes and `assertive` low suggestions do not change the material-finding count. Before returning or publishing zero material findings, verify all of the following:
 
 - the change map covers every reviewed human-authored file
 - every applicable review pass has concrete negative evidence, not merely “looked fine”
@@ -185,8 +192,9 @@ Zero inline findings can be the correct result. Do not invent a nit, praise comm
 - every mapped changed value or control edge was followed to a named terminal artifact and parse/render/execution context rather than stopping at an intermediate endpoint or helper
 - the strongest plausible unchanged caller, consumer, or sink was counterfactually tested and its inclusion or exclusion was recorded
 - passing checks were treated as counterevidence for only the behavior they actually exercise
-- material coverage, independence, and review-depth gaps are stated in the summary
+- material coverage, independence, and review-depth gaps are stated in the structured receipt
 - high-risk coverage received an independent omission challenge, or the result remains a draft with that explicit gap
+- the GitHub-visible review evidence contains at least three concrete, sanitized entries spanning the applicable passes rather than a generic claim that the review was thorough
 
 A zero-finding result that depends only on passing tests, agreement with the PR description, or absence of an obvious local bug does not pass this gate. For a high-risk change without an adequate quality-first semantic pass, stop in `draft` instead of publishing a conclusive-looking empty review.
 
@@ -212,29 +220,33 @@ For each concern, cite the exact code or runtime path, state the smallest action
 
 ## Artifact writing
 
-The summary has one heading and one prose paragraph. It should orient a reviewer to the changed behavior and the principal risk surfaces, then give the review receipt:
+The [review plan schema](github-publishing.md#review-plan-schema) owns exact JSON fields, renderer-created Markdown, counts, cardinality, and presentation validation. This section owns the meaning and quality of reviewer-supplied content.
 
-```markdown
-## Review summary
+### Summary content
 
-<change-and-risk synopsis, review focus, head, reviewed file count, blocking/non-blocking/question counts, and material coverage/depth gap>
-```
+Write one overview paragraph that names the changed behavior and principal risk surfaces. The reviewer owns the overview, scope, focus, evidence, coverage gaps, and optional notes; the transaction owns snapshot and finding-count rendering. Do not enumerate finding titles or fixes in the summary. When there are no material issue findings, keep the conclusion scoped to the evidence: say that no high-confidence `medium+` issue met the issue-thread threshold within reviewed coverage, not that the PR is safe. A suggestion-only review must not say that no finding or feedback met the selected profile threshold because its suggestion did.
 
-Do not enumerate findings there. Keep “no findings” scoped to the evidence: say no high-confidence finding was found within reviewed coverage, not that the PR is safe.
+Provide compact, sanitized evidence from distinct completed pass areas. Summarize only work actually completed. Do not expose the internal ledger, rejected-candidate speculation, secret material, or private runtime data. The schema owns the allowed evidence labels and cardinality; the [zero-finding gate](#zero-finding-gate) owns the stronger semantic evidence requirement for reviews without material issue findings, including suggestion-only reviews.
 
-When there are zero findings, return a separate session-only evidence receipt with one terse entry for each applicable review pass: the inspected base/head behavior or artifact, the strongest candidate considered, the counterevidence that rejected it, and any remaining gap. This receipt is not a GitHub comment and must not be added to the JSON publication plan.
+Review notes are non-findings. Keep them current-snapshot, high-confidence, concise, useful at PR level, and within the selected profile. Never place a `medium+` defect, material ambiguity, failed inline anchor, duplicate finding, or speculative concern there.
+
+Use presentation as information hierarchy, not decoration. Do not use task-list semantics as review evidence, hide core receipt or evidence content, or add decorative status cues. A validation checkmark must accompany an exact completed validation fact and must not imply zero findings, safety, approval, or merge readiness. Keep inline threads emoji-free.
+
+### Zero-material-finding session receipt
+
+When there are zero material issue findings, including a suggestion-only result, return a detailed session-only evidence receipt with one terse entry for each applicable review pass: the inspected base/head behavior or artifact, the strongest candidate considered, the counterevidence that rejected it, and any remaining gap. Only the compact sanitized evidence belongs in the JSON plan and GitHub review.
 
 ```text
 review pass | inspected base/head path or artifact | rejected candidate and counterevidence | remaining gap
 ```
 
-Each thread begins with one Conventional Comments-style label:
+### Inline thread content
 
-```text
-issue (blocking, high, correctness): Preserve the previous value on a rejected update
-```
+Use the exact `issue` or `suggestion` first-line contract defined by the [review plan schema](github-publishing.md#review-plan-schema). Write one concern per thread.
 
 Follow with concise evidence, impact, and the smallest safe correction or decision path. Prefer observable behavior over author intent. Do not use rhetorical questions, self-reference, compliments, or boilerplate.
+
+An `assertive` low-severity suggestion still needs high confidence, non-blocking disposition, exact current-delta anchoring, and a concrete improvement. Do not reclassify a speculative or style-only preference merely to increase comment volume.
 
 When the sink is pre-existing, the body must distinguish it from the PR's changed enabling or worsening edge in one concise sentence; do not imply that the PR authored the sink.
 

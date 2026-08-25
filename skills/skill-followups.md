@@ -22,11 +22,15 @@
 - Confirm in a fresh Claude session that the canonical symlinked package is discovered and can complete one standalone audit or maintain run.
 
 ### [`gh-review-pr`](gh-review-pr/SKILL.md)
-- Forward-test the documented same-snapshot omission safe stop against a submitted skill-owned review: verify that a newly verified inline finding or summary-count change returns a corrected draft without mutating GitHub or bypassing the snapshot guard.
-- Rerun an exactly published snapshot through the bundled transaction to verify `noop-existing-snapshot` behavior in a real session; unit coverage exists, but the live duplicate no-op remains unproven.
-- Forward-test `reply` on a submitted skill-owned finding after the PR head advances, and verify that the result distinguishes the original review head from the current head without permitting a preparation-time race.
-- Convert the adjudicated behavior-removal, security, and cross-boundary consumer-frontier cases into privacy-safe semantic fixtures; add a legitimate zero-finding control; then run matched self-review versus fresh-review and latency-first versus quality-first evaluations without revealing the expected findings.
-- Forward-test an unavailable named-worker case and confirm that evidence collection returns to the primary agent without generic-worker substitution or weakened publication gates.
+- Build one privacy-safe reusable semantic fixture corpus from the adjudicated behavior-removal, security, cross-boundary consumer-frontier, mixed managed-and-vendored dependency-selection, legitimate-zero, and hard-duplicate cases.
+  - Run blinded matched self-review versus fresh-review and latency-first versus quality-first evaluations without revealing expected findings.
+  - Score material-finding recall, duplicate and false-positive control, and whether the structured receipt distinguishes a supported zero-material-finding result from a hollow summary.
+  - On comparable fixtures, verify that `focused` emits no review notes, `balanced` keeps low-severity observations out of inline threads, and explicitly selected `assertive` permits only anchored high-confidence non-blocking low suggestions, without lowering semantic depth or increasing speculative noise.
+- Only when the user explicitly authorizes each relevant write in that turn, complete controlled schema-v2 live checks on github.com and the current corporate GHES.
+  - Publish one safe test review on each host and inspect the two-column receipt, conditional warning with one bullet per gap, blank-line hierarchy, linearized plain-text reading order, restrained `✅` semantics, and always-expanded evidence visually and with assistive-technology-oriented inspection.
+  - Verify that an explicit publish request creates exactly one review and that an exact same-snapshot rerun returns `noop-existing-snapshot`.
+  - Verify that a newly confirmed finding or summary-count change on an already reviewed same snapshot returns a corrected draft without writing or bypassing the snapshot guard.
+  - Forward-test `reply` after the PR head advances; the result must distinguish the original review head from the current head and stop on a preparation-time race.
 
 ## Notes
 - Keep this file concise and durable.

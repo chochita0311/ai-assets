@@ -1,6 +1,6 @@
 # GitHub Publishing Protocol
 
-Use this reference for `audit`, `validate`, `publish`, `refresh`, `amend`, `reply`, and recovery. The bundled script is the sole write path for skill-owned GitHub reviews.
+Use this reference for the exact review plan schema, renderer behavior, `audit`, `validate`, `publish`, `refresh`, `amend`, `reply`, and recovery. The bundled script is the sole write path for skill-owned GitHub reviews. Use [review-criteria.md](review-criteria.md) for semantic coverage, adjudication, and reviewer-supplied content quality.
 
 ## Contents
 
@@ -46,10 +46,39 @@ The JSON result includes the base/head SHAs, authenticated user, existing skill-
 
 ```json
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "head_sha": "0123456789abcdef0123456789abcdef01234567",
-  "summary": "## Review summary\n\n이 PR은 빈 권한 목록의 갱신 의미를 변경하며, 권한 회수와 실패 원자성을 중심으로 `0123456` 기준 변경 파일 4개를 검토한 결과 blocking 1건, non-blocking 0건, question 0건입니다. 생성 파일 1개는 source 기준으로 확인했습니다.",
+  "profile": "balanced",
+  "summary": {
+    "overview": "이 PR은 빈 권한 목록의 갱신 의미를 변경하며, 권한 회수와 실패 원자성이 주요 위험 표면입니다.",
+    "scope": "Human-authored 변경 파일 4개를 검토했고 생성 파일 1개는 generator와 schema 기준으로 확인했습니다.",
+    "focus": [
+      "빈 목록에서의 권한 회수",
+      "갱신 실패 시 상태 원자성"
+    ],
+    "evidence": [
+      {
+        "area": "boundary-behavior",
+        "detail": "Base와 head의 빈 목록 분기 및 저장 순서를 직접 대조했습니다."
+      },
+      {
+        "area": "integration-consumers",
+        "detail": "권한 값이 최종 authorization check에 소비되는 경로를 추적했습니다."
+      },
+      {
+        "area": "tests-validation",
+        "detail": "권한 회수 및 갱신 실패 테스트를 확인했습니다."
+      }
+    ],
+    "coverage_gaps": [],
+    "review_notes": [
+      {
+        "label": "positive",
+        "text": "생성 client를 schema source와 함께 갱신해 계약 추적성이 유지됩니다."
+      }
+    ]
+  },
   "comments": [
     {
       "finding_id": "retain-permission-on-empty-update",
@@ -68,15 +97,24 @@ The JSON result includes the base/head SHAs, authenticated user, existing skill-
 
 Rules enforced by the script:
 
-- `schema_version` is exactly `1`
+- `schema_version` is exactly `2`; marker-aware audit and maintenance continue to recognize submitted version 1 reviews
 - `base_sha` and `head_sha` are full SHAs from the same frozen audit
-- `summary` is one paragraph under `## Review summary`
-- `summary` contains the abbreviated head and each exact count in either label-first form (`blocking N`) or count-first form (`N blocking`)
+- `profile` is `focused`, `balanced`, or `assertive`
+- `summary` is an object with exactly `overview`, `scope`, `focus`, `evidence`, `coverage_gaps`, and `review_notes`
+- summary values are bounded plain one-line content so they cannot inject headings, lists, HTML markers, or a second review structure
+- the transaction renders a stable two-column GitHub Markdown `Review receipt`, escapes table separators in reviewer-supplied cells, and owns the surrounding blank-line hierarchy
+- the transaction renders the abbreviated head, profile, exact material-finding counts, and a separate assertive-suggestion count; only nonzero counts are bold
+- material coverage gaps produce one `WARNING` alert after the receipt with one blockquoted bullet per gap, while an empty gap list produces no alert
+- summary content may contain at most one `✅`, only as the trailing status cue on an exact `tests-validation` evidence fact
+- `focus` contains one to four items; `evidence` contains two to five objects with unique `area` values and at least three when there is no `medium+` issue thread, including suggestion-only reviews; `coverage_gaps` contains zero to four items
+- each evidence object has exactly `area` and `detail`; `area` is one of `boundary-behavior`, `integration-consumers`, `tests-validation`, `design-adversarial`, or `independence`
+- `focused` permits no review notes, `balanced` permits up to three, and `assertive` permits up to five; each note is labeled `optional`, `fyi`, or `positive`
 - `comments` contains zero to eight items
 - `finding_id` values and `(path, line, side)` anchors are unique
 - `line` is a positive integer and `side` is `RIGHT` or `LEFT`
-- severity is `critical`, `high`, or `medium`; confidence is exactly `high`
-- the first body line matches the disposition, severity, and category fields
+- severity is `critical`, `high`, or `medium` with confidence exactly `high`; explicitly selected `assertive` also permits high-confidence `low` comments only as non-blocking `suggestion` threads
+- a `medium+` body starts with `issue (<blocking|non-blocking|question>, <critical|high|medium>, <category>): <concise title>` and matches its disposition, severity, and category fields
+- an explicitly selected `assertive` low body starts with `suggestion (non-blocking, low, <category>): <concise title>`
 - obvious secret literals and pre-existing skill markers are rejected
 
 Use `RIGHT` only for an added line and `LEFT` only for a deleted line. The script rejects context-only, absent, binary, and truncated anchors.
@@ -167,7 +205,7 @@ When the user explicitly asks to correct the wording of a submitted skill-owned 
 
 ```json
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "head_sha": "0123456789abcdef0123456789abcdef01234567",
   "review_id": 456,
@@ -192,7 +230,7 @@ When the user explicitly asks to respond to a submitted skill-owned finding, use
 
 ```json
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "head_sha": "0123456789abcdef0123456789abcdef01234567",
   "review_id": 456,

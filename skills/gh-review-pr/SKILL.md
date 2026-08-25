@@ -1,6 +1,6 @@
 ---
 name: gh-review-pr
-description: Review, draft, publish, audit, refresh, amend, or reply to skill-owned GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a useful review summary and high-confidence inline threads while preventing duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, post inline code-review findings, rerun an automated review, audit existing human or skill-owned review feedback, correct the wording of a skill-owned finding, or respond to a skill-owned finding; do not use for editing PR titles or descriptions, posting replies to human-authored review threads, or general local code review without a PR.
+description: Review, draft, publish, audit, refresh, amend, or reply to skill-owned GitHub and GitHub Enterprise pull request reviews from a frozen base-to-head snapshot, producing a structured review receipt and calibrated inline threads while preventing unauthorized, duplicate, unanchored, or partially published comments. Use when Codex is asked to review a PR, explicitly post code-review feedback, rerun an automated review, audit existing human or skill-owned feedback, correct one skill-owned finding, or respond to one skill-owned finding; a skill mention or ordinary review request alone authorizes read-only draft or audit work, not a GitHub write. Do not use for editing PR titles or descriptions, posting replies to human-authored review threads, or general local code review without a PR.
 ---
 
 # GitHub PR Reviewer
@@ -9,8 +9,8 @@ Produce one review for one immutable PR `(base SHA, head SHA)` snapshot, or safe
 
 ## Choose the operating mode
 
-- `publish`: use for an explicit `$gh-review-pr <PR URL>` invocation or a clear request to review and post; publish one review after all gates pass
-- `draft`: use when the user says draft, preview, or do not post; return the summary and proposed threads without any GitHub write
+- `publish`: use only when the current request unambiguously asks to write the review to the actual PR, for example “post,” “publish,” “submit,” “leave comments,” “PR에 리뷰를 게시해줘,” or “GitHub에 댓글을 남겨줘”; publish one review after all gates pass
+- `draft`: use for a bare `$gh-review-pr <PR URL>`, an ordinary request to review, or when the user says draft, preview, or do not post; return the summary and proposed threads without any GitHub write
 - `audit`: inspect existing reviews, duplicate state, anchors, a prior run, or human-authored feedback without writing
 - `refresh`: re-review an explicitly requested snapshot whose base or head changed; never add a second skill-owned review to the same base/head pair
 - `amend`: correct only the wording of one submitted skill-owned finding after an explicit request; preserve its classification, anchor, marker, and review summary
@@ -18,20 +18,30 @@ Produce one review for one immutable PR `(base SHA, head SHA)` snapshot, or safe
 
 The operating `audit` mode is a complete read-only review task. The transaction script's `audit` subcommand is only the snapshot and ownership preflight required before semantic work in the review-building modes; it does not perform the review itself.
 
+A skill name, PR URL, permission to read the repository, or earlier publication request is not present-turn mutation authority. Requests to inspect, compare, evaluate, report, or review existing feedback stay `audit` or `draft` even when they mention this skill. When wording is ambiguous, do the useful read-only review and return the publish-ready draft; do not write first and ask afterward.
+
 Treat a full PR URL as the canonical target. Resolve a missing URL only when the current repository and branch identify exactly one PR. A generic request to inspect code without an identifiable PR is outside this skill.
 
 Use `COMMENT` by default. Use `APPROVE` or `REQUEST_CHANGES` only when the user explicitly requests that review decision; never infer it from finding counts.
 
 The transaction accepts `APPROVE` only with zero blocking findings and `REQUEST_CHANGES` only with at least one blocking finding. These are compatibility guards for an explicitly chosen event, not rules for choosing the event.
 
+## Choose the feedback profile
+
+- `balanced` is the default: publish only high-confidence `medium+` issue threads and allow up to three concise PR-level `Optional`, `FYI`, or `Positive` notes in the structured summary
+- `focused` is the quiet high-signal profile: use the same `medium+` issue threshold and omit review notes
+- `assertive` is opt-in only: keep the issue threshold, allow up to five review notes, and permit high-confidence `low` suggestions as non-blocking inline threads when they have exact changed-line anchors
+
+The profile controls feedback breadth, not review depth. Complete the same change map, review passes, counterfactual checks, and zero-finding gate in every profile. Never use review notes or `assertive` suggestions as a fallback for a material concern that failed confidence, causality, reachability, duplicate, or anchor gates.
+
 ## Preserve hard invariants
 
 - Freeze the base SHA and head SHA before reviewing, and bind every artifact to that pair
 - Review the committed base-to-head diff; exclude dirty and untracked working-tree state
 - Cover every human-authored changed line or name every generated, vendored, binary, truncated, or otherwise unreviewed gap
-- Publish at most one skill-owned review per PR base/head snapshot and at most eight inline findings
+- Publish at most one skill-owned review per PR base/head snapshot and at most eight inline threads
 - Anchor every inline thread to the exact added or deleted line that introduces or materially worsens the trigger or impact; never move it to merely reachable nearby code
-- Publish only current-snapshot, reachable findings with `critical`, `high`, or `medium` severity and `high` confidence
+- In `focused` and `balanced`, publish only current-snapshot, reachable findings with `critical`, `high`, or `medium` severity and `high` confidence; in explicitly selected `assertive`, a `low` thread must be a high-confidence, non-blocking `suggestion`
 - Keep low-confidence possibilities, style-only preferences, and mechanical lint in private analysis unless a repository rule makes them material
 - Never force an inline finding to make a review look useful; make a zero-finding result earn its conclusion through explicit negative evidence
 - Never expose literal secrets; describe the class, location, and remediation without repeating the value
@@ -85,21 +95,21 @@ Apply every authoritative [publication gate](references/review-criteria.md#publi
 
 ### 4. Compose separate artifacts
 
-Create the summary as exactly one paragraph under `## Review summary`. Give a concise change-and-risk synopsis and name the main review focus, then include the abbreviated head SHA, reviewed file count, exact numeric counts, and any material coverage, independence, or review-depth gap. Use language-appropriate order: `blocking N`, `non-blocking N`, and `question N` in Korean, or `N blocking`, `N non-blocking`, and `N question` findings in English. Do not repeat thread titles, detailed evidence, or remediation. For zero findings, say that no high-confidence finding was found within the stated coverage; do not claim the change is safe or defect-free.
+#### Structured summary and notes
 
-Write one concern per inline thread. Start it with:
+Create the structured summary object required by the [review plan schema](references/github-publishing.md#review-plan-schema). That protocol owns the exact fields, cardinality, renderer-created Markdown, finding counts, and presentation validation. The semantic [summary-content rules](references/review-criteria.md#summary-content) own reviewer-supplied text, note eligibility, evidence and gap content, and zero-material-finding language. Supply the reviewed scope, principal focus, compact evidence from the completed passes, and every material coverage, independence, or review-depth gap; do not hand-write renderer-owned facts.
 
-```text
-issue (<blocking|non-blocking|question>, <critical|high|medium>, <category>): <concise title>
-```
+With zero material issue findings, including a suggestion-only result, also prepare and return the detailed [session-only evidence receipt](references/review-criteria.md#zero-material-finding-session-receipt). Keep its candidate-level detail outside the JSON plan and GitHub review; only its compact sanitized counterpart belongs in summary evidence.
 
-Then state the triggering behavior, impact, and smallest safe correction or decision. Do not add praise, nits, generic review advice, or duplicated summary prose. Read [examples-ko.md](references/examples-ko.md) or [examples-en.md](references/examples-en.md) only when language calibration is useful.
+#### Inline threads
+
+Compose every thread under the [inline-thread content rules](references/review-criteria.md#inline-thread-content) and the plan schema's exact header contract. Read [examples-ko.md](references/examples-ko.md) or [examples-en.md](references/examples-en.md) only when language calibration is useful.
 
 ### 5. Complete the selected mode safely
 
 For `audit`, return the frozen base/head pair, ownership and duplicate state, pending-review state, the requested review or anchor findings, and material evidence gaps. When auditing human feedback, classify each concern and provide evidence, the smallest recommended action, and a concise response draft, but never post the response. Stop without creating or submitting a review.
 
-For `draft`, stop after returning the proposed summary, frozen base/head pair, coverage and review-depth gaps, plus publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, category, and body. With zero proposed threads, also return the compact [session-only evidence receipt](references/review-criteria.md#artifact-writing); keep it outside the GitHub summary and JSON plan.
+For `draft`, stop after returning the proposed structured summary, selected profile, frozen base/head pair, coverage and review-depth gaps, plus publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, category, and body.
 
 For `publish` or `refresh`, create a temporary JSON plan and follow [github-publishing.md](references/github-publishing.md). It owns the plan schema, commands, status meanings, pending-review protocol, reconciliation rules, and failure handling.
 
@@ -112,7 +122,7 @@ python3 "$GH_REVIEW_TRANSACTION" publish --pr <full-pr-url> --plan <plan-json>
 
 Pass `--event APPROVE` or `--event REQUEST_CHANGES` only for the user's explicit decision request. Do not reconstruct the write with ad hoc `gh api`, GraphQL, MCP, `curl`, browser actions, or individual comment calls if the script stops. If `gh` fails, report its sanitized error and the transaction status; do not switch providers.
 
-After publication, report the final review URL or ID, bound base/head SHAs, event, inline count, and any evidence gap. When the inline count is zero, also return the compact zero-finding evidence receipt in the session so the user can distinguish a supported empty review from a hollow summary. Delete the temporary plan unless the user explicitly asks to retain it.
+After publication, report the final review URL or ID, bound base/head SHAs, event, profile, inline count, and any evidence gap. Delete the temporary plan unless the user explicitly asks to retain it.
 
 ## Maintain a submitted skill-owned finding
 
