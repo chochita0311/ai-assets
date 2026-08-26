@@ -11,7 +11,7 @@ This is a content-level restructuring skill. It improves composition, flow, hier
 This skill also covers shaping a raw source set into a first coherent artifact when the input is not yet a document.
 This skill can also be applied to a skill document set to improve coherence across `SKILL.md`, method, checklist, and examples without redesigning the overall skill system.
 
-If another skill such as `docs-structuring` is available, prefer that direction when the real problem is document ownership, repo layering, entrance-doc drift, or cross-document duplication.
+If `$docs-structuring` is available, prefer that direction when the real problem is document ownership, repo layering, entrance-doc drift, or cross-document duplication.
 
 ## Purpose
 
@@ -90,9 +90,18 @@ Produce a document or document set with these properties:
 5. Validate that substance, force words, and exceptions were preserved.
 6. Check the result with the checklist.
 
+## Approval Boundary
+
+- Classify the planned intervention before editing from its full surface area. Use the exact thresholds in [references/method.md](references/method.md), and use `major` when the boundary is uncertain.
+- Treat document-wide reordering, broad semantic compression, and large-scale interpretive rewriting as high-risk `major` interventions.
+- Apply that class of intervention only when the active user request explicitly authorizes that degree of rewriting. General permission to edit—including “directly apply needed changes”—authorizes ordinary in-scope edits, not a high-risk `major` intervention. A request must name or clearly accept broad, major, document-wide, or substantial rewriting, or approve a previously shown major change map.
+- Without explicit authorization, withhold that intervention before mutating the affected material and provide a concise change map.
+- Explicit authorization changes whether the major intervention may be applied; it does not waive meaning, constraint, example, caveat, or exception preservation.
+
 ## Rules
 
 - Restructuring is applied only when it meaningfully improves clarity. Otherwise, preserve the existing structure.
+- Before editing, identify a concrete reader task that the current composition obstructs or a concrete misreading it is likely to cause. A possibly cleaner outline, more explicit navigation, or more links is not sufficient on its own.
 - If no meaningful improvement can be made, return the document unchanged.
 - Prefer the minimum effective restructuring.
 - Do not rewrite already-stable sections for aesthetic neatness.
@@ -100,6 +109,7 @@ Produce a document or document set with these properties:
 - Do not silently drop meaningful content.
 - Do not merge near-duplicate content until you verify that no distinct constraint is being lost.
 - Preserve force words such as `must`, `should`, `only`, `never`, and `unless`.
+- Preserve claim status and identity boundaries: do not upgrade proposals or unresolved mappings into confirmed facts, and do not collapse distinct actors, channels, environments, or systems under a shared label unless the source establishes that equivalence.
 - Keep examples, caveats, and exceptions near the rule or concept they qualify.
 - Prefer one strong canonical explanation over repeated paraphrases.
 - Make section titles reveal purpose, not just topic fragments.
@@ -114,11 +124,11 @@ Produce a document or document set with these properties:
 - If multiple `intake` outputs are emitted, each file must declare its role in one line near the top.
 - Do not expand from `intake` into downstream planning or specification documents unless the user explicitly asks for that next step.
 - When refinement improves substance but leaves the document bloated, fragmented, or uneven, this skill may be used to stabilize the composition.
-- When reshaping reveals cross-document ownership confusion, call out that boundary explicitly and consider `docs-structuring` if that skill is available.
+- When reshaping reveals cross-document ownership confusion, call out that boundary explicitly and consider `$docs-structuring` if that skill is available.
 
 ## References
 
-Read [references/method.md](references/method.md) for the full procedure, scoring model, risk signals, and handoff logic.
+Read [references/method.md](references/method.md) for the full procedure, intervention logic, risk signals, and handoff logic.
 Read [references/checklist.md](references/checklist.md) before finalizing a reshaping pass.
 Read [references/example-output.md](references/example-output.md) when you need the reporting shape for a full pass.
 
@@ -128,12 +138,13 @@ Unless the user asks for a lighter response, structure the working result around
 - operating mode used (`reshape` or `intake`)
 - necessity justification
 - intervention level when a full pass is being reported
+- withheld high-risk `major` change map when applicable
+- authorization basis and pre-edit preservation inventory when a high-risk `major` intervention was applied
 - changed files versus unchanged stable files when the input is a document set
 - primary shaped artifact when the mode is `intake`
 - derived views, if any, when the mode is `intake`
 - optional suggested derived views when they would help but were not emitted
 - composition diagnosis
-- composition score before and after when a full pass is useful
 - resulting outline
 - major `before -> after` moves
 - preserved versus consolidated content

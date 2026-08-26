@@ -8,29 +8,34 @@ This is an example of the reporting format, not a mandatory literal template.
 - `reshape`
 
 ## Necessity Justification
-- `policy.md` and `logging.md` both own logging rules, but the duplicated guidance is split across policy text, examples, and implementation notes.
-- The current order forces the reader to reconstruct the intended flow manually.
+- `policy.md` spreads required logging rules, implementation notes, examples, and exceptions across six sections.
+- The current order forces implementers to reconstruct which statements are requirements and which are supporting detail.
 
 ## Changed Files Versus Unchanged Stable Files
 - Changed:
-  - `policy.md`: mixed policy and implementation detail
-  - `logging.md`: duplicated rules and hidden constraints inside examples
+  - `policy.md`: required rules and supporting material are mixed across the document-wide reading path
 - Unchanged:
+  - `logging-reference.md`: stable implementation reference with no ownership overlap
   - `alerts.md`: already stable and narrowly scoped
   - `glossary.md`: reference-only structure already fit its purpose
 
 ## Intervention Level
-- `moderate`
+- high-risk `major`
+
+## Major Authorization Basis
+- The active request explicitly authorized a document-wide major rewrite of `policy.md`.
+
+## Pre-Edit Preservation Inventory
+- all required logging rules and force words
+- implementation examples and operational terminology
+- exception cases and the caveats they qualify
+- distinctions between policy requirements and supporting implementation notes
 
 ## Composition Diagnosis
 - policy and implementation details are mixed together
 - repeated logging rules appear in several sections
 - examples contain hidden constraints
 - the current opening does not orient the reader to the document's purpose
-
-## Composition Score
-- Before: `14 / 30`
-- After: `25 / 30`
 
 ## Resulting Outline
 1. Overview
@@ -45,14 +50,16 @@ This is an example of the reporting format, not a mandatory literal template.
 - merged: repeated rationale paragraphs -> `Core Logging Principles`
 - elevated: hidden constraints from examples -> `Required Logging Rules`
 - separated: implementation detail from policy text
+- moved without rewriting: exception examples -> `Exceptions And Edge Cases`
 
 ## Unchanged Stable Sections
-- retained the existing exception examples with only heading and placement changes
-- kept the original operational terminology because it already matched the system language
+- left `logging-reference.md`, `alerts.md`, and `glossary.md` unchanged
+- kept stable implementation detail in its existing owner instead of duplicating it into `policy.md`
 
 ## Preservation Notes
 - preserved all original constraints and examples
 - preserved `must` versus `should` distinctions
+- preserved the exception examples verbatim while moving them into the owned section
 - consolidated repeated explanations without collapsing distinct exceptions
 
 ## Confidence Summary

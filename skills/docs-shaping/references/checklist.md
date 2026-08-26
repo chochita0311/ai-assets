@@ -5,16 +5,21 @@ Use this as the final quick validator after a document-shaping pass.
 ## Final Validation
 - Was restructuring actually necessary?
 - If no meaningful improvement was available, was the document left unchanged?
+- Before editing, was a concrete obstructed reader task or likely misreading identified rather than only a potentially cleaner presentation?
 - Were stable sections left untouched unless there was a clear reason to change them?
 - If the input was a document set, were changed files and unchanged stable files reported explicitly?
 - If `intake` mode was used, was one primary shaped artifact identified explicitly?
 - If `intake` mode emitted derived views, was the primary shaped artifact retained by default?
 - Was the minimum effective restructuring applied?
+- Was the intervention classified before editing from its complete planned surface area, counting source sections whose claims were synthesized or reframed rather than only destination sections edited?
+- If a high-risk `major` intervention was not explicitly authorized, was that intervention withheld before the affected material was mutated and a concise change map provided instead?
+- If a high-risk `major` intervention was explicitly authorized, did the report name the authorization basis and pre-edit preservation inventory, were the inventoried unique content and constraints preserved, and were any requested tradeoffs kept explicit?
 - Is the new structure easier to follow than the original?
 - Do headings now match the content they own?
 - Are repeated ideas consolidated into one canonical place where appropriate?
 - Were rules, caveats, and exceptions preserved?
 - Were force words such as `must`, `should`, `only`, `never`, and `unless` preserved accurately?
+- Were claim status and identity boundaries preserved without upgrading uncertainty or collapsing distinct actors, channels, environments, or systems?
 - Were examples kept near the rules or concepts they qualify?
 - Did the pass avoid aesthetic-only rewrites?
 - Did the pass avoid introducing artificial structure where the existing structure was already sufficient?
@@ -22,7 +27,6 @@ Use this as the final quick validator after a document-shaping pass.
 - If the input was a related document set, did the pass keep heading patterns reasonably compatible unless divergence clearly helped?
 - Does the document now read more seamlessly from section to section?
 - Does the structure feel deliberate rather than historically accumulated?
-- If the score was used, was it used descriptively instead of as a reason to over-edit?
 - Were unchanged stable areas reported explicitly?
 - Were low-confidence compressions, merges, or splits avoided or called out?
 - If `intake` mode was used, were unresolved or low-confidence fragments handled explicitly?
@@ -32,7 +36,7 @@ Use this as the final quick validator after a document-shaping pass.
 - If the output was written as a comparison copy, were source-relative terms preserved unless relocation was explicitly requested?
 - If the input was PDF or mixed-media, were evidence artifacts and extraction-quality confidence reported when they mattered to trust in the result?
 - Did `intake` avoid drifting into PRD, execution planning, repo/docs structure design, or implementation-spec authoring unless explicitly requested?
-- If the real issue turned out to be ownership across files, was that boundary called out clearly and, if relevant, was `docs-structuring` suggested as a better fit?
+- If the real issue turned out to be ownership across files, was that boundary called out clearly and, if `$docs-structuring` was available and relevant, was it suggested as a better fit?
 
 ## Final Question
 - If this skill runs again on a similar document, is the same composition cleanup unlikely to be needed again without new content drift?

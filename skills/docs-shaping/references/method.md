@@ -42,6 +42,7 @@ Use this file for the full document-shaping procedure.
 - Split, merge, and consolidate are operations inside a mode, not modes by themselves.
 
 ### 2. Detect necessity before changing anything
+- Before editing, name a concrete reader task that the current composition obstructs or a concrete misreading it is likely to cause.
 - Only proceed when one or more of these are true:
   - duplication causes confusion
   - section order makes the document harder to follow
@@ -52,19 +53,27 @@ Use this file for the full document-shaping procedure.
   - the input is not yet a coherent document and needs intake shaping
 - If the document is already clear and stable, leave it mostly unchanged.
 - If no meaningful improvement can be made, return it unchanged.
+- A possibly cleaner outline, more explicit route, added links, or relocated warnings are not sufficient by themselves when the document already provides an executable path and the cautions needed to use it.
 
 ### 2a. Assign intervention level
+- Classify the planned edit before mutation from its complete surface area and semantic effect, not from a preferred label, the number of files changed, or a post-edit diff.
 - `minimal`
   - local reordering
   - heading cleanup
   - local consolidation
 - `moderate`
-  - several sections need reordering or regrouping
+  - a bounded cluster of no more than two top-level content sections needs interpretive reordering or regrouping
   - repeated material needs canonicalization
+  - the document-wide reading path and claim relationships remain intact
+  - purely additive navigation may span more sections or files when it does not move, remove, reinterpret, or reframe existing content
 - `major`
   - split or multi-doc consolidation is clearly necessary
   - current structure reflects historical accumulation rather than a usable composition
-- Prefer the lowest level that solves the problem.
+  - document-wide reordering or broad semantic compression is proposed
+  - interpretive moving, rewriting, consolidation, or status labeling would affect three or more top-level content sections, or equivalent conceptual sections when headings are absent
+  - one destination section, such as an executive summary, would synthesize or reframe claims drawn from three or more source sections
+  - moving largely unchanged text would still replace the document-wide reading path
+- Prefer the lowest level that fully describes the planned edit. If the boundary between `moderate` and `major` is uncertain, use `major`.
 
 ### 3. Diagnose composition failures
 - Look for:
@@ -87,8 +96,24 @@ Use this file for the full document-shaping procedure.
   - policy and brainstorming are mixed together
   - examples encode operational rules
   - `must` and `should` language varies across apparently similar statements
+  - planned compression would materially reduce unique examples, caveats, decisions, or explanatory context
+  - a broad rewrite could reinterpret factual relationships while improving flow
+  - a new heading or summary could strengthen a proposal, inference, or unresolved mapping into a confirmed fact
+  - an umbrella label could blur distinct actors, channels, environments, or systems whose equivalence is not established
   - the proposed shape conflicts with established document conventions
 - When risk is high, preserve more structure and report uncertainty explicitly.
+
+### 3b. Gate high-risk major interventions
+- Complete the intervention classification and preservation inventory before mutating the affected material. Do not use a post-edit `moderate` label to bypass this gate.
+- Treat document-wide reordering, broad semantic compression, or interpretive changes across three or more top-level content sections as both `major` and high risk, even when no split or merge is proposed. Count source sections whose claims are synthesized or reframed, not only edited destination sections. Purely additive navigation that leaves existing claims and content in place is not high risk on section count alone.
+- Apply a high-risk `major` intervention only when the active user request explicitly authorizes that class and degree of rewriting.
+- Do not treat general permission to edit, including “directly apply needed changes,” as authorization for broad semantic rewriting. Major authorization must name or clearly accept broad, major, document-wide, or substantial rewriting, or approve a previously shown major change map.
+- When authorization is absent, withhold that intervention before mutating the affected material and provide a concise change map containing:
+  - affected sections
+  - intended moves, merges, compression, or rewrites
+  - unique content and constraints that must be preserved
+  - material uncertainty or interpretation risk
+- When authorization is present, inventory the same preservation constraints before editing. Authorization permits the intervention but does not permit silent meaning loss.
 
 ### 4. Choose the target shape
 - Match the structure to the genre instead of forcing one template:
@@ -120,11 +145,12 @@ Use this file for the full document-shaping procedure.
   - conflicting with established document conventions without a clear need
 
 ### 5a. Preserve before compressing
-- Compression is allowed only when:
+- By default, compression is allowed only when:
   - repeated material is materially saying the same thing
   - one stronger canonical statement can replace weaker restatements
   - no caveat, exception, or force-word difference is lost
 - If in doubt, preserve and annotate rather than compress.
+- If the user explicitly authorizes high-risk `major` compression, preserve the meaning of unique material, keep requested tradeoffs explicit, and do not treat authorization as permission to discard examples, caveats, decisions, or constraints silently.
 
 ### 5b. Intake shaping
 - In `intake` mode:
@@ -169,41 +195,25 @@ Use this file for the full document-shaping procedure.
   - preserve source-relative terminology unless the user asks for a standalone relocated version
   - avoid rewriting internal path language only to match the temporary output location
 
-### 6. Score the composition
-- Use this lightweight composition score when a full pass is being reported:
-  - flow continuity (`0-5`)
-  - structural clarity (`0-5`)
-  - duplication control (`0-5`)
-  - section coherence (`0-5`)
-  - reader orientation (`0-5`)
-  - constraint visibility (`0-5`)
-- Interpretation:
-  - `24-30`: seamless and impeccable
-  - `18-23`: strong but still uneven
-  - `12-17`: structurally unstable
-  - `0-11`: fragmented or accumulated
-
-### 6a. Use the score descriptively, not mechanically
-- The score is a reporting aid, not a mandate to over-edit.
-- Do not chase a higher score by rewriting stable content.
-
-### 7. Validate preservation
+### 6. Validate preservation
 - Confirm:
   - all critical constraints remain
   - all explicit decisions remain
   - all exceptions remain
   - no unique content disappeared
   - force words were preserved
+  - confirmed facts, proposals, inferences, and unresolved items did not gain stronger certainty through headings or summaries
+  - distinct actors, channels, environments, and systems were not collapsed unless the source established their equivalence
   - unchanged stable sections were left alone on purpose
 
 ## Handoff Logic
 
-### Consider `docs-structuring` when available
+### Consider `$docs-structuring` when available
 - when the real issue is repo-wide doc ownership
 - when several files conflict over the durable owner of the same rule
 - when entrance docs, overview docs, or docs-map layers have drifted
 
-### Pair well with `refine-skill`
+### Pair well with `$refine-skill` when available
 - when substance improved but the composition became bloated, repetitive, fragmented, or uneven
 - when refinement exposed internal structure problems but not repo-wide ownership problems
 
@@ -212,12 +222,13 @@ Use this file for the full document-shaping procedure.
   - operating mode
   - necessity justification
   - intervention level
+  - withheld high-risk `major` change map when applicable
+  - authorization basis and pre-edit preservation inventory when a high-risk `major` intervention was applied
   - changed files versus unchanged stable files when the input is a document set
   - primary shaped artifact when the mode is `intake`
   - derived views, if any, when the mode is `intake`
   - optional suggested derived views when useful but not emitted
   - composition diagnosis
-  - score before and after when useful
   - resulting outline
   - `before -> after` movement summary
   - unchanged stable sections
