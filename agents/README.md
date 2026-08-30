@@ -26,6 +26,7 @@
 ## Operations Package
 - [agents/operations/runner.md](operations/runner.md): define how a human or harness starts and continues one run using prompts
 - [agents/ADOPTION-GUIDE.md](ADOPTION-GUIDE.md): explain how to export this shared package into a consuming repo and align it as local docs
+- [agents/harness-import-manifest.example.json](harness-import-manifest.example.json): schema-shaped example for initializing a consuming repo's own harness refresh baseline
 
 ## Profiles Package
 - [agents/profiles/README.md](profiles/README.md): explain reusable execution profiles
@@ -68,6 +69,7 @@ Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persis
 - This package is a shared source set, not a consumer repo by itself.
 - In a consuming repo, place:
   - role docs under `docs/agents/roles/`
+  - the repo-owned harness import manifest at `docs/agents/harness-import-manifest.json` after a successful fresh export, existing-installation bootstrap, or refresh/resync
   - flow docs under `docs/agents/flows/`
   - operation docs under `docs/agents/operations/`
   - profile docs under `docs/agents/profiles/`
