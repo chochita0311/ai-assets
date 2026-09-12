@@ -38,7 +38,7 @@
 - [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
 ## Runtime Adapters Package
-- [agents/adapters/codex/README.md](adapters/codex/README.md): install competence-first delegation, named worker and profile bindings, an optional operator-context recognition hook, and a read-only model-lifecycle audit into a personal Codex runtime
+- [agents/adapters/codex/README.md](adapters/codex/README.md): reuse personal instruction references, and install competence-first delegation, named worker and profile bindings, an optional operator-context recognition hook, and a read-only model-lifecycle audit into a personal Codex runtime
 - Keep portable delegation and continuity policy outside adapters; adapters own platform-specific fragments, concrete model bindings, installation guidance, and platform-specific audit, runner, and schedule assets.
 
 ## Related Shared Docs

@@ -32,6 +32,8 @@
 - Let each skill package own its own domain instructions; do not duplicate skill-local rules in `AGENTS.md`.
 
 ## Working Rules
+- Treat this as a public repository. Use placeholders or synthetic values in portable sources, examples, and tests; keep real per-user paths, internal hosts, and credentials outside the checkout.
+- Use [Personal Codex Instructions](agents/adapters/codex/instructions/README.md) when comparing reusable guidance with a destination `AGENTS.md` for import.
 - Prefer strengthening an existing skill contract over adding parallel guidance.
 - Prefer strengthening the shared harness package over keeping divergent project-local copies once the shared version is proven stable.
 - Follow [Skill Quality Guide](skills/SKILL-QUALITY.md) for package anatomy, file-role boundaries, evidence maturity, and distribution lifecycle.

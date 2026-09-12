@@ -14,6 +14,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
 - Review [skills/skill-followups.md](skills/skill-followups.md) for durable unresolved skill follow-up work across the repository.
 - Read [agents/README.md](agents/README.md) for the shared agent package.
+- Use [Personal Codex Instructions](agents/adapters/codex/instructions/README.md) as a reference for agent-led review and import of common, environment-specific, and PC-specific guidance.
 - Use [agents/ADOPTION-GUIDE.md](agents/ADOPTION-GUIDE.md) when exporting or refreshing the agent package in a consuming repo.
 - Read [pets/README.md](pets/README.md) before adding or changing a pet package.
 - Run [validate_skill_packages.py](scripts/validate_skill_packages.py) after changing a skill package.

@@ -4,6 +4,7 @@
 - Adapt the shared competence-first delegation policy to a personal Codex runtime.
 - Keep stable role names separate from replaceable model bindings.
 - Provide installable custom-agent files and a model-neutral managed section for the global Codex `AGENTS.md`.
+- Provide reusable personal guidance and generic environment and machine templates for agent-led import.
 - Provide an optional operator-context recognition hook without moving repo-local continuity policy into the personal runtime.
 - Provide a root-only, read-only lifecycle audit and a terminal-native weekly runner without making the audit a source of replacement authority.
 
@@ -14,9 +15,10 @@
 - [custom-agents/](custom-agents/) owns the canonical Codex custom-agent files and their concrete model bindings.
 - [profiles/](profiles/) owns canonical non-interactive root-agent profiles and their concrete model bindings.
 - [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks; it recognizes operator-context triggers but does not own or install the detailed policy.
+- [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the shared harness entrance blocks.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
 - [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) and [the LaunchAgent plist](launchd/com.jungcho.codex-model-binding-audit.plist) own the canonical terminal runner and macOS schedule definition. Installed runtime links do not become parallel sources of truth.
-- A target under `~/.codex/` or another explicitly selected Codex home is an installed runtime view, not a parallel source of truth.
+- Shared adapter blocks and linked bindings under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
 
 ## Official Codex References
 - [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, sandbox overrides, and delegation behavior
@@ -35,6 +37,11 @@ agents/adapters/codex/
 ├── README.md
 ├── global-agents-managed-section.md
 ├── model-binding-audit.md
+├── instructions/
+│   ├── README.md
+│   ├── general.md
+│   ├── environment.template.md
+│   └── machine.template.md
 ├── custom-agents/
 │   ├── evidence_scout.toml
 │   └── bounded_verifier.toml
@@ -51,13 +58,14 @@ agents/adapters/codex/
 | Canonical source | Runtime target |
 |---|---|
 | `global-agents-managed-section.md` | managed block inside `<codex-home>/AGENTS.md` |
+| applicable guidance from `instructions/` | selected rules merged into the destination `AGENTS.md` after comparison |
 | `custom-agents/evidence_scout.toml` | per-file symlink at `<codex-home>/agents/evidence_scout.toml` |
 | `custom-agents/bounded_verifier.toml` | per-file symlink at `<codex-home>/agents/bounded_verifier.toml` |
 | `profiles/model-binding-audit.config.toml` | per-file symlink at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
 | `launchd/com.jungcho.codex-model-binding-audit.plist` | symlink at `~/Library/LaunchAgents/com.jungcho.codex-model-binding-audit.plist` after approval |
 
-Do not replace the whole global `AGENTS.md` or `config.toml`; they may own unrelated personal settings. Merge only the marked managed section. Link each named TOML separately instead of linking the entire `agents/` directory so the runtime home can still own unrelated local agents.
+Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared adapter policy only through its marked regions; use the [personal instruction import guide](instructions/README.md) for other applicable guidance. Link each named TOML separately instead of linking the entire `agents/` directory so the runtime home can still own unrelated local agents.
 
 The audit runner executes from its canonical path under `scripts/`; it is not copied into a runtime home.
 
@@ -97,7 +105,7 @@ This package does not install itself automatically. Installation changes persona
 
 For an approved installation:
 
-1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat the competence-routing and operator-context blocks as independent managed regions. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
+1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat the competence-routing and operator-context blocks as independent managed regions. For personal guidance, compare the destination with [Personal Codex Instructions](instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
 2. Create the target `agents/` directory when absent.
 3. Create one symlink per named TOML from the target `agents/` directory to the canonical file under this adapter.
 4. Create one profile symlink from each approved Codex home to the canonical audit profile.

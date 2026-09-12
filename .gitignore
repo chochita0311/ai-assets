@@ -11,3 +11,6 @@
 __pycache__/
 *.py[cod]
 .ruff_cache/
+
+# Local editor state
+.obsidian/
