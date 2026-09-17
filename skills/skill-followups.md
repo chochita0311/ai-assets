@@ -12,6 +12,10 @@
 - Define a skill-specific adoption, synchronization, and removal contract before automating installation. Cover canonical symlinks versus copied targets, Codex and Claude discovery paths, target-specific metadata, pre-existing paths, cache refresh, and safe unlink behavior.
 - Consider a shared benchmark suite only after at least two skill families have reusable, privacy-safe task corpora and comparable pass/fail contracts; keep forward-tests skill-local until then.
 
+### [`refine-skill`](refine-skill/SKILL.md)
+- Validate static-only audits and explicit, implicit, and out-of-scope selection in the discovery environment.
+- Extend matched A/B runs to document/template corrections and repeat cases to check stability; capture actual tool traces alongside output checks.
+
 ### [`maintain-context-freshness`](maintain-context-freshness/SKILL.md)
 - Repeat `maintain` in an independent post-creation run:
   - verify that only approved content-state changes reach the smallest owning documents; finding IDs, ledger rows, and review, approval, or action status must remain session-only unless the user explicitly requests a named durable audit artifact

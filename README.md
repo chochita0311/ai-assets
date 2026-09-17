@@ -52,7 +52,7 @@ Use a bundle only when the named skills are actually distributed together:
 - [maintain-context-freshness](skills/maintain-context-freshness/SKILL.md): audit and safely maintain context freshness without erasing unique evidence
 - [pr-descriptor](skills/pr-descriptor/SKILL.md): create and evaluate evidence-based pull request artifacts, and safely apply explicitly requested description updates
 - [refactor-plan](skills/refactor-plan/SKILL.md): plan bounded refactors with parity and merge-safety gates
-- [refine-skill](skills/refine-skill/SKILL.md): refine an existing skill from real output evidence
+- [refine-skill](skills/refine-skill/SKILL.md): audit or improve an existing skill through evidence, failure diagnosis, and comparable validation
 - [screen-alignment](skills/screen-alignment/SKILL.md): align a screen with an existing design system
 - [workflow-context-sync](skills/workflow-context-sync/SKILL.md): reconcile multi-source workflow context into an explicitly owned target
 
