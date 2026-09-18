@@ -72,6 +72,8 @@
 8. Fix Agent
 9. Re-run the needed evaluators
 
+For `docs-content`, apply the [writing-contract route](../policies/harness/execution-loop-governance.md#docs-content-writing-contract): omit a separate Spec Agent pass only when the Orchestrator has designated a sufficient contract. Use that contract's ID and locator in the `Active spec` prompt field and all downstream reports.
+
 ## Invocation Rules
 - Fresh execution should start with `Orchestrator`, not directly with `Builder`, evaluators, or `Fix Agent`.
 - Invoke one role at a time.

@@ -41,6 +41,13 @@
 - An evaluator must not describe an unobserved rendered, runtime, interaction, migration, or integration state as verified merely because source inspection or a narrower automated check passed.
 - Before terminating a run, the Orchestrator must inspect evidence gaps and their acceptance impact; keep the evaluator result unchanged when an evidence gap requires more collection or blocks acceptance.
 
+## Docs-Content Writing Contract
+
+- A `docs-content` run may use a compact writing contract in place of a separate spec document. This is an alternate form of the active spec, not permission to build or evaluate without an execution contract.
+- The contract must identify the approved feature, source set and authority, affected document owners, permitted changes and preservation constraints, and acceptance checks with evaluator ownership. Reuse an existing approved feature section or another owned document when it already supplies these details; do not create a new file merely to satisfy the shape.
+- Before build or evaluation, the Orchestrator records the chosen contract's stable ID and relative path or section anchor in the run's `Active Spec` field. Use that same real ID and locator in spec fields throughout role handoffs, reports, and fix logs; do not invent a missing spec file. Retain run, attempt, and profile provenance.
+- This designated writing contract satisfies downstream roles' active-spec input. Skip a separate Spec Agent pass only when the contract is already sufficient; otherwise prepare or clarify it before execution. Return scope changes to planning and contract gaps to spec review under the normal rules.
+
 ## Execution Return Model
 The normal operating structure is:
 
@@ -150,7 +157,7 @@ Do not start executable spec work when:
 
 ## Traceability Rules
 - Use one run identifier such as `run-YYYYMMDD-01` for each active execution pass.
-- Use one spec document per active feature loop.
+- Use one active spec per feature loop: a spec document, or the designated [docs-content writing contract](#docs-content-writing-contract).
 - A run may include multiple attempts when execution loops locally or is retried after a technical blocker.
 - Record return-to-spec or return-to-planning as post-run human decisions rather than as silent in-run redirects.
 - Use evaluator reports that name:

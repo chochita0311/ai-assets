@@ -4,8 +4,17 @@ Use this as a shape reference for a full `docs-shaping` pass.
 
 This is an example of the reporting format, not a mandatory literal template.
 
+For bounded work, a compact result is sufficient: "Reviewed the revised runbook procedure and its prerequisites, warnings, and linked exceptions. Separated a diagnostic example from a destructive command because the shared block invited accidental execution. Preserved both commands and their conditions; no broader outline change. Other runbooks were not reviewed."
+
+For an unchanged follow-up: "Rechecked the edited procedure and qualifying warnings against the prior review. No remaining composition problem or meaning loss in this scope; no further changes." A whole-set request still requires whole-set review, even when only one file changes.
+
+A request to check whether an expanded guide set still reads as a coherent whole can begin with whole-set exploration. It need not wait for a local defect or the words "full audit"; any resulting major rewrite still follows the existing approval boundary.
+
 ## Operating Mode Used
 - `reshape`
+
+## Review Coverage
+- Read the four listed documents for composition and preservation; no claim is made about other documents.
 
 ## Necessity Justification
 - `policy.md` spreads required logging rules, implementation notes, examples, and exceptions across six sections.

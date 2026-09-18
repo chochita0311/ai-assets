@@ -183,7 +183,7 @@ If the target is a document set:
 - update the smallest document that owns each durable fact
 - update the entrance map only when navigation or current-status routing changed
 - avoid creating a catch-all context file beside existing owner documents
-- use `docs-structuring` only when the document set itself has an ownership problem
+- consider `$docs-structuring` if available when the document set itself has an ownership problem; otherwise report the structural follow-up and continue only the updates whose owners are clear
 
 If the target is a dedicated workflow context:
 
@@ -214,11 +214,11 @@ Show:
 - files updated
 - user review status
 
-Keep review status `pending` until the selected approval mode permits downstream work.
+Apply the [Reconciliation Approval Gate](../SKILL.md#reconciliation-approval-gate) for the selected mode's proceed rule and review status. Record independent authority, target, or decision blockers separately; a waived review is not user confirmation.
 
-### 11. Continue After Approval
+### 11. Continue When The Gate Permits
 
-After confirmation:
+After the selected mode permits continuation and independent blockers are resolved:
 
 1. open the recorded working targets
 2. verify current repo behavior

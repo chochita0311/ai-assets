@@ -3,25 +3,27 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.jungcho.codex-model-binding-audit</string>
-
+  <string>@LABEL@</string>
   <key>ProgramArguments</key>
   <array>
     <string>/bin/sh</string>
-    <string>/Users/jungcho/Projects/ai-assets/agents/adapters/codex/scripts/run-model-binding-audit.sh</string>
+    <string>@REPO_ROOT@/agents/adapters/codex/scripts/run-model-binding-audit.sh</string>
   </array>
-
   <key>WorkingDirectory</key>
-  <string>/Users/jungcho/Projects/ai-assets</string>
-
+  <string>@REPO_ROOT@</string>
   <key>EnvironmentVariables</key>
   <dict>
     <key>CODEX_HOME</key>
-    <string>/Users/jungcho/.codex</string>
+    <string>@CODEX_HOME@</string>
+    <key>CODEX_MODEL_AUDIT_BIN</key>
+    <string>@CODEX_BIN@</string>
+    <key>CODEX_MODEL_AUDIT_REPO</key>
+    <string>@REPO_ROOT@</string>
+    <key>CODEX_MODEL_AUDIT_LOG_DIR</key>
+    <string>@LOG_DIR@</string>
     <key>PATH</key>
-    <string>/Users/jungcho/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <string>@EXEC_PATH@</string>
   </dict>
-
   <key>StartCalendarInterval</key>
   <dict>
     <key>Weekday</key>
@@ -31,13 +33,11 @@
     <key>Minute</key>
     <integer>0</integer>
   </dict>
-
   <key>ProcessType</key>
   <string>Background</string>
-
   <key>StandardOutPath</key>
-  <string>/Users/jungcho/Library/Logs/codex-model-binding-audit/launchd.stdout.log</string>
+  <string>@LOG_DIR@/launchd.stdout.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/jungcho/Library/Logs/codex-model-binding-audit/launchd.stderr.log</string>
+  <string>@LOG_DIR@/launchd.stderr.log</string>
 </dict>
 </plist>

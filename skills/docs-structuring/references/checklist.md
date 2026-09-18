@@ -3,7 +3,11 @@
 Use this as the final quick validator after a documentation cleanup.
 
 ## Final Validation
-- Does each active document have one clear responsibility?
+- Was the target and starting scope inferred from the request and task evidence rather than assumed from the working directory or Git availability?
+- Was review breadth sufficient for the task, allowing whole-target discovery without a prior local defect or special request, while honoring explicit full audits and not treating inventories, samples, or untouched files as semantically verified?
+- Was reused evidence still current and applicable, with independent judgments preserved in paired reviews?
+- Were scope, completed checks, and any coverage gaps reported proportionately, without requiring a full report for a bounded or unchanged pass?
+- Does each reviewed document have one clear responsibility?
 - Is the entrance layer acting as a map rather than an encyclopedia?
 - If multiple AI entrance docs exist, are they aligned to the same ownership model?
 - If multiple AI entrance docs exist, do overview/docs-map files point to that entrance layer clearly enough?
@@ -15,14 +19,14 @@ Use this as the final quick validator after a documentation cleanup.
 - Was the pass handled incrementally where appropriate instead of creating unnecessary churn?
 - Were low-confidence changes suggested instead of silently applied?
 - Is the operating mode used explicit?
-- Is the severity summary explicit but still lightweight?
-- Is the doc-role map reported in a consistent shape?
+- If findings need prioritization, is the severity summary explicit but still lightweight?
+- If a doc-role map is useful for this pass, is it reported in a consistent shape?
 - Is there a clear `before -> after` summary of what changed?
 - Are suggested-only restructures clearly separated from applied changes?
 - Did the pass avoid aesthetic-only restructuring of already-stable docs?
 - Can a reader follow context across the layers without guessing where to go next?
 - Were optional larger restructures proposed before being applied?
-- Is the resulting doc tree cleaner and easier to maintain than before?
+- Did necessary fixes improve maintainability, or was leaving the reviewed structure unchanged justified?
 
 ## Final Question
 - If this skill runs again on a similar repo, is the same document-ownership cleanup unlikely to be needed again?

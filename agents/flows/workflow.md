@@ -147,7 +147,7 @@ Process:
 ## Execution Loop Guidance
 - Apply the consuming repo's execution-loop governance policy for active-feature concurrency, evidence gaps, failure classification, return paths, and post-contract regression checks; this flow does not redefine those rules.
 - Select the execution profile, surface lanes, and evaluator set through the consuming repo's execution-profile policy; this flow does not redefine that matrix.
-- `Spec Agent` is the first execution role and should create one spec per active feature.
+- After orchestration, `Spec Agent` normally prepares one spec per active feature. The [docs-content writing-contract route](../policies/harness/execution-loop-governance.md#docs-content-writing-contract) may reuse an already-sufficient contract without a separate spec-authoring pass.
 - `Builder` should work from the active spec, not directly from rough feature prose.
 - `Fix Agent` should consume findings from the active evaluator set and preserve the same feature boundary.
 

@@ -17,7 +17,7 @@
 - [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks; it recognizes operator-context triggers but does not own or install the detailed policy.
 - [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the shared harness entrance blocks.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
-- [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) and [the LaunchAgent plist](launchd/com.jungcho.codex-model-binding-audit.plist) own the canonical terminal runner and macOS schedule definition. Installed runtime links do not become parallel sources of truth.
+- [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) owns the canonical terminal runner. [The LaunchAgent template](launchd/model-binding-audit.template.plist) and [its renderer](scripts/render-model-binding-launchagent.py) define portable schedule behavior; generated machine-local plists own only installation paths and approved local settings.
 - Shared adapter blocks and linked bindings under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
 
 ## Official Codex References
@@ -48,9 +48,10 @@ agents/adapters/codex/
 ├── profiles/
 │   └── model-binding-audit.config.toml
 ├── scripts/
-│   └── run-model-binding-audit.sh
+│   ├── run-model-binding-audit.sh
+│   └── render-model-binding-launchagent.py
 └── launchd/
-    └── com.jungcho.codex-model-binding-audit.plist
+    └── model-binding-audit.template.plist
 ```
 
 ## Source-To-Target Mapping
@@ -63,11 +64,13 @@ agents/adapters/codex/
 | `custom-agents/bounded_verifier.toml` | per-file symlink at `<codex-home>/agents/bounded_verifier.toml` |
 | `profiles/model-binding-audit.config.toml` | per-file symlink at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
-| `launchd/com.jungcho.codex-model-binding-audit.plist` | symlink at `~/Library/LaunchAgents/com.jungcho.codex-model-binding-audit.plist` after approval |
+| `launchd/model-binding-audit.template.plist` | rendered machine-local file at `~/Library/LaunchAgents/<approved-label>.plist` after approval; never a symlink to the template |
 
 Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared adapter policy only through its marked regions; use the [personal instruction import guide](instructions/README.md) for other applicable guidance. Link each named TOML separately instead of linking the entire `agents/` directory so the runtime home can still own unrelated local agents.
 
 The audit runner executes from its canonical path under `scripts/`; it is not copied into a runtime home.
+
+Existing installations that link an old machine-specific plist require a separately approved local-file migration before that source is retired. Preserve the installed label, schedule, model binding, and paths unless their change is also approved; see [Installation And Operation](model-binding-audit.md#installation-and-operation).
 
 This mapping installs personal runtime assets only. It does not export the shared operator policy or template into a consuming repo. Follow [Agent System Adoption Guide](../../ADOPTION-GUIDE.md) for that repository-local installation.
 
@@ -79,12 +82,7 @@ Codex loads the standalone custom-agent TOMLs, identifies each agent by its `nam
 
 When a named worker has a different binding from the primary agent, invoke it with no inherited history or the smallest bounded recent-turn fork. A full-history fork inherits primary-thread behavior and can invalidate the custom binding before the worker starts.
 
-To replace a model generation:
-
-1. Change only the `model` value in the affected canonical TOML.
-2. Confirm each runtime symlink still resolves to that TOML.
-3. Start a fresh Codex session when runtime configuration may be cached.
-4. Explicitly invoke the named worker or root profile once and verify the actual model and permissions.
+Use [Controlled Migration After An Alert](model-binding-audit.md#controlled-migration-after-an-alert) as the single replacement procedure. Candidate evaluation, replacement approval, and post-install verification are distinct steps; approval to review a candidate does not authorize changing a live binding.
 
 No `AGENTS.md` regeneration or merge is required for a model-only change. Update the managed section only when the durable routing policy itself changes.
 
@@ -95,7 +93,7 @@ Treat any of the following as a binding-review trigger:
 - a new model generation that plausibly fits the worker's narrow role
 - observed quality falling below the role's competence floor
 
-A trigger starts evaluation; it does not authorize automatic substitution. Keep the existing binding until the candidate passes the role-specific smoke test, then update only the affected TOML.
+A trigger starts evaluation; it does not authorize automatic substitution. Keep the existing binding until the candidate passes the role-specific smoke test and the user approves replacement, then follow the canonical procedure.
 
 Use [model-binding-audit.md](model-binding-audit.md) for the CLI-first weekly detection workflow. The audit reports candidate drift; it never edits a TOML or treats a similarly positioned lightweight model as an automatic successor.
 

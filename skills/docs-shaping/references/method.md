@@ -5,6 +5,7 @@ Use this file for the full document-shaping procedure.
 ## Contents
 
 - [Purpose](#purpose)
+- [Review Scope And Evidence Reuse](#review-scope-and-evidence-reuse)
 - [Working Sequence](#working-sequence)
 - [Handoff Logic](#handoff-logic)
 - [Reporting Standard](#reporting-standard)
@@ -16,9 +17,36 @@ Use this file for the full document-shaping procedure.
 - reduce duplication, fragmentation, and flow breaks
 - make the result feel seamless and impeccably structured without destructive rewriting
 
+## Review Scope And Evidence Reuse
+
+### Select the starting scope
+- Resolve the selected document, set, or raw sources from the request and conversation rather than assuming the working directory owns them.
+- For document-set maintenance, first orient to the set's overall purpose, outlines, and content relationships. Growth, accumulated additions, uncertain coverage, or a request for cross-document coherence can justify whole-set review from the outset; a known local composition failure is not a prerequisite.
+- For routine end-of-task review, derive affected claims and sections from available decisions, status changes, source edits, or a diff when available. Non-Git material is equally valid input; do not require a user-authored scope packet.
+- When evidence supports a bounded impact, start with the affected content, its document-level purpose and outline, and the rules, examples, and exceptions needed to interpret it. This focused path is an option, not a required stage before broader review. Use searches and headings to guide reading, not to exclude content needed to understand the whole.
+- When the request covers an entire document or set, review that whole target for the requested properties. If the baseline or impact is unknown, broaden discovery rather than assuming the rest is stable. In `intake`, account for the whole supplied source set, including uncertain or deferred fragments.
+
+### Expand to protect meaning
+- Read complete sections or documents whenever ordering, claim relationships, subtle near-duplicates, or preservation cannot be judged from excerpts. A small diff is not proof that the rest is irrelevant.
+- Follow related content beyond the starting set when a changed definition, contradiction, hidden constraint, or dependency makes it necessary. These are examples, not an exhaustive permission list: broad exploration may be needed to discover composition problems not yet known. If this reveals ownership problems, use the existing handoff boundary rather than silently taking over a repository-wide restructuring task.
+- Do not require a new user prompt or add an approval gate merely to widen review within the selected target. Existing access permissions and edit approval boundaries still apply.
+- Mechanical link, index, or generated-content checks may establish those properties, not the quality or correctness of every document's prose. An exhaustive semantic request cannot be satisfied by sampling.
+- Preserve the distinction between current, historical, proposed, and unresolved claims using authoritative task evidence. Do not infer that every fact is current merely because composition is sound; surface unsupported freshness claims or a need for separate fact reconciliation.
+
+### Reuse preparation, preserve judgment
+- Reuse already-read, unchanged instructions and source content, source locators, outlines, and check results within the same task. Check the target, revision or content, and coverage when freshness is uncertain; do not create a persistent cache or audit ledger by default.
+- Before an authorized delegation, derive a compact handoff from the current work: resolved target, requested coverage, affected claims with source locators, and reusable checks. Prefer this to forwarding full session history; do not ask the user to assemble it or create another agent merely to prepare it.
+- When paired or delegated reviews are already authorized, reuse neutral discovery evidence and changed-fact context when available, while independently checking decisive passages for composition and preservation. Another reviewer's findings are leads, not proof. Keep explicitly requested independent discovery independent.
+- For a follow-up, review the edits and their effects on meaning, flow, and linked qualifications against the last reviewed state. Expand or restart when that baseline is stale or new evidence warrants it, not solely because the skill was invoked again.
+
+### Finish at the evidence boundary
+- Stop after the requested coverage, necessity decision, and applicable preservation checks are complete, with gated or uncertain interventions explicitly reported. A well-supported unchanged result is complete, not a reason to search for cosmetic work.
+- State any incomplete coverage instead of silently narrowing the request. Do not label material stable solely because it was not edited. Keep evidence notes session-local unless persistence is separately required.
+
 ## Working Sequence
 
 ### 1. Read for substance first
+- Use the scope procedure above to choose the reading set; expand it whenever the following judgments require more context.
 - Read enough to identify:
   - purpose
   - audience
@@ -184,10 +212,12 @@ Use this file for the full document-shaping procedure.
 ### 5c. Document-set selection report
 - If the input is a document set, report:
   - changed files
-  - unchanged stable files
+  - reviewed unchanged files or coherent groups
+  - material not substantively reviewed and the resulting coverage limits
   - the reason each changed file needed intervention
-  - why unchanged files were left alone
+  - why reviewed unchanged material was left alone
 - Prefer this explicit selection report over silently touching only part of a set.
+- A grouped summary is sufficient when individual unchanged files add no useful distinction; never imply that unreviewed files passed the necessity check.
 
 ### 5d. Comparison-copy outputs
 - When the user asks for a comparison copy, staging path, or side-by-side review output:
@@ -218,8 +248,10 @@ Use this file for the full document-shaping procedure.
 - when refinement exposed internal structure problems but not repo-wide ownership problems
 
 ## Reporting Standard
+- Match detail to the pass: use the compact result in `SKILL.md` for bounded or unchanged work; expand the categories below when they carry substantive findings. Do not omit approval, preservation, or evidence limits to shorten a report.
 - Report:
   - operating mode
+  - target, scope basis, and coverage (content-reviewed, mechanically checked, or only inventoried)
   - necessity justification
   - intervention level
   - withheld high-risk `major` change map when applicable

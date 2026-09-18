@@ -34,6 +34,7 @@
 ### Apply Profile And Evaluator Policy
 - Read the approved feature metadata and apply the execution-profile policy without reproducing its profile definitions or evaluator matrix locally.
 - Record the selected profile, surface lanes, evaluator set, and any run-specific deviation in the active run artifact.
+- For `docs-content`, designate the active spec or compact writing contract through [execution-loop governance](../policies/harness/execution-loop-governance.md#docs-content-writing-contract) before handing off to build or evaluation.
 
 ### Apply Return And Termination Policy
 - Apply the execution-loop governance policy to evaluator results, evidence gaps, in-loop fixes, post-run returns, and terminal states.

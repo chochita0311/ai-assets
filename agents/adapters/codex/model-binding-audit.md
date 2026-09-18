@@ -41,7 +41,7 @@ Run the audit manually from any terminal:
 ```sh
 codex --search --sandbox read-only --ask-for-approval never \
   exec --profile model-binding-audit --ephemeral --strict-config --color never \
-  --cd /Users/jungcho/Projects/ai-assets \
+  --cd "/absolute/path/to/ai-assets" \
   'Run the read-only Codex model-binding audit defined in agents/adapters/codex/model-binding-audit.md. Use $openai-docs. You are already inside the audit invocation: do not run codex or codex exec recursively. Remain in the root agent and do not invoke subagents. Return only the audit status and output contract with the status value on the same line as Status:.'
 ```
 
@@ -49,12 +49,15 @@ The command intentionally prints the final answer to stdout and progress to stde
 
 The profile also disables subagents, so the model under audit runs as the root agent rather than indirectly through a worker binding.
 
+Replace the example checkout path with the actual local clone. Codex uses `CODEX_HOME` when configured and otherwise the default home described in [official configuration guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md); do not assume one workstation's home directory.
+
 ## Installation And Operation
 
 The canonical automation assets are:
 
 - [scripts/run-model-binding-audit.sh](scripts/run-model-binding-audit.sh): executes the exact profile, captures reports, and records attention state
-- [launchd/com.jungcho.codex-model-binding-audit.plist](launchd/com.jungcho.codex-model-binding-audit.plist): runs the canonical runner every Monday at 09:00 local time
+- [launchd/model-binding-audit.template.plist](launchd/model-binding-audit.template.plist): portable Monday 09:00 schedule template, not an installable file until rendered
+- [scripts/render-model-binding-launchagent.py](scripts/render-model-binding-launchagent.py): renders a new machine-local plist outside the checkout; never overwrites a file, installs a job, or loads a schedule
 
 On macOS, install the plist as a user LaunchAgent only after the manual command has produced a correct result.
 
@@ -70,10 +73,28 @@ Prefer `launchd` to `crontab` on macOS. A calendar LaunchAgent runs after wake w
 For an approved installation:
 
 1. Link `profiles/model-binding-audit.config.toml` into each approved Codex home as `model-binding-audit.config.toml`.
-2. Run the canonical shell runner manually and inspect `latest-status.txt`, `latest-report.txt`, and `latest-stderr.log` under `~/Library/Logs/codex-model-binding-audit/`.
-3. Validate the canonical plist with `plutil -lint`.
-4. Link the plist into `~/Library/LaunchAgents/` and bootstrap it in the current GUI user domain.
-5. Confirm `launchctl print gui/$(id -u)/com.jungcho.codex-model-binding-audit` shows the Monday schedule and canonical runner path.
+2. Resolve the checkout, executable, Codex home, log directory, and executable search path for this computer. Run the canonical shell runner manually with those same settings and inspect `latest-status.txt`, `latest-report.txt`, and `latest-stderr.log` in the selected log directory.
+3. Render a candidate outside the checkout using the command below. Create its parent directory first; the renderer neither creates directories nor overwrites an existing output.
+4. Validate the generated candidate with `plutil -lint` and inspect its paths, label, schedule, and environment. Ensure the selected log directory exists before loading.
+5. Install the approved generated file under `~/Library/LaunchAgents/<approved-label>.plist` and bootstrap it in the current GUI user domain. Do not link the source template. Reconcile any existing destination first instead of overwriting it.
+6. Confirm `launchctl print gui/$(id -u)/<approved-label>` shows the approved schedule, environment, and canonical runner path.
+
+Example rendering command from the repository root; replace the absolute placeholders with verified local paths:
+
+```sh
+python3 agents/adapters/codex/scripts/render-model-binding-launchagent.py \
+  --repo-root "/absolute/path/to/ai-assets" \
+  --codex-bin "/absolute/path/to/codex" \
+  --codex-home "/absolute/path/to/codex-home" \
+  --log-dir "/absolute/path/to/audit-logs" \
+  --exec-path "/absolute/path/to/local-bin:/usr/bin:/bin" \
+  --label local.codex-model-binding-audit \
+  --output "/absolute/path/to/local-staging/model-binding-audit.plist"
+```
+
+Include directories for `node` and `rg` in `--exec-path` when using the optional manual preflight and exact-match extraction. The runner discovers its checkout from its own canonical path, Codex from `PATH` (then the user's local bin), and the docs helper from the selected Codex home. Explicit `CODEX_MODEL_AUDIT_REPO`, `CODEX_MODEL_AUDIT_BIN`, `CODEX_MODEL_AUDIT_LOG_DIR`, and `CODEX_MODEL_AUDIT_DOCS_HELPER` overrides remain available; generated plists pin the first three. Keep machine-local values outside this repository.
+
+For a legacy installation linked to a machine-specific source plist, inspect and preserve its effective configuration before changing the source. With explicit migration approval, replace the installed link with an equivalent regular local file, verify equivalence, and retain recovery evidence until checks pass. If the loaded job still names the old source, include same-label re-registration from the local file in the approved migration and verify the loaded path and effective settings before retiring the source. Do not remove or turn the old source into a placeholder while an installed link or loaded registration still depends on it. Schedule changes require separate approval; this migration does not require running an audit.
 
 The runner first uses the installed `openai-docs` manual helper to freshness-check and cache the current official Codex manual. When that succeeds, the model receives the verified manual and outline paths and uses targeted local reads before live-search gap filling. If preflight and required live sources are both unavailable, the audit must return `SOURCE_UNAVAILABLE`.
 
@@ -185,14 +206,13 @@ If official sources are unavailable, return SOURCE_UNAVAILABLE rather than relyi
 
 ## Controlled Migration After An Alert
 
-After the user approves review of a candidate:
+Approval to review a candidate authorizes evaluation, not replacement. This is the canonical migration procedure for named workers and the root audit profile:
 
-1. Confirm the candidate is available to the user's account through the model picker or another documented account-specific surface.
-2. Compare the candidate with the worker role's competence floor and special usage semantics.
-3. Change only the affected canonical TOML `model` value.
-4. Confirm both Codex homes still resolve the canonical TOML through their existing symlinks.
-5. Start a fresh session.
-6. Explicitly invoke the named worker and verify the actual model, permissions, behavior, and expected usage accounting.
-7. If any check fails, restore or replace the binding only through another reviewed decision; never fall back silently.
+1. Confirm account-specific availability and compare the candidate with the role's competence floor and special usage semantics. Leave the canonical TOML and installed runtime bindings unchanged.
+2. With any required test authority, smoke-test the exact candidate in a task-owned isolated configuration using the same role instructions and permissions. Verify the actual model, permissions, behavior, and observable usage accounting; report anything unverified. If isolation or account access is unavailable, report the gap instead of editing the live binding to make the test possible.
+3. Present the evidence and obtain explicit approval to replace the affected binding, including a recovery choice if post-install verification fails. A review request alone does not satisfy this step.
+4. Capture the current canonical value, change only the approved TOML's `model` value, and confirm all approved runtime symlinks still resolve to it. Preserve unrelated settings and concurrent changes.
+5. Start a fresh session and explicitly invoke the named worker or root profile. Verify the actual model, permissions, behavior, and expected usage accounting again; the isolated smoke test does not establish installed-runtime correctness.
+6. If verification fails, stop affected use and report the failure. Restore the captured binding only under the approved recovery choice and after checking for concurrent changes; otherwise ask for direction. Never substitute another model silently.
 
-When the affected binding is the audit profile itself, run the profile directly instead of invoking a named worker, then confirm its root-agent model and disabled-subagent behavior before reloading the weekly schedule.
+For the audit profile, test it directly as a root agent with subagents disabled. Keep any schedule inactive during an approved live migration and reload it only after successful verification; schedule changes require their own applicable approval. Remove task-owned test configuration after its purpose ends, retaining failure evidence only while needed for diagnosis or recovery.

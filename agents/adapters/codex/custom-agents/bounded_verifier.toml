@@ -1,7 +1,7 @@
 name = "bounded_verifier"
 description = "Bounded non-editing worker for a packet of exact test, lint, diff, or log-classification commands after expected behavior and commands are fixed. Use when validation output is noisy or spans several checks. Do not use for one immediately needed command, independent fixes, semantic completion approval, or high-level decisions."
 
-model = "gpt-5.3-codex-spark"
+model = "gpt-5.6-luna"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 

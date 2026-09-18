@@ -11,7 +11,7 @@
 
 ## Input Contract
 - one approved feature document
-- one active spec document
+- one active spec document or designated [docs-content writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 - candidate implementation
 - golden sources or design rules when relevant
 - relevant interaction-quality policies when the feature changes visible behavior or navigation continuity

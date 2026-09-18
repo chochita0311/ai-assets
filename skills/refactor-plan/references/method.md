@@ -80,7 +80,7 @@ Use this file for detailed refactor planning, parity analysis, validation design
 
 - If a refactor uses phases, levels, or batches, define what each one means inside the active plan.
 - Do not assume the same level count or severity model carries across different refactor tracks.
-- Keep reusable review and validation guidance in the checklist; keep ticket-specific phase definitions in the active plan.
+- Keep detailed reusable review and validation guidance in this method, final yes-or-no checks in [checklist.md](checklist.md), and ticket-specific phase definitions in the active plan.
 - Good phase definitions usually separate by one or more of:
   - blast radius
   - dependency ordering

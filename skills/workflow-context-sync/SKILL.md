@@ -166,10 +166,17 @@ Read [references/method.md](references/method.md) for detailed path resolution, 
 ## Reconciliation Approval Gate
 
 - Context reads, reconciliation, and approved target updates belong to this skill.
-- Code edits, refactors, and downstream execution do not start before the user reviews the reconciliation result.
+- Present the reconciliation result before code edits, refactors, or downstream execution; apply the selected mode below to decide whether another user response is required.
 - Default approval mode is `strict`.
 - `optional` or `skip` is allowed only when the user explicitly requests it for the current session.
-- Keep the review state `pending` until the proceed signal required by the selected mode is satisfied.
+
+| Mode | Proceed rule | User review status |
+| --- | --- | --- |
+| `strict` | Pause after presenting the result; continue only after explicit user confirmation of that reconciliation. | `pending` until confirmation, then `confirmed` |
+| `optional` | Continue without another response when the sources align and no new material assumption or decision needs review. Otherwise pause for explicit confirmation. | `not-required` when the condition holds; otherwise `pending`, then `confirmed` |
+| `skip` | Present the result and continue the already-authorized downstream task without a separate reconciliation confirmation. Preserve unresolved claims and identify any assumptions used. | `skipped`, never `confirmed` solely because the gate was waived |
+
+These modes control only reconciliation review. None grants missing creation, deletion, publication, or downstream-task authority, resolves an ambiguous required target, or permits guessing a decision needed for safe execution. If such a blocker remains, stop the affected work and report it separately from the review status. Reassess a materially changed reconciliation before continuing; a previous confirmation does not cover a changed decision.
 
 ## Output Contract
 
@@ -186,7 +193,7 @@ Report:
 - conflicts, open questions, and working assumptions
 - files updated
 - consolidation disposition when relevant
-- user review status
+- approval mode, user review status, and any independent downstream blocker
 - next-session handoff
 
 Do not claim persistence when only a session summary was produced.

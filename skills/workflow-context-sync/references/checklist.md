@@ -33,7 +33,9 @@ Use this as the final yes-or-no pass.
 - Was a working note kept non-canonical unless explicitly promoted?
 - Was the note treated only as source evidence rather than as a target mapping?
 - Was a session-only synthesis reported honestly as unsaved?
-- Did downstream implementation wait for the required review signal?
+- Was `strict` the default, with `optional` or `skip` selected only by the user for this session?
+- Did continuation and review status follow the selected mode without treating a waived review as confirmation?
+- Were independent authority, target, and blocking-decision requirements preserved in every mode?
 - Did the final report name the resolved target, files updated, and review status?
 
 ## Consolidation

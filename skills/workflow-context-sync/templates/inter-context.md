@@ -27,8 +27,10 @@ alias mapping:
 workflow name:
 branch purpose:
 current goal:
-user review status: pending|confirmed
+user review status: pending|confirmed|not-required|skipped
 approval mode: strict|optional|skip
+review basis:
+downstream blockers: none|describe
 
 ## Source Inventory
 

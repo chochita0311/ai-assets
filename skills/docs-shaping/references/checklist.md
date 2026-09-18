@@ -3,11 +3,15 @@
 Use this as the final quick validator after a document-shaping pass.
 
 ## Final Validation
+- Was the target and starting scope inferred from the request and task evidence without requiring a special prompt or Git diff?
+- Was review breadth sufficient for the task, allowing whole-target discovery without a prior local defect or special request, while honoring whole-target requests and preservation needs rather than relying only on changed hunks?
+- Was reused evidence still current and applicable, with independent composition judgments preserved in paired reviews?
+- Did the report distinguish content review from inventories or mechanical checks, and state any coverage gaps without claiming unreviewed material was stable?
 - Was restructuring actually necessary?
 - If no meaningful improvement was available, was the document left unchanged?
 - Before editing, was a concrete obstructed reader task or likely misreading identified rather than only a potentially cleaner presentation?
 - Were stable sections left untouched unless there was a clear reason to change them?
-- If the input was a document set, were changed files and unchanged stable files reported explicitly?
+- If the input was a document set, were changed files and reviewed unchanged files or groups reported explicitly, without an unnecessary untouched-file catalog?
 - If `intake` mode was used, was one primary shaped artifact identified explicitly?
 - If `intake` mode emitted derived views, was the primary shaped artifact retained by default?
 - Was the minimum effective restructuring applied?

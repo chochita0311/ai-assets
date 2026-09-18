@@ -11,7 +11,7 @@
 
 ## Input Contract
 - one approved feature document
-- one active spec document
+- one active spec document or designated [docs-content writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 - evaluator findings tied to that feature
 - active execution profile and assigned surface lane when relevant
 - current implementation state

@@ -6,7 +6,7 @@
 
 ## Default Role Sequence
 1. Orchestrator
-2. Spec Agent when the approved feature requires an implementation-facing writing spec
+2. Spec Agent when the active spec or compact writing contract still needs preparation
 3. Builder or document updater
 4. Contract Evaluator when durable policy, ownership, or source-of-truth rules change
 5. Functional Evaluator when links, generated docs, or rendered output must be checked
@@ -15,7 +15,7 @@
 ## Required Inputs
 - approved feature and parent PRD
 - current docs map, entrance docs, policy docs, and relevant source documents
-- active spec or writing contract when needed
+- active spec or designated compact writing contract before build or evaluation, following [Docs-Content Writing Contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 
 ## Required Evidence
 - source preservation evidence

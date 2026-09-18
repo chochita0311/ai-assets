@@ -11,7 +11,7 @@
 
 ## Input Contract
 - one approved feature document
-- one active spec document
+- one active spec document or designated [docs-content writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 - build output or implementation snapshot
 - golden sources and design policies relevant to the feature
 

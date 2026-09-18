@@ -2,12 +2,14 @@
 
 set -eu
 
-AUDIT_CODEX_BIN="${CODEX_MODEL_AUDIT_BIN:-/Users/jungcho/.local/bin/codex}"
-AUDIT_REPO_ROOT="${CODEX_MODEL_AUDIT_REPO:-/Users/jungcho/Projects/ai-assets}"
-AUDIT_LOG_DIR="${CODEX_MODEL_AUDIT_LOG_DIR:-/Users/jungcho/Library/Logs/codex-model-binding-audit}"
+AUDIT_SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+AUDIT_CODEX_BIN="${CODEX_MODEL_AUDIT_BIN:-$(command -v codex || printf '%s/.local/bin/codex' "$HOME")}"
+AUDIT_REPO_ROOT="${CODEX_MODEL_AUDIT_REPO:-$(CDPATH= cd -- "$AUDIT_SCRIPT_DIR/../../../.." && pwd -P)}"
+AUDIT_LOG_DIR="${CODEX_MODEL_AUDIT_LOG_DIR:-$HOME/Library/Logs/codex-model-binding-audit}"
+AUDIT_CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 AUDIT_PROFILE="model-binding-audit"
 AUDIT_PROFILE_PATH="$AUDIT_REPO_ROOT/agents/adapters/codex/profiles/model-binding-audit.config.toml"
-AUDIT_DOCS_HELPER="${CODEX_MODEL_AUDIT_DOCS_HELPER:-/Users/jungcho/.codex/skills/.system/openai-docs/scripts/fetch-codex-manual.mjs}"
+AUDIT_DOCS_HELPER="${CODEX_MODEL_AUDIT_DOCS_HELPER:-$AUDIT_CODEX_HOME/skills/.system/openai-docs/scripts/fetch-codex-manual.mjs}"
 AUDIT_PROMPT_BASE='Run the read-only Codex model-binding audit defined in agents/adapters/codex/model-binding-audit.md. Use $openai-docs. You are already inside the audit invocation: do not run codex or codex exec recursively. Remain in the root agent and do not invoke subagents. Treat the generated canonical binding manifest below as exact local input, verify official lifecycle sources, and return only the audit status and output contract with the status value on the same line as Status:.'
 
 mkdir -p "$AUDIT_LOG_DIR/runs"

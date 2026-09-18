@@ -1,7 +1,7 @@
 name = "evidence_scout"
 description = "Bounded, read-only worker for multi-file evidence gathering after the primary agent has fixed the question, scope, and return contract. Use for noisy call-path, usage, branch-impact, existing-test, and similar repository investigation. Do not use for one immediate command, requirement interpretation, architecture, security, source-of-truth, persistence, implementation, or final review."
 
-model = "gpt-5.3-codex-spark"
+model = "gpt-5.6-luna"
 model_reasoning_effort = "medium"
 sandbox_mode = "read-only"
 

@@ -5,6 +5,7 @@ Use this file for the full document-structuring procedure.
 ## Contents
 
 - [Purpose](#purpose)
+- [Review Scope And Evidence Reuse](#review-scope-and-evidence-reuse)
 - [Working Sequence](#working-sequence)
 - [Entrance-Doc Handling](#entrance-doc-handling)
 - [Restructure Boundaries](#restructure-boundaries)
@@ -19,10 +20,37 @@ Use this file for the full document-structuring procedure.
 - reduce duplication
 - leave a maintainable doc tree behind
 
+## Review Scope And Evidence Reuse
+
+### Select the starting scope
+- Resolve the target from the active request and conversation, including named knowledge bases outside the working repository. The current directory is not automatically the documentation owner.
+- For document-set maintenance, first orient to the set as a whole using its entrances, ownership map, and available structural history. Growth, accumulated notes, uncertain coverage, or the task's cross-document purpose can justify a whole-target review from the outset; a known contradiction is not a prerequisite.
+- For routine end-of-task reconciliation, derive changed facts, decisions, statuses, and files from available task evidence. Use a diff when useful, but support non-Git targets and changes that have not yet reached a document. Do not require the user to prepare a scope packet.
+- When evidence supports a bounded impact, start with affected owners, their entrance or overview pointers, and searches for references to changed claims. This focused path is an option, not a required stage before broader review. Use inventories and searches to guide reading, not to exclude content needed to understand the whole.
+- When no trustworthy change baseline exists, discover the target's active owners and check for drift more broadly. Do not assume that unmentioned documents are stable.
+- An explicit whole-target audit requires whole-target coverage of the requested properties. Exhaustive semantic review requires reading the relevant content, not sampling and calling it complete. Respect exclusions and existing authorization boundaries.
+
+### Expand according to evidence
+- Read enough surrounding content and authoritative sources to establish ownership, unique constraints, and whether a status is current or historical. A matching line or changed hunk alone may be insufficient.
+- Expand when ownership is unclear, claims conflict, links are stale, a shared rule affects other consumers, or initial evidence cannot support the requested conclusion. These are examples, not an exhaustive permission list: broad exploration may be needed to discover problems not yet known. Follow affected references transitively as needed; do not stop at an arbitrary one-hop boundary.
+- Do not require a new user prompt or add an approval gate merely to widen review within the selected target. Existing access permissions and edit approval boundaries still apply.
+- Use existing mechanical checks for properties they can establish, such as link targets or generated indexes. Distinguish those results from semantic review; samples cannot establish correctness of all unexamined content.
+- Ground factual or status corrections in authoritative task evidence. Preserve historical context and unresolved disagreements; recency or file modification time alone does not establish truth. If broader fact reconciliation is the main task, make that boundary explicit instead of treating structural review as proof that every fact is current.
+
+### Reuse preparation, preserve judgment
+- Reuse already-read, unchanged instructions and source content, inventories, source locators, and check results within the same task. Recheck their target, revision or content, and coverage when freshness is uncertain; do not invent a persistent cache or audit ledger.
+- Before an authorized delegation, derive a compact handoff from the current work: resolved target, requested coverage, changed facts with source locators, and reusable checks. Prefer this to forwarding full session history; do not ask the user to assemble it or create another agent merely to prepare it.
+- When paired or delegated reviews are already authorized, share neutral discovery evidence and changed-fact context when available. Each reviewer still checks the decisive source passages and applies its own lens; another reviewer's conclusion is a lead, not verification. Keep explicitly requested independent discovery independent.
+- On a follow-up, recheck the changed findings, affected passages, and dependent references against the last reviewed state. Restart broader discovery when that baseline is stale or new evidence expands the impact, not merely because the skill was invoked again.
+
+### Finish at the evidence boundary
+- Stop when requested coverage is met, material findings are resolved or explicitly withheld/unresolved under the existing gates, and affected links and ownership have been checked. An unchanged result is valid.
+- If coverage cannot be completed, report the specific gap; do not silently narrow the task or describe unreviewed material as verified or stable. Keep evidence notes in the session unless an existing owner or user request requires an artifact.
+
 ## Working Sequence
 
 ### 1. Audit the active docs
-- Start from the root and the most central entry docs.
+- Apply the scope procedure above; use the relevant entrance docs and owners as starting points, not an automatic whole-repository body read.
 - Read enough of the current structure to understand:
   - what the repo is
   - where users start
@@ -39,7 +67,7 @@ Use this file for the full document-structuring procedure.
   - avoid broad churn for unaffected areas
 
 ### 2. Classify document roles
-- Assign each active doc one primary role where possible:
+- Assign each doc in the review scope one primary role where possible:
   - entrance
   - overview
   - policy
@@ -164,6 +192,7 @@ Use this file for the full document-structuring procedure.
 - Track the pass explicitly as `before -> after`.
 - Record:
   - operating mode used
+  - target, scope basis, and coverage (content-reviewed, mechanically checked, or only inventoried)
   - severity summary
   - structure changes
   - ownership changes
@@ -174,8 +203,9 @@ Use this file for the full document-structuring procedure.
   - decision confidence by change
   - unresolved low-confidence items
 - Prefer concise, reviewable summaries over vague statements like "cleaned docs."
+- Expand the role map and change categories only when useful; a bounded or unchanged pass does not need the full report template or a catalog of untouched files.
 
 ## Finish Pass
 - Check the result with [checklist.md](checklist.md).
-- Confirm that the tree is cleaner and easier to maintain than before.
+- Confirm that necessary fixes improved maintainability, or explain why the reviewed structure was left unchanged.
 - If no comparable rerun exists yet, treat the refinement as improved but not fully rerun-validated.

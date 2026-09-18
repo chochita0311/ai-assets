@@ -12,7 +12,7 @@
 
 ## Input Contract
 - one approved feature document
-- one active spec document
+- one active spec document or designated [docs-content writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 - candidate implementation or proposed contract update
 - relevant project policies, architecture rules, schemas, generated artifacts, fixtures, and integration docs
 - active execution profile and surface-lane metadata when present

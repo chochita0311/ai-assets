@@ -83,12 +83,18 @@ Produce a document or document set with these properties:
 
 ## Workflow Summary
 
-1. Read for purpose, audience, genre, constraints, and hidden structure.
+1. Resolve the target and review scope from the request and available task evidence, then read for purpose, audience, genre, constraints, and hidden structure.
 2. Decide whether restructuring is actually necessary.
 3. Diagnose the composition failures that justify intervention.
 4. Apply the minimum effective reshaping.
 5. Validate that substance, force words, and exceptions were preserved.
 6. Check the result with the checklist.
+
+## Adaptive Review Scope
+
+- Infer the starting scope without requiring a special prompt, file list, or Git diff; use [references/method.md](references/method.md#review-scope-and-evidence-reuse).
+- Review breadth is separate from `reshape`/`intake` mode and intervention level. Choose breadth from the task's purpose and document state; whole-document or whole-set review may be the starting point without a prior local defect or an explicit "full audit" request. Efficiency must not narrow needed discovery, composition review, or preservation checks.
+- Reuse current discovery evidence while making independent composition judgments. Do not replace necessary reading with token or file caps, or describe unexamined content as stable or verified.
 
 ## Approval Boundary
 
@@ -134,8 +140,11 @@ Read [references/example-output.md](references/example-output.md) when you need 
 
 ## Output Format
 
-Unless the user asks for a lighter response, structure the working result around:
+For a bounded or unchanged pass, concisely report the scope and evidence basis, necessity or no-change reason, changes and preservation checks, and unresolved items. Distinguish reviewed unchanged material from material outside the pass; group stable areas rather than listing every untouched file.
+
+For a full pass, expand the relevant parts into the following without empty sections. Always retain applicable major-intervention authorization/change-map disclosures and intake traceability, regardless of report length:
 - operating mode used (`reshape` or `intake`)
+- review coverage and any limits
 - necessity justification
 - intervention level when a full pass is being reported
 - withheld high-risk `major` change map when applicable

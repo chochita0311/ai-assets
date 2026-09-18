@@ -42,7 +42,7 @@ Produce a documentation system with these properties:
 
 ## Workflow Summary
 
-1. Audit the active docs and classify each file by role.
+1. Resolve the documentation target and review scope from the request and available task evidence, then audit and classify the relevant docs.
 2. Identify duplicated facts, mixed-purpose docs, and ambiguous ownership.
 3. Choose the owning layer for each durable fact.
 4. Reorganize by moving or rewriting content into the owning doc.
@@ -55,6 +55,12 @@ Produce a documentation system with these properties:
 - Use `incremental` by default when the repository already has a mostly workable documentation tree; focus on stale, overlapping, or misowned material and preserve stable areas.
 - Use `restructure` only when ownership is broadly mixed, duplication is widespread, or the entrance and navigation layers are no longer usable.
 - Choose the mode from the current documentation state, not from a preference for a cleaner-looking tree.
+
+## Adaptive Review Scope
+
+- Infer the starting scope without requiring the user to supply a special prompt, file list, or Git diff. Follow the scope-selection procedure in [references/method.md](references/method.md#review-scope-and-evidence-reuse).
+- Review breadth and edit mode are independent: an `incremental` pass can cover the whole target. Choose breadth from the task's purpose and documentation state; whole-target review may be the starting point without a prior local defect or an explicit "full audit" request. Efficiency must not narrow needed discovery or cleanup.
+- Reuse current discovery evidence without outsourcing judgment. Report what was actually checked; an inventory or sample is not a full semantic audit. Do not impose file or token caps that leave required coverage incomplete.
 
 ## Approval Boundary
 
@@ -88,8 +94,11 @@ Read [references/example-output.md](references/example-output.md) when you need 
 
 ## Output Format
 
-Unless the user asks for a lighter response, structure the working result around:
+For a bounded or unchanged pass, report the scope and evidence basis, findings or changes, validation, and unresolved items concisely. Distinguish reviewed material from material only inventoried or outside the pass; do not enumerate every untouched file or emit empty sections.
+
+For a full pass, expand the relevant parts into:
 - operating mode used (`incremental` or `restructure`)
+- review coverage and any limits
 - doc-role map
 - ownership changes
 - `before -> after` structure summary

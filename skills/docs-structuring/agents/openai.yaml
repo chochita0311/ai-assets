@@ -1,7 +1,7 @@
 interface:
   display_name: "Docs Structuring"
   short_description: "Organize layered repo documentation"
-  default_prompt: "Use $docs-structuring to audit the repository docs, identify duplication and ambiguous ownership, then reorganize them into a clean layered structure with clear source-of-truth boundaries."
+  default_prompt: "Use $docs-structuring to review the relevant documentation, infer the needed scope from the request and current work, and fix duplication or unclear ownership while preserving useful content and stable structure."
 
 policy:
   allow_implicit_invocation: true

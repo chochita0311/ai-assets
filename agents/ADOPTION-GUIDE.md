@@ -83,7 +83,7 @@ Do not export `harness-import-manifest.example.json` as a managed shared file. U
 ## Exported Link Rewriting
 The shared source tree and the consuming-repo tree intentionally use different roots. Rewrite these source-relative links during export instead of copying them unchanged:
 
-- In exported role and flow docs, rewrite `../policies/harness/operator-briefing-and-review-receipts.md` to `../../policies/harness/operator-briefing-and-review-receipts.md`.
+- In exported role, profile, flow, and operation docs, rewrite source links under `../policies/harness/` to `../../policies/harness/`, preserving filenames and section anchors. This includes operator-briefing links and `execution-loop-governance.md#docs-content-writing-contract`.
 - In the exported operator policy, rewrite `../../templates/operator-briefing.md` to `../../agents/templates/operator-briefing.md`.
 - Do not leave exported documents dependent on `../ai-assets/` or another external source path.
 
