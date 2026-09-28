@@ -11,6 +11,36 @@
 - A consuming repo has an older local copy and needs a controlled sync from `../ai-assets/agents/`.
 - The operator wants the resulting repo to look like a normal local agent system, not like a mounted external dependency.
 
+## Adoption Mode Resolution
+
+The per-repo import baseline is defined in [Harness Import Manifest](#harness-import-manifest). Resolve the mode before writing:
+
+- No manifest and no installed local harness: use `Fresh Export`.
+- No manifest but local harness files already exist: use `Existing Installation Bootstrap`.
+- Valid manifest exists: use `Refresh Or Resync` from the recorded baseline.
+- Invalid manifest exists: use `Manifest Recovery`; preserve it and stop before harness-content writes.
+- A missing or invalid manifest is never proof that existing local files are safe to overwrite.
+
+### Manifest Recovery
+
+When an installed manifest fails schema, path, uniqueness, hash, or provenance validation, preserve it unchanged as evidence and do not use any of its values as a refresh baseline. Build and validate a separate recovery candidate from supported source, target, and Git evidence, using the evidence steps from `Existing Installation Bootstrap` when needed. Resume controlled refresh only after the recovered baseline candidate is valid and every unexplained difference is classified; replace the installed manifest only as the final successful step.
+
+### Existing Installation Bootstrap
+
+When a repo already has imported harness files but no manifest:
+
+1. Inspect the consuming repo's entrance docs, current harness layout, Git history, and repo-local ownership rules.
+2. Resolve the intended repository surfaces and optional capability exclusions.
+3. Identify the previous harness-only import or refresh commit and its `ai-assets` revision when possible.
+4. Render the candidate shared source into the consuming layout before comparing it with current targets.
+5. Classify exact or historically supported shared matches as `managed`.
+6. Classify confirmed intentional specializations as `local`.
+7. Treat unexplained differences as conflicts. Do not overwrite them or manufacture baseline hashes.
+8. Complete the controlled merge and finalization checks.
+9. Create the manifest only after every tracked entry has a supported source, target, ownership, and baseline.
+
+Bootstrap existing installations lazily on their next refresh. Do not require an immediate repository-wide migration solely to add manifests.
+
 ## Shared Source Package
 - Shared source lives in `../ai-assets/agents/`.
 - Shared harness governance lives in `../ai-assets/agents/policies/harness/`.
@@ -84,6 +114,7 @@ Do not export `harness-import-manifest.example.json` as a managed shared file. U
 The shared source tree and the consuming-repo tree intentionally use different roots. Rewrite these source-relative links during export instead of copying them unchanged:
 
 - In exported role, profile, flow, and operation docs, rewrite source links under `../policies/harness/` to `../../policies/harness/`, preserving filenames and section anchors. This includes operator-briefing links and `execution-loop-governance.md#docs-content-writing-contract`.
+- In exported roles and evaluation templates, rewrite `../policies/review/design-evaluation.md` to `../../policies/design/design-evaluation.md` and `../policies/review/interaction-evaluation.md` to `../../policies/experience/interaction-evaluation.md`. If an optional review asset is omitted, render its conditional reference as plain text instead of leaving a broken link.
 - In the exported operator policy, rewrite `../../templates/operator-briefing.md` to `../../agents/templates/operator-briefing.md`.
 - Do not leave exported documents dependent on `../ai-assets/` or another external source path.
 
@@ -153,36 +184,6 @@ For a `local` entry, preserve the target unconditionally and keep its per-entry 
 - Do not update a recorded hash to match unexplained local drift. Classify the difference first as an accepted upstream result, intentional local ownership, or an unresolved conflict.
 - When the shared example's `mapping.version` differs from the installed manifest, treat the mapping or link transforms as changed and re-render the selected file set before comparing target hashes.
 - Do not remove a previously tracked target merely because the new selection omits it. Report it as a retirement candidate and remove it only after explicit review.
-
-## Adoption Mode Resolution
-
-Resolve the mode before writing:
-
-- No manifest and no installed local harness: use `Fresh Export`.
-- No manifest but local harness files already exist: use `Existing Installation Bootstrap`.
-- Valid manifest exists: use `Refresh Or Resync` from the recorded baseline.
-- Invalid manifest exists: use `Manifest Recovery`; preserve it and stop before harness-content writes.
-- A missing or invalid manifest is never proof that existing local files are safe to overwrite.
-
-### Manifest Recovery
-
-When an installed manifest fails schema, path, uniqueness, hash, or provenance validation, preserve it unchanged as evidence and do not use any of its values as a refresh baseline. Build and validate a separate recovery candidate from supported source, target, and Git evidence, using the evidence steps from `Existing Installation Bootstrap` when needed. Resume controlled refresh only after the recovered baseline candidate is valid and every unexplained difference is classified; replace the installed manifest only as the final successful step.
-
-### Existing Installation Bootstrap
-
-When a repo already has imported harness files but no manifest:
-
-1. Inspect the consuming repo's entrance docs, current harness layout, Git history, and repo-local ownership rules.
-2. Resolve the intended repository surfaces and optional capability exclusions.
-3. Identify the previous harness-only import or refresh commit and its `ai-assets` revision when possible.
-4. Render the candidate shared source into the consuming layout before comparing it with current targets.
-5. Classify exact or historically supported shared matches as `managed`.
-6. Classify confirmed intentional specializations as `local`.
-7. Treat unexplained differences as conflicts. Do not overwrite them or manufacture baseline hashes.
-8. Complete the controlled merge and finalization checks.
-9. Create the manifest only after every tracked entry has a supported source, target, ownership, and baseline.
-
-Bootstrap existing installations lazily on their next refresh. Do not require an immediate repository-wide migration solely to add manifests.
 
 ## Operator Prompts
 Use prompts like these when asking a local coding agent to install or refresh the package in a repo.
@@ -264,7 +265,7 @@ Before finalizing an export or refresh in a consuming repo:
 2. Confirm that `docs/policies/harness/operator-briefing-and-review-receipts.md` and `docs/agents/templates/operator-briefing.md` exist when shared roles or flows are installed.
 3. Confirm that links from the exported orchestrator, workflow, and operator policy resolve inside the consuming repo.
 4. Check that all other local harness policy paths are correct.
-5. Check whether review assets belong under local `design/` and `experience/` policy owners.
+5. Check whether review assets belong under local `design/` and `experience/` policy owners; verify that exported role and evaluation-template links resolve to those assets or become unlinked conditional references when omitted.
 6. Add a short execution gate to the consuming repo's `AGENTS.md` so planning requests stop at PRD or feature review instead of being reinterpreted as implementation approval.
 7. Keep repo-specific rules outside the shared role package.
 8. Confirm that generated planning docs use repo-relative links instead of local absolute paths.

@@ -88,6 +88,12 @@ Produce:
 5. Uncertainties that block clean decomposition
 6. Explicit non-goals carried from the PRD
 
+## Foundation Dependency Rule
+
+- Do not hand a product feature to spec work if a required foundation feature is still unresolved.
+- If a proposed product feature still contains contract ambiguity, split out a foundation feature instead of letting the product feature absorb that ambiguity.
+- If a proposed feature spans multiple surfaces, declare lane dependencies or split it until each feature has a clear execution shape.
+
 ## Suggested Output Shape
 ```yaml
 prd_summary:
@@ -191,12 +197,6 @@ non_goals:
 - The next role should receive human-approved feature boundaries, not raw planner output.
 - Any proposed feature that still depends on unresolved uncertainty should be held back or split again.
 - Planner output should make later acceptance checklist generation almost mechanical.
-
-## Foundation Dependency Rule
-
-- Do not hand a product feature to spec work if a required foundation feature is still unresolved.
-- If a proposed product feature still contains contract ambiguity, split out a foundation feature instead of letting the product feature absorb that ambiguity.
-- If a proposed feature spans multiple surfaces, declare lane dependencies or split it until each feature has a clear execution shape.
 
 ## Non-Goals
 - writing implementation specs directly

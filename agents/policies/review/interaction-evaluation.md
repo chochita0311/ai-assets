@@ -264,6 +264,7 @@
 - Reading surfaces that render references, citations, or Markdown links must preserve usable anchors in both the body content and any generated reference panel.
 - Auto-linking raw URLs must not corrupt existing Markdown links by creating nested anchors, malformed `href` values, or duplicated visible URL fragments.
 - Evaluators should test notes with raw URLs, Markdown links, trailing punctuation, and generated reference sections because link-rendering failures often appear only in mixed content.
+- For generated reports whose citations come from a bounded source set, inspect the rendered DOM and follow representative links: admitted references should open their intended source, while missing or unapproved references should remain visibly non-interactive. Source Markdown or parser output alone does not establish this behavior.
 
 ### First-State Isolation And Handoff
 

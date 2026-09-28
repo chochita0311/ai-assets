@@ -13,7 +13,7 @@
 ### Execution Roles
 - [agents/roles/orchestrator.md](roles/orchestrator.md): control one bounded execution loop, select the execution profile, and route failures to the right layer
 - [agents/roles/spec-agent.md](roles/spec-agent.md): translate one approved feature into an implementation-facing spec
-- [agents/roles/builder.md](roles/builder.md): implement one approved spec without expanding scope
+- [agents/roles/builder.md](roles/builder.md): implement one approved active execution contract without expanding scope
 - [agents/roles/contract-evaluator.md](roles/contract-evaluator.md): evaluate APIs, schemas, generated artifacts, source-of-truth ownership, and integration boundaries
 - [agents/roles/design-evaluator.md](roles/design-evaluator.md): evaluate visual and design-surface correctness against sources and spec
 - [agents/roles/functional-evaluator.md](roles/functional-evaluator.md): evaluate runtime behavior, state handling, workflows, and regressions

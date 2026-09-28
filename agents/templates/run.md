@@ -12,6 +12,8 @@
 - Created: `YYYY-MM-DD`
 - Updated: `YYYY-MM-DD`
 
+For `docs-content`, replace both spec-file examples with the designated writing contract’s real ID and repository-relative file or section anchor. Do not create a spec file just to fill this template.
+
 ## Goal
 - Record one active execution pass for one approved feature.
 - Treat one run as an automated execution unit that reports back to the human owner.
@@ -40,7 +42,7 @@
 - Optional skills or tools expected:
 
 ## Current Artifacts
-- Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
+- Active Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
 - Contract evaluation: `[eval-0000-contract-title](../evaluation/eval-0000-contract-title.md)`
 - Design evaluation: `[eval-0000-design-title](../evaluation/eval-0000-design-title.md)`
 - Functional evaluation: `[eval-0000-functional-title](../evaluation/eval-0000-functional-title.md)`

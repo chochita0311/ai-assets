@@ -14,7 +14,7 @@
 - one active spec document or designated [docs-content writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract)
 - candidate implementation
 - golden sources or design rules when relevant
-- relevant interaction-quality policies when the feature changes visible behavior or navigation continuity
+- relevant interaction-quality policies, including [Interaction Evaluation](../policies/review/interaction-evaluation.md) when installed, for visible behavior or navigation continuity
 
 ## Capability Guidance
 - When checking live interaction clarity, prefer an appropriate available browser automation or inspection tool over pure static reasoning.

@@ -12,6 +12,8 @@
 - Created: `YYYY-MM-DD`
 - Updated: `YYYY-MM-DD`
 
+For `docs-content`, replace the Spec example with the designated writing contract’s real ID and repository-relative file or section anchor. Do not invent a spec file.
+
 ## Input Reports
 - Evaluator reports addressed:
 

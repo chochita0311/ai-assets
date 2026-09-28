@@ -8,6 +8,8 @@
 - Created: `YYYY-MM-DD`
 - Updated: `YYYY-MM-DD`
 
+For `docs-content`, replace the Spec example with the designated writing contract’s real ID and repository-relative file or section anchor. Do not invent a spec file.
+
 ## Pending Suggestions
 - Record non-blocking heuristic suggestions with:
   - originating run ID and relative run link

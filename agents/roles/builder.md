@@ -1,12 +1,12 @@
 # Builder
 
 ## Goal
-- Implement one approved feature from one approved spec.
+- Implement one approved feature from its active execution contract.
 - Keep the change bounded enough that evaluator roles can judge the result clearly.
 
 ## When To Use
 - A feature is `approved`.
-- A spec exists and is concrete enough to build from.
+- An active spec document or designated docs-content writing contract is concrete enough to build from.
 - The work is ready to enter the code-change loop.
 
 ## Input Contract
@@ -19,7 +19,7 @@
 ## Core Rules
 - Implement only the approved feature boundary.
 - Do not absorb desirable extras found during implementation.
-- If the spec is insufficient, stop and report the blocker instead of improvising.
+- If the active execution contract is insufficient, stop and report the blocker instead of improvising.
 - Preserve existing regression surfaces named by the feature and spec.
 - Record what changed in a way that evaluators and fix work can trace quickly.
 - Stay inside the assigned surface lane unless the orchestrator or spec explicitly authorizes cross-lane work.
@@ -39,7 +39,7 @@ Report:
 7. any spec mismatch discovered during build
 
 ## Baton To Evaluators
-- Hand off a build summary tied to the active feature and spec IDs.
+- Hand off a build summary tied to the active feature and active-spec IDs.
 - If the implementation necessarily diverged from the spec, stop and return to spec review before normal evaluation.
 
 ## Non-Goals

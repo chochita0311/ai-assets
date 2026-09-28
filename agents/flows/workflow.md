@@ -51,7 +51,7 @@
 10. `Orchestrator`
    - Select the active feature, active spec target, execution profile, surface lanes, and evaluator set.
 11. `Spec Agent`
-   - Write or update one implementation-facing spec in `docs/plans/spec/`.
+   - Write or update one implementation-facing spec in `docs/plans/spec/`. For `docs-content`, the Orchestrator may instead designate a sufficient existing [writing contract](../policies/harness/execution-loop-governance.md#docs-content-writing-contract) and omit this pass.
 12. `Builder`
    - Implement only the approved feature boundary from the active spec.
 13. `Contract Evaluator`
@@ -98,7 +98,7 @@ The workflow may expose user-facing continuity without adding a workflow phase.
   - translates one approved feature into implementation-ready execution detail
   - does not redefine the feature boundary
 - Builder:
-  - implements one approved spec
+  - implements one approved active execution contract
   - does not add adjacent scope opportunistically
 - Contract Evaluator:
   - checks APIs, schemas, messages, generated outputs, source-of-truth ownership, and integration boundaries
@@ -114,15 +114,9 @@ The workflow may expose user-facing continuity without adding a workflow phase.
   - returns to planning or spec review when findings expose boundary or contract problems
 
 ## Approval Rule
-- Planning output is not executable truth until a human locks the boundary.
-- PRD and feature planning should pause at their review steps instead of flowing forward automatically.
-- PRDs may carry explicitly recorded open items when they do not block safe feature planning.
-- Approved features must be concrete enough for the spec agent to proceed without guesswork.
-- If material ambiguity remains during planning and would block safe feature planning or spec handoff, stop and ask the human owner instead of carrying the ambiguity forward.
-- If a later evaluator detects a likely missing behavior, it may suggest it, but that behavior must return to spec approval before implementation.
-- Use the consuming repo's planning-governance policy as the operating rule for where PRDs and features live and how they change.
-- Use `docs/plans/spec/` for implementation-facing specs tied to one approved feature.
-- Use the consuming repo's execution-loop governance policy for execution-layer fail classification and return paths.
+- Stop at human PRD and feature reviews before handing an approved feature to execution; the step-by-step flow above owns that timing.
+- Use [PRD And Feature Management](../policies/harness/prd-feature-management.md) for approval criteria, permissible PRD open items, feature completeness, and document placement. Ask the human owner when material ambiguity prevents the next handoff.
+- Route missing behavior discovered after approval through [Execution Loop Governance](../policies/harness/execution-loop-governance.md) instead of adding it during implementation.
 
 ## Reusable Prompt Frame
 Use this framing when invoking the early planning roles:

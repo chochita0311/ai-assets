@@ -19,7 +19,7 @@
 
 ## Input Contract
 - one approved feature document
-- one active spec document when it already exists
+- one active spec document or designated docs-content writing contract when it already exists
 - declared feature type, surface, execution profile, and surface lanes when available
 - current evaluator and fix artifacts when the loop is already running
 - relevant execution governance rules
