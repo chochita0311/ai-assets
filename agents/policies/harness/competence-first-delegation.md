@@ -140,8 +140,8 @@ A substitute may be used only when an explicit runtime binding or fallback polic
 When changing the model behind a named worker:
 
 1. Change the concrete model identifier in the runtime binding file.
-2. Validate the binding file's syntax and confirm that installed runtime targets still resolve to it.
-3. Install or sync the adapter only to an approved runtime target when its link or file mapping changed.
+2. Validate the binding file's syntax.
+3. For every affected, approved runtime target, follow the applicable adapter's installation or synchronization procedure whenever the binding content or source-to-target mapping changes. Verify that the installed configuration reflects the intended binding.
 4. Start a fresh runtime session when configuration or instruction caching may apply.
 5. Explicitly invoke the named worker and verify its actual model and permissions before treating the new binding as active.
 

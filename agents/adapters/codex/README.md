@@ -18,7 +18,7 @@
 - [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the shared harness entrance blocks.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
 - [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) owns the canonical terminal runner. [The LaunchAgent template](launchd/model-binding-audit.template.plist) and [its renderer](scripts/render-model-binding-launchagent.py) define portable schedule behavior; generated machine-local plists own only installation paths and approved local settings.
-- Shared adapter blocks and linked bindings under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
+- Shared adapter blocks and copied runtime TOMLs under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
 
 ## Official Codex References
 - [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, sandbox overrides, and delegation behavior
@@ -60,13 +60,13 @@ agents/adapters/codex/
 |---|---|
 | `global-agents-managed-section.md` | managed block inside `<codex-home>/AGENTS.md` |
 | applicable guidance from `instructions/` | selected rules merged into the destination `AGENTS.md` after comparison |
-| `custom-agents/evidence_scout.toml` | per-file symlink at `<codex-home>/agents/evidence_scout.toml` |
-| `custom-agents/bounded_verifier.toml` | per-file symlink at `<codex-home>/agents/bounded_verifier.toml` |
-| `profiles/model-binding-audit.config.toml` | per-file symlink at `<codex-home>/model-binding-audit.config.toml` |
+| `custom-agents/evidence_scout.toml` | regular-file copy at `<codex-home>/agents/evidence_scout.toml` |
+| `custom-agents/bounded_verifier.toml` | regular-file copy at `<codex-home>/agents/bounded_verifier.toml` |
+| `profiles/model-binding-audit.config.toml` | regular-file copy at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
 | `launchd/model-binding-audit.template.plist` | rendered machine-local file at `~/Library/LaunchAgents/<approved-label>.plist` after approval; never a symlink to the template |
 
-Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared adapter policy only through its marked regions; use the [personal instruction import guide](instructions/README.md) for other applicable guidance. Link each named TOML separately instead of linking the entire `agents/` directory so the runtime home can still own unrelated local agents.
+Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared adapter policy only through its marked regions; use the [personal instruction import guide](instructions/README.md) for other applicable guidance. Install approved TOMLs individually as regular-file copies and keep the target `agents/` directory locally owned so unrelated local agents can coexist.
 
 The audit runner executes from its canonical path under `scripts/`; it is not copied into a runtime home.
 
@@ -101,19 +101,25 @@ Use [model-binding-audit.md](model-binding-audit.md) for the CLI-first weekly de
 
 This package does not install itself automatically. Installation changes personal runtime state and should occur only after explicit approval.
 
+A custom-agent loader reported `Too many levels of symbolic links (os error 62)` for a symlink that ordinary file reads could resolve. This adapter uses regular-file copies for custom-agent TOMLs and applies the same installation convention to root-profile TOMLs.
+
 For an approved installation:
 
 1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat the competence-routing and operator-context blocks as independent managed regions. For personal guidance, compare the destination with [Personal Codex Instructions](instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
-2. Create the target `agents/` directory when absent.
-3. Create one symlink per named TOML from the target `agents/` directory to the canonical file under this adapter.
-4. Create one profile symlink from each approved Codex home to the canonical audit profile.
-5. Verify every link resolves to the intended canonical file. Do not replace a pre-existing file or link without reconciling its ownership first.
+2. Create a locally owned target `agents/` directory when absent. Reconcile any existing directory symlink before installing worker files.
+3. For each approved custom-agent or root-profile TOML, inspect the canonical source and destination. Resolve the ownership of any existing file or link and any local differences before replacement; do not overwrite unresolved changes. Capture the prior destination state for recovery, including file content, symlink target, or absence.
+4. Stage a byte-for-byte copy of the canonical TOML in the destination directory, recheck the source and destination for concurrent changes, and atomically replace only the intended destination entry. When migrating a symlink, replace the link itself; never copy through it or modify its source.
+5. Verify each installed TOML is a regular file, not a symlink, and matches the canonical source byte-for-byte or by content hash. Retain the captured destination state through runtime verification; remove task-owned staging and recovery artifacts once no longer needed.
 6. Leave unrelated global instructions and configuration untouched.
 7. Start a fresh Codex session.
-8. Explicitly invoke each named worker and root profile once and verify its actual model and sandbox behavior.
+8. Explicitly invoke each installed named worker and root profile once and verify its actual model and sandbox behavior. A generic subagent invocation or successful file read does not establish that a named worker loads correctly.
 9. Test one positive auto-routing case and one case that must stay with the primary agent.
 
-Install the weekly LaunchAgent separately and only after the manual audit succeeds. Follow [model-binding-audit.md](model-binding-audit.md#installation-and-operation) for validation, installation, status, and failure handling.
+If runtime verification fails, stop affected use and report the failure. For an installation or synchronization without a model change, restore the captured destination state only within the approved scope and after checking for concurrent changes; otherwise retain it for review. For a model replacement, use [Controlled Migration After An Alert](model-binding-audit.md#controlled-migration-after-an-alert) to recover the canonical binding and installed copies together.
+
+After an approved canonical TOML change, repeat the TOML copy and runtime verification steps for each affected file in every approved Codex home. Copies do not update automatically. Synchronization does not authorize a new model binding or schedule activation.
+
+On macOS, the optional weekly LaunchAgent requires separate installation approval and a successful manual audit. Follow [model-binding-audit.md](model-binding-audit.md#installation-and-operation) for validation, installation, status, and failure handling.
 
 ## Audit Profile
 

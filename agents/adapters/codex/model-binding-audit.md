@@ -72,7 +72,7 @@ Prefer `launchd` to `crontab` on macOS. A calendar LaunchAgent runs after wake w
 
 For an approved installation:
 
-1. Link `profiles/model-binding-audit.config.toml` into each approved Codex home as `model-binding-audit.config.toml`.
+1. Install `profiles/model-binding-audit.config.toml` as a regular-file copy named `model-binding-audit.config.toml` in each approved Codex home, following the [adapter installation and synchronization rules](README.md#installation-boundary).
 2. Resolve the checkout, executable, Codex home, log directory, and executable search path for this computer. Run the canonical shell runner manually with those same settings and inspect `latest-status.txt`, `latest-report.txt`, and `latest-stderr.log` in the selected log directory.
 3. Render a candidate outside the checkout using the command below. Create its parent directory first; the renderer neither creates directories nor overwrites an existing output.
 4. Validate the generated candidate with `plutil -lint` and inspect its paths, label, schedule, and environment. Ensure the selected log directory exists before loading.
@@ -211,8 +211,8 @@ Approval to review a candidate authorizes evaluation, not replacement. This is t
 1. Confirm account-specific availability and compare the candidate with the role's competence floor and special usage semantics. Leave the canonical TOML and installed runtime bindings unchanged.
 2. With any required test authority, smoke-test the exact candidate in a task-owned isolated configuration using the same role instructions and permissions. Verify the actual model, permissions, behavior, and observable usage accounting; report anything unverified. If isolation or account access is unavailable, report the gap instead of editing the live binding to make the test possible.
 3. Present the evidence and obtain explicit approval to replace the affected binding, including a recovery choice if post-install verification fails. A review request alone does not satisfy this step.
-4. Capture the current canonical value, change only the approved TOML's `model` value, and confirm all approved runtime symlinks still resolve to it. Preserve unrelated settings and concurrent changes.
+4. Capture the current canonical TOML and affected installed copies for recovery, change only the approved TOML's `model` value, and synchronize every approved runtime copy using [Installation Boundary](README.md#installation-boundary). Preserve unrelated settings and concurrent changes.
 5. Start a fresh session and explicitly invoke the named worker or root profile. Verify the actual model, permissions, behavior, and expected usage accounting again; the isolated smoke test does not establish installed-runtime correctness.
-6. If verification fails, stop affected use and report the failure. Restore the captured binding only under the approved recovery choice and after checking for concurrent changes; otherwise ask for direction. Never substitute another model silently.
+6. If verification fails, stop affected use and report the failure. Restore the captured binding in the canonical TOML and affected runtime copies only under the approved recovery choice and after checking for concurrent changes; otherwise ask for direction. Never substitute another model silently.
 
 For the audit profile, test it directly as a root agent with subagents disabled. Keep any schedule inactive during an approved live migration and reload it only after successful verification; schedule changes require their own applicable approval. Remove task-owned test configuration after its purpose ends, retaining failure evidence only while needed for diagnosis or recovery.
