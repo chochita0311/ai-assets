@@ -29,6 +29,7 @@ For `docs-content`, replace the Spec example with the designated writing contrac
 - Record only directly observed evidence and identify synthetic fixtures or approved runtime data boundaries.
 - Select applicable detailed checks from [Design Evaluation](../policies/review/design-evaluation.md) and [Interaction Evaluation](../policies/review/interaction-evaluation.md) when those review assets are installed. Record the concrete witness, owner, peer consumers, state transitions, and limitations required by the active feature.
 - For source normalization, complex collection or scroll behavior, remote or multi-target actions, and long-running work, follow the relevant owned checks rather than treating a generic fixture or successful endpoint as sufficient evidence.
+- For generated analysis, identify comparison inputs and configuration, original outputs, review scope, and observed variation. Separate content, interface, application, and user-outcome evidence using the corresponding Interaction Evaluation checks; identify settings that were only requested and outcomes that were not observed.
 
 ## Evidence Gaps
 - List required but unavailable evidence and the claims that remain unverified.

@@ -15,7 +15,7 @@
 
 ## Use
 
-- Apply these rules when evaluating visible state changes, navigation continuity, or browse and read flows.
+- Apply these rules when evaluating visible state changes, navigation continuity, browse and read flows, or generated analysis that users interpret and act on. Select checks relevant to the approved feature; report a missing product capability through the existing scope-review route.
 - Add new entries when the same class of interaction failure proves reusable beyond one feature.
 - Promote an entry elsewhere only when it becomes broader product law rather than an evaluation asset.
 
@@ -24,6 +24,7 @@
 - [Transition Stability And Continuity](#transition-stability-and-continuity)
 - [Binding, Scope, And Responsive State Ownership](#binding-scope-and-responsive-state-ownership)
 - [Execution Confirmation And Action Ownership](#execution-confirmation-and-action-ownership)
+- [Analysis And Recommendation Flows](#analysis-and-recommendation-flows)
 - [Menus, Disclosures, And Affordances](#menus-disclosures-and-affordances)
 - [Repeated Controls And State Anchoring](#repeated-controls-and-state-anchoring)
 - [Reading Surface Link Integrity](#reading-surface-link-integrity)
@@ -166,6 +167,7 @@
 - When a product offers pre-execution confirmation for a command, job, or mutation, show the effective base request, user-supplied additions, executable invocation, and relevant input-channel boundaries such as arguments, standard input, environment, or files at the level needed for an informed decision.
 - Distinguish base input from optional additions and make append, replace, or override semantics explicit; changes made in the form should update the confirmation coherently.
 - The confirmation should derive from the same execution source as the real action rather than from a separately maintained approximation, while masking credentials or other values the user should not need to inspect.
+- Where they affect the decision, distinguish the executing account or profile, runtime workspace, evidence scope, and intended change target. The directory from which the application was launched must not stand in for all four; use recognizable labels and disclose technical paths only when the user needs them.
 - Evaluators should compare the visible confirmation with captured execution input for the normal path and each in-scope optional-input path.
 
 #### First-Use Prerequisite Recovery
@@ -194,6 +196,30 @@
 - Separate meaningful phases such as preparation, bounded processing, and finalization. Show determinate counts or percentages only when their denominator and update semantics are trustworthy; otherwise use honest phase or indeterminate feedback rather than fabricated precision.
 - Progress feedback should preserve the action's established busy state, accessible status announcements, focus and retry behavior, and safe executable fallback. Do not expose private source paths, raw content, or internal diagnostics merely to make the operation appear informative.
 - Evaluators should exercise fast completion, delayed progress, zero work, phase transitions, partial and terminal failure, interrupted streaming or polling, fallback execution, retry, and the final refresh or result handoff. Confirm that the action never appears inert and that completion feedback does not overstate work that was skipped or retained.
+
+### Analysis And Recommendation Flows
+
+#### Missing Evidence Requests
+
+- Before requesting more material, account for facts and complete passages already supplied to the current analysis. Ask for the smallest missing item that could change the decision, explaining the remaining uncertainty; differently worded requests for the same established fact still impose duplicate work.
+- Make the requested item recognizable through its subject, source, and nearby content or an approved stable reference. Distinguish omitted material from a clipped excerpt, and do not infer an unseen message's speaker, meaning, or outcome from its position alone.
+- When the user supplies the requested material, the next result should acknowledge what it resolves and narrow or withdraw the request. If material is inaccessible, changed, or insufficient, state that specific limit rather than implying it has been reviewed. Do not imply cross-run memory that the feature does not provide.
+- Evaluators should compare complete, clipped, missing, and subsequently supplied evidence, including a case that justifies no further request. A structurally valid output is insufficient evidence that a request is necessary or non-duplicative.
+
+#### Recommendation Application And Follow-Through
+
+- When advice is meant to be acted on, identify the smallest supported application route: what to change or say, where to deliver it, who performs setup and later execution, and the trigger and duration. Provide usable wording or a concrete edit when the evidence supports it; identify unresolved placement or activation facts instead of inventing a file, installation, or automatic loading behavior.
+- Make one-time setup and recurring manual effort explicit. A recommendation that requires the user to repeat an instruction for every task or session must disclose that burden; it must not read like an already installed persistent behavior.
+- Keep proposed, applied, effective, and explicitly deferred states distinct. An earlier proposal alone does not prove adoption or benefit and should not suppress useful application help when an evidenced need remains. Respect known successful use and explicit deferral rather than repeatedly prescribing the same intervention.
+- Keep action, expected benefit, follow-up, and handoff at the same task stage and within the approved authority. For example, a review of an answer after work must not silently become a prerequisite for executing the work.
+- Evaluators should trace the recommendation from the user's current state to one observable application and outcome check. Compare an unapplied proposal, known successful application, explicit deferral, and proposal history without underlying work evidence. Judge application quality by a supported delivery route and disclosed burden.
+
+#### Generated Result Meaning And Evidence
+
+- Evaluate generated explanations against the supplied goal, actual claims, applicability conditions, and observed work. An apology or a request for clarification alone does not establish a prior error or user fault. If an explanation changes a substantive claim, the result should make that change understandable.
+- For variable outputs, declare the comparison inputs and configuration, review the original first outputs, and distinguish wording changes from changes in candidate, conclusion, or proposed action. Record whether model settings and execution context were requested or observed; fresh conversational context alone does not establish runtime isolation.
+- Include applicable contrasts such as a supported opportunity, healthy clarification, changed requirements, missing context, and a justified no-change result. Do not reward recommendation count, novelty, or repeated generation until an appealing answer appears. Record a preserved defect and a later correction separately.
+- Keep structural validity, grounded content, usable interface behavior, actual application, and user benefit as separate claims. A few consistent outputs, a schema pass, a browser pass, or more detailed advice do not establish improved comprehension or reduced effort. State which evidence was actually obtained and leave unobserved outcomes open.
 
 ### Menus, Disclosures, And Affordances
 
@@ -265,6 +291,13 @@
 - Auto-linking raw URLs must not corrupt existing Markdown links by creating nested anchors, malformed `href` values, or duplicated visible URL fragments.
 - Evaluators should test notes with raw URLs, Markdown links, trailing punctuation, and generated reference sections because link-rendering failures often appear only in mixed content.
 - For generated reports whose citations come from a bounded source set, inspect the rendered DOM and follow representative links: admitted references should open their intended source, while missing or unapproved references should remain visibly non-interactive. Source Markdown or parser output alone does not establish this behavior.
+
+#### Saved Result Reuse
+
+- When the approved task includes reusing a result, make its copy, download, or handoff path discoverable from the selected result. Reopening an earlier record should retrieve its artifact even when current settings have changed or newer results exist.
+- Reading, inspecting history, following citations, and retrieving an existing artifact must preserve their read-only meaning. They must not silently rerun analysis, charge for another attempt, or apply a recommendation.
+- A successful analysis with no recommendation can still own a reusable report. Gate artifact access on actual artifact availability, and distinguish an unavailable or failed report from a successful no-change conclusion.
+- Evaluators should activate the offered reuse path from direct entry and selected history, at narrow and wide layouts with keyboard access. Check artifact identity and content under the declared export contract, plus unavailable states and absence of new execution; a successful endpoint alone does not establish discoverability.
 
 ### First-State Isolation And Handoff
 

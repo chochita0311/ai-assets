@@ -115,7 +115,8 @@
 
 - Persisted evidence is not automatically eligible for a user-facing metric, rank, date range, or category row.
 - Diagnostic, synthetic, fallback, or error records may remain valuable for traceability while being excluded from ordinary analytical presentation when they do not represent the measured concept.
-- Evaluators should confirm that summary, history, composition, coverage, and linked counts use one coherent eligible set so an excluded record does not leak through a secondary consumer.
+- Evaluators should confirm that summary, history, composition, coverage, and linked counts for the same measured concept use one coherent eligible set so an excluded record does not leak through a secondary consumer.
+- Hiding background, child, test, or analysis work from an ordinary work inventory does not by itself exclude its consumed resources from accounting. Check each consumer's declared population, including unsuccessful work with observed usage; apply [Adjacent Metric Denominator Clarity](#adjacent-metric-denominator-clarity) when populations differ.
 
 #### Secondary Metric Explanatory Burden
 
@@ -134,6 +135,20 @@
 - Adjacent totals, costs, counts, and activity metrics may legitimately use different eligible populations, but the layout and labels must not imply that they reconcile one-to-one.
 - When one metric includes background or child activity while another counts only primary work, the distinction should be visible at the point of comparison or in a bounded trust explanation.
 - Evaluators should inspect denominator definitions together with hierarchy and supporting copy rather than assuming shared placement means shared scope.
+
+#### Estimate State And Calculation Basis
+
+- When execution cost or another estimate is part of interpreting a result, keep the selected record's value and calculation state discoverable beside that result. An aggregate total alone does not explain the selected operation.
+- Distinguish genuine zero, a positive amount below display precision, missing observations, unavailable calculation inputs or rates, partial coverage, and calculation failure. A blank, dash, rounded zero, or shared success treatment must not imply that all these states mean no consumption.
+- Keep the calculation basis that belongs to the recorded estimate inspectable through a bounded explanation. Do not label a historical estimate with today's settings or present a provider-reported amount, local estimate, and actual bill as interchangeable.
+- Evaluators should compare these states independently of execution success, plus a historical record whose basis differs from current defaults. Check list/detail consistency and expanded explanations without adding unnecessary metric panels.
+
+#### Analysis Coverage And Selection Rationale
+
+- A discovery, ranking, or analysis result should distinguish the eligible population, the selected input, and the candidate discussed. Describe actual inspection only to the extent supported by evidence. Report known sampling limits, omitted or clipped content, and material recency or distribution preferences without implying an exhaustive review.
+- Explain why the candidate and its category fit the user's goal and observed work. Incidental words in source material, activity volume, spend, or a working directory alone do not establish the problem type or improvement priority.
+- Explain the selection policy at the decision point and retain the actual scope with the result. Automatic selection must not imply randomness, project balance, a new candidate on every run, or a proven best opportunity unless the product establishes those properties.
+- Evaluators should compare summaries and detailed coverage, historical results without the new metadata, and repeated outputs from the same input. Keep observed selection behavior separate from untested explanations of why the model chose it.
 
 #### User-Facing Terminology Boundary And Consistency
 
@@ -317,6 +332,7 @@
 - Before classifying or correcting a rendered mismatch, confirm the exact route, region, and scroll owner named by the report. A visually similar peer is useful comparison evidence, but it is not a substitute for observing the affected surface.
 - Broad screen-family work should sample the consuming product's supported viewport boundaries and representative long-content, empty, unavailable, error, and active-interaction states. Exact widths and required states belong to the consuming product's contract.
 - Record the effective viewport rendered by the page rather than assuming that a requested window size was applied exactly. Browser minimum-window constraints, device-pixel ratio, zoom, or tool clamping can change the observed width; use viewport or device emulation when needed to reach a required minimum boundary.
+- At the supported minimum width, include a classic vertical scrollbar where the supported environment reserves space for one, and inspect expanded disclosures as well as the initial state. Record viewport width, document client width and scroll width: a page can fit the requested viewport while still exceeding the usable width after the scrollbar consumes space. Confirm that root minimum widths do not widen the document and that any intentional local scrolling remains reachable; clipping overflow is not evidence of containment.
 - Use synthetic or explicitly approved content when captures, fixtures, or audit artifacts could otherwise expose private runtime data.
 - If the required rendered evidence cannot be collected, record the evidence gap explicitly and do not describe unobserved runtime behavior as a verified pass. The owning feature, active spec, or selected profile decides whether that gap blocks acceptance.
 

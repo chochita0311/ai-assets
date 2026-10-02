@@ -30,6 +30,7 @@
 - Frame findings in terms of user comprehension, feedback, and friction.
 - Evaluate relationship and provenance copy from the current task subject's perspective. Do not accept internal mechanism names or ambient proximity as meaningful context unless they explain why the item matters to the user.
 - For one action spanning independent targets, compare aggregate and per-target feedback, partial failure, retention or removal consequences, and scoped recovery instead of evaluating only the happy-path completion message.
+- Treat generated analysis and its route into action as part of the user experience. Apply the relevant coverage, evidence-request, application, and saved-result checks in the installed review policies; report demonstrated usability separately from unobserved user benefit.
 
 ## Required Output
 Produce findings grouped by:
