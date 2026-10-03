@@ -97,6 +97,20 @@
 - Keep the control group, current scale or state, diagram legend, and canvas visually related without collapsing them into one ambiguous action cluster. Controls that depend on successful rendering should remain truthfully unavailable until the canvas is ready.
 - Evaluators should compare wide and narrow layouts, long labels, disabled and bounded states, render failure, keyboard and touch reachability, and the non-interactive or textual fallback. Canvas navigation must not widen the outer document or make the fallback feel like an error residue.
 
+#### Finite Canvas Coverage And Navigation Bounds
+
+- When the approved canvas is bounded by a finite image or content region, its allowed zoom and translation should respect the actual rendered viewport and coverage region, including reserved shell space. A fixed minimum scale alone does not establish coverage across aspect ratios.
+- For supported input paths, evaluate rendered coverage after wheel or pinch zoom, visible controls, dragging, reset, automatic focusing, animated intermediate states, and resizing. A valid final position does not excuse an uncovered or abruptly corrected intermediate frame. [Technical Canvas Input Ownership](interaction-evaluation.md#technical-canvas-input-ownership) owns gesture and control behavior.
+- Evaluators should exercise minimum zoom, each edge and corner, focus near a boundary, and resize after panning at supported wide and narrow viewports. Observe both the rendered background and its transformed bounds; outer-document overflow checks alone cannot prove canvas coverage.
+- Intentional margins, elastic overscroll, tiled maps, and unbounded canvases follow their own approved contracts. Do not impose finite-image coverage on them or use clipping to hide an unreachable destination.
+
+#### Image-Backed Surface Foreground Hierarchy
+
+- On image-backed interactive surfaces, foreground content, controls, selection, and transient feedback should remain distinguishable while the image retains its approved role, whether primary, contextual, or for inspection.
+- Tone changes should be evaluated in both directions: an image can overwhelm foreground content, but excessive dimming can also erase the subject or useful spatial landmarks. Brightness, overlay, saturation, and vignette values are implementation choices, not reusable acceptance thresholds.
+- Evaluators should compare bright and dark image regions, idle and selected content, active feedback, supported zoom levels, and wide and narrow layouts. Inspect the actual composite, including overlays and filters; a declared filter or stacking order alone does not prove legibility.
+- Auxiliary overview or orientation tools should earn their screen area through an approved navigation need. When removing one, verify that the remaining controls and context still support orientation and recovery rather than treating removal as a universal simplification rule.
+
 #### Scrollable Table Frame And Fill
 
 - A table that scrolls locally should keep overflow and outer frame ownership in a wrapper while retaining native table layout inside it. When columns are narrower than the reading region, header and row surfaces should fill that region instead of ending at intrinsic cell width.

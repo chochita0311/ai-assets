@@ -41,6 +41,7 @@
 - Do not expose internal source paths, loading scaffolds, or temporary copy during normal screen transitions if the user can avoid seeing them.
 - Prefer atomic content swaps, cached data reuse, and background prefetching over clearing the current screen first and then rebuilding it.
 - Verify important browse and read flows by clicking through them in a browser and checking for brief visual flashes, unstable sticky regions, or loading-state leaks.
+- When destination warming is part of the change, compare a cold first visit, a click before warming finishes, and a warm revisit under representative delayed or failed asset loading. Prefetch hints or successful downloads alone do not establish that the destination is rendered and interactive; warming must not become a prerequisite for navigation.
 
 #### Navigation Continuity
 
@@ -59,6 +60,26 @@
 - Outgoing surface exit, incoming surface entry, and persistent-shell state changes should be timed as separate parts of one handoff.
 - Destination disclosures, dropdowns, or contextual panels should not appear before the destination shell or content is ready enough to own them.
 - Evaluators should sample early, middle, and late transition frames and verify computed durations or animation names when timing is part of the fix.
+
+#### Exploratory View And Route Feedback Continuity
+
+- When users can pan, zoom, or otherwise explore independently of selection, distinguish the current rendered view from the logically selected origin. A destination change should continue from the current view unless an explicit reset or origin return is part of the approved interaction.
+- View movement and route feedback may serve different purposes: the view establishes a comfortable destination context while a trace explains the connection between items. Evaluate their relationship independently rather than requiring the view to follow every route bend.
+- When route choice materially affects the interaction, confirm that the approved feature defines what is minimized or prioritized, such as distance, hops, time, or a semantic ordering. If it does not, report a spec gap rather than selecting a criterion; do not assume that one shortest-path interpretation fits every product.
+- Evaluators should select from a manually moved or zoomed view, start closer to the destination than to the selected origin, and compare short, long, and multi-turn routes. Check for rewind, unnecessary zoom excursions, abrupt direction changes, and a destination that remains meaningfully visible near a boundary.
+
+#### Continuous Route Motion And Completion
+
+- When a moving trace represents one journey across several segments, its progression should read as one continuous movement. Segment boundaries should not restart timing or leave unexplained persistent highlights; intentional selection or completed-route states remain separate from transient travel feedback.
+- Evaluate perceived speed through traveled distance, easing, current scale, and visible trace or tail length together. Increasing a nominal duration does not by itself establish a slower or smoother experience.
+- Define completion for both the destination view and any remaining feedback. If a tail follows the leading trace, allow its approved arrival or fade to finish even when the view settles earlier; do not remove it merely because a separate camera timer ended.
+- Evaluators should observe start, segment crossings, arrival, and feedback completion on short, long, and multi-turn routes. Computed styles, timer values, DOM presence, and an error-free console establish implementation facts, not the visible continuity or naturalness of motion.
+
+#### Superseded Motion And Cleanup Ownership
+
+- A new selection, manual navigation, reset, or route exit should cancel or replace superseded motion according to the approved interaction. Cleanup callbacks, timers, and animation completions from an earlier journey must not clear the current journey's view or feedback.
+- Motion-reduction behavior should preserve destination selection and usable context while applying the product's approved reduced or immediate transition. Do not require decorative travel to complete before users can act.
+- Evaluators should interrupt both active movement and trailing feedback with rapid consecutive selection, drag or zoom, reset, and exit where supported. Check the latest destination and its current feedback after the earlier journey would have completed, and compare the reduced-motion path when offered.
 
 #### Deferred Interaction Reconciliation
 
