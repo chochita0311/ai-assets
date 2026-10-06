@@ -105,7 +105,7 @@ When the user asks what something means, distinguish an explanation of the exist
 
 This document owns the platform-neutral policy and its rationale. The [Codex managed fragment](../adapters/codex/global-agents-managed-section.md) owns the compact installable projection under the `response-clarity` markers. Keep that projection self-contained: ordinary sessions must not need this checkout, an optional skill, or a link read to receive the essential rules. Update the fragment when this policy changes; installed copies change only through the adapter's merge procedure.
 
-The [Codex adapter](../adapters/codex/README.md#response-clarity) owns global installation. Detailed references are maintainer material, not a required reading stack before every answer. Document reshaping and ownership work can still use their respective skills when available and appropriate.
+The [Codex adapter](../adapters/codex/README.md#baseline-installation) owns global installation. Detailed references are maintainer material, not a required reading stack before every answer. Document reshaping and ownership work can still use their respective skills when available and appropriate.
 
 Existing harness behavior remains independently owned:
 

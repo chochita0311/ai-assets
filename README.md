@@ -5,7 +5,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
 - [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, runtime adapters, and execution templates
-- [agents/policies/](agents/policies/): reusable response guidance, harness governance, and evaluation assets shared with the agent package
+- [agents/policies/](agents/policies/): reusable response and code quality guidance, harness governance, and evaluation assets shared with the agent package
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
 - [scripts/](scripts/): repository-level validation and maintenance tools shared across asset packages
 
@@ -16,6 +16,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - Read [agents/README.md](agents/README.md) for the shared agent package.
 - Use [Personal Codex Instructions](agents/adapters/codex/instructions/README.md) as a reference for agent-led review and import of common, environment-specific, and PC-specific guidance.
 - Use [Response Clarity And Meaning Preservation](agents/policies/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; install it through the Codex adapter without requiring a repository harness or skill.
+- Use [Code Quality](agents/policies/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification; install it through the Codex adapter.
 - Use [agents/ADOPTION-GUIDE.md](agents/ADOPTION-GUIDE.md) when exporting or refreshing the agent package in a consuming repo.
 - Read [pets/README.md](pets/README.md) before adding or changing a pet package.
 - Run [validate_skill_packages.py](scripts/validate_skill_packages.py) after changing a skill package.

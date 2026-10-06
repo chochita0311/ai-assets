@@ -38,11 +38,12 @@
 - [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
 ## Runtime Adapters Package
-- [agents/adapters/codex/README.md](adapters/codex/README.md): reuse personal instruction references, and install meaning-preserving response defaults, competence-first delegation, named worker and profile bindings, an optional operator-context recognition hook, and a read-only model-lifecycle audit into a personal Codex runtime
-- Keep portable response, delegation, and continuity policy outside adapters; adapters own platform-specific fragments, concrete model bindings, installation guidance, and platform-specific audit, runner, and schedule assets.
+- [agents/adapters/codex/README.md](adapters/codex/README.md): reuse personal instruction references, and install meaning-preserving response defaults, common code quality guidance, competence-first delegation, named worker and profile bindings, an optional operator-context recognition hook, and a read-only model-lifecycle audit into a personal Codex runtime
+- Keep portable response, code quality, delegation, and continuity policy outside adapters; adapters own platform-specific fragments, concrete model bindings, installation guidance, and platform-specific audit, runner, and schedule assets.
 
 ## Related Shared Docs
 - [agents/policies/response-clarity.md](policies/response-clarity.md): session-wide meaning preservation, reader-oriented composition, sources, and the boundary between global response defaults and repository harness behavior
+- [agents/policies/code-quality.md](policies/code-quality.md): session-wide decision guidance for project conformity, simplicity, version-aware documentation, and verification evidence
 - [agents/policies/harness/competence-first-delegation.md](policies/harness/competence-first-delegation.md): platform-neutral admission, capability, fallback, context-transfer, and final-ownership rules for delegated work
 - [agents/policies/harness/prd-feature-management.md](policies/harness/prd-feature-management.md): planning-governance rule for PRDs, features, approval, and traceability
 - [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
