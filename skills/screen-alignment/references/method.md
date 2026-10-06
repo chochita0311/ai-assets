@@ -97,7 +97,7 @@ Inputs:
 
 - current screen
 - target screen
-- constitution
+- constitution or durable design rules, if available
 - explicit preservation constraints
 - related family screens when useful
 
@@ -113,7 +113,7 @@ Expected outcome:
 Inputs:
 
 - current screen
-- constitution
+- constitution or durable design rules, if available
 - related family screens
 - user direction for the new area or behavior
 
@@ -178,7 +178,7 @@ For `adapt`, inspect:
 
 - current screen
 - target screen
-- constitution
+- constitution or durable design rules, if available
 - explicit preservation constraints
 - related family screens when useful
 - current repo data model, currently implemented content fields, supported interactions, and actual content currently shown on the screen
@@ -188,7 +188,7 @@ If the user froze regions explicitly, record those regions as no-change scope be
 For `extend`, inspect:
 
 - current screen
-- constitution
+- constitution or durable design rules, if available
 - related family screens
 - user examples, sketches, or partial references
 

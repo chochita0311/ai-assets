@@ -24,6 +24,10 @@ Use this as the final quick validator after a document-shaping pass.
 - Were rules, caveats, and exceptions preserved?
 - Were force words such as `must`, `should`, `only`, `never`, and `unless` preserved accurately?
 - Were claim status and identity boundaries preserved without upgrading uncertainty or collapsing distinct actors, channels, environments, or systems?
+- Was preservation checked in both directions, with each substantive source statement matched to an actual output passage and each factual output statement supported?
+- Were relationship direction, number-to-subject pairings, units, timing, persistence, change conditions, fixed-versus-illustrative facts, settled-versus-open requirements, and separate evidence/approval states retained accurately, including through headings, table columns, and grouping?
+- Did proposed designs keep retained facts and requirements binding, and were easily confused paraphrases checked against their source terms and definitions?
+- Were discovered omissions or incorrect paraphrases repaired and dependent claims rechecked before accepting the result?
 - Were examples kept near the rules or concepts they qualify?
 - Did the pass avoid aesthetic-only rewrites?
 - Did the pass avoid introducing artificial structure where the existing structure was already sufficient?

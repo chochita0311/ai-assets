@@ -20,7 +20,7 @@
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.
 - Within each skill package, `templates/` holds output scaffolds.
-- [agents/policies/](agents/policies/) holds shared harness and evaluation governance.
+- [agents/policies/](agents/policies/) holds shared response guidance, harness governance, and evaluation governance.
 
 ## Source Of Truth
 - Keep `AGENTS.md` short and operational.

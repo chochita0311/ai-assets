@@ -31,7 +31,7 @@ Title: 선택 배송지가 없는 주문의 조회 오류 수정
 
 ## Validation
 
-- `./gradlew test`
+- `./gradlew test` 통과
 - API 통합 테스트에서 배송지 없는 주문의 `200` 응답 확인
 
 ## Impact
@@ -41,7 +41,7 @@ Title: 선택 배송지가 없는 주문의 조회 오류 수정
 
 ## Frontend/Web
 
-근거: 검색 결과 화면에 빈 상태와 키보드 포커스 스타일을 추가했으며, 컴포넌트 테스트와 Chrome 수동 검증을 수행했다.
+근거: 검색 결과 화면에 빈 상태와 키보드 포커스 스타일을 추가했으며, 컴포넌트 테스트는 수행했지만 결과가 제공되지 않았다. Chrome 수동 검증에서는 키보드 탐색과 필터 초기화 동작을 확인했다.
 
 ```markdown
 Title: 검색 결과의 빈 상태와 키보드 탐색 개선
@@ -58,7 +58,7 @@ Title: 검색 결과의 빈 상태와 키보드 탐색 개선
 
 ## Validation
 
-- `npm test -- SearchResults`
+- `npm test -- SearchResults` 수행 완료, 결과 미제공
 - Chrome에서 키보드 탐색과 필터 초기화 동작 확인
 
 ## Impact
@@ -91,7 +91,7 @@ Title: 릴리스 브랜치로 운영 배포 단계 제한
 
 ## Validation
 
-- `shellcheck scripts/deploy.sh`
+- `shellcheck scripts/deploy.sh` 통과
 - Jenkins Replay에서 pull request 빌드의 배포 stage 생략 확인
 - Jenkins Replay에서 릴리스 브랜치의 배포 stage 진입 확인
 
@@ -124,8 +124,8 @@ Title: 애플리케이션 서브넷의 NAT gateway 구성 분리
 
 ## Validation
 
-- `terraform fmt -check`
-- `terraform validate`
+- `terraform fmt -check` 통과
+- `terraform validate` 통과
 - staging `terraform plan`에서 리소스 추가와 route 교체 확인
 - 운영 apply 미실행
 
@@ -142,7 +142,7 @@ Title: 애플리케이션 서브넷의 NAT gateway 구성 분리
 
 ## Database/Migration
 
-근거: 주문 테이블에 nullable 컬럼을 먼저 추가하고 애플리케이션 배포 후 backfill하도록 설계했다. migration test와 staging backfill을 완료했다.
+근거: 주문 테이블에 nullable 컬럼을 먼저 추가하고 애플리케이션 배포 후 backfill하도록 설계했다. migration test가 통과했으며 staging에서 100,000건 backfill 후 건수 일치를 확인했다.
 
 ```markdown
 Title: 주문 처리 채널 컬럼과 단계적 backfill 추가
@@ -181,7 +181,7 @@ Title: 주문 처리 채널 컬럼과 단계적 backfill 추가
 
 ## Library/Dependency
 
-근거: HTTP client의 retry API를 새 설정 객체로 이동하고 기존 overload는 deprecated 처리했다. 지원 런타임 전체에서 테스트했다.
+근거: HTTP client의 retry API를 새 설정 객체로 이동하고 기존 overload는 deprecated 처리했다. 지원 런타임 compatibility matrix는 통과했지만 `./gradlew test`의 개별 결과는 제공되지 않았다.
 
 ```markdown
 Title: HTTP client retry 설정 API 통합
@@ -196,10 +196,12 @@ Title: HTTP client retry 설정 API 통합
 - 기존 retry overload를 deprecated 처리
 - 기존 인자를 `RetryPolicy`로 변환하는 호환 계층 추가
 - 소비자 예제와 API 문서 갱신
+- 기존 overload는 다음 major release까지 유지
+- 신규 코드는 `RetryPolicy` 사용 권장
 
 ## Validation
 
-- `./gradlew test`
+- 미확인: `./gradlew test` 결과
 - 지원 JDK 버전의 compatibility matrix 통과
 
 ## Impact
@@ -207,10 +209,6 @@ Title: HTTP client retry 설정 API 통합
 - 기존 소비자 코드의 동작 유지
 - 신규 API 사용 시 retry 설정 방식 변경
 
-## Migration
-
-- 기존 overload는 다음 major release까지 유지
-- 신규 코드는 `RetryPolicy` 사용 권장
 ```
 
 ## Mixed/Security and Operations

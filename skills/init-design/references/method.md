@@ -125,12 +125,11 @@
 - If no creative-source document exists, keep the governance wording general enough to tolerate a future source file.
 
 ## Source Priority
-Use this priority order unless the repository explicitly defines another source-of-truth rule:
+Explicit user instructions and clarified constraints for the active task govern the run. Within those constraints, use this priority order unless the repository explicitly defines another source-of-truth rule consistent with them:
 1. current committed visual source set or the explicit base artifact(s) named by the user
 2. existing creative-source document such as `DESIGN.md`
 3. repository constraints and product/runtime docs
-4. explicit user notes or clarifications for the current run
-5. cautious inference only where the above sources do not decide the issue
+4. cautious inference only where the above sources do not decide the issue
 
 Rules:
 - Higher-priority sources should not be silently overridden by lower-priority sources.

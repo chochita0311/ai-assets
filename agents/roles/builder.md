@@ -19,7 +19,7 @@
 ## Core Rules
 - Implement only the approved feature boundary.
 - Do not absorb desirable extras found during implementation.
-- If the active execution contract is insufficient, stop and report the blocker instead of improvising.
+- If the active execution contract is insufficient, report the gap to the Orchestrator instead of improvising; follow [Execution Loop Governance](../policies/harness/execution-loop-governance.md#technical-block-exception) for technical blockers and post-run routing.
 - Preserve existing regression surfaces named by the feature and spec.
 - Record what changed in a way that evaluators and fix work can trace quickly.
 - Stay inside the assigned surface lane unless the orchestrator or spec explicitly authorizes cross-lane work.
@@ -40,7 +40,7 @@ Report:
 
 ## Baton To Evaluators
 - Hand off a build summary tied to the active feature and active-spec IDs.
-- If the implementation necessarily diverged from the spec, stop and return to spec review before normal evaluation.
+- If the implementation necessarily diverged from the spec, report the mismatch and recommend spec review to the Orchestrator. Follow [Execution Loop Governance](../policies/harness/execution-loop-governance.md#execution-return-model) for early stopping and the human owner's post-run return decision.
 
 ## Non-Goals
 - redefining acceptance criteria

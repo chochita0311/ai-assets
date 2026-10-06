@@ -1,6 +1,6 @@
 ---
 name: docs-shaping
-description: Reshape document content into a clearer, more coherent, and more navigable form while preserving meaning. Apply minimal, non-destructive restructuring only when necessary. Default to reshaping existing structure.
+description: Reshape existing documents or a raw source set into clearer, coherent, navigable content while preserving meaning, constraints, and intent. Apply only necessary, non-destructive composition changes. Do not use for repository-wide document ownership or tree cleanup, cosmetic-only edits, or downstream PRD, planning, or specification authoring.
 ---
 
 # Docs Shaping

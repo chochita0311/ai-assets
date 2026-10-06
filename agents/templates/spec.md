@@ -38,8 +38,10 @@
 - Lane:
   - path roots:
   - dependency order:
+  - owning role:
   - implementation responsibility:
   - validation evidence:
+  - evaluator ownership:
 
 ## State And Interaction Contract
 - Define the states, transitions, and interaction rules that must hold.

@@ -111,7 +111,7 @@ The runner never falls back to another model. It removes the attention sentinel 
    - explicit deprecation or retirement of a bound model
    - an explicit official replacement mapping
    - a new generation of the same special-purpose model line
-   - changes to entitlement, separate usage limits, modality, tool support, or custom-agent compatibility
+   - changes to entitlement, separate usage limits, capability, modality, tool support, or custom-agent compatibility
    - changes to custom-agent model precedence or configuration schema
 5. Distinguish an explicit successor from a merely newer or similarly lightweight model. Similar speed, cost, or positioning is not lineage or capability equivalence.
    - `REVIEW_REQUIRED` requires evidence tied to an exact bound model or its explicitly named special-purpose lineage.
@@ -125,11 +125,11 @@ The runner never falls back to another model. It removes the attention sentinel 
 
 ## Status Contract
 
-- `NO_BINDING_CHANGE`: official evidence shows no lifecycle change relevant to current bindings.
-- `REVIEW_REQUIRED`: official evidence identifies a deprecation, retirement, explicit successor, materially changed entitlement, or plausible same-line generation requiring human review.
+- `NO_BINDING_CHANGE`: official evidence shows no relevant lifecycle, entitlement, usage-limit, capability, or configuration change affecting current bindings.
+- `REVIEW_REQUIRED`: official evidence tied to an exact bound model or its explicitly named special-purpose lineage identifies a deprecation, retirement, explicit successor, or plausible same-line generation requiring human review. It also applies to material changes affecting that binding's entitlement, separate usage limits, capability, modality, tool support, custom-agent compatibility, model precedence, or configuration schema.
 - `SOURCE_UNAVAILABLE`: one or more required official sources could not be checked; do not infer that bindings are current.
 
-`REVIEW_REQUIRED` is not replacement approval. It starts the controlled migration workflow.
+`REVIEW_REQUIRED` is not replacement approval. It requests human review; any proposed replacement must follow the controlled migration workflow.
 
 If no exact-binding or explicitly preserved-lineage trigger exists, return `NO_BINDING_CHANGE` even when adjacent model families have newer recommendations, deprecations, or replacements.
 
@@ -185,8 +185,9 @@ Check only current official OpenAI Codex sources, including the Codex Models pag
 Codex changelog, and Subagents documentation when configuration behavior is relevant.
 
 Determine whether any bound model has been deprecated, retired, explicitly replaced,
-given a same-line successor, or changed in entitlement, separate usage limits,
-capability, modality, or custom-agent compatibility.
+given a same-line successor, or is materially affected by changes in entitlement,
+separate usage limits, capability, modality, tool support, custom-agent compatibility,
+model precedence, or configuration schema.
 
 Do not treat a merely newer, faster, cheaper, or similarly lightweight model as a successor.
 Deprecation or replacement of a sibling, ancestor, adjacent general model, or unrelated

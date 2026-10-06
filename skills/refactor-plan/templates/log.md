@@ -43,7 +43,7 @@ Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff
 - Important compatibility or contract notes:
   - `...`
 - Parity claim status:
-  - `Preserved | Provisional | Unknown`
+  - `Preserved | Intentional deltas present | Provisional | Unknown`
 - Parity confidence basis:
   - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
 - If `Preserved`, strict baseline audit completed:

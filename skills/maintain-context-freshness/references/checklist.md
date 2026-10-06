@@ -19,6 +19,7 @@ Use this as the final yes-or-no pass.
 - Were freshness-sensitive claims selected before broad scanning?
 - Were destructive, irreversible, recovery, current-action, ownership, and preservation claims prioritized before routine aligned background?
 - Was source priority chosen per claim domain?
+- For high-stakes decisions, was the separate High-Stakes Domains guidance read and applied?
 - Was every later source opened because it could change a named finding's disposition or confidence?
 - When applicable, were directly coupled reprocessing, rollback, recovery, status-closure, and target-owned freshness or disposal rules checked?
 - Are checked and important unchecked sources explicit?

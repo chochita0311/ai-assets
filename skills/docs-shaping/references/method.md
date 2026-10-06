@@ -179,6 +179,9 @@ Use this file for the full document-shaping procedure.
   - no caveat, exception, or force-word difference is lost
 - If in doubt, preserve and annotate rather than compress.
 - If the user explicitly authorizes high-risk `major` compression, preserve the meaning of unique material, keep requested tradeoffs explicit, and do not treat authorization as permission to discard examples, caveats, decisions, or constraints silently.
+- Compare in both directions before accepting the result: match each substantive source statement to an actual passage in the shaped artifact, and trace each factual output statement to its source. Do not rely on overall similarity. This can be an internal check; it does not require a saved inventory or visible checklist.
+- Verify the actor, action, object, relationship direction, number-to-subject pairing, unit, condition, negation, force, and claim status of changed statements, including each subject's timing, persistence, and change conditions. Keep fixed facts distinct from examples, settled requirements from open decisions, and evidence strength from approval status. A proposed design still carries its retained facts and binding requirements. Check headings, table columns, and grouping as part of the claim's meaning. When translating inverse or easily confused terms, keep the source term beside the paraphrase and check its defining actor or perspective; do not infer semantics from a label alone.
+- Repair any omission, unsupported addition, or changed relationship, then recheck dependent claims. If equivalence is uncertain, retain the faithful passage instead of accepting a fluent substitute. Correct a demonstrated source error explicitly from evidence; preservation does not require repeating it.
 
 ### 5b. Intake shaping
 - In `intake` mode:

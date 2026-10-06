@@ -10,7 +10,7 @@ and import personal instructions into an existing `AGENTS.md`.
 | [general.md](general.md) | Common personal preferences: PR descriptions, local writes, temporary artifacts, and Go caches |
 | [environment.template.md](environment.template.md) | Optional rules for a company or other environment: hosts, connectors, and GitHub Enterprise commands |
 | [machine.template.md](machine.template.md) | PC-specific path aliases and examples |
-| [Shared adapter instructions](../global-agents-managed-section.md) | Existing delegation and context-continuity rules |
+| [Shared adapter instructions](../global-agents-managed-section.md) | Meaning-preserving response defaults, delegation, and conditional context continuity |
 
 The templates illustrate what to consider; use only the parts relevant to the
 destination. Actual company values and local paths belong in the destination
@@ -28,6 +28,8 @@ destination. Actual company values and local paths belong in the destination
 4. When import is requested, merge applicable rules directly into the destination,
    preserving unrelated content, examples, exceptions, and instruction strength.
    Keep the existing shared adapter markers when importing their marked blocks.
+   For the response baseline, follow [Response Clarity installation](../README.md#response-clarity);
+   its essential rules work without a repository harness or skill invocation.
 5. Verify that no unique existing guidance was lost, and summarize what changed.
 
 ## Example Request

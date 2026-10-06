@@ -27,10 +27,15 @@ alias mapping:
 workflow name:
 branch purpose:
 current goal:
-user review status: pending|confirmed|not-required|skipped
-approval mode: strict|optional|skip
-review basis:
-downstream blockers: none|describe
+
+reconciliation review history (historical evidence, not current-session authority):
+- review session:
+  review date:
+  reconciliation scope:
+  user review status: pending|confirmed|not-required|skipped
+  approval mode: strict|optional|skip
+  review basis:
+  downstream blockers: none|describe
 
 ## Source Inventory
 
@@ -98,11 +103,15 @@ planned targets:
 
 ## Source Sync Status
 
-sources checked this session:
--
+dated source observations:
+- source:
+  observation date or evidence window:
+  scope:
 
 source deltas vs canonical context:
--
+- source:
+  as-of:
+  delta:
 
 external recheck needed: yes|no
 
@@ -110,7 +119,10 @@ external recheck needed: yes|no
 
 - path:
   role: working note|historical context|duplicate candidate
-  disposition: keep|archive|delete candidate|not evaluated
+  disposition: keep|archive candidate|delete candidate|not evaluated
+  action: archive|delete|none
+  action status: proposed|approved|applied|not applicable
+  archive destination: (exact path for an approved or applied archive)
   note:
 
 ## Next Handoff Note

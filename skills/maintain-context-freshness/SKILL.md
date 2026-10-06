@@ -98,6 +98,7 @@ Keep run-control state separate from document content.
 - For `dispose`, use the `audit` route, then read [Disposal Proof](references/method.md#disposal-proof) and [Apply Disposal Exactly](references/method.md#10-apply-disposal-exactly).
 - Read [Failure Diagnosis](references/method.md#failure-diagnosis) only when the pass encounters one of its failure signals.
 - Before freshness classification, read [Universal Indicator Principles](references/indicators.md#universal-indicator-principles), [Strong Freshness Signals](references/indicators.md#strong-freshness-signals), and [Weak Or Misleading Signals](references/indicators.md#weak-or-misleading-signals), then load only the relevant domain subsection under [Cross-Domain Indicator Families](references/indicators.md#cross-domain-indicator-families).
+- For legal, regulatory, medical, financial, security, privacy, records-retention, or destructive data decisions, also read [High-Stakes Domains](references/indicators.md#high-stakes-domains).
 - Use [references/checklist.md](references/checklist.md) before finalizing any audit, maintenance, or disposal pass.
 
 ## Disposal Proof Gate

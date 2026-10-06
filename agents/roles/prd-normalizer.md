@@ -41,7 +41,7 @@
 - Do not silently reinterpret a source-of-truth request as a generated-output-only adjustment.
 
 ## Required Output
-Produce a normalized PRD package with these sections:
+Produce a normalized PRD package that follows the [PRD Rules](../policies/harness/prd-feature-management.md#prd-rules) and includes these sections:
 
 1. Request summary
 2. Product intent in plain language
@@ -52,6 +52,9 @@ Produce a normalized PRD package with these sections:
 7. Constraints
 8. Acceptance seeds for downstream spec work
 9. Source map
+10. Proposed feature candidates for human boundary review
+
+Feature candidates remain proposals; they do not authorize spec work, implementation, or evaluation.
 
 ## Suggested Output Shape
 ```yaml
@@ -82,6 +85,9 @@ acceptance_seeds:
   - user can reach the login view
   - invalid credentials produce a visible failure state
   - successful authentication transitions to the intended next view
+
+proposed_feature_candidates:
+  - Login entry and credential submission flow, proposed for human boundary review.
 
 source_map:
   - human_request: primary

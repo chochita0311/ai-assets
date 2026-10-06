@@ -42,6 +42,7 @@
 - Lane:
   - path roots:
   - dependencies:
+  - owning role:
   - expected evidence:
   - evaluator ownership:
 
@@ -98,6 +99,8 @@
 - Execution profile:
 - Latest evaluator report: `[eval-0000-title](../evaluation/eval-0000-title.md)`
 - Latest fix note: `[fix-0000-title](../fix/fix-0000-title.md)`
+
+For `docs-content`, replace the Active spec doc example with the designated writing contract's real ID and repository-relative file or section anchor. This may be an existing approved file or feature section; do not create a spec file just to fill this trace.
 
 ## Continuity Notes
 - `YYYY-MM-DD`: initial draft

@@ -31,7 +31,7 @@ Fixed the `500` response returned when an order has no selected shipping address
 
 ## Validation
 
-- `./gradlew test`
+- `./gradlew test` passed
 - API integration test confirming a `200` response without shipping data
 
 ## Impact
@@ -41,7 +41,7 @@ Fixed the `500` response returned when an order has no selected shipping address
 
 ## Frontend/Web
 
-Evidence: The search results page adds an empty state and keyboard focus styling; component tests and a manual Chrome check were completed.
+Evidence: The search results page adds an empty state and keyboard focus styling; component tests completed without a reported result, and a manual Chrome check verified keyboard navigation and filter reset.
 
 ```markdown
 Title: Improve search empty states and keyboard navigation
@@ -58,7 +58,7 @@ Added an actionable empty state when a search returns no results. Improved focus
 
 ## Validation
 
-- `npm test -- SearchResults`
+- `npm test -- SearchResults` completed; result not provided
 - Manual: verified keyboard navigation and filter reset in Chrome
 
 ## Impact
@@ -91,7 +91,7 @@ Restricted the production deployment stage to release branches. Pull request and
 
 ## Validation
 
-- `shellcheck scripts/deploy.sh`
+- `shellcheck scripts/deploy.sh` passed
 - Jenkins Replay confirming deployment is skipped for pull request builds
 - Jenkins Replay confirming deployment is entered for a release branch
 
@@ -124,8 +124,8 @@ Moved application subnet egress to a dedicated NAT gateway. This reduces the bla
 
 ## Validation
 
-- `terraform fmt -check`
-- `terraform validate`
+- `terraform fmt -check` passed
+- `terraform validate` passed
 - Staging `terraform plan` confirming gateway creation and route replacement
 - Production apply not run
 
@@ -181,7 +181,7 @@ Added `order_channel` to identify the path used to create each order. The rollou
 
 ## Library/Dependency
 
-Evidence: HTTP retry parameters move into a configuration object while the old overload remains deprecated; the supported runtime matrix passes.
+Evidence: HTTP retry parameters move into a configuration object while the old overload remains deprecated; the supported runtime matrix passes, but no separate result for `./gradlew test` was supplied.
 
 ```markdown
 Title: Consolidate HTTP client retry configuration
@@ -196,10 +196,12 @@ Consolidated retry parameters into a `RetryPolicy` configuration object. Existin
 - Deprecate the existing retry overload
 - Add a compatibility adapter from legacy parameters
 - Update consumer examples and API documentation
+- Keep the existing overload until the next major release
+- Recommend `RetryPolicy` for new integrations
 
 ## Validation
 
-- `./gradlew test`
+- Not verified from the available evidence: `./gradlew test` result
 - Supported JDK compatibility matrix passed
 
 ## Impact
@@ -207,10 +209,6 @@ Consolidated retry parameters into a `RetryPolicy` configuration object. Existin
 - Preserve behavior for existing consumers
 - Change the preferred retry configuration for new consumers
 
-## Migration
-
-- Keep the existing overload until the next major release
-- Recommend `RetryPolicy` for new integrations
 ```
 
 ## Mixed/Security and Operations

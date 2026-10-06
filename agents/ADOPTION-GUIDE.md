@@ -113,10 +113,15 @@ Do not export `harness-import-manifest.example.json` as a managed shared file. U
 ## Exported Link Rewriting
 The shared source tree and the consuming-repo tree intentionally use different roots. Rewrite these source-relative links during export instead of copying them unchanged:
 
-- In exported role, profile, flow, and operation docs, rewrite source links under `../policies/harness/` to `../../policies/harness/`, preserving filenames and section anchors. This includes operator-briefing links and `execution-loop-governance.md#docs-content-writing-contract`.
+- In exported role, profile, flow, operation, and planning-template docs, rewrite source links under `../policies/harness/` to `../../policies/harness/`, preserving filenames and section anchors. This includes operator-briefing links, `execution-loop-governance.md#docs-content-writing-contract`, and the Fix Log's execution-return link.
 - In exported roles and evaluation templates, rewrite `../policies/review/design-evaluation.md` to `../../policies/design/design-evaluation.md` and `../policies/review/interaction-evaluation.md` to `../../policies/experience/interaction-evaluation.md`. If an optional review asset is omitted, render its conditional reference as plain text instead of leaving a broken link.
+- In the exported Design Evaluation policy, rewrite sibling `interaction-evaluation.md` links to `../experience/interaction-evaluation.md`, preserving section anchors. If the optional Interaction Evaluation policy is omitted, retain the section name as conditional plain text instead; for example, `Technical Canvas Input Ownership, when installed, owns gesture and control behavior.` Do not require the omitted peer to complete the export.
 - In the exported operator policy, rewrite `../../templates/operator-briefing.md` to `../../agents/templates/operator-briefing.md`.
 - Do not leave exported documents dependent on `../ai-assets/` or another external source path.
+
+Mapping version `2` adds the review-to-review link transform and optional-peer handling above to version `1`.
+
+Mapping version `3` also applies the harness-policy link transform to planning templates, including the Fix Log exported under `docs/plans/fix/`.
 
 ## Local Ownership Rules
 - The consuming repo should own the final installed copy.
@@ -155,7 +160,7 @@ Do not overwrite repo-local material that is not part of the shared harness pack
 - `source.revision`: full Git commit SHA for the latest accepted upstream snapshot used by the import or refresh operation. Import from a committed shared-source state.
 - `selection.repository_surfaces`: consuming-repo capability surfaces used to choose the exported set.
 - `selection.excluded_capabilities`: intentionally omitted optional capabilities such as `design` or `ux`.
-- `mapping.version`: latest export-mapping and link-rewrite contract version used by the import or refresh operation. Start with `1` and increment it when those semantics change materially.
+- `mapping.version`: latest export-mapping and link-rewrite contract version used by the import or refresh operation. The initial version was `1`; the current version is `3`. Increment it when those semantics change materially.
 - `files`: the resolved tracked file list for the consuming repo.
 
 Each `files` entry must record:
@@ -221,7 +226,7 @@ Read `docs/agents/harness-import-manifest.json` first when it exists.
 If the manifest is missing but local harness files already exist, bootstrap the existing installation instead of performing a blind fresh export.
 If the manifest exists but fails validation, preserve it unchanged and stop before harness-content writes. Build and validate a separate recovery candidate from supported source, target, and Git evidence; never refresh from invalid values or replace the installed manifest before the final successful step.
 Keep repo-specific policy or product docs that are not part of the shared harness package.
-Update only the shared role, flow, operation, profile, template, and harness-policy layers.
+Update only the shared role, flow, operation, profile, template, harness-policy, and selected review-asset layers.
 If local docs have drifted, reconcile references and ownership cleanly instead of duplicating guidance.
 Compare source and rendered hashes before writing, preserve `local` entries, and report unexplained differences as conflicts.
 If the current shared mapping version differs from the manifest, re-render the selected file set before comparing targets.
@@ -265,7 +270,7 @@ Before finalizing an export or refresh in a consuming repo:
 2. Confirm that `docs/policies/harness/operator-briefing-and-review-receipts.md` and `docs/agents/templates/operator-briefing.md` exist when shared roles or flows are installed.
 3. Confirm that links from the exported orchestrator, workflow, and operator policy resolve inside the consuming repo.
 4. Check that all other local harness policy paths are correct.
-5. Check whether review assets belong under local `design/` and `experience/` policy owners; verify that exported role and evaluation-template links resolve to those assets or become unlinked conditional references when omitted.
+5. Check whether review assets belong under local `design/` and `experience/` policy owners; verify that exported role, evaluation-template, and review-policy links resolve to those assets, including section anchors, or become unlinked conditional references when omitted. Confirm that the manifest records the applied mapping version.
 6. Add a short execution gate to the consuming repo's `AGENTS.md` so planning requests stop at PRD or feature review instead of being reinterpreted as implementation approval.
 7. Keep repo-specific rules outside the shared role package.
 8. Confirm that generated planning docs use repo-relative links instead of local absolute paths.

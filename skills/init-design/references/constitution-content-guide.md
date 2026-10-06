@@ -276,13 +276,14 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
   --color-primary-strong: #0f3d97;
   --color-bg-light: #fdfcf9;
   --color-surface-light: #ffffff;
+  --color-text-strong: #101828;
   --color-text-muted: #667085;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --space-1: 4px;
   --space-4: 16px;
-  --shadow-card: 0 4px 20px -2px rgba(20, 75, 184, 0.05);
+  --shadow-soft: 0 4px 20px -2px rgba(20, 75, 184, 0.05);
 }
 ```
 - General lesson:
@@ -295,6 +296,7 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
   --page-bg: var(--color-bg-light);
   --page-heading: var(--color-text-strong);
   --surface-card: var(--color-surface-light);
+  --shadow-card: var(--shadow-soft);
   --interactive-primary-bg: var(--color-primary);
   --radius-card: var(--radius-md);
   --radius-panel: var(--radius-lg);

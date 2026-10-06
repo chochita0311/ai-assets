@@ -208,4 +208,4 @@ Use this file for the full document-structuring procedure.
 ## Finish Pass
 - Check the result with [checklist.md](checklist.md).
 - Confirm that necessary fixes improved maintainability, or explain why the reviewed structure was left unchanged.
-- If no comparable rerun exists yet, treat the refinement as improved but not fully rerun-validated.
+- Report the documentation properties actually checked. If this task also changed a skill's behavior, report its separate behavioral evidence and limits; an ordinary or unchanged documentation pass does not imply a skill-behavior improvement.

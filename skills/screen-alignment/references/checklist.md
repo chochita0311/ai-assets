@@ -38,7 +38,7 @@ Use this checklist before claiming parity work is complete.
 - no constitutional rule was violated silently
 - no redesign was introduced under cleanup wording
 - constitution-critical controls (for example search and primary navigation) remained discoverable
-- no AI-assistant/profile framing cues were introduced unless constitution explicitly allowed them
+- no AI-assistant/profile framing cues were introduced in archive shell composition unless constitution explicitly allowed them
 
 ## Common Failure Checks
 

@@ -46,11 +46,10 @@ Use this skill to turn an initial source set into a stable design starting point
    - `single-screen artifact`
    - `multi-screen source set`
    - `screen-plus-context`
-2. Resolve source priority before writing:
+2. Honor explicit user instructions and clarified constraints for the active task, then rank design sources within those constraints:
    - current visual source set or committed base artifact(s)
    - existing creative-source document such as `DESIGN.md`
    - repository constraints and docs
-   - explicit user notes or clarifications
    - only then inference
 3. Identify whether a creative-source document already exists, such as `DESIGN.md`, and treat it as source material rather than as durable law.
 4. Evaluate the artifact as design input, not as the final system.

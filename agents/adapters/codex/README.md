@@ -1,6 +1,7 @@
 # Codex Runtime Adapter
 
 ## Purpose
+- Install a self-contained, meaning-preserving response baseline across personal sessions, including repositories without the harness.
 - Adapt the shared competence-first delegation policy to a personal Codex runtime.
 - Keep stable role names separate from replaceable model bindings.
 - Provide installable custom-agent files and a model-neutral managed section for the global Codex `AGENTS.md`.
@@ -9,13 +10,14 @@
 - Provide a root-only, read-only lifecycle audit and a terminal-native weekly runner without making the audit a source of replacement authority.
 
 ## Ownership
+- [Response Clarity And Meaning Preservation](../../policies/response-clarity.md) owns the platform-neutral response policy, preservation checks, examples, and sources.
 - [Competence-First Delegation](../../policies/harness/competence-first-delegation.md) owns the platform-neutral policy.
 - [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md) owns detailed continuity triggers, output semantics, and non-interference rules.
 - [Operator Briefing Template](../../templates/operator-briefing.md) owns the non-persistent response scaffold.
 - [custom-agents/](custom-agents/) owns the canonical Codex custom-agent files and their concrete model bindings.
 - [profiles/](profiles/) owns canonical non-interactive root-agent profiles and their concrete model bindings.
-- [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks; it recognizes operator-context triggers but does not own or install the detailed policy.
-- [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the shared harness entrance blocks.
+- [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks: a self-contained response baseline, delegation routing, and conditional operator-context recognition. It does not install the detailed repository continuity policy.
+- [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the managed adapter blocks.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
 - [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) owns the canonical terminal runner. [The LaunchAgent template](launchd/model-binding-audit.template.plist) and [its renderer](scripts/render-model-binding-launchagent.py) define portable schedule behavior; generated machine-local plists own only installation paths and approved local settings.
 - Shared adapter blocks and copied runtime TOMLs under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
@@ -105,7 +107,7 @@ A custom-agent loader reported `Too many levels of symbolic links (os error 62)`
 
 For an approved installation:
 
-1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat the competence-routing and operator-context blocks as independent managed regions. For personal guidance, compare the destination with [Personal Codex Instructions](instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
+1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat response-clarity, competence-routing, and operator-context as independent managed regions. For response-only installation, follow [Response Clarity](#response-clarity); worker and profile installation steps apply only when those assets are also in scope. For personal guidance, compare the destination with [Personal Codex Instructions](instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
 2. Create a locally owned target `agents/` directory when absent. Reconcile any existing directory symlink before installing worker files.
 3. For each approved custom-agent or root-profile TOML, inspect the canonical source and destination. Resolve the ownership of any existing file or link and any local differences before replacement; do not overwrite unresolved changes. Capture the prior destination state for recovery, including file content, symlink target, or absence.
 4. Stage a byte-for-byte copy of the canonical TOML in the destination directory, recheck the source and destination for concurrent changes, and atomically replace only the intended destination entry. When migrating a symlink, replace the link itself; never copy through it or modify its source.
@@ -155,6 +157,26 @@ Do not add an automatically invoked code-writing worker until real runs show tha
 - Add an optional Codex config fragment only when a shared concurrency or hook rule has been proven necessary.
 - Add a sync script only after merge behavior for pre-existing personal files is explicitly specified and tested.
 - Keep role contracts stable when replacing model generations.
+
+## Response Clarity
+
+The `response-clarity` block applies the [shared response policy](../../policies/response-clarity.md) without a skill command or repository-local dependency. Its first priority is preserving substantive meaning; readability changes must not remove conditions, evidence, alternatives, uncertainty, or necessary explanations. Sources and review examples remain in the shared policy rather than expanding every runtime's instruction load.
+
+For an authorized response-only installation or update:
+
+1. Resolve the actual Codex home and the owner of its `AGENTS.md`, including symlinks. Check for `AGENTS.override.md`, which takes precedence; reconcile the effective file before claiming the baseline is active. Do not overwrite an intentional override or create a second competing rule block.
+2. Compare the destination with the `response-clarity` source block. Preserve unrelated instructions and existing continuity rules. A harness-only machine may have no global file; create one only when global installation was requested, without requiring a harness import.
+3. Keep a task-owned backup and a separate complete candidate. Merge the block once, retain its markers, and recheck source and destination before replacing the resolved owner. Stop on concurrent changes or unexplained local differences. Keep symlink entries intact.
+4. Verify the installed block matches the approved source and all content outside the intended edit is preserved. Verify every in-scope alias still resolves to the owner, then remove task-owned staging and backups after successful verification.
+5. Start a fresh Codex session for the updated instruction chain. File equality verifies installation, not actual semantic preservation or reader comprehension; use the policy's validation guidance for any behavioral evaluation.
+
+For substantive source synthesis, the installed block keeps the [source-first preservation pass](../../policies/response-clarity.md#claim-review-and-clarification) self-contained: inventory complete claims, resolve scope, preserve each subject and condition, draft and reread, then compare actual final passages with their sources. The block also requires a readability check after preservation and another preservation check after editing. Working records stay in task-owned private scratch with local file tools; simple answers do not require them. Keep records through verification and any active evaluation or recovery, then remove them.
+
+The shared policy owns the detailed method and [evaluation criteria](../../policies/response-clarity.md#validation-and-evidence-limits); this adapter owns installation. The review is executed by the agent. It is not an enforced runtime interception or a guarantee that every omission is detected.
+
+No worker, model, profile, runtime hook, or external summarizer is required. The mandatory rules are in the installed block itself; following a link or reading this checkout is not needed before each answer. The adapter is the distribution mechanism, not a separate post-processing stage.
+
+The response baseline and operator-context recognition block can coexist. Keep the continuity block's trigger and repetition rules: it owns when an additional briefing is useful, while the response block governs how the resulting answer preserves meaning. A repository with only the harness retains its existing continuity and evidence contracts; installing the global baseline is separate and is not part of harness export or refresh.
 
 ## Operator Context Continuity
 

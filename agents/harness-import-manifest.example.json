@@ -15,7 +15,7 @@
     ]
   },
   "mapping": {
-    "version": 1
+    "version": 3
   },
   "files": [
     {
@@ -23,7 +23,7 @@
       "target": "docs/agents/roles/orchestrator.md",
       "ownership": "managed",
       "baseline_source_revision": "<full-git-commit-sha>",
-      "baseline_mapping_version": 1,
+      "baseline_mapping_version": 3,
       "source_sha256": "<source-file-sha256>",
       "rendered_sha256": "<rendered-target-sha256>"
     }

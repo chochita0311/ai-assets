@@ -31,7 +31,10 @@ For `docs-content`, replace the Spec example with the designated writing contrac
 ## Remaining Issues
 - Record unresolved findings, if any.
 
-## Return Decision
+## Recommended Route
+
+Record the Fix Agent's recommendation. A return to spec or planning requires the human owner's post-run decision; follow [Execution Loop Governance](../policies/harness/execution-loop-governance.md#execution-return-model) for routing and early technical blockers.
+
 - `re-evaluate`
 - `spec-review`
 - `planning-review`

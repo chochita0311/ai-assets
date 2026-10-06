@@ -44,7 +44,7 @@ For a bounded or unchanged pass, use a compact result instead (see the closing e
 - policy, architecture, and roadmap content retained in `docs/handbook.md`; none was moved into separate files
 
 ## Removed Duplication Summary
-- removed repeated repository description from `AGENTS.md`, `CLAUDE.md`, and `README.md`
+- consolidated the repository description in `README.md`; removed repeated copies from `AGENTS.md` and `CLAUDE.md`
 - removed repeated local run command from four files down to one owner
 - removed repeated payments package flag notes from central and local docs
 

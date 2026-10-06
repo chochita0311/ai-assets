@@ -20,7 +20,7 @@
 - Fix only confirmed issues tied to the approved feature.
 - Do not absorb speculative improvements just because the code is already open.
 - Stay inside the evaluator finding and assigned lane unless the orchestrator routes a broader fix.
-- If evaluator findings imply missing scope or a bad spec assumption, stop and return to spec or planning.
+- If evaluator findings imply missing scope or a bad spec assumption, report the gap and recommend planning or spec review to the Orchestrator. Follow [Execution Loop Governance](../policies/harness/execution-loop-governance.md#execution-return-model) for technical blockers and the human owner's post-run return decision.
 - Preserve already-passing behaviors while fixing the current issue set.
 
 ## Required Output
@@ -34,6 +34,7 @@ Report:
 
 ## Baton Back To Evaluators
 - Return the work for re-evaluation against the same feature and spec unless the fix uncovered a planning blocker.
+- Report a planning blocker to the Orchestrator for handling under [Execution Loop Governance](../policies/harness/execution-loop-governance.md#technical-block-exception); do not redirect the active run to planning autonomously.
 
 ## Non-Goals
 - broad cleanup

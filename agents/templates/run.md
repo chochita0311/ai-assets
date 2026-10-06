@@ -30,6 +30,7 @@ For `docs-content`, replace both spec-file examples with the designated writing 
 - Lane:
   - path roots:
   - dependencies:
+  - owning role:
   - validation evidence:
   - evaluator ownership:
 

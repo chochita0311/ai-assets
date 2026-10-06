@@ -142,6 +142,8 @@ For a dedicated workflow context:
 - read the file before scanning other sources
 - preserve its source inventory, decisions, and handoff unless newer evidence supersedes them
 
+Read persisted review evidence with its session, date, and reconciliation scope. Preserve it as history and use the [Reconciliation Approval Gate](../SKILL.md#reconciliation-approval-gate) to establish current-session authority.
+
 ### 7. Build The Source Inventory
 
 For each source needed for the current decision, record:
@@ -149,7 +151,7 @@ For each source needed for the current decision, record:
 - id
 - type and location
 - role
-- freshness
+- freshness and observation date or evidence window
 - owner or update path
 - source relationships when dependencies matter
 
@@ -189,6 +191,8 @@ If the target is a dedicated workflow context:
 
 - update the source inventory, reconciliation notes, decisions, drift watchlist, sync status, and handoff
 - keep temporary investigation detail out unless it affects future decisions
+
+When persisting reconciliation review evidence, retain the approval mode, user review status, review basis, and downstream blockers with the review session, date, and reconciliation scope. Preserve earlier records when a later review is recorded; mark unavailable historical details as unknown rather than inventing them. Record source checks and deltas as dated observations, not as checks from "this session."
 
 If no existing target is resolved:
 
@@ -281,11 +285,13 @@ Use `consolidate` when context was written to the wrong location or several cand
 4. merge only supported material into the owning canonical artifacts
 5. classify each candidate:
    - `keep`: still owns distinct material
-   - `archive`: useful history but no longer active
+   - `archive candidate`: useful history but no longer active
    - `delete candidate`: fully absorbed temporary or misplaced artifact
-6. show the exact disposition list
-7. archive or delete only after explicit approval for those targets
+6. show the exact disposition list, including source targets, proposed actions, and proposed archive destinations when known
+7. archive or delete only after explicit approval of the exact source target and action, including the exact destination for an archive
 8. rerun link and entrance-map checks after cleanup
+
+When recording disposition status, distinguish `proposed`, `approved`, and `applied`; use `applied` only after the approved operation and its checks succeed.
 
 Never delete a working note merely because it is not canonical.
 
@@ -325,4 +331,4 @@ Never delete a working note merely because it is not canonical.
 
 - Symptom: temporary-looking files are deleted immediately after a merge.
 - Cause: consolidation disposition was not separated from destructive cleanup.
-- Fix: produce an exact keep/archive/delete-candidate list and wait for approval.
+- Fix: produce an exact keep/archive-candidate/delete-candidate list and wait for approval of each cleanup source target and action, including the exact archive destination.

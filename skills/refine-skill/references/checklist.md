@@ -14,6 +14,8 @@ Use this final pass in both modes. Answer yes or no; use not applicable with a r
 - Are no-change decisions supported, core content and working behavior preserved, and rules assigned to actual owners without imposing a fixed file layout?
 - Are affected examples, metadata, templates, and executable resources aligned, with applicable static and resource checks completed or their gaps named?
 - Do reported comparisons identify relevant revision, input, model, tool, and context differences and any author intervention?
+- Was the effective instruction set, including inherited or cached guidance, checked before treating a producer as a revision-isolated control?
+- Is every factual acceptance check supported by evidence available to the compared producers, with input gaps kept separate from output failures?
 - Does each claimed forward-test or rerun contain an actual task execution, with independence and comparability stated accurately?
 - Where behavior is claimed improved, are the original failure and relevant successful controls checked, including authorized completion when restrictions changed?
 - Are invocation changes checked against realistic intended and out-of-scope requests, or explicitly left as an evidence gap?

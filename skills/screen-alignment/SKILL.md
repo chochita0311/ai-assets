@@ -115,9 +115,11 @@ Browser automation is optional. Use it when rendered comparison, screenshot capt
 
 ## Expected Result
 
-A successful pass should:
+A successful implementation pass (`match`, `adapt`, or `extend`) should:
 
 - make current screen read materially closer to target when a target exists
 - keep new or revised areas native when no exact target exists
 - preserve constitutional rules and avoid accidental redesign
 - leave no temporary parity-inspection debris behind
+
+For `reframe`, a successful pass stops implementation and reframes the task as redesign, constitution revision, or a narrower constitution-preserving adaptation.

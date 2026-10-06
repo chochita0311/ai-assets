@@ -105,8 +105,8 @@ Use when several context candidates or misplaced temporary files cover the same 
 
 - Select the canonical target before merging.
 - Compare candidates and preserve unique supported facts, decisions, provenance, and unresolved questions.
-- Classify each non-canonical artifact as `keep`, `archive`, or `delete candidate`.
-- Delete or archive files only when the user explicitly approves those exact targets.
+- Classify each non-canonical artifact as `keep`, `archive candidate`, or `delete candidate`.
+- Delete or archive files only when the user explicitly approves the exact source targets and actions, including the exact destination for an archive.
 
 ## Canonical Target Resolution
 
@@ -176,6 +176,8 @@ Read [references/method.md](references/method.md) for detailed path resolution, 
 | `optional` | Continue without another response when the sources align and no new material assumption or decision needs review. Otherwise pause for explicit confirmation. | `not-required` when the condition holds; otherwise `pending`, then `confirmed` |
 | `skip` | Present the result and continue the already-authorized downstream task without a separate reconciliation confirmation. Preserve unresolved claims and identify any assumptions used. | `skipped`, never `confirmed` solely because the gate was waived |
 
+Persisted review modes, statuses, and supporting evidence describe the dated reconciliation that produced them; they do not select a later session's mode or confirm its reconciliation. Keep them as historical review records with session, date, and scope. An unchanged confirmation already given in the current session remains valid within its confirmed scope.
+
 These modes control only reconciliation review. None grants missing creation, deletion, publication, or downstream-task authority, resolves an ambiguous required target, or permits guessing a decision needed for safe execution. If such a blocker remains, stop the affected work and report it separately from the review status. Reassess a materially changed reconciliation before continuing; a previous confirmation does not cover a changed decision.
 
 ## Output Contract
@@ -189,11 +191,11 @@ Report:
 - proposed target and target kind when new persistence is recommended
 - resolved context home and namespace when used
 - canonical target and target kind, or `unresolved`
-- sources checked and meaningful deltas
+- sources checked with observation dates or evidence windows and meaningful deltas
 - conflicts, open questions, and working assumptions
 - files updated
 - consolidation disposition when relevant
-- approval mode, user review status, and any independent downstream blocker
+- current-session approval mode, user review status, and any independent downstream blocker
 - next-session handoff
 
 Do not claim persistence when only a session summary was produced.

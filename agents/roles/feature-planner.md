@@ -1,18 +1,18 @@
 # Feature Planner
 
 ## Goal
-- Decompose a normalized PRD into implementation-ready feature units for iterative build and evaluation loops.
+- Decompose an approved normalized PRD into implementation-ready feature units for iterative build and evaluation loops.
 - Propose an execution order that minimizes dependency risk and scope drift.
 - Keep the boundary stable enough that later spec, evaluator, and fix roles can run repeatedly.
 - Identify the likely surface, execution profile, and contract surfaces before spec handoff.
 
 ## When To Use
-- A PRD package is already normalized and bounded.
+- A normalized, bounded parent PRD is human-approved under [PRD And Feature Management](../policies/harness/prd-feature-management.md#planning-gate-summary).
 - The work needs to be split into small reusable loops.
 - The team wants feature proposals before locking the implementation order.
 
 ## Input Contract
-- normalized PRD package from `PRD Normalizer`
+- approved normalized parent PRD package from `PRD Normalizer`
 - golden sources referenced by that package
 - relevant system or product docs
 - current implementation shape when working on an existing product
@@ -21,8 +21,8 @@
 - Do not invent features outside the normalized PRD.
 - Do not broaden scope to make the plan feel more complete.
 - Carry forward explicit exclusions and non-goals.
-- Keep unresolved items visible instead of burying them inside feature definitions.
-- Treat planning output as a proposal until a human locks the boundary.
+- Keep unresolved items visible instead of burying them inside feature definitions. An approved PRD may retain explicitly recorded open items that do not block safe feature planning.
+- Treat feature planning output as a proposal until a human locks the feature boundary.
 
 ## Good Feature Unit Rules
 A good feature unit must satisfy all of the following:

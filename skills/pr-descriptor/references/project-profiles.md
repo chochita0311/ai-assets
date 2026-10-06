@@ -100,7 +100,7 @@ Emphasize:
 - Deprecation and upgrade paths
 - Package, cross-version, and integration validation actually performed
 
-Add `Migration` for breaking or deprecating changes. Add `Impact` for consumer-visible behavior.
+Add `Migration` for breaking or deprecating changes that require a one-time consumer transition. Add `Impact` for consumer-visible behavior.
 
 ## Dependency and security
 
@@ -162,7 +162,7 @@ Include exact endpoints, environment identifiers, mount paths, or configuration 
 Require or strengthen conditional sections when any trigger applies:
 
 - Require `Impact` for user-visible behavior, public contracts, permissions, performance, cost, availability, security, or compatibility
-- Require `Migration` for schema, state, data, public API, one-time configuration cutovers, or consumer transitions; a configuration file change alone does not trigger it
+- Require `Migration` only for actual one-time transitions involving schema, state, data, public APIs, configuration cutovers, or consumers; an ordinary compatible schema, API, or configuration edit alone does not trigger it
 - Require `Deployment and Rollback` for ordered rollout, runtime configuration, infrastructure, data changes, artifact publication, feature flags, or recovery work
 - Require `Screenshots` for visible UI changes with available visual evidence
 - Require `Review Guide` for large diffs, mixed concerns, generated files, vendor updates, or sequence-sensitive review
