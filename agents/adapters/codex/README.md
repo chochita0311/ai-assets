@@ -5,24 +5,24 @@
 - Install common code quality guidance that uses project rules, actual versions, and existing quality tools across personal sessions.
 - Adapt the shared competence-first delegation policy to a personal Codex runtime.
 - Keep stable role names separate from replaceable model bindings.
-- Provide installable custom-agent files and a model-neutral managed section for the global Codex `AGENTS.md`.
-- Provide reusable personal guidance and generic environment and machine templates for agent-led import.
+- Provide installable custom-agent files and install the shared, model-neutral managed regions into the global Codex `AGENTS.md`.
+- Import applicable personal guidance and generic environment and machine templates from the shared instruction library.
 - Provide an optional operator-context recognition hook without moving repo-local continuity policy into the personal runtime.
 - Provide a root-only, read-only lifecycle audit and a terminal-native weekly runner without making the audit a source of replacement authority.
 
 ## Ownership
-- [Response Clarity And Meaning Preservation](../../policies/response-clarity.md) owns the platform-neutral response policy, preservation checks, examples, and sources.
-- [Code Quality](../../policies/code-quality.md) owns platform-neutral guidance on project conformity, simplicity, official documentation, and verification evidence.
+- [Response Clarity And Meaning Preservation](../../policies/baseline/response-clarity.md) owns the platform-neutral response policy, preservation checks, examples, and sources.
+- [Code Quality](../../policies/baseline/code-quality.md) owns platform-neutral guidance on project conformity, simplicity, official documentation, and verification evidence.
 - [Competence-First Delegation](../../policies/harness/competence-first-delegation.md) owns the platform-neutral policy.
 - [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md) owns detailed continuity triggers, output semantics, and non-interference rules.
 - [Operator Briefing Template](../../templates/operator-briefing.md) owns the non-persistent response scaffold.
 - [custom-agents/](custom-agents/) owns the canonical Codex custom-agent files and their concrete model bindings.
 - [profiles/](profiles/) owns canonical non-interactive root-agent profiles and their concrete model bindings.
-- [global-agents-managed-section.md](global-agents-managed-section.md) owns the installable, model-neutral entrance-policy blocks: self-contained response and code quality baselines, delegation routing, and conditional operator-context recognition. It does not install the detailed repository continuity policy.
-- [Personal Codex Instructions](instructions/README.md) is the reference library and import guide for common, environment-specific, and PC-specific guidance. Its personal preferences are distinct from the managed adapter blocks.
+- [Shared runtime instructions](../../instructions/standard.md) are the generated, model-neutral delivery bundle: self-contained response and code quality baselines, delegation routing, and conditional operator-context recognition. Policy documents own its marked rules; this adapter owns Codex installation. The bundle does not install the detailed repository continuity policy.
+- [Shared Local AI Instructions](../../instructions/README.md) owns bundle generation and the reference library and import guide for personal, environment-specific, and PC-specific guidance. Its selectable personal preferences are distinct from the managed common blocks.
 - [model-binding-audit.md](model-binding-audit.md) owns the read-only, CLI-first model-lifecycle audit contract.
 - [run-model-binding-audit.sh](scripts/run-model-binding-audit.sh) owns the canonical terminal runner. [The LaunchAgent template](launchd/model-binding-audit.template.plist) and [its renderer](scripts/render-model-binding-launchagent.py) define portable schedule behavior; generated machine-local plists own only installation paths and approved local settings.
-- Shared adapter blocks and copied runtime TOMLs under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
+- Shared instruction blocks and copied runtime TOMLs under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
 
 ## Official Codex References
 - [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, sandbox overrides, and delegation behavior
@@ -39,13 +39,7 @@ Recheck these references before adopting a future configuration-format change; c
 ```text
 agents/adapters/codex/
 ├── README.md
-├── global-agents-managed-section.md
 ├── model-binding-audit.md
-├── instructions/
-│   ├── README.md
-│   ├── general.md
-│   ├── environment.template.md
-│   └── machine.template.md
 ├── custom-agents/
 │   ├── evidence_scout.toml
 │   └── bounded_verifier.toml
@@ -60,17 +54,17 @@ agents/adapters/codex/
 
 ## Source-To-Target Mapping
 
-| Canonical source | Runtime target |
+| Repository asset | Runtime target |
 |---|---|
-| `global-agents-managed-section.md` | managed block inside `<codex-home>/AGENTS.md` |
-| applicable guidance from `instructions/` | selected rules merged into the destination `AGENTS.md` after comparison |
+| `../../instructions/standard.md` (generated from policy owners) | managed block inside `<codex-home>/AGENTS.md` |
+| applicable guidance from `../../instructions/` | selected rules merged into the destination `AGENTS.md` after comparison |
 | `custom-agents/evidence_scout.toml` | regular-file copy at `<codex-home>/agents/evidence_scout.toml` |
 | `custom-agents/bounded_verifier.toml` | regular-file copy at `<codex-home>/agents/bounded_verifier.toml` |
 | `profiles/model-binding-audit.config.toml` | regular-file copy at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
 | `launchd/model-binding-audit.template.plist` | rendered machine-local file at `~/Library/LaunchAgents/<approved-label>.plist` after approval; never a symlink to the template |
 
-Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared adapter policy only through its marked regions; use the [personal instruction import guide](instructions/README.md) for other applicable guidance. Install approved TOMLs individually as regular-file copies and keep the target `agents/` directory locally owned so unrelated local agents can coexist.
+Preserve unrelated personal content in the global `AGENTS.md` and `config.toml`. Merge shared runtime policy only through its marked regions; use the [personal instruction import guide](../../instructions/README.md) for other applicable guidance. Install approved TOMLs individually as regular-file copies and keep the target `agents/` directory locally owned so unrelated local agents can coexist.
 
 The audit runner executes from its canonical path under `scripts/`; it is not copied into a runtime home.
 
@@ -88,7 +82,7 @@ When a named worker has a different binding from the primary agent, invoke it wi
 
 Use [Controlled Migration After An Alert](model-binding-audit.md#controlled-migration-after-an-alert) as the single replacement procedure. Candidate evaluation, replacement approval, and post-install verification are distinct steps; approval to review a candidate does not authorize changing a live binding.
 
-No `AGENTS.md` regeneration or merge is required for a model-only change. Update the managed section only when the durable routing policy itself changes.
+No shared-bundle regeneration or `AGENTS.md` merge is required for a model-only change. Update the owning policy and regenerate the bundle only when the durable routing policy itself changes.
 
 Treat any of the following as a binding-review trigger:
 
@@ -109,7 +103,7 @@ A custom-agent loader reported `Too many levels of symbolic links (os error 62)`
 
 For an approved installation:
 
-1. Merge only the approved marked blocks from the managed section into each distinct target `AGENTS.md`. Treat response-clarity, code-quality, competence-routing, and operator-context as independent managed regions. For baseline-only installation, follow [Baseline Installation](#baseline-installation); worker and profile installation steps apply only when those assets are also in scope. For personal guidance, compare the destination with [Personal Codex Instructions](instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
+1. Merge only the approved marked blocks from the [shared bundle](../../instructions/standard.md) into each distinct target `AGENTS.md`. Treat response-clarity, code-quality, competence-routing, and operator-context as independent managed regions. For baseline-only installation, follow [Baseline Installation](#baseline-installation); worker and profile installation steps apply only when those assets are also in scope. For personal guidance, compare the destination with [Shared Local AI Instructions](../../instructions/README.md) and import the applicable rules. If one Codex home's `AGENTS.md` is already a symlink to another, update the resolved owner only once.
 2. Create a locally owned target `agents/` directory when absent. Reconcile any existing directory symlink before installing worker files.
 3. For each approved custom-agent or root-profile TOML, inspect the canonical source and destination. Resolve the ownership of any existing file or link and any local differences before replacement; do not overwrite unresolved changes. Capture the prior destination state for recovery, including file content, symlink target, or absence.
 4. Stage a byte-for-byte copy of the canonical TOML in the destination directory, recheck the source and destination for concurrent changes, and atomically replace only the intended destination entry. When migrating a symlink, replace the link itself; never copy through it or modify its source.
@@ -157,12 +151,12 @@ Do not add an automatically invoked code-writing worker until real runs show tha
 
 ## Future Extensions
 - Add an optional Codex config fragment only when a shared concurrency or hook rule has been proven necessary.
-- Add a sync script only after merge behavior for pre-existing personal files is explicitly specified and tested.
+- Add a runtime synchronization script only after merge behavior for pre-existing personal files is explicitly specified and tested. Repository bundle generation does not synchronize a personal runtime.
 - Keep role contracts stable when replacing model generations.
 
 ## Baseline Installation
 
-The `response-clarity` and `code-quality` blocks use the same installation procedure and can be installed independently.
+The `response-clarity` and `code-quality` blocks in the [shared bundle](../../instructions/standard.md) use the same installation procedure and can be installed independently. Before an installation or update, run `python3 scripts/render_global_agent_instructions.py --check` from the repository root and resolve stale or invalid source regions before merging. Regeneration alone does not authorize a local installation.
 
 For an authorized baseline installation or update:
 
@@ -174,23 +168,11 @@ For an authorized baseline installation or update:
 
 ## Response Clarity
 
-The `response-clarity` block applies the [shared response policy](../../policies/response-clarity.md) without a skill command or repository-local dependency. Its first priority is preserving substantive meaning; readability changes must not remove conditions, evidence, alternatives, uncertainty, or necessary explanations. Sources and review examples remain in the shared policy rather than expanding every runtime's instruction load.
-
-For substantive source synthesis, the installed block keeps the [source-first preservation pass](../../policies/response-clarity.md#claim-review-and-clarification) self-contained: inventory complete claims, resolve scope, preserve each subject and condition, draft and reread, then compare actual final passages with their sources. The block also requires a readability check after preservation and another preservation check after editing. Working records stay in task-owned private scratch with local file tools; simple answers do not require them. Keep records through verification and any active evaluation or recovery, then remove them.
-
-The shared policy owns the detailed method and [evaluation criteria](../../policies/response-clarity.md#validation-and-evidence-limits); this adapter owns installation. The review is executed by the agent. It is not an enforced runtime interception or a guarantee that every omission is detected.
-
-No worker, model, profile, runtime hook, or external summarizer is required. The mandatory rules are in the installed block itself; following a link or reading this checkout is not needed before each answer. The adapter is the distribution mechanism, not a separate post-processing stage.
-
-The response baseline and operator-context recognition block can coexist. Keep the continuity block's trigger and repetition rules: it owns when an additional briefing is useful, while the response block governs how the resulting answer preserves meaning. A repository with only the harness retains its existing continuity and evidence contracts; installing the global baseline is separate and is not part of harness export or refresh.
+Install the `response-clarity` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#response-clarity) owns its self-contained delivery contract, preservation workflow, harness coexistence, and evidence limits; the [policy](../../policies/baseline/response-clarity.md) owns the rules and detailed method.
 
 ## Code Quality
 
-The `code-quality` block applies the [shared code quality policy](../../policies/code-quality.md) to code work across sessions. Its complete decision rules are in the installed block; using them requires no skill invocation, repository harness, or access to this checkout.
-
-Project rules, contracts, actual versions, and existing quality tools determine implementation choices. The block guides simplicity, scoped legacy improvements, version-aware official documentation, and honest verification. Maintain language and tool specifics in their owning projects and official sources. The adapter distributes instructions through global `AGENTS.md`; it adds no runtime hook or automatic lint or test runner.
-
-Use [Baseline Installation](#baseline-installation) to merge only the approved block. A source update requires an authorized synchronization into each intended runtime owner; installed blocks do not synchronize themselves. Static equality establishes installation, while improvement over the prior baseline remains unproven until representative code tasks are compared.
+Install the `code-quality` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#code-quality) owns its cross-session delivery contract and synchronization boundary; the [policy](../../policies/baseline/code-quality.md) owns the code-work decision rules and evaluation limits.
 
 ## Operator Context Continuity
 

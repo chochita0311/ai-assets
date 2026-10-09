@@ -194,3 +194,18 @@ Before emitting a briefing or receipt, confirm:
 - unchanged information is not repeated;
 - human action is explicit as `now`, `later at a named trigger`, or `none`;
 - no permanent by-product was created merely for presentation.
+
+## Runtime Recognition Instructions
+
+This marked section is the canonical conditional recognition hook for the common local-AI instruction bundle. The shared instruction package owns generation and checking; adapters own global installation. Repository adoption owns installation of the detailed policy and response template as repository-local assets. A global hook alone must not synthesize or install them.
+
+<!-- ai-assets:operator-context-continuity:start -->
+- The user does not need to invoke a briefing command. Detect orientation requests, new or resumed canonical targets, handoffs, planning returns, material direction changes, partial-evidence review, and meaningful completion boundaries from normal conversation.
+- When the current repo exposes the detailed operator-briefing policy, load it only after such a trigger. If no resolvable policy exists, do not synthesize a substitute or create continuity artifacts; keep the normal response unchanged.
+- On target activation or resumption, provide at most one self-contained Work Briefing for the unchanged work episode only when prior context materially affects understanding or execution. Explain the objective, causal history, current boundary, next action, and human review need without requiring the user to open links.
+- Do not repeat unchanged briefing content on same-target follow-ups. Emit a Direction Alert only for a material conflict or change.
+- Emit a Review Receipt only when direction, assumptions, open points, evidence scope, human review, blocking, handoff, or another durable continuity concern materially changed.
+- Use plain-language names before IDs, define material internal terms, and treat links as audit evidence rather than a substitute for explanation.
+- Briefings and receipts are projections only. They must not create state, alter routing or approvals, duplicate canonical facts, or create permanent artifacts solely for presentation.
+- If no relevant context or meaningful delta exists, remain silent and continue the normal response.
+<!-- ai-assets:operator-context-continuity:end -->

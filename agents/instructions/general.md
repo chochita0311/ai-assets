@@ -86,7 +86,7 @@ they own, treat the request as authorization to persist that text.
 
 ## Go Build Cache Management
 
-- For ordinary Go build and test commands, do not set a task-specific `GOCACHE`; use the configured shared cache path reported by `go env GOCACHE`.
+- For ordinary Go build and test commands, including repeated verification runs, do not set a task-specific `GOCACHE`; use the configured shared cache path reported by `go env GOCACHE`.
 - When isolated verification requires a temporary `GOCACHE`, create a task-owned directory and arrange for its automatic removal when the task ends. Retain it after failure only when needed for diagnosis, and remove it after the investigation finishes.
-- When repeated verification runs benefit from cache reuse, use one stable, purpose-scoped cache path across those runs and retain it between runs. Remove it only after that purpose ends and the safety conditions below are met.
+- When isolated verification requires a temporary `GOCACHE` and repeated runs benefit from cache reuse, use one stable, task-owned, purpose-scoped cache path across those runs and retain it between runs. Repetition alone does not justify a temporary cache for ordinary commands. Remove the isolated cache only after that purpose ends and the safety conditions below are met, subject to the task-end cleanup and diagnosis-retention rules above.
 - Remove a custom Go cache or temporary build output only when its ownership is known and no active or concurrent process may still use it. If ownership or active use is uncertain, preserve the path and report it instead of deleting it.

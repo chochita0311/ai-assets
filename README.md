@@ -4,8 +4,9 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
-- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, runtime adapters, and execution templates
-- [agents/policies/](agents/policies/): reusable response and code quality guidance, harness governance, and evaluation assets shared with the agent package
+- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, shared instructions, runtime adapters, and execution templates
+- [agents/policies/](agents/policies/README.md): session-wide defaults under `baseline/`, harness governance under `harness/`, and evaluation criteria under `review/`
+- [agents/instructions/](agents/instructions/README.md): generated shared local-AI instructions and selectable personal, environment, and machine guidance
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
 - [scripts/](scripts/): repository-level validation and maintenance tools shared across asset packages
 
@@ -14,9 +15,9 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
 - Review [skills/skill-followups.md](skills/skill-followups.md) for durable unresolved skill follow-up work across the repository.
 - Read [agents/README.md](agents/README.md) for the shared agent package.
-- Use [Personal Codex Instructions](agents/adapters/codex/instructions/README.md) as a reference for agent-led review and import of common, environment-specific, and PC-specific guidance.
-- Use [Response Clarity And Meaning Preservation](agents/policies/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; install it through the Codex adapter without requiring a repository harness or skill.
-- Use [Code Quality](agents/policies/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification; install it through the Codex adapter.
+- Use [Shared Local AI Instructions](agents/instructions/README.md) for shared-bundle generation and agent-led import of applicable personal, environment-specific, and PC-specific guidance. Runtime adapters own local installation.
+- Use [Response Clarity And Meaning Preservation](agents/policies/baseline/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; its generated runtime rules work without a repository harness or skill.
+- Use [Code Quality](agents/policies/baseline/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification. The Codex adapter installs either baseline for Codex.
 - Use [agents/ADOPTION-GUIDE.md](agents/ADOPTION-GUIDE.md) when exporting or refreshing the agent package in a consuming repo.
 - Read [pets/README.md](pets/README.md) before adding or changing a pet package.
 - Run [validate_skill_packages.py](scripts/validate_skill_packages.py) after changing a skill package.
@@ -44,6 +45,21 @@ Use a bundle only when the named skills are actually distributed together:
   }
 }
 ```
+
+## Validate Shared Agent Instructions
+
+Edit the marked rules in their policy owners, then regenerate and check the
+shared bundle before distributing it:
+
+```sh
+python3 scripts/render_global_agent_instructions.py
+python3 scripts/render_global_agent_instructions.py --check
+python3 -m unittest discover -s scripts -p 'test_render_global_agent_instructions.py'
+```
+
+Generation changes the repository artifact only. Updating a local runtime is a
+separate merge that preserves its existing instructions and settings; see the
+[shared instruction guide](agents/instructions/README.md).
 
 ## Skill Catalog
 - [design-plan](skills/design-plan/SKILL.md): plan multi-screen design consistency and reconciliation work

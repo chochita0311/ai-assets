@@ -108,6 +108,11 @@ Use this mapping when exporting from the shared package into a consuming repo:
 
 The harness-policy wildcard includes `operator-briefing-and-review-receipts.md`. Export that policy and the operator briefing template whenever roles or flows are exported so their continuity references remain complete.
 
+The `policies/baseline/` sources and shared `instructions/` package are outside
+this export. Marked runtime sections inside exported harness policies remain
+policy text; exporting them does not merge any global instruction file. Shared
+bundle generation and runtime installation are separate from harness adoption.
+
 Do not export `harness-import-manifest.example.json` as a managed shared file. Use it to initialize the consuming repo's own `docs/agents/harness-import-manifest.json` only after the fresh export and its finalization checks succeed.
 
 ## Exported Link Rewriting

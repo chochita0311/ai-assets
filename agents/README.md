@@ -37,13 +37,18 @@
 - [agents/profiles/infra-devtool.md](profiles/infra-devtool.md): infrastructure, tooling, scripts, CI, and local workflow work
 - [agents/profiles/docs-content.md](profiles/docs-content.md): documentation, content, policy, guide, and information-architecture work
 
+## Shared Instructions Package
+- [agents/instructions/README.md](instructions/README.md): generate common local-AI instructions from their policy owners and selectively import personal, environment, and machine guidance
+- [agents/instructions/standard.md](instructions/standard.md): generated, self-contained response and code quality baselines, delegation rules, and conditional operator-context recognition
+- [agents/policies/README.md](policies/README.md): ownership map for `baseline/`, `harness/`, and `review/` policies
+
 ## Runtime Adapters Package
-- [agents/adapters/codex/README.md](adapters/codex/README.md): reuse personal instruction references, and install meaning-preserving response defaults, common code quality guidance, competence-first delegation, named worker and profile bindings, an optional operator-context recognition hook, and a read-only model-lifecycle audit into a personal Codex runtime
-- Keep portable response, code quality, delegation, and continuity policy outside adapters; adapters own platform-specific fragments, concrete model bindings, installation guidance, and platform-specific audit, runner, and schedule assets.
+- [agents/adapters/codex/README.md](adapters/codex/README.md): install the shared instruction bundle and applicable personal guidance, named worker and profile bindings, and a read-only model-lifecycle audit into a personal Codex runtime
+- Keep portable policies and shared instructions outside adapters. Adapters own platform-specific discovery and installation, concrete model and capability bindings, and platform-specific audit, runner, and schedule assets. The current packaged adapter is Codex; another runtime can reuse the common instructions through its own verified adapter.
 
 ## Related Shared Docs
-- [agents/policies/response-clarity.md](policies/response-clarity.md): session-wide meaning preservation, reader-oriented composition, sources, and the boundary between global response defaults and repository harness behavior
-- [agents/policies/code-quality.md](policies/code-quality.md): session-wide decision guidance for project conformity, simplicity, version-aware documentation, and verification evidence
+- [agents/policies/baseline/response-clarity.md](policies/baseline/response-clarity.md): session-wide meaning preservation, reader-oriented composition, sources, and the boundary between global response defaults and repository harness behavior
+- [agents/policies/baseline/code-quality.md](policies/baseline/code-quality.md): session-wide decision guidance for project conformity, simplicity, version-aware documentation, and verification evidence
 - [agents/policies/harness/competence-first-delegation.md](policies/harness/competence-first-delegation.md): platform-neutral admission, capability, fallback, context-transfer, and final-ownership rules for delegated work
 - [agents/policies/harness/prd-feature-management.md](policies/harness/prd-feature-management.md): planning-governance rule for PRDs, features, approval, and traceability
 - [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
@@ -65,7 +70,7 @@
 
 Long-running imported harnesses can provide automatic, low-noise user context through [Operator Briefing And Review Receipts](policies/harness/operator-briefing-and-review-receipts.md). The policy adds explanatory Work Briefings and Review Receipts at relevant target and lifecycle boundaries without adding a source of truth, workflow stage, status, or approval gate.
 
-Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persistent output scaffold. Repository-local adoption owns the detailed policy and template; the Codex adapter carries only a small recognition hook and remains silent when the current repo does not expose the policy.
+Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persistent output scaffold. Repository-local adoption owns the detailed policy and template; the shared instruction bundle carries only a small recognition hook, installed through a runtime adapter, which remains silent when the current repo does not expose the policy.
 
 ## Consumer Repo Placement
 - This package is a shared source set, not a consumer repo by itself.

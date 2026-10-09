@@ -9,7 +9,8 @@
 ## Codebase Map
 - Scan the repo root before assuming structure.
 - [agents/](agents/) holds reusable harness roles, flows, operations, profiles, policies, and templates.
-- [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installable policy fragments derived from shared policy.
+- [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installation procedures.
+- [agents/instructions/](agents/instructions/README.md) holds the generated shared local-AI instruction bundle and selectable personal guidance and templates.
 - [agents/templates/](agents/templates/) holds shared planning, execution, evaluation, and non-persistent response scaffolds for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
 - [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets; use [Pet Package Guide](pets/README.md) for the package contract.
@@ -20,20 +21,22 @@
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.
 - Within each skill package, `templates/` holds output scaffolds.
-- [agents/policies/](agents/policies/) holds shared response and code quality guidance, harness governance, and evaluation governance.
+- [agents/policies/](agents/policies/README.md) holds session-wide defaults under `baseline/`, workflow governance under `harness/`, and evaluation criteria under `review/`.
 
 ## Source Of Truth
 - Keep `AGENTS.md` short and operational.
 - Keep [README.md](README.md) as the overview and navigation doc for humans entering the repo.
 - Keep shared harness and evaluation governance under [agents/policies/](agents/policies/) rather than scattering it across role files.
 - Keep platform-neutral delegation rules under [agents/policies/](agents/policies/) and concrete runtime model bindings under [agents/adapters/](agents/adapters/).
+- Keep marked runtime rules in their policy owners; generate the shared instruction bundle rather than editing a second copy.
 - Keep the repository-wide skill acceptance bar in [Skill Quality Guide](skills/SKILL-QUALITY.md).
 - Keep repository-wide package-name and named cross-skill-reference validation in [validate_skill_packages.py](scripts/validate_skill_packages.py); the quality guide remains normative, and other applicable static checks remain separate.
 - Let each skill package own its own domain instructions; do not duplicate skill-local rules in `AGENTS.md`.
 
 ## Working Rules
 - Treat this as a public repository. Use placeholders or synthetic values in portable sources, examples, and tests; keep real per-user paths, internal hosts, and credentials outside the checkout.
-- Use [Personal Codex Instructions](agents/adapters/codex/instructions/README.md) when comparing reusable guidance with a destination `AGENTS.md` for import.
+- Use [Shared Local AI Instructions](agents/instructions/README.md) when comparing reusable guidance with a destination global instruction file for import.
+- After changing marked policy rules, run `python3 scripts/render_global_agent_instructions.py` and `python3 scripts/render_global_agent_instructions.py --check`; generation does not install personal runtime files.
 - Prefer strengthening an existing skill contract over adding parallel guidance.
 - Prefer strengthening the shared harness package over keeping divergent project-local copies once the shared version is proven stable.
 - Follow [Skill Quality Guide](skills/SKILL-QUALITY.md) for package anatomy, file-role boundaries, evidence maturity, and distribution lifecycle.
