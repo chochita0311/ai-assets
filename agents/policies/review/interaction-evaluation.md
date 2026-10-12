@@ -116,6 +116,14 @@
 - Preserving the outer document position can still be intentional when it keeps the scope control or current task anchor stable; it is not automatically equivalent to inheriting the destination's local result state. Full-page versus partial navigation is an implementation detail and does not decide this contract by itself.
 - Evaluators should exercise the transition after scrolling, across multiple scope choices, with shorter and longer destinations, and through back, forward, refresh, and direct entry as applicable. Verify each scroll container and state owner separately.
 
+#### Preference Scope And Lifetime
+
+- When a product promises to remember a preference, distinguish persistent user intent from navigation state whose lifetime is transient under the approved contract, such as hover or a temporary disclosure. Define what is remembered, its scope and lifetime, and the storage boundary rather than inferring persistence from the current screen.
+- Evaluate the promise across applicable refresh, new-tab, browser reopen, application or service restart, site-data removal, and cross-client cases. A preference scoped to one browser need not follow another client; an account-wide promise needs evidence at that boundary.
+- Keep an absent preference distinct from an explicitly empty or cleared choice when they have different meanings. Defaults, migration, and precedence between saved values, current input, and legacy state should follow the approved contract without silently restoring a choice the user removed.
+- Confirmation should distinguish pending, saved, and failed persistence. A queued request is still pending until the owning storage boundary confirms success; failure should preserve correctable intent and offer the approved retry, rollback, or reset path.
+- Evaluators should observe the remembered value after the claimed lifecycle boundary and compare absent, explicit-empty, migrated, pending, failed, and recovered states. A fresh browser context establishes client isolation; it does not establish an actual browser-process restart or an application or service restart. Storage may be local or shared according to the product contract; these checks do not require a server database.
+
 #### Equivalent Scope Consistency
 
 - A problem reported for one tab, root, category, collection, or similar scope option should be traced to the shared control and state owner before it is treated as data-specific.
@@ -154,6 +162,13 @@
 - When a nested selection reveals or replaces a meaningful content region, focus and scroll should move to the most specific newly selected destination that establishes context, not to a generic page heading or shared ancestor.
 - The destination should remain visible below sticky shell regions and use the nearest reachable document position when the exact offset cannot be attained near a scroll boundary.
 - Click-driven selection, back or forward restoration, and initial direct entry should have explicit, separately tested focus and scroll behavior rather than sharing one unconditional jump routine.
+
+#### Temporary Inspection And Committed Selection
+
+- When the approved surface supports both temporary inspection and committed selection, define their identities, action destinations, visible selection, and restoration separately. Inspection must not silently overwrite the committed item or unexpectedly move the camera or reflow the reading surface, including at narrow widths.
+- Evaluators should commit item A, inspect item B through hover or the approved equivalent, then leave B. Check which identity remains held, what each available action would target, how selection is shown, and which reading state returns. An inspection action must not operate on a different item merely because the committed selection is unchanged.
+- Dismissal followed by a rerender or relayout under a stationary pointer must not immediately reopen inspection solely because an item moved beneath that pointer. Reactivation and release should follow the approved exit, reentry, focus, or explicit-activation contract.
+- Exercise the supported mouse, keyboard, and touch activation, release, dismissal, and restoration paths, including repeated or superseded inspection. The approved number of panels and eager or lazy data loading remain product choices; evaluate pending, failed, and stale-response behavior under the existing readiness contract rather than requiring a second card or forbidding deferred fetching.
 
 #### Breakpoint Control-State Compatibility
 
@@ -261,6 +276,10 @@
 - Pointer clicks can leave keyboard focus on a trigger; evaluators should test click-then-mouseleave to confirm highlight and expanded states clear unless keyboard focus intentionally remains.
 - Temporary handoff locks used to bridge route transitions should be released once real hover or focus can own the state.
 - Same-route navigation clicks should avoid both reload flicker and stale open or highlighted menu states.
+- When an additional reading panel opens through hover or focus, the trigger, panel, and traversable gap should allow entry, reading, and return without premature dismissal. Define exit from the combined reading region, reentry, and explicit dismissal; a successful trigger hover alone does not establish the handoff.
+- If a grace period bridges the gap, keep it finite and cancel obsolete dismissal on reentry or supersession by another inspection. Test slow traversal, leaving both regions, rapid reentry, and switching triggers. Timing and gap geometry follow the approved interaction rather than a universal delay or corridor shape.
+- Test genuine keyboard entry, focus transfer, and release separately from incidental focus retained after a mouse click. Focus should retain or release the panel according to its actual input ownership and approved reading contract.
+- Users should be able to read, select text, and scroll inside the panel without an invisible gap overlay stealing canvas drag, zoom, or other surrounding input. Verify full approved access through keyboard and touch as well as pointer traversal.
 
 #### Compact Control Menu Placement
 
@@ -290,6 +309,10 @@
 - Ordinary wheel or trackpad scrolling should remain owned by the page or bounded viewport unless the approved modifier or pinch gesture is active. Zoom should preserve the pointer or viewport neighborhood closely enough that users do not lose the content they were inspecting.
 - Rerendered or replaced canvases need one current interaction binding and an explicit reset-or-preserve rule. Render failure and no-script states must retain the approved textual or navigational fallback instead of leaving inert controls.
 - Evaluators should test plain scrolling, modifier gestures, visible buttons, keyboard focus, bounds, reset, fit, repeated replacement, narrow layouts, and unavailable rendering separately.
+- For each approved pan or zoom gesture, declare the affected axes and those that should remain unchanged. Exercise horizontal-only `deltaX`, vertical-only `deltaY`, and combined wheel or trackpad input where supported; a fitted axis or reached edge may legitimately remain still, but must not cause usable movement on the other axis to be dropped. Compare single-axis fit and resize states with the approved preservation contract.
+- Click, drag, and cancellation should have distinct outcomes. Verify the activation boundary, release outside the canvas, and supported cancellation paths so a completed or cancelled drag does not become an unintended item action.
+- When manipulation is explicitly transient rather than a committed edit, release or cancellation should return the affected objects to their original anchors, finish settling, and stop idle animation. Evaluate the approved reduced-motion branch separately; do not apply this return rule to navigation or edits whose changed position is intentionally retained.
+- When Design Evaluation is installed, its `Finite Canvas Coverage And Navigation Bounds` section owns usable-frame geometry, changing content extents, and approved elastic bounds. Evaluate input response against that geometry without imposing one modifier binding on every canvas.
 
 #### In-Place Utility Action Continuity
 

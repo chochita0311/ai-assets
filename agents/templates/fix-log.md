@@ -21,7 +21,7 @@ For `docs-content`, replace the Spec example with the designated writing contrac
 - List the defects being addressed in this fix pass.
 
 ## Changes Applied
-- Summarize the code or contract surfaces changed.
+- Summarize the code, contract, or document surfaces changed.
 
 ## Contract Or Lane Impact
 - Contract surfaces touched:

@@ -7,7 +7,7 @@
 ## When To Use
 - A feature is `approved`.
 - An active spec document or designated docs-content writing contract is concrete enough to build from.
-- The work is ready to enter the code-change loop.
+- The work is ready to enter the implementation loop.
 
 ## Input Contract
 - one approved feature document

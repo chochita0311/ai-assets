@@ -103,6 +103,17 @@
 - For supported input paths, evaluate rendered coverage after wheel or pinch zoom, visible controls, dragging, reset, automatic focusing, animated intermediate states, and resizing. A valid final position does not excuse an uncovered or abruptly corrected intermediate frame. [Technical Canvas Input Ownership](interaction-evaluation.md#technical-canvas-input-ownership) owns gesture and control behavior.
 - Evaluators should exercise minimum zoom, each edge and corner, focus near a boundary, and resize after panning at supported wide and narrow viewports. Observe both the rendered background and its transformed bounds; outer-document overflow checks alone cannot prove canvas coverage.
 - Intentional margins, elastic overscroll, tiled maps, and unbounded canvases follow their own approved contracts. Do not impose finite-image coverage on them or use clipping to hide an unreachable destination.
+- Measure the actual usable frame, including axis or label lanes, open panes, reserved controls, and the rendered content footprint. The nominal element box alone does not establish that a boundary item or its reading target remains visible and reachable.
+- When visible membership, filtering, or pane geometry changes, recompute the relevant content extent and usable space. Preserve the approved anchor, refit, or clamp behavior rather than retaining bounds from a different visible set or silently resetting the view.
+- Check each axis separately after fit and resize. Compare the preserved anchor in a fitted dimension and the available translation range in a still-overflowing dimension against the actual usable frame and approved refit or clamp rule. Gesture response belongs to [Technical Canvas Input Ownership](interaction-evaluation.md#technical-canvas-input-ownership).
+- If bounded elastic overshoot is approved, observe its temporary limit and return to settled bounds on release. The overshoot must not become a persisted navigation position; compare interruption and resizing during the return under the product's contract.
+
+#### Semantic Orientation Across Zoom
+
+- Evaluate semantic orientation separately from geometric fit. Across the full approved visible scope, users should be able to identify the required groups, axes, and relationships and recover the reading context; fitting every box inside the viewport does not establish that coverage.
+- Define which labels are retained, compressed, aggregated, or omitted at minimum zoom, overview, reading recovery, and narrow layouts. Check the approved recovery route for labels and relationships required for reading context rather than silently losing that orientation.
+- Compare text, box, and heading scaling together at the supported levels. Check overlap, clipping, and unintended omission, including a heading that scales differently from its group or a readable label whose surrounding box no longer supports its role.
+- Evaluators should inspect the complete required group, axis, and relationship coverage at overview and exercise the offered reading-recovery path. Font floors, always-visible labels, and uniform shrinking are product choices rather than universal acceptance rules.
 
 #### Image-Backed Surface Foreground Hierarchy
 
@@ -131,6 +142,8 @@
 - Diagnostic, synthetic, fallback, or error records may remain valuable for traceability while being excluded from ordinary analytical presentation when they do not represent the measured concept.
 - Evaluators should confirm that summary, history, composition, coverage, and linked counts for the same measured concept use one coherent eligible set so an excluded record does not leak through a secondary consumer.
 - Hiding background, child, test, or analysis work from an ordinary work inventory does not by itself exclude its consumed resources from accounting. Check each consumer's declared population, including unsuccessful work with observed usage; apply [Adjacent Metric Denominator Clarity](#adjacent-metric-denominator-clarity) when populations differ.
+- Eligibility for a meaningful grouping value is distinct from retention of the record that carries it. Known semantic values, sentinel placeholders, reference-only markers, and unknown values should keep their source-established roles; normalize them in presentation only under a recognized source contract while preserving raw evidence and authority.
+- Evaluators should compare all-known, all-unknown, and mixed populations. An ineligible grouping value must not become a meaningful category merely because its raw string is present, and excluding that value must not silently drop an otherwise retained record. [Nested Collection Hierarchy And Ordering](#nested-collection-hierarchy-and-ordering) owns how eligible and intentionally empty groups are presented.
 
 #### Secondary Metric Explanatory Burden
 
@@ -203,6 +216,14 @@
 - When one category applies to a contiguous run of items, prefer one owning group heading over repeating the same category label in every row. Group boundaries should read more strongly than item separation; repeated row rules should remain lighter or give way to spacing so they do not compete with the semantic grouping. Apply [Single Boundary Ownership](#single-boundary-ownership) where adjacent regions meet.
 - Define ordering independently at each hierarchy level. A stable categorical order may support predictable scanning while source occurrence, chronology, priority, or task order may better preserve meaning within a group; one global sort rule should not be assumed to serve both.
 - Evaluators should compare single- and multi-group states, single- and multi-item groups, intentional empty orientation groups, retained overflow, and narrow layouts. Confirm that pagination or disclosure does not duplicate headings, split boundaries ambiguously, or reorder items against the approved per-level contract.
+- Derive ordinary headings from meaningful eligible grouping values. Sentinel, reference-only, or unknown values should not create a ghost category outside their declared presentation role. Compare all-known, all-unknown, and mixed states so retained ungrouped items are not mistaken for an empty collection. Keep intentionally empty orientation groups only under their approved role; source-specific value recognition follows [Presentation Eligibility Is A Separate Contract](#presentation-eligibility-is-a-separate-contract), while ordering and layout remain governed by the per-level contract.
+
+#### Display Aggregation And Original Records
+
+- When records are aggregated only to reduce display density, preserve their original members, identifiers, true count, and approved individual inspection and action paths. Visual proximity, including a shared day, must not imply a business relationship or ancestry that the source does not establish.
+- Logical selection should remain attached to the original selected record when zoom or regrouping changes its display host or representative. Distinguish member selection from group selection, and compare visible state and action identity before and after aggregation or expansion. [Temporary Inspection And Committed Selection](interaction-evaluation.md#temporary-inspection-and-committed-selection) owns temporary versus committed interaction state.
+- Define the reduction used for each group-level source, pin, and status cue and retain the true member count. A reduced cue should express that summary without implying that every member has the representative's value; original per-member state remains inspectable. Badge glyphs, muted tones, or an any-member-pinned rule are not universal requirements.
+- Evaluators should compare homogeneous and mixed-source, pin, and status groups, individual inspection and actions, changing representatives, and aggregation or expansion while an original member is selected. Check membership and count against the originals rather than accepting the rendered representative as the entire record set.
 
 #### Independent State-Axis Legibility
 
