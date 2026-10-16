@@ -145,6 +145,13 @@
 - Eligibility for a meaningful grouping value is distinct from retention of the record that carries it. Known semantic values, sentinel placeholders, reference-only markers, and unknown values should keep their source-established roles; normalize them in presentation only under a recognized source contract while preserving raw evidence and authority.
 - Evaluators should compare all-known, all-unknown, and mixed populations. An ineligible grouping value must not become a meaningful category merely because its raw string is present, and excluding that value must not silently drop an otherwise retained record. [Nested Collection Hierarchy And Ordering](#nested-collection-hierarchy-and-ordering) owns how eligible and intentionally empty groups are presented.
 
+#### Analytical Selection And Display-Domain Consistency
+
+- Distinguish the selected record population, requested date bounds, aggregation interval, metric, and rendered axis extent. A display transformation should preserve the selection, totals, URL state, and date fields unless changing them is an explicit part of the approved interaction.
+- Define whether the history retains, trims, aggregates, or compresses empty periods. Apply that policy to the currently selected data rather than retaining bounds from another source or using different rules for default and manually entered dates. Preserve intermediate time gaps or show their approved compression explicitly.
+- Keep genuine zero, missing observations, unavailable calculation, and no matching records distinguishable under the metric's contract. A compact axis must not turn unknown coverage into zero activity or imply that the displayed endpoints are the requested query bounds.
+- Evaluators should compare dense and sparse histories, empty leading/trailing and interior periods, all-zero and unavailable metrics, and source/metric/interval changes through controls, direct URLs, and back/forward navigation. Check selection and summary against the rendered extent; [Equivalent Scope Consistency](interaction-evaluation.md#equivalent-scope-consistency) and [In-Place Analytical Switch Continuity](interaction-evaluation.md#in-place-analytical-switch-continuity) own the associated transition behavior. Fixed axis padding, trimming, or bucket counts remain product choices.
+
 #### Secondary Metric Explanatory Burden
 
 - A derived or supporting metric should earn its space by improving a decision or interpretation beyond the primary observed values.
@@ -154,7 +161,7 @@
 #### Instructional Copy Entitlement And Redundancy
 
 - Persistent helper or explanatory copy should earn its place by adding a consequence, decision boundary, validation rule, recovery path, or other information not already conveyed by the field label, status, control state, bounded preview, or nearby feedback.
-- When a heading, badge, helper, preview, and validation region repeat the same fact, keep one clear owning explanation instead of distributing near-equivalent prose across the task. Optional setup should not appear required merely because its explanation is louder or repeated more often than the primary action; use the consuming repo's `interaction-evaluation.md` section `Optional Setup Must Not Become A Prerequisite` as the canonical interaction contract for required fields, validation, submission, and success conditions.
+- When a heading, badge, helper, preview, and validation region repeat the same fact, keep one clear owning explanation instead of distributing near-equivalent prose across the task. Optional setup should not appear required merely because its explanation is louder or repeated more often than the primary action; when Interaction Evaluation is installed, use its `Optional Setup Must Not Become A Prerequisite` section as the canonical interaction contract for required fields, validation, submission, and success conditions.
 - When copy is removed, evaluators should confirm that required labels, errors, recovery guidance, and accessibility semantics remain discoverable and that the layout closes the vacated space without leaving a dead band or breaking responsive rhythm.
 
 #### Adjacent Metric Denominator Clarity
@@ -179,9 +186,17 @@
 
 #### User-Facing Terminology Boundary And Consistency
 
+- Compact technical notation, abbreviations, and relative path labels should expose the reference frame needed for the approved task, such as home, a configured base, workspace, repository, or source. Changing a label or display preference must not silently reassign a record or imply that its historical attribution changed. Compare current labels, stored identity, and retained historical snapshots where applicable; evaluate settings through the existing product contract rather than requiring a new configuration flow.
 - Internal storage, schema, or type names do not automatically own the user-facing vocabulary; visible labels should express the user's concept without requiring the internal contract to be renamed.
 - Once a user-facing term is chosen, apply it consistently across summaries, details, empty or unavailable states, errors, trust or calculation explanations, and accessibility text, including singular, plural, and number formatting.
 - Evaluators should confirm that nearby labels still distinguish the concept from adjacent records or events and that internal aliases do not leak through secondary presentation consumers.
+
+#### Compact Identifier Display And Action Identity
+
+- When an identifier is shortened for reading, keep its displayed form distinct from the canonical identity, source namespace, and action target. Provide the approved complete-value inspection or reuse path when the user's task requires it, including keyboard and assistive access rather than hover alone.
+- Define abbreviation and collision handling within the relevant identity scope. Different records that share a prefix must remain distinguishable; identical native values from different sources or tenants must not silently merge their identities. A fixed prefix length is not a universal requirement.
+- Copy, reference, export, or resume actions should use the value and namespace required by their approved contract. When a complete identifier is required, the rendered prefix or a local navigation-row identifier must not silently replace it.
+- Evaluators should compare short and long values, shared prefixes, identical values across source boundaries, narrow layouts, and the actual value delivered by the action. Visual abbreviation, full-value accessibility, and action identity should remain coherent; [In-Place Utility Action Continuity](interaction-evaluation.md#in-place-utility-action-continuity) owns feedback and interaction-state preservation.
 
 #### Authority Region Separation
 
@@ -196,6 +211,14 @@
 - Source retention and user-facing presentation are separate decisions. A valid record may remain visible when it is sparse, command-only, or not safely normalized, while generated context may remain retained as provenance without becoming a visible title, message, search term, or derived reference.
 - Normalize only source envelopes with a stable, recognized contract. Preserve the raw source, and render an unknown or ambiguous envelope literally, escaped, or with a truthful source label instead of guessing its meaning, dropping the record, or reattributing its content.
 - Evaluators should compare a visible prompt paired with generated context, a command-only record, an unknown envelope, and a source-version change. Confirm both that retained evidence remains inspectable at its owning layer and that the presentation projection preserves authored content and role boundaries.
+- Preserve authored input at the source's actual message boundaries: one turn or batch may contain an initial request, follow-up answers, and additional input. Deduplicate repeated source representations through the recognized identity or duplication contract; equal wording alone must not erase distinct authored messages. Keep question/answer association and source order intact.
+- Evaluators should also inspect the first and last authored inputs, multiple inputs within one turn, split text blocks mixed with generated siblings, genuine retransmissions, and repeated wording across distinct records or turns. Confirm that removing a generated block cannot discard neighboring authored input, and retaining authored input cannot expose generated siblings.
+
+#### Conversation Role And Completion Legibility
+
+- Where a conversation or history distinguishes authored input, intermediate assistance, and completed responses, make those roles understandable without changing the body or source order. Use the approved combination of speaker identity, spacing, boundaries, tone, and accessible semantics; extra status labels or one particular border treatment are not universal requirements.
+- A response-completion treatment should follow each source's declared terminal or phase contract. Missing, unknown, interrupted, or contradictory evidence should retain its truthful uncertainty rather than acquiring completion from message position or wording alone. A completed response does not establish successful execution of the user's task.
+- Evaluators should compare intermediate, completed, and unmarked responses across supported source adapters, profiles, primary histories, and child histories. Shared presentation should retain source-specific evidence rather than require identical native fields. Check body contrast and structural cues when tint is reduced, and evaluate any necessary accessible completion meaning separately from the visible treatment.
 
 #### Subject-Relative Relationship Evidence
 
@@ -314,6 +337,7 @@
 
 #### Metadata Layer Separation
 
+- Evaluate width allocation when compact metadata combines short, fixed-form values with long, variable fields. Compare localized dates, short and long identifiers or paths, wide layouts, and the actual reading-container width with adjacent panes open or closed. Check unexplained empty bands and clipping rather than assuming equal-width slots establish balanced density; control-state changes should preserve neighboring geometry.
 - Distinct metadata layers inside a compact card should not visually occupy the same horizontal band.
 - Tag chips and collection or locator labels should read as separate rows or clearly separated zones, not as partially overlapping content.
 - Evaluators should check long-content cases, multi-tag cases, and short-summary cases to confirm the metadata hierarchy still reads cleanly.
