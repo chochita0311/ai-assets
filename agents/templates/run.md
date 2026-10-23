@@ -42,6 +42,20 @@ For `docs-content`, replace both spec-file examples with the designated writing 
 - Relevant policies:
 - Optional skills or tools expected:
 
+## Optional Harness Experience
+
+- When Harness Improvement is selected and configured, the
+  [ordinary stage operation](../operations/harness-improvement.md#ordinary-stage-work)
+  handles relevant retrieval, stage evidence and common improvement records.
+- Stage/improvement references and meaningful reuse or persistence gaps, only when
+  this record's audience may access them:
+- Related experiment reference, only when a comparison's first authorized trial
+  has actually started and this record's audience may access that reference:
+- Use [Harness Improvement](../operations/harness-improvement.md) when installed.
+  Keep records and effects with their private owners; do not put private
+  locators or identifying record IDs in public runs. Omit this section when
+  unused or unsafe to reference; private recording does not require a public link.
+
 ## Current Artifacts
 - Active Spec: `[spec-0000-title](../spec/spec-0000-title.md)`
 - Contract evaluation: `[eval-0000-contract-title](../evaluation/eval-0000-contract-title.md)`

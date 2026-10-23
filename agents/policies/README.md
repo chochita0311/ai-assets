@@ -24,3 +24,13 @@ rule ownership when adapters install the generated bundle.
 The [adoption guide](../ADOPTION-GUIDE.md) separately owns harness export into
 consuming repositories. Its harness and review mappings do not implicitly
 install the session-wide baselines or any personal runtime files.
+
+[Harness Improvement](harness/harness-improvement.md) owns the optional
+configured stage retrieval/reflection, cross-component evidence, comparison,
+privacy and private-store lifecycle. The [Improvement Record And Exchange
+Contract](harness/improvement-record-contract.md) owns the common format,
+identity, states and import/export admission, including revision feedback.
+The [common catalog](../../evidence/README.md) discovers component-owned
+reusable experience and pending improvements under one contract; records do not adopt rules or
+assign local work. Adopted rules stay with their existing policy, skill, or
+review-asset owner.

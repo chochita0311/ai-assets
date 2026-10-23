@@ -8,6 +8,7 @@
 - [Diagnose Before Choosing A Fix](#diagnose-before-choosing-a-fix)
 - [Refine The Actual Owner](#refine-the-actual-owner)
 - [Validate And Compare](#validate-and-compare)
+- [Retain Unresolved Work](#retain-unresolved-work)
 - [Stop And Report](#stop-and-report)
 
 ## Resolve The Target And Authority
@@ -32,6 +33,9 @@
 | Comparable execution after a revision | Whether the observed failure recurs and controls still pass | Generalization remains bounded by the cases and conditions tested |
 
 For self-refinement, the current package may be `v1` and the edited package `v2` for static comparison. A behavioral test still requires an actual audit or refinement task performed with the skill. Missing execution evidence limits the conclusion; it does not forbid a useful static audit or an authorized correction of a visible defect.
+
+This method does not require a surrounding workflow package, an experiment or a
+new record file.
 
 ## Define Success For The Target Skill
 
@@ -97,6 +101,26 @@ For a comparable run:
 5. Treat a later pass as comparable rerun evidence only when it executes the revised target on the same task class and tests the same failure. Re-reading files, changing instructions, or reviewing an existing output is not a behavioral rerun of that target. For `refine-skill` itself, the executed task must produce an audit or refinement result.
 
 Do not make multiple agents or a large benchmark mandatory. Scale repeated runs to risk and observed variance. Where controls, versions, or context isolation are unavailable, report the limitation instead of presenting an assisted result as a controlled improvement.
+
+## Retain Unresolved Work
+
+When maintenance leaves actionable work, use an existing authorized follow-up
+owner or report it in the session if none is resolved. Retain the target and
+item identity, evidence or hypothesis with limits, next bounded check, completion
+criteria, revisit trigger/dependencies, applicable authority and actual state.
+Match an existing item before adding one; preserve counterevidence and do not
+count the same event twice. A follow-up does not require a supported lesson.
+Keep work resolution separate from knowledge support and normative adoption; connect
+actual execution and acceptance to the existing task rather than duplicating it.
+
+Consult matching items when the task calls for them; an item or a due date is
+not approval to run comparisons, broaden the audit or perform live actions.
+Reuse existing authorization. Stop unchanged exploration until relevant evidence
+or conditions change. A static correction leaves required behavioral or
+installation checks open. Close satisfied or deliberately withdrawn work with
+its actual evidence/reason under the owner's retention rule; keep required
+comparison evidence accessible before retiring a source note. Public records
+receive only reviewed generalized content, never private original evidence.
 
 ## Stop And Report
 

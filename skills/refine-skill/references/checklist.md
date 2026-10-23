@@ -20,4 +20,5 @@ Use this final pass in both modes. Answer yes or no; use not applicable with a r
 - Where behavior is claimed improved, are the original failure and relevant successful controls checked, including authorized completion when restrictions changed?
 - Are invocation changes checked against realistic intended and out-of-scope requests, or explicitly left as an evidence gap?
 - Are `Result`, `Evidence Coverage`, highest evidence level, regressions, and unresolved follow-ups reported without overstating stability?
+- Does actionable remaining work use one existing authorized owner or stay session-only, with evidence limits, next check, eligibility and closure criteria; are private evidence and unmet behavioral requirements preserved rather than copied publicly or marked complete after a static edit?
 - Are disposable artifacts cleaned only within known task ownership, retained paths explained, and durable references free of temporary-path dependencies?

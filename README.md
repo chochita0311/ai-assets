@@ -5,6 +5,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
 - [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, shared instructions, runtime adapters, and execution templates
+- [evidence/](evidence/README.md): generalized improvement evidence, reusable knowledge and pending work, organized by asset domain and component
 - [agents/policies/](agents/policies/README.md): session-wide defaults under `baseline/`, harness governance under `harness/`, and evaluation criteria under `review/`
 - [agents/instructions/](agents/instructions/README.md): generated shared local-AI instructions and selectable personal, environment, and machine guidance
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
@@ -13,7 +14,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 ## How To Navigate
 - Start with [AGENTS.md](AGENTS.md) for the operational repo map and working rules.
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
-- Review [skills/skill-followups.md](skills/skill-followups.md) for durable unresolved skill follow-up work across the repository.
+- Use the [improvement record catalog](evidence/README.md) for reusable knowledge and pending improvements across asset domains, stored by component. The [record and exchange contract](agents/policies/harness/improvement-record-contract.md) governs their shared format, placement, import, export and feedback.
 - Read [agents/README.md](agents/README.md) for the shared agent package.
 - Use [Shared Local AI Instructions](agents/instructions/README.md) for shared-bundle generation and agent-led import of applicable personal, environment-specific, and PC-specific guidance. Runtime adapters own local installation.
 - Use [Response Clarity And Meaning Preservation](agents/policies/baseline/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; its generated runtime rules work without a repository harness or skill.

@@ -25,6 +25,7 @@
 
 ## Operations Package
 - [agents/operations/runner.md](operations/runner.md): define how a human or harness starts and continues one run using prompts
+- [agents/operations/harness-improvement.md](operations/harness-improvement.md): configured stage experience, bounded comparisons and consumer-to-common export
 - [agents/ADOPTION-GUIDE.md](ADOPTION-GUIDE.md): explain how to export this shared package into a consuming repo and align it as local docs
 - [agents/harness-import-manifest.example.json](harness-import-manifest.example.json): schema-shaped example for initializing a consuming repo's own harness refresh baseline
 
@@ -52,6 +53,9 @@
 - [agents/policies/harness/competence-first-delegation.md](policies/harness/competence-first-delegation.md): platform-neutral admission, capability, fallback, context-transfer, and final-ownership rules for delegated work
 - [agents/policies/harness/prd-feature-management.md](policies/harness/prd-feature-management.md): planning-governance rule for PRDs, features, approval, and traceability
 - [agents/policies/harness/execution-loop-governance.md](policies/harness/execution-loop-governance.md): execution-loop rules, fail classification, routing, and artifact ownership
+- [agents/policies/harness/harness-improvement.md](policies/harness/harness-improvement.md): optional cross-component application evidence, effects, private records and common promotion
+- [agents/policies/harness/improvement-record-contract.md](policies/harness/improvement-record-contract.md): common improvement identity, states, import/export admission and revision feedback
+- [agents/schemas/improvement-record.schema.json](schemas/improvement-record.schema.json): versioned metadata shape for improvement records
 - [agents/policies/harness/execution-profiles.md](policies/harness/execution-profiles.md): profile selection, surface-lane, and evaluator routing rules
 - [agents/policies/harness/traceability-and-link-hygiene.md](policies/harness/traceability-and-link-hygiene.md): portable path, link, and source-of-truth reference rules
 - [agents/policies/harness/operator-briefing-and-review-receipts.md](policies/harness/operator-briefing-and-review-receipts.md): low-noise operator context, lifecycle triggers, repetition limits, and non-interference rules
@@ -65,6 +69,65 @@
 - [agents/templates/fix-log.md](templates/fix-log.md): reusable fix-log template
 - [agents/templates/heuristic-backlog.md](templates/heuristic-backlog.md): reusable heuristic backlog template
 - [agents/templates/operator-briefing.md](templates/operator-briefing.md): non-persistent response scaffolds for operator briefings, alerts, and receipts
+- [agents/templates/harness-local-store.md](templates/harness-local-store.md): private binding, evidence owners, improvement index and exchange receipts
+- [agents/templates/harness-stage-record.md](templates/harness-stage-record.md): lightweight stage/attempt application evidence and closing reflection
+- [agents/templates/harness-experiment.md](templates/harness-experiment.md): private comparison record at a resolved private owner, created only once the first authorized trial actually starts
+- [agents/templates/harness-improvement-record.md](templates/harness-improvement-record.md): common record body and metadata for reusable pending work and experience
+- [evidence/README.md](../evidence/README.md): repository-wide improvement record catalog, covering harness and skill subjects under one contract without adding rule authority
+
+## Optional Harness Improvement
+
+Select `harness-improvement` through the adoption guide when a consumer wants
+repeatable experience for incremental harness changes. Configure the consumer's
+local `docs/evidence/` store and its discovery binding once during adoption,
+or reuse an existing configured owner. Keep its generated local records ignored
+and outside the managed import set, beside `docs/agents/` and `docs/plans/`.
+The agent then
+retrieves relevant experience on each actual stage's entry and records observed
+component use and outcomes, reconciling reusable knowledge/work in common records
+on exit, including planning-only work. No separate improvement prompt is needed. Missing persistence remains
+session-only; template installation alone is not active collection.
+
+Stage records distinguish logical roles from runtime actors and task PRDs,
+features and specs from the harness contracts used on them. A real comparison,
+when warranted and authorized, adds baseline/candidate results, per-edit effects
+and counterexamples. Ordinary completion does not require an experiment.
+
+Keep original evidence with the consumer's private owner. Public improvement
+records are generalized, self-contained accounts with explicit evidence limits. Adopted
+rules continue to belong to their policy, skill or review-asset owner. Source
+changes, publication, consumer refresh and runtime activation are distinct.
+Consumers without the capability need no new run fields or migration.
+
+[Improvement Record v1](policies/harness/improvement-record-contract.md) is the
+common format for experience and reusable pending work across harness, skills,
+resources and UI/UX. Its work, knowledge, evidence and adoption states are
+independent. Canonical public records live with their improvement subject under
+`evidence/agents/<component>/` or `evidence/skills/<component>/`. The same record
+owns its knowledge and improvement work; select by subject/cue/state from the
+common catalog. Each record appears once, with IDs unique across subject domains.
+There are no separate lesson formats, skill work lists or case aliases.
+Existing task artifacts still own actual execution and acceptance. Import selected records as references by default,
+or explicitly as work candidates; neither assigns work nor adopts a rule.
+
+For common reuse, the operation resolves the actual shared source and exports a
+reviewed record to its component-owned evidence location, or an authorized
+rule change to its existing policy/skill/review owner. Public identity and
+revision connect local applicability decisions, actual work, results and
+counterevidence to a later reviewed record update. Other consumers receive
+selected records or updated rules through their own controlled refresh and
+reassess applicability there. Preserve record history and private/public
+separation throughout. Private project and
+machine histories are not automatically synchronized. The hooks are instructions
+performed by the agent, not a background service or permission to publish.
+
+In that commonization context, `ai-assets로 export해줘` reviews the current
+project's available harness, skill/resource/tool and UI/UX experience for
+qualified common content. The user need not repeat the privacy/generalization
+prompt. [Short export requests](operations/harness-improvement.md#recognize-an-export-request)
+also support case-only, review-only and narrower categories. Keep private and
+sensitive originals outside the public source; no eligible candidate means no
+source change. Export does not itself commit, publish or refresh other projects.
 
 ## Operator Context Continuity
 
@@ -81,6 +144,9 @@ Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persis
   - operation docs under `docs/agents/operations/`
   - profile docs under `docs/agents/profiles/`
   - non-persistent agent response scaffolds under `docs/agents/templates/`
+  - optional blank improvement templates under `docs/agents/templates/` and their metadata schema under `docs/agents/schemas/`
+  - generated local experience at `docs/evidence/STORE.md`, `stages/`, `improvements/` and `experiments/` under that layer, ignored and consumer-owned, or at an existing configured equivalent; shared refresh preserves these outputs
+  - separately selected public records under `docs/evidence/agents/<component>/` or `docs/evidence/skills/<component>/` and only their common catalog's selected rows at `docs/evidence/README.md`, following managed import ownership
   - PRD and execution templates under `docs/plans/`
   - governance and review assets under `docs/policies/`
 - Keep the rules for those artifacts in the consuming repo's policy layer instead of repeating them in folder README files.
@@ -95,5 +161,5 @@ Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persis
 - Treat the runner guide as the ordered prompt source for the current execution pass instead of generating runtime scaffolding files automatically.
 
 ## Packaging Rule
-- Treat `agents/` as the shared home for stable roles, flows, operations, profiles, policies, and templates.
+- Treat `agents/` as the shared home for stable roles, flows, operations, profiles, policies and templates. Public improvement records belong to the repository-level `evidence/` layer under their subject domain and component.
 - Keep repo-specific operating rules in the consuming repo's `AGENTS.md` or `docs/policies/`; do not hide them inside reusable role definitions.

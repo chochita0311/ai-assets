@@ -2,7 +2,7 @@
   "schema_version": 1,
   "source": {
     "repository": "ai-assets",
-    "package_root": "agents",
+    "package_root": ".",
     "revision": "<full-git-commit-sha>"
   },
   "selection": {
@@ -11,19 +11,20 @@
     ],
     "excluded_capabilities": [
       "design",
-      "ux"
+      "ux",
+      "harness-improvement"
     ]
   },
   "mapping": {
-    "version": 3
+    "version": 8
   },
   "files": [
     {
-      "source": "roles/orchestrator.md",
+      "source": "agents/roles/orchestrator.md",
       "target": "docs/agents/roles/orchestrator.md",
       "ownership": "managed",
       "baseline_source_revision": "<full-git-commit-sha>",
-      "baseline_mapping_version": 3,
+      "baseline_mapping_version": 8,
       "source_sha256": "<source-file-sha256>",
       "rendered_sha256": "<rendered-target-sha256>"
     }

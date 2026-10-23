@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI Assets Improvement Record v1",
+  "description": "Metadata shape only. The owning contract requires narrative, public-fitness, provenance and authority review.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "format": {
+      "const": "ai-assets-improvement-record"
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "record_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "audience": {
+      "type": "string",
+      "enum": [
+        "private",
+        "public"
+      ]
+    },
+    "subjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "harness",
+              "skill",
+              "resource",
+              "design",
+              "ux",
+              "runtime"
+            ]
+          },
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_revision": {
+            "description": "Full source Git commit when known and applicable; other package/model/runtime versions belong in the narrative.",
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+              }
+            ]
+          },
+          "content_sha256": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            ]
+          }
+        },
+        "required": [
+          "kind",
+          "key",
+          "source_revision",
+          "content_sha256"
+        ]
+      }
+    },
+    "work": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "type": "string",
+          "enum": [
+            "observed-defect",
+            "evidence-gap",
+            "requested-extension",
+            "hypothesis",
+            "planned-work",
+            "not-applicable"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "active",
+            "resolved",
+            "superseded",
+            "withdrawn",
+            "not-applicable"
+          ]
+        },
+        "readiness": {
+          "type": "string",
+          "enum": [
+            "not-assessed",
+            "ready",
+            "waiting",
+            "blocked",
+            "not-applicable"
+          ]
+        }
+      },
+      "required": [
+        "basis",
+        "state",
+        "readiness"
+      ]
+    },
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "not-assessed",
+            "candidate",
+            "supported",
+            "superseded",
+            "withdrawn"
+          ]
+        }
+      },
+      "required": [
+        "state"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "static-observation",
+              "generalized-private-observation",
+              "public-execution",
+              "illustrative-synthetic"
+            ]
+          }
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "none",
+            "unknown",
+            "static-validation",
+            "resource-execution",
+            "observed-stage-execution",
+            "fresh-forward-test",
+            "comparable-rerun"
+          ]
+        },
+        "execution": {
+          "type": "string",
+          "enum": [
+            "not-run",
+            "run",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "coverage": {
+          "type": "string",
+          "enum": [
+            "not-assessed",
+            "complete",
+            "partial",
+            "unavailable"
+          ]
+        }
+      },
+      "required": [
+        "kinds",
+        "maturity",
+        "execution",
+        "coverage"
+      ]
+    },
+    "adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "public_fitness": {
+          "type": "string",
+          "enum": [
+            "not-reviewed",
+            "approved",
+            "hold",
+            "not-applicable"
+          ]
+        },
+        "case_status": {
+          "type": "string",
+          "enum": [
+            "not-requested",
+            "draft",
+            "accepted",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "rule_status": {
+          "type": "string",
+          "enum": [
+            "not-proposed",
+            "proposed",
+            "accepted",
+            "implemented",
+            "superseded",
+            "withdrawn"
+          ]
+        }
+      },
+      "required": [
+        "public_fitness",
+        "case_status",
+        "rule_status"
+      ]
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "related": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+          }
+        },
+        "supersedes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+          }
+        }
+      },
+      "required": [
+        "related",
+        "supersedes"
+      ]
+    }
+  },
+  "required": [
+    "format",
+    "schema_version",
+    "record_id",
+    "revision",
+    "audience",
+    "subjects",
+    "work",
+    "knowledge",
+    "evidence",
+    "adoption",
+    "relations"
+  ]
+}

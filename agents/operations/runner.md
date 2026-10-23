@@ -11,6 +11,7 @@
 - [Default Invocation Order](#default-invocation-order)
 - [Invocation Rules](#invocation-rules)
 - [Default Closing Sequence](#default-closing-sequence)
+- [Optional Harness Improvement](#optional-harness-improvement)
 - [Prompt Frame](#prompt-frame)
 - [Role Prompts](#role-prompts)
 - [Invocation Examples](#invocation-examples)
@@ -96,11 +97,31 @@ For `docs-content`, apply the [writing-contract route](../policies/harness/execu
 - When all related runs for the active feature or PRD increment are complete, do not jump straight to acceptance.
 - Confirm that required evaluator reports are present and that any partial or unavailable evidence is recorded with its acceptance impact.
 - First summarize any reusable `design` or `interaction` evaluation candidates discovered during the run set.
+- When Harness Improvement is configured, include supported common-harness promotion candidates in this same review, with their intended owners. Complete local stage recording independently of the promotion decision.
 - Ask the human owner whether each candidate should be added or discarded.
 - After that decision, report that the related runs are complete and ask for:
   - PRD or feature acceptance when relevant
   - run acceptance
   - final close or follow-up direction
+
+## Optional Harness Improvement
+
+When the capability is selected and its private binding is ready, perform
+[ordinary stage work](harness-improvement.md#ordinary-stage-work) around every
+actual role invocation, including controlled direct continuation, fixes and
+evaluator reruns. Retrieve relevant improvement records before the role works; record
+observed components and task outcomes during and after it. The performer
+supplies evidence and the coordinator owns the write. Reuse an existing
+stage/attempt identity on resume or duplicate hook entry. Logical roles need
+not be separate runtime agents.
+
+This requires no extra improvement prompt from the user. If persistence is
+unresolved, use session-only observations and report the gap. Keep audience-safe
+references rather than duplicating private records in the run. An improvement
+request or relevant problem may warrant the operation's bounded comparison;
+ordinary completion does not. Export a common lesson only through its authorized
+source-owner route. Capability absence requires no migration and the existing
+closing sequence, design/interaction decisions and human acceptance remain.
 
 ## Prompt Frame
 Use this base frame for every execution-role prompt in a consuming repo. For `Orchestrator` and initial `Spec Agent` prompts, set `Active spec` to `none yet` when no contract has been designated. For `docs-content`, use the writing contract’s real ID and repository-relative file or section anchor once designated; do not create a spec file just to fill a prompt.

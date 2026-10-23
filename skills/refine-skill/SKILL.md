@@ -43,7 +43,7 @@ Report static acceptance and behavioral validation separately when their conclus
 ## Evidence Handling
 
 - Keep comparison evidence in the session when sufficient. Do not create permanent analysis documents by default.
-- When scratch files are needed, use a bounded task-owned temporary location. Keep private transcripts and runtime data outside public checkouts; a repository-local scratch location must follow the repository's rules.
+- When scratch files are needed, use a bounded task-owned temporary location. Keep private transcripts and runtime data at an authorized private owner, excluded from publication and shared assets; repository-local storage and scratch must follow the repository's ownership, ignore and retention rules.
 - Before finishing, remove only exact task-created files or directories whose ownership is known and which no active process uses. Never delete a shared scratch root such as `docs/tmp/` wholesale.
 - Preserve uncertain ownership and evidence still needed for active diagnosis or recovery; report retained paths, purpose, and cleanup condition. Durable references must point to an explicit durable owner or original evidence, not disposable scratch paths.
 

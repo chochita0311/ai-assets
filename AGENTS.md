@@ -16,7 +16,7 @@
 - [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets; use [Pet Package Guide](pets/README.md) for the package contract.
 - [scripts/](scripts/) holds repository-level validation and maintenance tools; keep skill-local deterministic operations inside the owning skill package instead.
 - [skills/](skills/) holds the reusable skill packages.
-- [skills/skill-followups.md](skills/skill-followups.md) owns durable unresolved skill follow-up work across the repository; it is not a skill entry contract.
+- [evidence/](evidence/README.md) holds public improvement records by asset domain and component, separately from reusable asset packages; its common catalog owns no independent work state.
 - Each skill package's `SKILL.md` is its entry contract.
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.

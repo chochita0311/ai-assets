@@ -80,6 +80,22 @@ The workflow may expose user-facing continuity without adding a workflow phase.
 - At completion, planning return, block, handoff, or approval boundary, emit a Review Receipt only when the operator has a meaningful delta to understand.
 - Apply [Operator Briefing And Review Receipts](../policies/harness/operator-briefing-and-review-receipts.md); these hooks do not change workflow routing or state transitions.
 
+## Optional Experience Hooks
+
+When Harness Improvement is selected and its private binding is ready, apply
+the [ordinary stage operation](../operations/harness-improvement.md#ordinary-stage-work)
+at each actual stage's entry and exit, including PRD normalization, feature
+planning and execution-role handoffs. Retrieve relevant experience before the
+work, record observed component use and outcomes, and retain supported knowledge in the common Improvement Record. The coordinator owns the record/index update; the performer supplies
+its evidence. Reuse the same stage identity if another wrapper also calls the
+hook. Before execution starts, use the planning artifact/session rather than
+inventing a run ID.
+
+This runs within the existing stages and review boundaries. It creates no
+additional planning approval, evaluator or automatic comparison. Without a
+resolved private owner, keep supported observations session-only and report the
+gap; absence of the capability preserves the existing workflow.
+
 ## Role Boundaries
 - Human:
   - sets product direction

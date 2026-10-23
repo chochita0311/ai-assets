@@ -198,6 +198,16 @@ non_goals:
 - Any proposed feature that still depends on unresolved uncertainty should be held back or split again.
 - Planner output should make later acceptance checklist generation almost mechanical.
 
+## Optional Experience
+
+When Harness Improvement is selected and configured, use its
+[ordinary stage hooks](../operations/harness-improvement.md#ordinary-stage-work)
+on entry and handoff, including direct role invocation. Use the actual planning
+target/stage, not a fictitious run. Reuse a stage already opened by the workflow.
+Relevant experience can inform decomposition; it does not approve a proposed
+feature or resolve product uncertainty. An unresolved private binding permits
+session-only observation, with the gap reported.
+
 ## Non-Goals
 - writing implementation specs directly
 - changing code
