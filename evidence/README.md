@@ -33,11 +33,11 @@ Finding a record neither assigns work nor adopts a rule. Query all relevant
 domains when matching IDs or questions; an absent row does not prove that a
 record is missing from the actual collection.
 
-The current collection contains skill records; no harness-component records
-are retained yet.
+Current records span harness and skill subjects.
 
 | Record | Subjects | Title |
 |---|---|---|
+| [ir-harness-improvement-adoption-review](agents/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
 | [ir-skill-distribution-contract](skills/skill-distribution/skill-distribution-contract.md) | `skills` | Skill distribution and removal contract |
 | [ir-skill-benchmark-prerequisites](skills/skill-benchmark/skill-benchmark-prerequisites.md) | `skills` | Shared skill benchmark prerequisites |
 | [ir-refine-skill-discovery-validation](skills/refine-skill/refine-skill-discovery-validation.md) | `skills/refine-skill` | Refine-skill discovery and static-audit validation |
