@@ -235,6 +235,8 @@ For `match`, write visual mismatches.
 For `extend`, write consistency requirements.
 For `adapt`, write both directional borrow list and preservation constraints.
 
+For every implementation mode, preserve the requested control type and task flow when correcting placement, size, or overlap unless the approved task changes the interaction. Record the observable relationship before editing: which trigger, menu edge, visible shape, state, and supported viewport must align. A substituted control passing its own tests does not verify the requested correction.
+
 For `adapt`, preservation constraints should include product-truth constraints such as:
 
 - do not add sort controls unless current screen or repo data actually supports sorting
@@ -332,6 +334,15 @@ Use rendered verification, not source-only review:
 - computed style checks
 - geometry checks (width, height, spacing, radius)
 - typography, color, border, and shadow checks
+
+For the affected region, check the relationships and states that can distinguish a real correction from a similar-looking substitute:
+
+- Measure the outer frame, painted glyph or shape, and interactive hit area separately. CSS box equality alone does not prove visible-edge alignment; preserve the approved hit area and visible keyboard focus while compacting the artwork.
+- Inspect closed and expanded controls, short and long content, and the effective rendered viewport at supported boundaries. For unexpected scroll extent, include positioned or visually hidden descendants and last-item reachability; preserve accessible labels and reachable content.
+- Exercise repeated controls in sequence, including icon versus surrounding hit-area activation, dismissal, peer switching, and pointer-to-keyboard handoff. Keep selected state distinct from incidental pointer focus.
+- Record the served or bundled assets, host, and input mechanism actually observed. Browser automation, an isolated embedded-view probe, and the target native app establish different evidence; for native actions, follow the actual control through the chooser or host interaction to the resulting application state.
+
+Apply checks relevant to the reported change and the product's supported environments. If required rendered or host evidence is unavailable, name the gap and leave that claim unverified; do not infer a broader pass from source, process startup, or endpoint success.
 
 Automation is optional; use it when repeatability helps.
 

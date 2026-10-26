@@ -38,6 +38,9 @@ Current records span harness and skill subjects.
 | Record | Subjects | Title |
 |---|---|---|
 | [ir-harness-improvement-adoption-review](agents/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
+| [ir-ui-requested-control-rendering](agents/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment` | Requested controls and rendered geometry |
+| [ir-ui-state-transition-contracts](agents/interaction-evaluation/state-transition-contracts.md) | Interaction Evaluation, Design Evaluation, `skills/screen-alignment` | Stateful controls and committed intent |
+| [ir-ui-native-host-evidence](agents/interaction-evaluation/native-host-evidence.md) | Interaction Evaluation, `skills/screen-alignment` | Native host and end-to-end evidence |
 | [ir-skill-distribution-contract](skills/skill-distribution/skill-distribution-contract.md) | `skills` | Skill distribution and removal contract |
 | [ir-skill-benchmark-prerequisites](skills/skill-benchmark/skill-benchmark-prerequisites.md) | `skills` | Shared skill benchmark prerequisites |
 | [ir-refine-skill-discovery-validation](skills/refine-skill/refine-skill-discovery-validation.md) | `skills/refine-skill` | Refine-skill discovery and static-audit validation |

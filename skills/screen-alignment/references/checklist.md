@@ -21,6 +21,8 @@ Use this checklist before claiming parity work is complete.
 ## Comparison Discipline
 
 - mismatch or consistency list was concrete and visual
+- placement, size, or overlap fixes preserved the requested control and task flow unless the approved task changed them
+- acceptance checked the named visible relationship rather than only a substitute control or equal CSS boxes
 - issues were classified into narrow categories
 - edits were applied in owning layers
 - rendered verification happened after each narrow pass
@@ -48,6 +50,9 @@ Use this checklist before claiming parity work is complete.
 - borders and shadows did not become louder than target/family
 - layout widths did not create dead zones or compression
 - remaining differences were not just cache artifacts
+- relevant outer-frame, painted-shape, and hit-area bounds were checked independently while preserving keyboard focus and accessible identity
+- unexpected scroll extent was checked against positioned and visually hidden descendants without removing needed accessible content
+- affected repeated controls were exercised through dismissal, peer switching, icon/hit-area activation, and pointer-to-keyboard handoff
 - no foreign component language was introduced during extension work
 - no structurally foreign target was treated as ordinary parity work
 - directional targets were not copied more literally than preservation constraints allow
@@ -70,3 +75,5 @@ Use this checklist before claiming parity work is complete.
 - temporary local overrides were removed or explicitly documented as temporary
 - final result is defensible against constitution, target/family references, preservation constraints, and direct human visual comparison
 - if parity could not be completed honestly, that was stated explicitly
+- observed assets, host, input mechanism, and effective viewport were identified; partial probes were not reported as full native or end-to-end acceptance
+- required but unavailable rendered or host checks remained explicit evidence gaps

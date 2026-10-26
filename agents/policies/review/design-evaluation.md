@@ -55,6 +55,7 @@
 - Treat the outer-frame inset and the visible separation between content and the scrollbar as different relationships. When a scrollbar is present, measure the end edges of text, truncation boundaries, dividers, and focus surfaces against the scrollbar track rather than inferring breathing room from the panel edge alone.
 - Preserve the approved content-to-scrollbar separation without inflating the opposite inset merely to create coordinate symmetry. The implementation may use a content-owned inner wrapper or another layout mechanism as long as the visible result and overflow ownership remain stable.
 - Evaluators should inspect short, threshold, and long-list states, plus the breakpoint where nested scrolling becomes normal document flow. Compare all four edges, corner radii, overflow behavior, and active-scrollbar end insets, and confirm that scrollbar-specific compensation does not leave an unexplained gap after the scrollbar lane disappears.
+- When a page scrolls beyond its visible content, inspect positioned, transformed, and visually hidden accessibility descendants as possible contributors to scroll extent. Verify their containing blocks and compare the last visible item with the actual document end on short and long lists. Removing accessible labels or clipping reachable content is not a valid containment repair.
 
 #### Parallel Reading Region Scroll Ownership
 
@@ -238,6 +239,8 @@
 - A region title, semantic group, subgroup or kind, and repeated item should not collapse into one undifferentiated typographic tone. Use role-appropriate combinations of size, weight, spacing, and boundary strength so hierarchy remains legible without relying on color alone.
 - When one category applies to a contiguous run of items, prefer one owning group heading over repeating the same category label in every row. Group boundaries should read more strongly than item separation; repeated row rules should remain lighter or give way to spacing so they do not compete with the semantic grouping. Apply [Single Boundary Ownership](#single-boundary-ownership) where adjacent regions meet.
 - Define ordering independently at each hierarchy level. A stable categorical order may support predictable scanning while source occurrence, chronology, priority, or task order may better preserve meaning within a group; one global sort rule should not be assumed to serve both.
+- When the contract promises name or path ordering, compare the actual comparator with the meaning displayed to the user. Shortened paths, aliases, and cached labels must not silently substitute a different sorting key; test mixed old/new or partially refreshed records, missing-value fallbacks, and stable tie-breaking by the approved identity.
+- Label, path, or formatting changes should preserve a separately configured manual, chronological, priority, or per-group order unless the approved change includes reordering. Verify order after refresh and across consumers that promise to share it, while keeping the selected record tied to its identity.
 - Evaluators should compare single- and multi-group states, single- and multi-item groups, intentional empty orientation groups, retained overflow, and narrow layouts. Confirm that pagination or disclosure does not duplicate headings, split boundaries ambiguously, or reorder items against the approved per-level contract.
 - Derive ordinary headings from meaningful eligible grouping values. Sentinel, reference-only, or unknown values should not create a ghost category outside their declared presentation role. Compare all-known, all-unknown, and mixed states so retained ungrouped items are not mistaken for an empty collection. Keep intentionally empty orientation groups only under their approved role; source-specific value recognition follows [Presentation Eligibility Is A Separate Contract](#presentation-eligibility-is-a-separate-contract), while ordering and layout remain governed by the per-level contract.
 
@@ -261,6 +264,12 @@
 - Visual inspiration from a source artifact must not override the current approved shell boundaries.
 - When a feature is scoped to one surface, unchanged shell regions must remain visually intact unless the approved feature explicitly includes them.
 - Local surface redesign must not quietly restyle the left, top, or bottom shell.
+
+#### Requested Control Preservation
+
+- A placement, size, or overlap correction preserves the requested control type and task flow unless the approved task explicitly changes the interaction. Replacing a dropdown with radio choices does not establish that the dropdown defect is fixed.
+- Turn the reported relationship into an observable comparison: for a menu requested below its control, inspect the expanded top edge, width relationship, trigger visibility, clipping, and selected-item states at the supported viewport boundaries.
+- A passing layout test for a substituted interaction is evidence for that implementation only. Correct the acceptance target and repeat rendered evaluation before reporting the requested fix complete.
 
 #### Shell Handoff Visual Continuity
 
@@ -306,6 +315,8 @@
 
 - When a control must match a reference, compare text-relative padding, content width, selected-surface bounds, and indicator position in addition to the outer width and height.
 - Equal outer tracks can still fail parity when labels have different lengths or the reference sizes segments from their content.
+- Distinguish the outer frame, painted glyph or shape, and interactive hit area. A transformed icon or inset SVG path can have different visible edges despite equal CSS boxes; measure the painted relationship named by the request as well as its container.
+- Compact visible geometry must preserve the approved hit area, keyboard focus visibility, and accessible control identity. Do not shrink the hit area merely to make icon bounds match; inspect closed, expanded, hover, selected, and focus states at the applicable narrow and scroll boundaries.
 - Evaluators should test short and long labels and measure the selected geometry rather than inferring parity from one shared minimum width.
 - For controls with a disclosure indicator, including native selects, measure the selected-text reserve, indicator bounds, and indicator-to-edge inset as separate relationships. Verify that one indicator remains legible without duplication and that focus, disabled, invalid, compact, narrow, and touch states preserve the intended alignment.
 

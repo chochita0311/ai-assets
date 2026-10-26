@@ -108,6 +108,14 @@
 - Endpoint success alone is insufficient evidence for a click-driven action because stale assets can leave new markup visible but inert.
 - When progressive enhancement is part of the approved contract, the underlying form or link should remain a safe executable path and preserve the relevant user scope.
 
+#### Native Host And End-To-End Action Evidence
+
+- For packaged or embedded clients, startup evidence should reach the first meaningful rendered page and its required routes. A running process, open window, or successful health endpoint does not establish a usable or authenticated UI. Include fresh and retained launch state when the changed startup contract depends on it.
+- For a native chooser or other operating-system action, exercise the rendered control through the actual supported host, the native interaction, and the resulting application state. A mocked bridge, admitted API request, or visible helper panel establishes only that checked segment. Verify a valid selection, cancellation, and relevant failure paths; cancellation must preserve the prior draft when the contract promises it.
+- Identify the source revision, served or bundled assets, backend, and native host actually exercised, including unchanged or reused layers. A browser check, isolated embedded-view probe, and running packaged app are distinct targets; apply [Active Runtime And Mixed-Version Evidence](#active-runtime-and-mixed-version-evidence) when those layers can refresh independently.
+- State the input mechanism with the observation: script-dispatched events, browser automation, operating-system events injected into an isolated view, or physical input in the target app. An event reported as trusted does not by itself establish physical input or execution in the target host.
+- Check the hosts and input paths required by the affected product contract. Mark missing host or end-to-end evidence as unverified rather than promoting a partial probe to full acceptance; the owning acceptance contract decides whether the gap blocks delivery.
+
 #### Scope Transition State Contract
 
 - When a scope change redefines the result set, define preservation or reset per state owner instead of treating the whole page as one state. Query, filter, selection, disclosure, pane geometry, outer page scroll, and nested result or tree scroll may need different outcomes.
@@ -122,6 +130,9 @@
 - Evaluate the promise across applicable refresh, new-tab, browser reopen, application or service restart, site-data removal, and cross-client cases. A preference scoped to one browser need not follow another client; an account-wide promise needs evidence at that boundary.
 - Keep an absent preference distinct from an explicitly empty or cleared choice when they have different meanings. Defaults, migration, and precedence between saved values, current input, and legacy state should follow the approved contract without silently restoring a choice the user removed.
 - Confirmation should distinguish pending, saved, and failed persistence. A queued request is still pending until the owning storage boundary confirms success; failure should preserve correctable intent and offer the approved retry, rollback, or reset path.
+- For autosaved preferences, exercise rapid successive edits, delayed or out-of-order responses, concurrent changes, and closing or reopening while a write is pending. The latest accepted intent and confirmed storage must agree under the product's conflict and close behavior; stale responses must not overwrite newer choices or unrelated settings.
+- A failed or lost response may leave persistence unknown rather than prove that storage rejected the change. Reconcile with the owning storage boundary before claiming saved or rolled back. If confirmation or readback also fails, preserve that uncertainty and the approved recovery path instead of presenting an unconfirmed value as durable.
+- These checks follow the approved save model. They do not require autosave or remove an explicit-save form's separate draft, Save, and Cancel boundaries.
 - Evaluators should observe the remembered value after the claimed lifecycle boundary and compare absent, explicit-empty, migrated, pending, failed, and recovered states. A fresh browser context establishes client isolation; it does not establish an actual browser-process restart or an application or service restart. Storage may be local or shared according to the product contract; these checks do not require a server database.
 
 #### Equivalent Scope Consistency
@@ -302,6 +313,21 @@
 - Evaluators should check both closed and expanded states and confirm that the label, cue, control placement, revealed content, DOM order, and keyboard focus order remain coherent. In a sequential disclosure, the revealed content and collapse action should remain reachable without skipped targets or an unexplained reversal of visual progression; in an accordion, the stable heading should remain the anchor before its content. Collapsing should leave focus on a visible control.
 
 ### Repeated Controls And State Anchoring
+
+#### Sequential Control Input And Focus
+
+- Exercise repeated controls as a sequence: open one, dismiss it through supported outside-click or Escape paths, open a peer, then return. Transient open, hover, and focus states must not alter another record's committed selection or leave obsolete menus active.
+- Compare activation on the painted icon, text, and surrounding hit area rather than only the button center. Child event targets and host focus behavior can make visually equivalent parts behave differently; observe the reported path in each affected supported host or state the missing evidence.
+- Distinguish the selected value from incidental focus retained after pointer activation. Test pointer-to-keyboard handoff and genuine keyboard navigation so selection, accessible state, and the focus indicator remain coherent without stale or doubled emphasis.
+- A pointer-focus correction must preserve visible keyboard focus and the control's accessible meaning. Blanket focus suppression is not evidence that the interaction is fixed.
+
+#### List Reordering Feedback And Commit
+
+- A drag handle alone does not establish usable reordering. During manipulation, make the moving item and proposed destination legible through the approved lift, insertion marker, neighbor movement, or equivalent feedback; the settled order should clearly reflect the completed action.
+- Distinguish preview, commit, and cancellation using the product's persistence contract. Under a commit-on-drop contract, cancellation, an unchanged drop, or release outside any valid destination must not write a new order. A drag must not accidentally activate the row's other action.
+- Exercise supported pointer and keyboard reorder paths, edge scrolling, first/last-item moves, and interruption. Where motion is used, verify the reduced-motion branch without losing destination or completion feedback.
+- Check persistence failure, concurrent order changes, and readback after refresh under [Preference Scope And Lifetime](#preference-scope-and-lifetime). Do not report an optimistic preview as saved; retain the approved recovery path and a meaningful focus target.
+- Where several surfaces share a configured order, confirm propagation while preserving record identity, active selection, and independent filters. When Design Evaluation is installed, its `Nested Collection Hierarchy And Ordering` section owns display and per-level sort semantics; reordering does not authorize changing those contracts.
 
 #### Technical Canvas Input Ownership
 
