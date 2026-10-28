@@ -9,6 +9,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - [agents/policies/](agents/policies/README.md): session-wide defaults under `baseline/`, harness governance under `harness/`, and evaluation criteria under `review/`
 - [agents/instructions/](agents/instructions/README.md): generated shared local-AI instructions and selectable personal, environment, and machine guidance
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
+- [tools/](tools/README.md): standalone reusable utilities organized by provider and tool
 - [scripts/](scripts/): repository-level validation and maintenance tools shared across asset packages
 
 ## How To Navigate

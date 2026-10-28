@@ -14,6 +14,7 @@
 - [agents/templates/](agents/templates/) holds shared planning, execution, evaluation, and non-persistent response scaffolds for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
 - [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets; use [Pet Package Guide](pets/README.md) for the package contract.
+- [tools/](tools/README.md) holds standalone reusable utilities organized by provider and tool.
 - [scripts/](scripts/) holds repository-level validation and maintenance tools; keep skill-local deterministic operations inside the owning skill package instead.
 - [skills/](skills/) holds the reusable skill packages.
 - [evidence/](evidence/README.md) holds public improvement records by asset domain and component, separately from reusable asset packages; its common catalog owns no independent work state.
