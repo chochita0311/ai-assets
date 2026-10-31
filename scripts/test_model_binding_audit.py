@@ -64,7 +64,8 @@ class LaunchAgentTests(unittest.TestCase):
 
 
 class RunnerTests(unittest.TestCase):
-    def run_fixture(self, status="NO_BINDING_CHANGE", model="fixture-model", missing_binary=False):
+    def run_fixture(self, status="NO_BINDING_CHANGE", model="fixture-model", missing_binary=False,
+                    worker_bindings=None):
         with tempfile.TemporaryDirectory(prefix="ai-assets-runner-test-") as scratch:
             root = Path(scratch)
             checkout = root / "different checkout & spaces"
@@ -73,6 +74,10 @@ class RunnerTests(unittest.TestCase):
             (adapter / "profiles").mkdir()
             (adapter / "custom-agents").mkdir()
             (adapter / "profiles/model-binding-audit.config.toml").write_text('model = "fixture-model"\n')
+            for name, binding in (worker_bindings or {}).items():
+                (adapter / "custom-agents" / f"{name}.toml").write_text(
+                    f'name = "{name}"\nmodel = "{binding}"\n'
+                )
             runner = adapter / "scripts/run-model-binding-audit.sh"
             shutil.copyfile(ADAPTER / "scripts/run-model-binding-audit.sh", runner)
             bin_dir = root / "bin"
@@ -114,6 +119,11 @@ exit 1
                 self.assertEqual(Path(args[args.index("--cd") + 1]).resolve(), checkout.resolve())
                 self.assertEqual(args[args.index("--sandbox") + 1], "read-only")
                 self.assertEqual(args[args.index("--profile") + 1], "model-binding-audit")
+                # The shell fixture splits embedded prompt newlines into recorded lines.
+                recorded_arguments = "\n".join(args)
+                for name, binding in (worker_bindings or {}).items():
+                    self.assertIn(f"[agents/adapters/codex/custom-agents/{name}.toml]", recorded_arguments)
+                    self.assertIn(f'name = "{name}"\nmodel = "{binding}"', recorded_arguments)
             else:
                 self.assertFalse((root / "arguments.txt").exists())
             self.assertFalse(any((root / "logs").glob(".report.*")))
@@ -121,6 +131,15 @@ exit 1
 
     def test_relocated_checkout_and_path_binary_discovery(self):
         code, status, attention = self.run_fixture()
+        self.assertEqual(code, 0)
+        self.assertIn("Status: NO_BINDING_CHANGE", status)
+        self.assertFalse(attention)
+
+    def test_manifest_includes_distinct_worker_bindings_without_changing_audit_model(self):
+        code, status, attention = self.run_fixture(worker_bindings={
+            "fixture_scout": "fixture-scan-model",
+            "review_challenger": "fixture-review-model",
+        })
         self.assertEqual(code, 0)
         self.assertIn("Status: NO_BINDING_CHANGE", status)
         self.assertFalse(attention)

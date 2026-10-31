@@ -8,6 +8,8 @@ Use this reference for the exact review plan schema, renderer behavior, `audit`,
 - [Read-only audit](#read-only-audit)
 - [Review plan schema](#review-plan-schema)
 - [Validate and publish atomically](#validate-and-publish-atomically)
+  - [Publication concurrency](#publication-concurrency)
+  - [Validate and submit](#validate-and-submit)
 - [Statuses and exit behavior](#statuses-and-exit-behavior)
 - [Refresh and duplicate handling](#refresh-and-duplicate-handling)
 - [Failure recovery](#failure-recovery)
@@ -18,6 +20,7 @@ Use this reference for the exact review plan schema, renderer behavior, `audit`,
 ## Requirements
 
 - Install and authenticate the `gh` CLI for the PR host
+- Use Python 3 with the standard-library file locking available on Unix (`fcntl`) or Windows (`msvcrt`) for publication; read-only commands do not acquire a publication lock
 - Use a full `https://<host>/<owner>/<repo>/pull/<number>` URL
 - Keep each review plan, amendment, or reply in a temporary local file through verification and any failure reconciliation; remove it after a verified result unless the user asks to retain it
 - Resolve the directory containing `SKILL.md` and use the transaction script's absolute path; never assume the current working directory is the skill package
@@ -121,6 +124,16 @@ Use `RIGHT` only for an added line and `LEFT` only for a deleted line. The scrip
 
 ## Validate and publish atomically
 
+### Publication concurrency
+
+The public `publish` entry point takes a nonblocking OS file lock for the canonical PR target before its fresh preflight and holds it through creation, pending verification, submission, final verification and any reconciliation or cleanup. Calls for the same target sharing the same local lock directory cannot publish concurrently. Repository case aliases share a lock; different PRs use different locks. A competing call stops with `safety-stop` before review API access. After the active call finishes, audit before retrying; a completed same-snapshot review becomes a no-op.
+
+The directory is `<user-home>/.cache/gh-review-pr/locks`, independent of checkout, installed skill copy, Codex home or review profile. The helper creates it as needed; failure to acquire a supported lock stops publication. Its empty hash-named files are persistent runtime coordination state, not review artifacts. Leave them in place when the OS lock is released by closing the descriptor or process exit. Deleting or replacing a lock file while a publisher can use it would split the lock identity. Remove this directory only after all publishers using it have stopped and none can start during removal. `audit` and `validate` do not create it.
+
+This is local coordination for cooperating calls under the same OS user, home and lock-capable filesystem. It is not a distributed GitHub lock. Writers on other hosts, under another OS user/home, or bypassing this entry point must be serialized by their caller. If an overlapping writer outside this scope cannot be excluded or coordinated, keep the review in draft. Do not bypass this boundary with another cache directory, an extra GET, or an ad hoc write.
+
+### Validate and submit
+
 Validate the completed plan immediately before writing:
 
 ```bash
@@ -143,7 +156,7 @@ For an explicitly requested decision, append `--event APPROVE` or `--event REQUE
 
 `APPROVE` is compatible only with zero blocking findings. `REQUEST_CHANGES` is compatible only with at least one blocking finding. These guards validate the user's explicit event; they never infer or select it.
 
-The script performs this transaction:
+Inside the publication lock, the script performs this transaction:
 
 1. Re-fetch the PR base/head pair, changed-file patches, reviews, comments, and the authenticated user
 2. Reject stale base/head pairs, invalid anchors, prior finding identifiers, same-snapshot reviews, and human pending-review conflicts
@@ -173,11 +186,13 @@ Successful JSON statuses include:
 - `replied-reconciled`: the reply response was ambiguous, but reconciliation proved exactly one requested reply exists
 - `noop-existing-reply`: an identical authenticated-user reply already exists on the owned finding, so no write occurred
 
-Command errors, including invalid CLI usage, are emitted as sanitized JSON on stderr with a nonzero exit code. An `invalid-plan` or preflight `safety-stop` occurs before review creation; correct the input and run `validate` again. `validate` itself is read-only. After any nonzero `publish` result that may follow a write—especially `github-error`, `verification-failed`, timeout, or create/submit uncertainty—run a fresh `audit` before retrying.
+Command errors, including invalid CLI usage, are emitted as sanitized JSON on stderr with a nonzero exit code. An `invalid-plan`, publication-lock `safety-stop`, or preflight `safety-stop` occurs before review creation; resolve the reported input or coordination condition and run `audit`/`validate` again. `validate` itself is read-only. After any nonzero `publish` result that may follow a write—especially `github-error`, `verification-failed`, timeout, or create/submit uncertainty—run a fresh `audit` before retrying.
 
 ## Refresh and duplicate handling
 
-`refresh` is a semantic mode, not a force flag. When either base or head changes, audit the new pair, rebuild coverage and the ledger, retain existing threads as the discussion locations for old findings, and publish only genuinely new findings. The script permits one skill-owned review on the new snapshot but refuses a second one for the exact same pair.
+`refresh` is a semantic mode, not a force flag or publication authority. When either base or head changes, audit the new pair, rebuild coverage and the ledger, and retain existing threads as the discussion locations for old findings. An ordinary re-review request returns a draft. Only when the current request explicitly authorizes publication may genuinely new findings be published through the concurrency boundary above. The script permits one skill-owned review on the new snapshot but refuses a second one for the exact same pair.
+
+Apply the [review continuity rules](review-criteria.md#review-continuity-and-convergence) when rebuilding that evidence. A previous-head repair comparison may supplement the current base/head review, but does not change the script's snapshot, duplicate or anchor gates. Guidance provenance, round allowances and finding outcomes stay in the internal/session record; do not add fields to the schema-v2 plan or use the summary as a duplicate-finding fallback.
 
 Do not alter `finding_id` to evade duplicate detection. If the same concern remains on a new snapshot, omit a new thread. If only the wording is similar but the trigger or impact is materially different, use a genuinely distinct semantic identifier.
 

@@ -12,7 +12,7 @@ Produce one review for one immutable PR `(base SHA, head SHA)` snapshot, or safe
 - `publish`: use only when the current request unambiguously asks to write the review to the actual PR, for example “post,” “publish,” “submit,” “leave comments,” “PR에 리뷰를 게시해줘,” or “GitHub에 댓글을 남겨줘”; publish one review after all gates pass
 - `draft`: use for a bare `$gh-review-pr <PR URL>`, an ordinary request to review, or when the user says draft, preview, or do not post; return the summary and proposed threads without any GitHub write
 - `audit`: inspect existing reviews, duplicate state, anchors, a prior run, or human-authored feedback without writing
-- `refresh`: re-review an explicitly requested snapshot whose base or head changed; never add a second skill-owned review to the same base/head pair
+- `refresh`: re-review an explicitly requested snapshot whose base or head changed; return a draft unless the current request also explicitly authorizes publication, and never add a second skill-owned review to the same base/head pair
 - `amend`: correct only the wording of one submitted skill-owned finding after an explicit request; preserve its classification, anchor, marker, and review summary
 - `reply`: respond to one submitted skill-owned finding after an explicit request; target the original review snapshot even when the current PR head has advanced, and never use this mode for human-authored threads
 
@@ -25,6 +25,12 @@ Treat a full PR URL as the canonical target. Resolve a missing URL only when the
 Use `COMMENT` by default. Use `APPROVE` or `REQUEST_CHANGES` only when the user explicitly requests that review decision; never infer it from finding counts.
 
 The transaction accepts `APPROVE` only with zero blocking findings and `REQUEST_CHANGES` only with at least one blocking finding. These are compatibility guards for an explicitly chosen event, not rules for choosing the event.
+
+## Run directly or as a delegated reviewer
+
+The task-owning reviewer is the agent assigned to complete this review, whether invoked directly or delegated the full task. A delegated reviewer follows the same workflow and output contract within the authority actually assigned to it; it does not need this repository's harness, a runtime adapter, or a named worker. Use the [full-review handoff](references/review-criteria.md#full-review-handoff) to carry the original current user request, raw evidence, operating choices, and permission boundaries. Delegation does not create GitHub write authority or transfer decisions reserved by higher-priority instructions or the caller. Return any reserved operation to its owner with the completed review artifacts; do not ask for approval already supplied in the current request.
+
+An omission challenger is a separate supporting role that returns candidates and gaps. Its no-publication and no-further-delegation limits do not redefine the full reviewer's assigned task. If this reviewer cannot start another agent, use another authorized independent execution when available; otherwise apply the high-risk draft rule below without treating the absence of an adapter as a blocker to useful review.
 
 ## Choose the feedback profile
 
@@ -55,7 +61,7 @@ The profile controls feedback breadth, not review depth. Complete the same chang
 
 ### 1. Resolve authority and freeze the target
 
-Read applicable repository instructions, including nested `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, pull request templates, and explicit review guidance. Treat repository style guidance such as `.gemini/styleguide.md` as criteria below executable behavior and repository rules.
+Honor the session's higher-priority instructions. Freeze the PR pair before selecting repository review guidance; read the applicable root and ancestor instructions, optional `REVIEW.md`, contribution rules, and templates under the [trusted-guidance contract](references/review-criteria.md#trusted-review-guidance). Record the guidance revision and effective instruction sources separately from the code snapshot. Repository style guidance such as `.gemini/styleguide.md` remains below executable behavior and repository rules.
 
 Use the full PR URL for every GitHub operation. For GitHub Enterprise, set `GH_HOST` to the URL host; the bundled transaction script does this automatically.
 
@@ -66,26 +72,28 @@ GH_REVIEW_TRANSACTION="<absolute-gh-review-pr-skill-dir>/scripts/gh_review_trans
 python3 "$GH_REVIEW_TRANSACTION" audit --pr <full-pr-url>
 ```
 
-Record the returned base and head SHAs. The audit result establishes snapshot and transaction ownership state only; it is not the semantic review evidence bundle. Separately fetch the PR diff and file patches, changed files, commits, checks, PR body, review bodies, inline threads, issue comments, and unresolved-thread state through authorized read-only GitHub tooling. The bundled-script-only rule applies to review writes, not to those reads.
+Record the returned base and head SHAs, then resolve the trusted review guidance. The audit result establishes snapshot and transaction ownership state only; it is not the semantic review evidence bundle. Separately fetch the PR diff and file patches, changed files, commits, checks, PR body, review bodies, inline threads, issue comments, and unresolved-thread state through authorized read-only GitHub tooling. The bundled-script-only rule applies to review writes, not to those reads.
 
-Re-read both SHAs before adjudication and again through the transaction script before publishing. If either changed, discard snapshot-bound analysis and restart on the new pair.
+Re-read both SHAs before adjudication and again through the transaction script before publishing. If either changed, discard snapshot-bound analysis and restart on the new pair within the [snapshot-attempt allowance](references/review-criteria.md#episode-and-allowance). If no attempt remains, return a draft with the freshness gap instead of treating stale analysis as current.
 
 ### 2. Build evidence before findings
 
 Use this source priority when inputs disagree:
 
 1. Frozen base-to-head diff and code behavior
-2. Applicable repository rules
+2. Applicable repository rules from the recorded trusted guidance revision
 3. Tests, checks, and reproducible validation for that snapshot
 4. Explicitly supplied issue, design, incident, or operational context
 5. PR body and commits as claimed intent
 6. Existing comments as discussion and duplicate context, not behavioral truth
 
-Use a local checkout only when it can represent the exact frozen base and head commits; otherwise inspect immutable remote content. Read [review-criteria.md](references/review-criteria.md) before classifying or publishing findings. It owns [review depth and independence](references/review-criteria.md#review-depth-and-independence), [change mapping and review passes](references/review-criteria.md#change-map-and-review-passes), severity, confidence, causality, reachability, counterevidence, the internal finding ledger, [zero-finding adjudication](references/review-criteria.md#zero-finding-gate), and [human-feedback audits](references/review-criteria.md#human-feedback-audits).
+Use a local checkout only when it can represent the exact frozen base and head commits; otherwise inspect immutable remote content. Read [review-criteria.md](references/review-criteria.md) before classifying or publishing findings. It owns [trusted guidance](references/review-criteria.md#trusted-review-guidance), [review depth and independence](references/review-criteria.md#review-depth-and-independence), [change mapping and review passes](references/review-criteria.md#change-map-and-review-passes), severity, confidence, causality, reachability, counterevidence, the internal finding ledger, [zero-finding adjudication](references/review-criteria.md#zero-finding-gate), [review continuity](references/review-criteria.md#review-continuity-and-convergence), and [human-feedback audits](references/review-criteria.md#human-feedback-audits).
 
 Classify the semantic pass as `fresh-review` or `self-review`. If the active session authored or extensively designed the change, treat its earlier explanations only as claimed intent and run a clean-room adversarial pass from the frozen artifacts. For security-sensitive, cross-service, behavior-removal, migration, or otherwise complex changes, obtain a quality-first semantic pass and, when the runtime and user authority permit it, a separate no-history omission challenge before publication—even when the first pass found issues. Reconcile the union through the same publication gates. If adequate depth or independence is unavailable, stop in `draft` with that gap; never treat one discovered finding as proof that coverage is complete.
 
-When the runtime provides suitable named workers, `evidence_scout` may gather bounded multi-file call-path or test evidence and `bounded_verifier` may run an exact validation packet. A separately configured review-capable worker may challenge candidate coverage only when its competence and no-history input meet the repository's delegation rules. Pass only frozen task artifacts. The primary agent must retain scope, security judgment, final adjudication, publication, and completion approval. The skill does not bind a model name.
+Use the [independent reviewer brief](references/review-criteria.md#independent-reviewer-brief) to assign the omission challenge through an authorized competent subagent, a separate fresh review session, or another available independent reviewer. Follow the environment's delegation rules. Bounded evidence collectors and exact-command validators may support the work but do not replace semantic review. If no independent execution is available, complete useful analysis, retain the actual `fresh-review` or `self-review` classification, and apply the existing high-risk draft rule. The task-owning reviewer adjudicates candidates and completes the assigned review; the challenger does not acquire scope, security, publication, or completion decisions. Any decisions reserved by higher-priority instructions or the caller remain with that owner.
+
+For a requested re-review, apply the [continuity and convergence rules](references/review-criteria.md#review-continuity-and-convergence). A one-shot review ends after its current result. An explicitly authorized review series uses a finite allowance; neither finding a defect nor having allowance left authorizes source edits, extra review rounds, or another GitHub write.
 
 ### 3. Adjudicate before composing
 
@@ -109,9 +117,9 @@ Compose every thread under the [inline-thread content rules](references/review-c
 
 For `audit`, return the frozen base/head pair, ownership and duplicate state, pending-review state, the requested review or anchor findings, and material evidence gaps. When auditing human feedback, classify each concern and provide evidence, the smallest recommended action, and a concise response draft, but never post the response. Stop without creating or submitting a review.
 
-For `draft`, stop after returning the proposed structured summary, selected profile, frozen base/head pair, coverage and review-depth gaps, plus publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, category, and body.
+For `draft`, including `refresh` without current-request publication authority, stop after returning the proposed structured summary, selected profile, frozen base/head pair, guidance provenance, coverage and review-depth gaps, plus publish-ready metadata for every proposed thread: `finding_id`, path, line, side, severity, confidence, disposition, category, and body. For a re-review series, also return the observed round/allowance and unresolved prior concerns in the session receipt, outside the publishing plan.
 
-For `publish` or `refresh`, create a temporary JSON plan and follow [github-publishing.md](references/github-publishing.md). It owns the plan schema, commands, status meanings, pending-review protocol, reconciliation rules, and failure handling.
+For `publish` or explicitly publication-authorized `refresh`, create a temporary JSON plan and follow [github-publishing.md](references/github-publishing.md), including its [publication concurrency requirements](references/github-publishing.md#publication-concurrency). It owns the plan schema, commands, status meanings, pending-review protocol, reconciliation rules, and failure handling.
 
 Use the already resolved absolute script path for review creation and submission:
 

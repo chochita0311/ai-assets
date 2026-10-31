@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
+import sys
 import tempfile
 import unittest
 from collections.abc import Mapping
@@ -12,6 +14,7 @@ from contextlib import redirect_stderr
 from io import StringIO
 from pathlib import Path
 from typing import Any
+from unittest import mock
 
 import gh_review_transaction as transaction
 
@@ -362,6 +365,15 @@ class FakeGitHubClient:
 class TransactionTests(unittest.TestCase):
     def setUp(self) -> None:
         self.ref = transaction.PullRequestRef.parse(PR_URL)
+        self.lock_directory = tempfile.TemporaryDirectory(prefix="gh-review-test-locks-")
+        self.addCleanup(self.lock_directory.cleanup)
+        lock_root = mock.patch.object(
+            transaction,
+            "publication_lock_root",
+            return_value=Path(self.lock_directory.name),
+        )
+        lock_root.start()
+        self.addCleanup(lock_root.stop)
 
     def test_parse_pr_url_requires_canonical_full_url(self) -> None:
         self.assertEqual(self.ref.repository, "octo/widgets")
@@ -768,6 +780,110 @@ This PR replaces stored state and the review focused on failure atomicity and re
         self.assertEqual(result["status"], "noop-existing-snapshot")
         self.assertEqual(result["review_id"], review_id)
         self.assertEqual(client.post_calls, [])
+
+    def test_competing_publisher_stops_before_stale_preflight_can_submit_twice(self) -> None:
+        client = FakeGitHubClient()
+        plan = make_plan()
+        original_post = client.post
+        competing_calls = []
+
+        def interleaved_post(endpoint: str, payload: Mapping[str, Any]) -> Any:
+            if endpoint == f"{self.ref.endpoint}/reviews" and not competing_calls:
+                competing_calls.append(endpoint)
+                with self.assertRaisesRegex(transaction.SafetyError, "publication lock"):
+                    transaction.publish(client, self.ref, plan, "COMMENT")
+            return original_post(endpoint, payload)
+
+        client.post = interleaved_post
+        result = transaction.publish(client, self.ref, plan, "COMMENT")
+
+        self.assertEqual(result["status"], "published")
+        self.assertEqual(len(competing_calls), 1)
+        self.assertEqual(len(client.reviews), 1)
+        self.assertEqual(client.reviews[0]["state"], "COMMENTED")
+        self.assertEqual(len(client.post_calls), 2)
+        rerun = transaction.publish(client, self.ref, plan, "COMMENT")
+        self.assertEqual(rerun["status"], "noop-existing-snapshot")
+        self.assertEqual(len(client.post_calls), 2)
+
+    def test_publication_lock_excludes_another_process_then_releases(self) -> None:
+        code = """
+import sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+import gh_review_transaction as transaction
+transaction.publication_lock_root = lambda: Path(sys.argv[2])
+try:
+    with transaction.publication_lock(transaction.PullRequestRef.parse(sys.argv[3])):
+        print('acquired')
+except transaction.SafetyError:
+    print('busy')
+    sys.exit(3)
+"""
+        command = [
+            sys.executable, "-B", "-c", code, str(Path(__file__).resolve().parent),
+            self.lock_directory.name, PR_URL,
+        ]
+        with transaction.publication_lock(self.ref):
+            blocked = subprocess.run(command, capture_output=True, text=True, timeout=10)
+        acquired = subprocess.run(command, capture_output=True, text=True, timeout=10)
+
+        self.assertEqual(blocked.returncode, 3, blocked.stderr)
+        self.assertEqual(blocked.stdout.strip(), "busy")
+        self.assertEqual(acquired.returncode, 0, acquired.stderr)
+        self.assertEqual(acquired.stdout.strip(), "acquired")
+
+    def test_publication_lock_matches_repository_case_aliases(self) -> None:
+        alias = transaction.PullRequestRef.parse(
+            "https://github.example.com/Octo/Widgets/pull/17"
+        )
+        with transaction.publication_lock(self.ref):
+            with self.assertRaises(transaction.SafetyError):
+                with transaction.publication_lock(alias):
+                    self.fail("a case alias must not bypass the same PR lock")
+
+    def test_publication_lock_does_not_block_a_different_pr(self) -> None:
+        other = transaction.PullRequestRef.parse(
+            "https://github.example.com/octo/widgets/pull/18"
+        )
+        with transaction.publication_lock(self.ref):
+            with transaction.publication_lock(other):
+                pass
+
+    def test_publication_failure_releases_lock_for_reconciled_retry(self) -> None:
+        client = FakeGitHubClient()
+        client.create_failure = "before"
+        with self.assertRaises(transaction.GitHubError):
+            transaction.publish(client, self.ref, make_plan(), "COMMENT")
+        client.create_failure = None
+
+        result = transaction.publish(client, self.ref, make_plan(), "COMMENT")
+
+        self.assertEqual(result["status"], "published")
+        self.assertEqual(len(client.reviews), 1)
+
+    def test_unavailable_lock_stops_before_review_api_calls(self) -> None:
+        client = FakeGitHubClient()
+        with mock.patch.object(Path, "mkdir", side_effect=PermissionError):
+            with self.assertRaises(transaction.SafetyError):
+                transaction.publish(client, self.ref, make_plan(), "COMMENT")
+        self.assertEqual(client.post_calls, [])
+        self.assertEqual(client.reviews, [])
+
+    def test_new_snapshot_can_publish_after_prior_transaction_releases_lock(self) -> None:
+        client = FakeGitHubClient()
+        first = transaction.publish(client, self.ref, make_plan(comments=False), "COMMENT")
+        client.head_sha = NEW_HEAD_SHA
+        plan = transaction.ReviewPlan(
+            BASE_SHA, NEW_HEAD_SHA, "balanced", make_summary(), (),
+        )
+
+        second = transaction.publish(client, self.ref, plan, "COMMENT")
+
+        self.assertEqual(first["status"], "published")
+        self.assertEqual(second["status"], "published")
+        self.assertNotEqual(first["review_id"], second["review_id"])
+        self.assertEqual(len(client.reviews), 2)
 
     def test_version_one_review_marker_still_blocks_same_snapshot_repost(self) -> None:
         client = FakeGitHubClient()

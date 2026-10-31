@@ -25,7 +25,7 @@
 - Shared instruction blocks and copied runtime TOMLs under a Codex home are installed views of these sources. Actual personal, environment, and machine settings remain in the destination `AGENTS.md`.
 
 ## Official Codex References
-- [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, sandbox overrides, and delegation behavior
+- [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, inherited permissions, capability reductions, and delegation behavior
 - [Custom instructions with AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md): global and project instruction discovery
 - [Models](https://learn.chatgpt.com/docs/models): recommended models, special-purpose models, and deprecation guidance
 - [Codex changelog](https://learn.chatgpt.com/docs/changelog): model launches and lifecycle announcements
@@ -42,7 +42,8 @@ agents/adapters/codex/
 ├── model-binding-audit.md
 ├── custom-agents/
 │   ├── evidence_scout.toml
-│   └── bounded_verifier.toml
+│   ├── bounded_verifier.toml
+│   └── review_challenger.toml
 ├── profiles/
 │   └── model-binding-audit.config.toml
 ├── scripts/
@@ -60,6 +61,7 @@ agents/adapters/codex/
 | applicable guidance from `../../instructions/` | selected rules merged into the destination `AGENTS.md` after comparison |
 | `custom-agents/evidence_scout.toml` | regular-file copy at `<codex-home>/agents/evidence_scout.toml` |
 | `custom-agents/bounded_verifier.toml` | regular-file copy at `<codex-home>/agents/bounded_verifier.toml` |
+| `custom-agents/review_challenger.toml` | regular-file copy at `<codex-home>/agents/review_challenger.toml` |
 | `profiles/model-binding-audit.config.toml` | regular-file copy at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
 | `launchd/model-binding-audit.template.plist` | rendered machine-local file at `~/Library/LaunchAgents/<approved-label>.plist` after approval; never a symlink to the template |
@@ -71,6 +73,12 @@ The audit runner executes from its canonical path under `scripts/`; it is not co
 Existing installations that link an old machine-specific plist require a separately approved local-file migration before that source is retired. Preserve the installed label, schedule, model binding, and paths unless their change is also approved; see [Installation And Operation](model-binding-audit.md#installation-and-operation).
 
 This mapping installs personal runtime assets only. It does not export the shared operator policy or template into a consuming repo. Follow [Agent System Adoption Guide](../../ADOPTION-GUIDE.md) for that repository-local installation.
+
+## Worker Permissions
+
+Custom agents inherit the parent session's sandbox, approval policy, provider and MCP servers. A custom-agent `sandbox_mode` declaration does not create an independent permission boundary in current clients. Existing worker files retain their legacy declarations; the read-only or non-editing labels describe their role instructions, not separately enforced sandboxes. Root profiles and the parent session remain the owners of actual permission settings; see the [official permission and custom-agent rules](https://learn.chatgpt.com/docs/agent-configuration/subagents#approvals-and-sandbox-controls).
+
+Supported per-agent feature reductions can disable capabilities such as apps, plugins, memories and permission requests. They do not establish that every inherited tool is read-only. If an assigned task requires enforced read-only isolation, resolve an adequate parent or separate execution boundary before admitting the task; do not claim that a non-editing prompt supplies that guarantee.
 
 ## Model Binding Lifecycle
 
@@ -110,7 +118,7 @@ For an approved installation:
 5. Verify each installed TOML is a regular file, not a symlink, and matches the canonical source byte-for-byte or by content hash. Retain the captured destination state through runtime verification; remove task-owned staging and recovery artifacts once no longer needed.
 6. Leave unrelated global instructions and configuration untouched.
 7. Start a fresh Codex session.
-8. Explicitly invoke each installed named worker and root profile once and verify its actual model and sandbox behavior. A generic subagent invocation or successful file read does not establish that a named worker loads correctly.
+8. Explicitly invoke each installed named worker and root profile once. Verify the actual model and reasoning settings, inherited worker permissions or root-profile sandbox, and the worker's behavioral limits. A generic invocation, a worker's self-report, or a successful file read does not establish that the named binding loads correctly.
 9. Test one positive auto-routing case and one case that must stay with the primary agent.
 
 If runtime verification fails, stop affected use and report the failure. For an installation or synchronization without a model change, restore the captured destination state only within the approved scope and after checking for concurrent changes; otherwise retain it for review. For a model replacement, use [Controlled Migration After An Alert](model-binding-audit.md#controlled-migration-after-an-alert) to recover the canonical binding and installed copies together.
@@ -135,6 +143,33 @@ On macOS, the optional weekly LaunchAgent requires separate installation approva
 - no source edits or independent fixes
 - separates primary failures from cascading failures and reports evidence gaps
 
+### `review_challenger`
+- independent semantic candidate discovery and omission checks from frozen raw artifacts
+- cross-file behavior, terminal consumers, realistic failure paths and counterevidence under the primary's supplied review contract
+- no source edits, execution of reviewed code, GitHub writes, acceptance decisions or further delegation
+- configured with an initial `gpt-6.1-sol` / `max` binding; actual availability, competence and cost require the named-runtime and semantic checks below
+
+This is one Codex implementation of the portable [independent reviewer brief](../../../skills/gh-review-pr/references/review-criteria.md#independent-reviewer-brief). The skill defines the review role without requiring this adapter, this worker name or any model binding. Another authorized competent reviewer can perform the role. This adapter owns only the concrete Codex configuration and installation.
+
+The primary may invoke the installed worker when the active task's skill, project instructions or user request authorizes an independent review and the competence, context, permission and allowance checks pass. The worker description is discovery guidance, not a background router. In `gh-review-pr`, the skill's risk and independence rules determine when a challenge is required. Keep the semantic gates with the supplied contract rather than duplicating them in this adapter or modifying common harness routing to activate the worker.
+
+Pass a no-history task packet with raw immutable evidence and the applicable role brief, not the implementation conversation or expected findings. Use a committed base/head pair for a PR. For a local candidate, the primary supplies an immutable build/bundle with exact source identifiers; no commit is created merely to obtain an identifier. Reconcile returned candidates through the original gates. If a required independent challenge is unavailable, preserve the owning contract's gap and draft/acceptance rules; never relabel the same primary's self-review as independent.
+
+The role's four feature reductions are optional choices, not prerequisites for an independent reviewer:
+
+| Setting | Purpose and tradeoff |
+|---|---|
+| `apps = false` | Reduce connector access. If required evidence exists only in a connected app, the primary must supply an authorized immutable evidence bundle or report the gap. |
+| `plugins = false` | Reduce plugin-provided tools and instructions. This may also remove useful read capabilities; it does not make every inherited tool read-only. |
+| `memories = false` | Reduce prior-context input through memories. This does not erase passed conversation or replace the no-history packet requirement. |
+| `request_permissions_tool = false` | Keep additional permission handling with the primary, to which this role returns bounded validation requests. This does not create a separate sandbox. |
+
+Before relying on these choices, compare a complete local evidence packet with a task whose needed evidence is available only through an app or plugin. A restriction must retain an authorized completion path or produce an explicit evidence gap. Changing these flags does not change the review role's decision boundaries or authorize runtime installation.
+
+Before relying on this binding, verify its exact registered name, actual model/effort, context inputs, parent-permission inheritance and capability reductions in a fresh runtime. Then use answer-isolated cross-file, consumer-boundary, legitimate-zero and duplicate controls to assess its omission benefit and noise. TOML parsing or configuration equality alone is not semantic validation. The existing model-binding audit discovers canonical `custom-agents/*.toml` files, so confirm this binding appears in its manifest without adding a scheduler or model-replacement policy.
+
+Keep observed results and remaining runtime acceptance in the [review-challenger validation record](../../../evidence/agents/codex/review-challenger-validation.md); source publication does not establish installation or activation.
+
 Do not add an automatically invoked code-writing worker until real runs show that its task class is consistently bounded, reversible, and cheaper to review than direct primary-agent work.
 
 ## Routing Validation Cases
@@ -145,8 +180,12 @@ Do not add an automatically invoked code-writing worker until real runs show tha
 | Multi-directory usage and call-path inventory | `evidence_scout` |
 | Broad branch diff evidence with file and symbol citations | `evidence_scout` |
 | Several exact test commands plus failure clustering | `bounded_verifier` |
-| Requirement, architecture, security, persistence, or final review | primary agent |
+| Authorized independent omission challenge with frozen evidence and a competent installed binding | `review_challenger`; primary adjudicates the candidates |
+| The same omission-review role on a runtime without this adapter | another authorized competent execution under the supplied role brief; no adapter dependency |
+| Routine task with no material need for an independent review | primary agent |
+| Requirement, architecture, security, persistence, publication, or final acceptance decisions | primary agent |
 | Optional worker unavailable | primary agent, without generic substitution |
+| Required independent challenge unavailable | owning review contract's draft or evidence-gap rule; primary analysis does not manufacture independence |
 | Explicitly requested worker unavailable | `REQUESTED_WORKER_UNAVAILABLE` |
 
 ## Future Extensions

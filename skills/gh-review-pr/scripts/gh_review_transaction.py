@@ -11,7 +11,8 @@ import re
 import shutil
 import subprocess
 import sys
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any
@@ -1513,6 +1514,44 @@ def reconcile_created_review(
     return str(review.get("state", "")).upper(), review_id, review
 
 
+def publication_lock_root() -> Path:
+    return Path.home() / ".cache" / "gh-review-pr" / "locks"
+
+
+@contextmanager
+def publication_lock(ref: PullRequestRef) -> Iterator[None]:
+    """Exclude publishers for one PR sharing this user's local lock directory."""
+    descriptor = None
+    try:
+        try:
+            root = publication_lock_root()
+            root.mkdir(mode=0o700, parents=True, exist_ok=True)
+            key = hashlib.sha256(ref.url.lower().encode("utf-8")).hexdigest()
+            descriptor = os.open(root / f"{key}.lock", os.O_CREAT | os.O_RDWR, 0o600)
+            if os.name == "posix":
+                import fcntl
+
+                fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            elif os.name == "nt":
+                import msvcrt
+
+                msvcrt.locking(descriptor, msvcrt.LK_NBLCK, 1)
+            else:
+                raise SafetyError("publication locking is unavailable on this platform")
+        except (ImportError, OSError, RuntimeError) as error:
+            raise SafetyError(
+                "the publication lock is busy or unavailable; this call made no review "
+                "API request. After any active publisher finishes, run audit before "
+                "retrying; do not bypass or delete the lock file"
+            ) from error
+        yield
+    finally:
+        if descriptor is not None:
+            # Closing releases the OS lock, including on exceptions. Keep the inode:
+            # unlinking it could let another publisher lock a different file.
+            os.close(descriptor)
+
+
 def publish(
     client: GitHubClient,
     ref: PullRequestRef,
@@ -1528,6 +1567,16 @@ def publish(
     if event == "APPROVE" and blocking:
         raise PlanError("APPROVE cannot be used with a blocking finding")
 
+    with publication_lock(ref):
+        return _publish_locked(client, ref, plan, event)
+
+
+def _publish_locked(
+    client: GitHubClient,
+    ref: PullRequestRef,
+    plan: ReviewPlan,
+    event: str,
+) -> Mapping[str, Any]:
     checked = preflight(client, ref, plan)
     if checked.status == "noop-existing-snapshot":
         existing_comments = sum(
