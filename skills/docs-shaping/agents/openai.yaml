@@ -1,7 +1,7 @@
 interface:
   display_name: "Docs Shaping"
   short_description: "Non-destructively reshape document composition"
-  default_prompt: "Use $docs-shaping to review the selected document(s) or sources at the scope needed for the request and current work, reshape only where necessary while preserving meaning and constraints, and report changes or a justified unchanged result."
+  default_prompt: "Use $docs-shaping to review the selected documents or sources at the scope needed for the request and current work, check explanation versus work history and reader-needed detail, reshape only where necessary while preserving meaning and constraints, and report changes or a justified unchanged result."
 
 policy:
   allow_implicit_invocation: true

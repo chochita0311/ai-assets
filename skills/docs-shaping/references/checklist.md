@@ -20,11 +20,14 @@ Use this as the final quick validator after a document-shaping pass.
 - If a high-risk `major` intervention was explicitly authorized, did the report name the authorization basis and pre-edit preservation inventory, were the inventoried unique content and constraints preserved, and were any requested tradeoffs kept explicit?
 - Is the new structure easier to follow than the original?
 - Do headings now match the content they own?
+- Are current explanation, active work, and dated evidence distinguishable without making work history look like guidance through heading changes?
+- Does each displayed execution identifier or technical value serve the reader here, while necessary compatibility, identifier-format, and reproduction details remain exact?
+- Was misowned material retained at a verified authorized owner, or kept accessible in its source with the placement gap reported instead of a default new log or catch-all appendix?
 - Are repeated ideas consolidated into one canonical place where appropriate?
 - Were rules, caveats, and exceptions preserved?
 - Were force words such as `must`, `should`, `only`, `never`, and `unless` preserved accurately?
 - Were claim status and identity boundaries preserved without upgrading uncertainty or collapsing distinct actors, channels, environments, or systems?
-- Was preservation checked in both directions, with each substantive source statement matched to an actual output passage and each factual output statement supported?
+- Was preservation checked in both directions, with each substantive source statement matched to an actual output or retained source/evidence passage, linked destinations verified, and each factual output statement supported?
 - Were relationship direction, number-to-subject pairings, units, timing, persistence, change conditions, fixed-versus-illustrative facts, settled-versus-open requirements, and separate evidence/approval states retained accurately, including through headings, table columns, and grouping?
 - Did proposed designs keep retained facts and requirements binding, and were easily confused paraphrases checked against their source terms and definitions?
 - Were discovered omissions or incorrect paraphrases repaired and dependent claims rechecked before accepting the result?
@@ -38,12 +41,14 @@ Use this as the final quick validator after a document-shaping pass.
 - Were unchanged stable areas reported explicitly?
 - Were low-confidence compressions, merges, or splits avoided or called out?
 - If `intake` mode was used, were unresolved or low-confidence fragments handled explicitly?
+- Did `intake` distinguish maintaining existing supporting/evidence owners from optional audience-specific derived views, without forcing all fragments into the primary artifact or creating unrequested records?
 - If `intake` mode emitted multiple outputs, were derived views labeled explicitly and kept role-distinct?
 - If `intake` mode emitted derived views, were they user-requested, user-confirmed, or otherwise clearly justified instead of being treated as an automatic default?
 - If `intake` mode did not emit derived views, were any useful next derived views suggested explicitly instead of being silently folded into the current pass?
 - If the output was written as a comparison copy, were source-relative terms preserved unless relocation was explicitly requested?
 - If the input was PDF or mixed-media, were evidence artifacts and extraction-quality confidence reported when they mattered to trust in the result?
 - Did `intake` avoid drifting into PRD, execution planning, repo/docs structure design, or implementation-spec authoring unless explicitly requested?
+- Were intentional single-file role boundaries supported without treating file selection alone as permission to mix purposes, while respecting intervention gates and keeping duplicate closeouts or pass reports out of explanation?
 - If the real issue turned out to be ownership across files, was that boundary called out clearly and, if `$docs-structuring` was available and relevant, was it suggested as a better fit?
 
 ## Final Question

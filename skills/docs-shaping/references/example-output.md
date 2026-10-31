@@ -4,6 +4,12 @@ Use this as a shape reference for a full `docs-shaping` pass.
 
 This is an example of the reporting format, not a mandatory literal template.
 
+## Contents
+
+- [Full-pass reporting example](#operating-mode-used)
+- [Intake example notes](#intake-example-notes)
+- [Content role examples](#content-role-examples)
+
 For bounded work, a compact result is sufficient: "Reviewed the revised runbook procedure and its prerequisites, warnings, and linked exceptions. Separated a diagnostic example from a destructive command because the shared block invited accidental execution. Preserved both commands and their conditions; no broader outline change. Other runbooks were not reviewed."
 
 For an unchanged follow-up: "Rechecked the edited procedure and qualifying warnings against the prior review. No remaining composition problem or meaning loss in this scope; no further changes." A whole-set request still requires whole-set review, even when only one file changes.
@@ -89,3 +95,16 @@ A request to check whether an expanded guide set still reads as a coherent whole
   - grouped versus deferred fragments
   - unresolved or low-confidence source material
 - Do not emit PRDs, execution plans, repo/docs structure proposals, or implementation specs by default from `intake`.
+
+## Content Role Examples
+
+These synthetic cases apply when this skill runs alone as well as when a separate ownership review is available.
+
+| Input | Expected disposition |
+| --- | --- |
+| A guide paragraph combines “Retries require version 2.4 or later” with a dated run ID, build hash, and one-off pass receipt; the selected set includes the existing verification record. | Keep the compatibility condition in the explanation. Preserve the run-specific values, result, environment, and limits in the verified record and link it when useful. Merely renaming the paragraph “Implementation notes” does not resolve the mixture. |
+| A reproduction step uses an exact source revision and distinct source/input hashes; an API reference specifies an identifier's required format. | Keep the exact values and format where the reader must execute or compare them, with labels explaining their subjects. Do not simplify them away for a cleaner-looking page. |
+| A single selected working note has a confirmed constraint, a future proposal, and a failed dated experiment. | Keep the constraint binding, the proposal tentative, and the experiment historical with its conditions. Use clear local sections when adequate; do not force a new file or turn the experiment into a general rule. |
+| Intake combines source fragments for a guide with task notes and an existing evidence record. | Produce the primary guide while preserving the other material in appropriate existing sources or owners. Do not copy the whole work history into the guide, reinterpret the record as a required derived view, or create a new plan/log by default. |
+| Only an explanation guide is selected and a proposed relocation has no suitable authorized destination. | Keep the original material accessible and report the unresolved placement and scope boundary. The single-file selection does not authorize turning the guide into a working log; do not silently omit material or claim that an appendix alone fixes the ownership problem. |
+| A follow-up finds no remaining composition defect, changed evidence, or new execution. | Return an unchanged result in the response; do not add a review appendix or repeat the prior closeout in the artifact. |

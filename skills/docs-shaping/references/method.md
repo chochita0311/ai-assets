@@ -6,6 +6,7 @@ Use this file for the full document-shaping procedure.
 
 - [Purpose](#purpose)
 - [Review Scope And Evidence Reuse](#review-scope-and-evidence-reuse)
+- [Content Roles And Reader Needs](#content-roles-and-reader-needs)
 - [Working Sequence](#working-sequence)
 - [Handoff Logic](#handoff-logic)
 - [Reporting Standard](#reporting-standard)
@@ -43,6 +44,21 @@ Use this file for the full document-shaping procedure.
 - Stop after the requested coverage, necessity decision, and applicable preservation checks are complete, with gated or uncertain interventions explicitly reported. A well-supported unchanged result is complete, not a reason to search for cosmetic work.
 - State any incomplete coverage instead of silently narrowing the request. Do not label material stable solely because it was not edited. Keep evidence notes session-local unless persistence is separately required.
 
+## Content Roles And Reader Needs
+
+### Judge each passage's function and placement
+- Distinguish current knowledge and guidance, active proposals/status/next actions, and dated execution or verification evidence within the selected content. A shared subject does not make these roles interchangeable; a log can itself be the authoritative record of an event.
+- Ask whether removing or relocating a detail would prevent the intended reader from completing this document's task, then whether the exact value is needed at this point. Do this even when no neighboring skill is available. Moving a work receipt under a tidier heading or into an appendix does not by itself make it suitable explanation.
+- For explanation and user guides, preserve the concepts, current behavior, conditions, exceptions, and rationale needed to understand and act. Keep internal run IDs, commit lists, raw hashes, temporary paths, and test receipts with their evidence when the reader does not need them here; accuracy and traceability alone do not justify a string dump in the narrative.
+- Retain exact supported versions, identifier formats, executable commands, fixed reproduction inputs, and content fingerprints where the reader must use or compare them. Explain their purpose; keep versions and each subject's fingerprints distinct. Dates, technical syntax, historical rationale, and negative findings are not removal criteria by themselves. Research, ADRs, and evidence records may require them.
+
+### Preserve material within the authorized scope
+- Use suitable sections or existing owners in the selected document set for knowledge, active work, and dated evidence. Update changed explanation in place instead of appending session chronology, and do not turn a scoped observation or proposal into a general rule or accepted decision.
+- Verify retained source and destination passages before removing a relocated block. Preserve the full meaning, exact values, relevant time/environment, conditions, examples, rationale, uncertainty, and source connections; a link must not replace the explanation or qualifications that this reader still needs.
+- If no suitable owner is resolved, or movement exceeds scope, keep the original material accessible and report the specific gap. Do not create a new log by default, silently omit the content, or force it into the primary narrative. Broader ownership decisions use the existing handoff boundary; they do not prevent detecting and reporting the mixture here.
+- A single-file request does not by itself permit turning explanation into a working log. When the requested artifact or established document contract intentionally combines roles, distinguish them with clear sections or fields and explicit time/scope rather than forcing new files. Otherwise preserve the explanation's intended role and report unresolved placement. Existing intervention and approval rules still govern any split, consolidation, or broad rewrite.
+- Keep shaping receipts in the response unless the task authorizes persistence at a resolved record owner. Reuse existing records rather than creating a new log by default. If no further change is needed and no new execution occurred, report unchanged instead of appending a duplicate closeout.
+
 ## Working Sequence
 
 ### 1. Read for substance first
@@ -51,6 +67,7 @@ Use this file for the full document-shaping procedure.
   - purpose
   - audience
   - document genre
+  - content roles and reader needs, using the procedure above
   - hard constraints
   - decisions and rationales
   - caveats and exceptions
@@ -116,6 +133,8 @@ Use this file for the full document-shaping procedure.
   - stable sections being dragged into churn by nearby edits
   - new structure being imposed where the existing structure is already sufficient
   - related files drifting into incompatible heading or section-label patterns without good reason
+  - execution receipts or active work made to look like current guidance through heading changes
+  - opaque identifiers interrupting explanation without a reader task that needs those values there
 
 ### 3a. Detect destructive-risk signals
 - Be cautious when:
@@ -148,7 +167,8 @@ Use this file for the full document-shaping procedure.
   - policy: purpose -> scope -> rules -> exceptions -> notes
   - guide: goal -> prerequisites -> steps -> variations -> troubleshooting
   - design note: context -> problem -> constraints -> approach -> tradeoffs
-  - planning/logging: context -> current state -> decisions -> next steps -> tracking details
+  - plan: context -> goals -> current state -> decisions -> next steps -> tracking details
+  - execution/log: scope and time -> inputs and environment -> actions -> results -> decisions and rationale -> limits -> follow-up
   - manuscript-style explanation: thesis -> distinctions -> method -> examples -> limits
 - Keep one canonical home per idea when possible.
 - Do not introduce artificial structure where the existing structure is already sufficient.
@@ -179,19 +199,20 @@ Use this file for the full document-shaping procedure.
   - no caveat, exception, or force-word difference is lost
 - If in doubt, preserve and annotate rather than compress.
 - If the user explicitly authorizes high-risk `major` compression, preserve the meaning of unique material, keep requested tradeoffs explicit, and do not treat authorization as permission to discard examples, caveats, decisions, or constraints silently.
-- Compare in both directions before accepting the result: match each substantive source statement to an actual passage in the shaped artifact, and trace each factual output statement to its source. Do not rely on overall similarity. This can be an internal check; it does not require a saved inventory or visible checklist.
+- Compare in both directions before accepting the result: match each substantive source statement to an actual passage in the appropriate shaped output or retained source/evidence owner, verifying linked destinations rather than assuming they preserve it, and trace each factual output statement to its source. Do not rely on overall similarity. This can be an internal check; it does not require a saved inventory or visible checklist.
 - Verify the actor, action, object, relationship direction, number-to-subject pairing, unit, condition, negation, force, and claim status of changed statements, including each subject's timing, persistence, and change conditions. Keep fixed facts distinct from examples, settled requirements from open decisions, and evidence strength from approval status. A proposed design still carries its retained facts and binding requirements. Check headings, table columns, and grouping as part of the claim's meaning. When translating inverse or easily confused terms, keep the source term beside the paraphrase and check its defining actor or perspective; do not infer semantics from a label alone.
 - Repair any omission, unsupported addition, or changed relationship, then recheck dependent claims. If equivalence is uncertain, retain the faithful passage instead of accepting a fluent substitute. Correct a demonstrated source error explicitly from evidence; preservation does not require repeating it.
 
 ### 5b. Intake shaping
 - In `intake` mode:
   - inventory the source set
-  - separate canonical content, supporting material, and tentative fragments
+  - separate canonical content, supporting material, and tentative fragments by their content roles
   - group related fragments before drafting the target structure
   - preserve uncertainty when the source is incomplete or ambiguous
   - produce one clearly identified primary shaped artifact by default
   - do not force every source fragment into the main narrative
-- Some material may remain as notes, appendix, or unresolved items if forcing it into the main flow would reduce clarity.
+- Some material may remain as notes, appendix, or unresolved items when it fits that document's role and forcing it into the main flow would reduce clarity. Apply the content-role procedure before using an appendix; it is not a default home for unrelated execution history.
+- Maintaining an existing supporting or evidence owner is distinct from creating an audience-specific derived view. It does not authorize a new record, a new document tree, or downstream planning; preserve unresolved fragments in their original sources and report their placement when no authorized owner is available.
 - Additional outputs may be created as derived views only when:
   - the user asks for them, or
   - the source clearly supports distinct audience-specific views without inventing new strategy
@@ -238,6 +259,8 @@ Use this file for the full document-shaping procedure.
   - confirmed facts, proposals, inferences, and unresolved items did not gain stronger certainty through headings or summaries
   - distinct actors, channels, environments, and systems were not collapsed unless the source established their equivalence
   - unchanged stable sections were left alone on purpose
+  - knowledge, active work, and dated evidence remain distinguishable, including in intentionally mixed single-file documents
+  - retained identifiers serve the reader at their displayed location, and relocated material remains complete at its verified owner
 
 ## Handoff Logic
 
@@ -269,6 +292,7 @@ Use this file for the full document-shaping procedure.
   - unchanged stable sections
   - evidence artifacts and extraction-quality confidence for PDF or mixed-media intake when relevant
   - preservation notes
+  - retained owners and unresolved placement when content roles were mixed
   - confidence and unresolved risks
 
 ## Finish Pass

@@ -1,6 +1,6 @@
 ---
 name: docs-shaping
-description: Reshape existing documents or a raw source set into clearer, coherent, navigable content while preserving meaning, constraints, and intent. Apply only necessary, non-destructive composition changes. Do not use for repository-wide document ownership or tree cleanup, cosmetic-only edits, or downstream PRD, planning, or specification authoring.
+description: Reshape existing documents or a raw source set into clearer, coherent, navigable content while preserving meaning, constraints, and intent. Use for composition problems, including explanation mixed with work history or reader-irrelevant execution detail. Apply only necessary, non-destructive changes. Do not use for repository-wide document ownership or tree cleanup, cosmetic-only edits, or downstream PRD, planning, or specification authoring.
 ---
 
 # Docs Shaping
@@ -76,6 +76,7 @@ Produce a document or document set with these properties:
 - the structure is clearer and easier to scan
 - repeated ideas are consolidated into one canonical place
 - rules, caveats, and exceptions stay attached to the guidance they qualify
+- current explanation, active work, and dated evidence remain distinguishable, with detail suited to the reader's task
 - the result feels intentionally designed rather than historically accumulated
 - stable sections remain untouched unless change is necessary
 - changed versus unchanged areas are explicit when reshaping a document set
@@ -83,11 +84,11 @@ Produce a document or document set with these properties:
 
 ## Workflow Summary
 
-1. Resolve the target and review scope from the request and available task evidence, then read for purpose, audience, genre, constraints, and hidden structure.
+1. Resolve the target and review scope from the request and available task evidence, then read for purpose, audience, genre, content roles, constraints, and hidden structure.
 2. Decide whether restructuring is actually necessary.
 3. Diagnose the composition failures that justify intervention.
 4. Apply the minimum effective reshaping.
-5. Validate that substance, force words, and exceptions were preserved.
+5. Validate that substance, force words, and exceptions were preserved in appropriate sections or retained owners.
 6. Check the result with the checklist.
 
 ## Adaptive Review Scope
@@ -113,6 +114,7 @@ Produce a document or document set with these properties:
 - Do not rewrite already-stable sections for aesthetic neatness.
 - Do not introduce artificial structure where the existing structure is sufficient.
 - Do not silently drop meaningful content.
+- Apply [the content-role and reader-need checks](references/method.md#content-roles-and-reader-needs) independently: preserving meaning does not require keeping every work receipt or source identifier in the explanation, and accurate provenance alone does not justify its placement there.
 - Do not merge near-duplicate content until you verify that no distinct constraint is being lost.
 - Preserve force words such as `must`, `should`, `only`, `never`, and `unless`.
 - Preserve claim status and identity boundaries: do not upgrade proposals or unresolved mappings into confirmed facts, and do not collapse distinct actors, channels, environments, or systems under a shared label unless the source establishes that equivalence.
@@ -125,7 +127,7 @@ Produce a document or document set with these properties:
 - When intake relies on screenshots, PDFs, or mixed-media sources, preserve traceability and report extraction-confidence when fidelity may be affected.
 - In `intake` mode, produce one clearly identified primary shaped artifact by default.
 - Retain the primary shaped artifact by default when derived views are created.
-- Additional `intake` outputs are optional derived views, not required defaults.
+- Additional audience-specific `intake` outputs are optional derived views, not required defaults. Maintaining an existing supporting or evidence owner is not a derived view or permission to create a new record.
 - Derived views should normally be proposed or user-confirmed rather than emitted by default.
 - If multiple `intake` outputs are emitted, each file must declare its role in one line near the top.
 - Do not expand from `intake` into downstream planning or specification documents unless the user explicitly asks for that next step.
@@ -135,12 +137,15 @@ Produce a document or document set with these properties:
 ## References
 
 Read [references/method.md](references/method.md) for the full procedure, intervention logic, risk signals, and handoff logic.
+Use its [content-role and reader-need procedure](references/method.md#content-roles-and-reader-needs) when explanation, work state, evidence, or execution identifiers are mixed.
 Read [references/checklist.md](references/checklist.md) before finalizing a reshaping pass.
 Read [references/example-output.md](references/example-output.md) when you need the reporting shape for a full pass.
 
 ## Output Format
 
 For a bounded or unchanged pass, concisely report the scope and evidence basis, necessity or no-change reason, changes and preservation checks, and unresolved items. Distinguish reviewed unchanged material from material outside the pass; group stable areas rather than listing every untouched file.
+
+When roles were mixed, state where meaningful material was retained and any unresolved placement. Keep the pass report in the response or at an authorized record owner; do not create a session log or a review appendix by default.
 
 For a full pass, expand the relevant parts into the following without empty sections. Always retain applicable major-intervention authorization/change-map disclosures and intake traceability, regardless of report length:
 - operating mode used (`reshape` or `intake`)

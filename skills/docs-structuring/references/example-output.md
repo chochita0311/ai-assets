@@ -78,3 +78,16 @@ For a bounded or unchanged pass, use a compact result instead (see the closing e
 - Follow-up after those edits: "Rechecked the changed status passages and affected pointers against the prior review. No new drift or ownership conflicts; no further changes. This was a follow-up, not a fresh whole-target audit."
 - Whole-set upkeep after growth: a request to keep the expanded documentation coherent can start with all active owners and their relationships, even without the words "full audit" or a previously identified defect. The task itself justifies broad discovery.
 - Explicit full audit: inventory the entire selected target, review each requested ownership relationship, and report any unexamined areas as gaps. A small or unchanged patch does not reduce the requested review coverage.
+
+## Content Role Examples
+
+These synthetic cases illustrate dispositions, not a required document tree or a record of skill execution.
+
+| Input | Expected disposition |
+| --- | --- |
+| A feature guide accumulates current behavior, next tasks, and one-off test receipts; the set already has a work plan and a RUN. | Update established behavior in the guide, reconcile tasks in the plan, and retain dated checks and limits in the RUN. Verify destinations before removing relocated passages; a shared feature name does not make all three guide content. |
+| A reader-facing guide contains an internal build hash, a supported-version condition, and the required `request_id` format. | Keep the version condition and identifier format in the guide. Retain the internal hash in its existing evidence record when readers do not need it to use the feature; do not hide the same irrelevant block in a guide appendix. |
+| Reproduction instructions require a tool version, a source fingerprint, and a separate input fingerprint. | Retain all three with their distinct subjects and uses. Opaque strings can be essential executable reference; do not replace either fingerprint with the version. |
+| The user selects one working document with current reference, proposed work, and dated observations. | Keep the file and make the sections' roles, applicability, and time explicit. Do not force a split solely to obtain one file per content role. |
+| Only a reader-facing guide is selected; it contains a unique execution account but no authorized record owner is resolved. | Preserve the original account and report the exact placement gap. Selecting one guide does not authorize adding work-history sections to it. Do not call it clean, discard the evidence, create a log by default, or treat an unrelated appendix as a resolved owner. |
+| The same closeout is reviewed again with no needed change or new execution. | Report unchanged in the response. Do not append another receipt or recreate the same task in a different owner. |

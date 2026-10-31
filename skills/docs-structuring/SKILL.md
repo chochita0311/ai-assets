@@ -1,6 +1,6 @@
 ---
 name: docs-structuring
-description: Reorganize repository documentation into a clear layered structure with explicit ownership, deduplication, and cross-links. Use when docs are scattered, overlap each other, mix responsibilities, need entrance files such as AGENTS.md or CLAUDE.md aligned, or need to be restructured again as the project grows.
+description: Reorganize repository documentation into a clear layered structure with explicit ownership, deduplication, and cross-links. Use when docs are scattered, overlap each other, mix responsibilities, accumulate plans or execution history in knowledge docs, need entrance files such as AGENTS.md or CLAUDE.md aligned, or need to be restructured again as the project grows.
 ---
 
 # Docs Structuring
@@ -35,6 +35,7 @@ Produce a documentation system with these properties:
 - entrance docs such as `AGENTS.md` or `CLAUDE.md` act as maps, not encyclopedias
 - `README.md` remains user-facing
 - project and domain docs are separated by role and responsibility
+- current knowledge, active work, and execution evidence have clear owners, including within mixed documents
 - specialized material lives outside entrance docs
 - documents link to one another where that improves context discovery
 - duplicated content is removed and replaced with pointers
@@ -44,7 +45,7 @@ Produce a documentation system with these properties:
 
 1. Resolve the documentation target and review scope from the request and available task evidence, then audit and classify the relevant docs.
 2. Identify duplicated facts, mixed-purpose docs, and ambiguous ownership.
-3. Choose the owning layer for each durable fact.
+3. Choose the owning layer and content role for each affected fact, work item, or execution record.
 4. Reorganize by moving or rewriting content into the owning doc.
 5. Add cross-links where they materially improve context discovery.
 6. Track the changes explicitly as `before -> after`.
@@ -79,6 +80,8 @@ Produce a documentation system with these properties:
 - Keep every file clean, concise, and organically integrated into the doc tree.
 - When changing one doc, check nearby docs and linked docs for stale context.
 - If guidance already exists in the correct owner doc, link to it instead of copying it.
+- Classify affected passages as well as whole files, and check whether the intended reader needs each detail in that document; use [references/layer-model.md](references/layer-model.md#content-roles-and-reader-needs).
+- Reconcile session outcomes into their existing knowledge, work, or evidence owners instead of appending the session narrative to a guide. Preserve unique material and report unresolved placement; do not create a session log by default.
 - Prefer document structures that clarify ownership and navigation instead of copying folder patterns mechanically.
 - When a repository uses a durable-rule versus active-plan split, prefer `docs/policies/` for owned rules and `docs/plans/` for sequencing, refactoring, and roadmap material.
 - Do not remove preexisting file content just to make the tree look cleaner; preserve and reorganize it unless the user explicitly wants content removed.
@@ -88,13 +91,15 @@ Produce a documentation system with these properties:
 ## References
 
 Read [references/method.md](references/method.md) for the full procedure, decision logic, and approval boundaries.
-Read [references/layer-model.md](references/layer-model.md) when you need a concise model for assigning document ownership.
+Read [references/layer-model.md](references/layer-model.md) when assigning document or passage ownership, including reader needs and placement of execution identifiers.
 Read [references/checklist.md](references/checklist.md) before finalizing a documentation reorganization.
 Read [references/example-output.md](references/example-output.md) when you need the reporting shape for a full pass.
 
 ## Output Format
 
 For a bounded or unchanged pass, report the scope and evidence basis, findings or changes, validation, and unresolved items concisely. Distinguish reviewed material from material only inventoried or outside the pass; do not enumerate every untouched file or emit empty sections.
+
+When content roles are mixed, identify the retained owners and any unresolved destination without creating a separate inventory artifact by default.
 
 For a full pass, expand the relevant parts into:
 - operating mode used (`incremental` or `restructure`)

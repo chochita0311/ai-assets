@@ -7,7 +7,11 @@ Use this as the final quick validator after a documentation cleanup.
 - Was review breadth sufficient for the task, allowing whole-target discovery without a prior local defect or special request, while honoring explicit full audits and not treating inventories, samples, or untouched files as semantically verified?
 - Was reused evidence still current and applicable, with independent judgments preserved in paired reviews?
 - Were scope, completed checks, and any coverage gaps reported proportionately, without requiring a full report for a bounded or unchanged pass?
-- Does each reviewed document have one clear responsibility?
+- Does each reviewed document have one clear responsibility, with intentional mixed-role sections explicitly scoped?
+- Were knowledge/guidance, active work, and execution/evidence distinguished at passage level even when they share a topic?
+- Does retained technical detail serve the intended reader at its location, with unnecessary provenance moved to its owner and required compatibility/reproduction identifiers preserved?
+- Were relocated passages verified at their destinations with unique meaning and evidence limits intact, or preserved in place with the unresolved owner reported?
+- Were changed facts and status reconciled into existing owners without duplicate closeout entries, a new session log by default, or a review report pasted into explanation?
 - Is the entrance layer acting as a map rather than an encyclopedia?
 - If multiple AI entrance docs exist, are they aligned to the same ownership model?
 - If multiple AI entrance docs exist, do overview/docs-map files point to that entrance layer clearly enough?
@@ -26,6 +30,7 @@ Use this as the final quick validator after a documentation cleanup.
 - Did the pass avoid aesthetic-only restructuring of already-stable docs?
 - Can a reader follow context across the layers without guessing where to go next?
 - Were optional larger restructures proposed before being applied?
+- Were single-file requests respected without treating file selection alone as permission to mix purposes or forcing a split solely because several content roles were present?
 - Did necessary fixes improve maintainability, or was leaving the reviewed structure unchanged justified?
 
 ## Final Question

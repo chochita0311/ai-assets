@@ -75,11 +75,14 @@ Use this file for the full document-structuring procedure.
   - development
   - roadmap
   - specialized reference
-  - tracking or logs
+  - active-work tracking
+  - execution or evidence records, including logs
+- Inspect affected passages as well as the file's primary topic. Apply [the content-role and reader-need model](layer-model.md#content-roles-and-reader-needs) even when only this skill is available; a feature guide can still contain a misowned run receipt.
 - If a file cannot be summarized in one short ownership statement, treat it as mixed-purpose.
 - Keep a compact working table during the pass:
   - file
   - role
+  - affected section and content role when the file is mixed
   - owner level
   - current problems
   - planned action
@@ -96,6 +99,8 @@ Use this file for the full document-structuring procedure.
   - multiple AI entrance docs drifting apart
   - stale docs-map or overview pointers
   - stable docs collecting temporary tactical notes
+  - guides accumulating session chronology, execution identifiers, or pass receipts that their readers do not need
+  - observations or proposed work presented as current rules without supporting authority
 
 ### 3a. Detect drift explicitly
 - Record drift as one or more of:
@@ -142,6 +147,13 @@ Use this file for the full document-structuring procedure.
   - multiple structures are plausible
   - suggest the change instead of applying it
 - Use confidence to decide whether to apply, apply-with-note, or suggest-only.
+
+### 4b. Reconcile knowledge, work, and evidence
+- Update changed current facts and guidance in place, keep progress and next actions in their active-work owner, and preserve dated actions, checks, results, and limits in their execution/evidence owner. Use the repository's existing roles rather than requiring a new folder or one file per role.
+- Extract reusable facts from work records only when the source establishes their applicability. Keep a local test result scoped to its environment; it does not create a general policy, change a proposal into an accepted decision, or grant approval.
+- Before removing a relocated passage from its former home, verify the destination preserves its unique facts, conditions, examples, rationale, timing, identifiers, and evidence limits. Retain useful source connections, and keep each explanation understandable without opening links merely to discover its required conditions.
+- If the owner is unresolved or movement exceeds scope, preserve the existing material and report the exact placement gap. Do not silently discard it, invent a new session log, or put it into a guide solely because no record owner exists. Apply clear authorized re-homing directly; keep the existing approval boundaries for optional splits and broader changes.
+- Respect a single-file selection without assuming it permits mixed purposes. When the requested artifact or established document contract intentionally combines roles, distinguish current explanation, active work, and dated evidence through clear sections or fields with their scope and time. Otherwise preserve the explanation's intended role and report unresolved placement. Do not force a file split merely because several roles are present.
 
 ## Entrance-Doc Handling
 
@@ -190,6 +202,8 @@ Use this file for the full document-structuring procedure.
 
 ## Change Tracking
 - Track the pass explicitly as `before -> after`.
+- Keep the pass report in the response unless the task authorizes persistence at a resolved record owner. Reuse existing records; do not create a new session log by default, paste a review receipt into explanation, or create a permanent report merely to show the pass occurred.
+- Reconcile existing work items and records before adding status or execution entries. If no further change is needed and no new execution occurred, report an unchanged result instead of appending another closeout entry.
 - Record:
   - operating mode used
   - target, scope basis, and coverage (content-reviewed, mechanically checked, or only inventoried)
@@ -197,6 +211,7 @@ Use this file for the full document-structuring procedure.
   - structure changes
   - ownership changes
   - moved content
+  - retained knowledge, work, and evidence owners when roles were mixed, including unresolved placement
   - removed duplication
   - cross-link additions
   - suggested-only restructures
