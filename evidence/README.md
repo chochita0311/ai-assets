@@ -49,7 +49,6 @@ Current records span harness and skill subjects.
 | [ir-documentation-content-role-validation](skills/documentation/documentation-content-role-validation.md) | `skills/docs-structuring`, `skills/docs-shaping` | Documentation content-role validation |
 | [ir-context-freshness-independent-maintenance](skills/maintain-context-freshness/context-freshness-independent-maintenance.md) | `skills/maintain-context-freshness` | Independent context maintenance validation |
 | [ir-context-freshness-disposal-validation](skills/maintain-context-freshness/context-freshness-disposal-validation.md) | `skills/maintain-context-freshness` | Context archive and deletion validation |
-| [ir-context-freshness-claude-discovery](skills/maintain-context-freshness/context-freshness-claude-discovery.md) | `skills/maintain-context-freshness` | Context skill discovery in Claude |
 | [ir-pr-review-semantic-corpus](skills/gh-review-pr/pr-review-semantic-corpus.md) | `skills/gh-review-pr` | PR review semantic corpus and comparisons |
 | [ir-pr-review-live-validation](skills/gh-review-pr/pr-review-live-validation.md) | `skills/gh-review-pr` | PR review controlled live validation |
 | [ir-codex-review-challenger-validation](agents/codex/review-challenger-validation.md) | `agents/adapters/codex/custom-agents/review_challenger.toml` | Codex review-challenger runtime validation |
