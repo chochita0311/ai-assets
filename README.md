@@ -4,10 +4,11 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
-- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, shared instructions, runtime adapters, and execution templates
+- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, shared instructions, prompt presets, runtime adapters, and execution templates
 - [evidence/](evidence/README.md): generalized improvement evidence, reusable knowledge and pending work, organized by asset domain and component
 - [agents/policies/](agents/policies/README.md): session-wide defaults under `baseline/`, harness governance under `harness/`, and evaluation criteria under `review/`
 - [agents/instructions/](agents/instructions/README.md): generated shared local-AI instructions and selectable personal, environment, and machine guidance
+- [agents/presets/codex/](agents/presets/codex/README.md): reusable Codex prompt presets with a numbered catalog and independent full or selective import into local configuration
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
 - [tools/](tools/README.md): standalone reusable utilities organized by provider and tool
 - [scripts/](scripts/): repository-level validation and maintenance tools shared across asset packages
@@ -17,6 +18,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
 - Use the [improvement record catalog](evidence/README.md) for reusable knowledge and pending improvements across asset domains, stored by component. The [record and exchange contract](agents/policies/harness/improvement-record-contract.md) governs their shared format, placement, import, export and feedback.
 - Read [agents/README.md](agents/README.md) for the shared agent package.
+- Use [Codex Prompt Presets](agents/presets/codex/README.md) to list prompts or import all or selected preset numbers on a PC; that package owns its import procedure separately from runtime adapters.
 - Use [Shared Local AI Instructions](agents/instructions/README.md) for shared-bundle generation and agent-led import of applicable personal, environment-specific, and PC-specific guidance. Runtime adapters own local installation.
 - Use [Response Clarity And Meaning Preservation](agents/policies/baseline/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; its generated runtime rules work without a repository harness or skill.
 - Use [Code Quality](agents/policies/baseline/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification. The Codex adapter installs either baseline for Codex.

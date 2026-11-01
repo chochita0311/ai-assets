@@ -10,6 +10,7 @@
 - Scan the repo root before assuming structure.
 - [agents/](agents/) holds reusable harness roles, flows, operations, profiles, policies, and templates.
 - [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installation procedures.
+- [agents/presets/codex/](agents/presets/codex/README.md) owns reusable prompt presets, their numbered catalog, and full or selective import into local Codex configuration, independently of runtime adapters.
 - [agents/instructions/](agents/instructions/README.md) holds the generated shared local-AI instruction bundle and selectable personal guidance and templates.
 - [agents/templates/](agents/templates/) holds shared planning, execution, evaluation, and non-persistent response scaffolds for consuming repos.
 - [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.

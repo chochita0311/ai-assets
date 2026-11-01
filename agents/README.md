@@ -43,9 +43,13 @@
 - [agents/instructions/standard.md](instructions/standard.md): generated, self-contained response and code quality baselines, delegation rules, and conditional operator-context recognition
 - [agents/policies/README.md](policies/README.md): ownership map for `baseline/`, `harness/`, and `review/` policies
 
+## Prompt Presets Package
+- [agents/presets/codex/README.md](presets/codex/README.md): reusable prompt sources, a numbered catalog, selection rendering, and full or selective import into local Codex configuration
+- Prompt presets own their catalog and import procedure independently of runtime adapters. An import request can select all entries or specific catalog numbers; it configures prompts without executing them.
+
 ## Runtime Adapters Package
 - [agents/adapters/codex/README.md](adapters/codex/README.md): install the shared instruction bundle and applicable personal guidance, named worker and profile bindings, and a read-only model-lifecycle audit into a personal Codex runtime
-- Keep portable policies and shared instructions outside adapters. Adapters own platform-specific discovery and installation, concrete model and capability bindings, and platform-specific audit, runner, and schedule assets. The current packaged adapter is Codex; another runtime can reuse the common instructions through its own verified adapter.
+- Keep portable policies and shared instructions outside adapters. Adapters own platform-specific discovery and installation of their runtime assets, concrete model and capability bindings, and platform-specific audit, runner, and schedule assets. The current packaged adapter is Codex; another runtime can reuse the common instructions through its own verified adapter.
 
 ## Related Shared Docs
 - [agents/policies/baseline/response-clarity.md](policies/baseline/response-clarity.md): session-wide meaning preservation, reader-oriented composition, sources, and the boundary between global response defaults and repository harness behavior
@@ -161,5 +165,5 @@ Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persis
 - Treat the runner guide as the ordered prompt source for the current execution pass instead of generating runtime scaffolding files automatically.
 
 ## Packaging Rule
-- Treat `agents/` as the shared home for stable roles, flows, operations, profiles, policies and templates. Public improvement records belong to the repository-level `evidence/` layer under their subject domain and component.
+- Treat `agents/` as the shared home for stable roles, flows, operations, profiles, policies, prompt presets and templates. Public improvement records belong to the repository-level `evidence/` layer under their subject domain and component.
 - Keep repo-specific operating rules in the consuming repo's `AGENTS.md` or `docs/policies/`; do not hide them inside reusable role definitions.
