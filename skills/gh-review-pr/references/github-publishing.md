@@ -163,7 +163,7 @@ Inside the publication lock, the script performs this transaction:
 3. Add stable hidden run and finding markers to the payload
 4. Create one review in `PENDING` state with all inline comments in one JSON request
 5. Re-fetch the pending review and its comments
-6. Verify state, commit, marker ownership, count, path, exact frozen-diff anchor, body, and the unchanged base/head pair. Prefer returned `line` and `side`; only when both are absent, accept the exact legacy `original_position` computed from the same complete frozen patch and bound to the planned head commit.
+6. Verify state, commit, marker ownership, count, path, exact frozen-diff anchor, body, and the unchanged base/head pair. Prefer returned `line` and `side`; use legacy read-back verification only when both are `None` or missing. First use `original_commit_id` with `original_position`; fall back to `commit_id` with `position` only when both original fields are `None` or missing, never combining fields from the two pairs. The selected commit must equal the planned head commit, and the selected integer position must exactly match the position computed for the planned changed-line anchor from the same complete frozen patch.
 7. Delete the owned pending review and stop if pre-submit verification fails
 8. Submit the verified pending review with the requested event and summary
 9. Read after write and verify final state, markers, count, and anchors
@@ -267,7 +267,7 @@ A reply result reports both the original `review_base_sha` / `review_head_sha` a
 ## Safety boundaries
 
 - Do not hand-build `comments[][line]` fields; use the JSON plan
-- Do not accept `line: null`, legacy `position`, file-level comments, or context-only anchors in a plan or write payload. A read-back response may be verified through its legacy `original_position` only under the exact frozen-patch and planned-head checks in the atomic protocol.
+- Do not accept `line: null`, legacy `position`, file-level comments, or context-only anchors in a plan or write payload. A read-back response may use a legacy pair only under the exact fallback, complete frozen-patch, and planned-head checks in the [atomic protocol](#validate-and-submit).
 - Do not copy review text into the summary when an inline anchor fails
 - Do not retry a timeout by creating another review
 - Do not edit, dismiss, resolve, reply to, or delete human review material

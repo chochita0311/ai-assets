@@ -3,12 +3,12 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-pr-review-semantic-corpus",
-  "revision": 7,
+  "revision": 8,
   "audience": "public",
   "subjects": [{"kind": "skill", "key": "skills/gh-review-pr", "source_revision": null, "content_sha256": "eca6c95927d8395b1266740e3ecef61e4605ba95eec6f7ba6b35173114208595"}],
   "work": {"basis": "planned-work", "state": "open", "readiness": "not-assessed"},
   "knowledge": {"state": "candidate"},
-  "evidence": {"kinds": ["static-observation", "illustrative-synthetic"], "maturity": "fresh-forward-test", "execution": "mixed", "coverage": "partial"},
+  "evidence": {"kinds": ["static-observation", "illustrative-synthetic", "generalized-private-observation"], "maturity": "fresh-forward-test", "execution": "mixed", "coverage": "partial"},
   "adoption": {"public_fitness": "approved", "case_status": "not-requested", "rule_status": "not-proposed"},
   "relations": {"related": ["ir-pr-review-live-validation", "ir-codex-review-challenger-validation"], "supersedes": []}
 }
@@ -22,7 +22,7 @@ Create a reusable privacy-safe semantic corpus for gh-review-pr and compare revi
 
 The comparison inputs were the [Anthropic review workflow](https://claude.dev/blog/solving-code-review-at-anthropic/), [Claude Code Review documentation](https://code.claude.com/docs/en/code-review), and [the associated discussion](https://news.ycombinator.com/item?id=50122951). Fresh-context review, code-backed verification and trusted guidance motivated the local changes; cost, false fixes and transferability remain evaluation questions. Those sources are design inputs, not measurements of this package, and reviewer agreement is not proof that a finding is true.
 
-The selected scope is the portable skill contract and an optional Codex implementation of the omission-review role. Shared harness repair loops, runtime spending limits and budget-exhaustion escalation routing are deferred to a separate broader harness review. The skill's finite snapshot-attempt allowance is an operational instruction, not a time/token/cost cap, automatic repair loop or implemented escalation service. The initial allowance of three is not an empirically optimal review count.
+The original selected scope was the portable skill contract and an optional Codex implementation of the omission-review role. Shared harness repair loops, runtime spending limits and budget-exhaustion routing were deferred to a separate broader harness review. That later source work is now owned by [Workflow Governance](../../../harness/policies/workflow-governance.md) and [Execution Loop Governance](../../../harness/policies/execution-loop-governance.md); it does not supply a new runtime service or close this record's comparison matrix. The skill's finite snapshot-attempt allowance remains an operational instruction, not a time/token/cost cap, automatic repair loop or implemented escalation service. The initial allowance of three is not an empirically optimal review count.
 
 ## Evidence And Evaluation
 
@@ -74,12 +74,38 @@ There is no comparable v1 agent-review run, broad recall/noise estimate or cost
 measurement. Result is PASS for the checked corrections and cases; Evidence
 Coverage remains partial.
 
-High-risk independence, snapshot churn/exhaustion, guidance conflicts and the
-full profile/strategy matrix remain unrun. The optional named worker's remaining
+The earlier ordinary tasks did not exercise high-risk independence, snapshot
+churn/exhaustion, guidance conflicts or the full profile/strategy matrix; those
+PR-specific matrix checks remain open. The optional named worker's remaining
 checks belong to [Codex review-challenger validation](../../agents/codex/review-challenger-validation.md);
 live publication, receipts/accessibility and platform/provider limits belong to
 [controlled live validation](pr-review-live-validation.md). Do not count the two
 ordinary delegated tasks as evidence that either unrun capability works.
+
+### Later offline audit and contract reconciliation — 2026-11-02
+
+A subsequent retained payload audit exercised read-only feedback adjudication:
+it distinguished a faulty test counterargument and pre-existing behavior from
+a supported regression. The related refactor/delivery case covered full and
+repair-delta comparisons, retained a remaining implementation failure, and
+included a legitimate-zero documentation control; its continuation evidence
+and independence limits belong to [the challenger record](../../agents/codex/review-challenger-validation.md#retained-payload-and-repair-observations--2026-11-02).
+These observations do not complete a controlled strategy comparison, the full
+high-risk PR matrix, or live publication. Original audit scratch was removed
+after integration; the retained basis is the originating conversation's reports,
+not a published replay bundle or a newly reconstructed trial count.
+
+The same maintenance pass aligned the publishing reference with the existing
+legacy read-back implementation. Both modern location fields must be None or
+missing; the original commit/position pair is preferred, and the current pair
+is considered only when both original fields are None or missing. The selected
+pair must match the planned head and exact position from the complete frozen
+patch. Write-payload anchor restrictions remain unchanged. This was a prose
+correction, not a new script capability or a live GitHub observation.
+
+The closeout reran all 63 offline transaction tests successfully. This repeats
+resource verification on the unchanged script; it is not an additional semantic
+forward-test or evidence that platform races and provider limits are resolved.
 
 ## Work And Acceptance
 
@@ -152,3 +178,9 @@ separate events.
   runtime and live checks remain with their distinct owners. The generalized
   additions were reviewed for public fitness; no private paths, identifiers or
   original runtime data were copied into the public record.
+
+- Revision 8, 2026-11-02: retained the later offline feedback audit, reconciled
+  the separately completed harness-source work and legacy response description,
+  aligned the disclosed private-observation kind, and recorded the 63-test
+  resource recheck. Historical observations and the
+  remaining PR strategy/publication matrix were preserved; no live write ran.

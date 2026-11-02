@@ -29,10 +29,10 @@ their marked runtime sections without rewriting their text:
 
 | Managed region | Policy source |
 |---|---|
-| `response-clarity` | [Response Clarity And Meaning Preservation](../policies/baseline/response-clarity.md#runtime-instructions) |
-| `code-quality` | [Code Quality](../policies/baseline/code-quality.md#decision-rules) |
-| `competence-routing` | [Competence-First Delegation](../policies/harness/competence-first-delegation.md#runtime-instructions) |
-| `operator-context-continuity` | [Operator Briefing And Review Receipts](../policies/harness/operator-briefing-and-review-receipts.md#runtime-recognition-instructions) |
+| `response-clarity` | [Response Clarity And Meaning Preservation](../../policies/baseline/response-clarity.md#runtime-instructions) |
+| `code-quality` | [Code Quality](../../policies/baseline/code-quality.md#decision-rules) |
+| `competence-routing` | [Competence-First Delegation](../../policies/competence-first-delegation.md#runtime-instructions) |
+| `operator-context-continuity` | [Operator Briefing And Review Receipts](../../harness/policies/operator-briefing-and-review-receipts.md#runtime-recognition-instructions) |
 
 Edit the owning policy's marked rules, keep its detailed guidance consistent,
 then run these commands from the repository root:
@@ -59,17 +59,17 @@ global file or use the same model, tool, or permission settings.
 The four regions remain independently installable. The continuity region is
 only a recognition hook when the consuming repo exposes its detailed policy.
 Install repository-local continuity policy and templates through the
-[adoption guide](../ADOPTION-GUIDE.md); generating or installing the global
+[adoption guide](../../harness/ADOPTION-GUIDE.md); generating or installing the global
 bundle does not export a harness or implicitly install the global baselines
 when a harness is exported.
 
 ## Response Clarity
 
-The `response-clarity` block applies the [shared response policy](../policies/baseline/response-clarity.md) without a skill command or repository-local dependency. Its first priority is preserving substantive meaning; readability changes must not remove conditions, evidence, alternatives, uncertainty, or necessary explanations. Sources and review examples remain in the shared policy rather than expanding every runtime's instruction load.
+The `response-clarity` block applies the [shared response policy](../../policies/baseline/response-clarity.md) without a skill command or repository-local dependency. Its first priority is preserving substantive meaning; readability changes must not remove conditions, evidence, alternatives, uncertainty, or necessary explanations. Sources and review examples remain in the shared policy rather than expanding every runtime's instruction load.
 
-For substantive source synthesis, the installed block keeps the [source-first preservation pass](../policies/baseline/response-clarity.md#claim-review-and-clarification) self-contained: inventory complete claims, resolve scope, preserve each subject and condition, draft and reread, then compare actual final passages with their sources. The block also requires a readability check after preservation and another preservation check after editing. Working records stay in task-owned private scratch with local file tools; simple answers do not require them. Keep records through verification and any active evaluation or recovery, then remove them.
+For substantive source synthesis, the installed block keeps the [source-first preservation pass](../../policies/baseline/response-clarity.md#claim-review-and-clarification) self-contained: inventory complete claims, resolve scope, preserve each subject and condition, draft and reread, then compare actual final passages with their sources. The block also requires a readability check after preservation and another preservation check after editing. Working records stay in task-owned private scratch with local file tools; simple answers do not require them. Keep records through verification and any active evaluation or recovery, then remove them.
 
-The shared policy owns the detailed method and [evaluation criteria](../policies/baseline/response-clarity.md#validation-and-evidence-limits); runtime adapters own installation. The review is executed by the agent. It is not an enforced runtime interception or a guarantee that every omission is detected.
+The shared policy owns the detailed method and [evaluation criteria](../../policies/baseline/response-clarity.md#validation-and-evidence-limits); runtime adapters own installation. The review is executed by the agent. It is not an enforced runtime interception or a guarantee that every omission is detected.
 
 No worker, model, profile, runtime hook, or external summarizer is required. The mandatory rules are in the installed block itself; following a link or reading this checkout is not needed before each answer. The runtime adapter is the installation mechanism, not a separate post-processing stage.
 
@@ -77,7 +77,7 @@ The response baseline and operator-context recognition block can coexist. Keep t
 
 ## Code Quality
 
-The `code-quality` block applies the [shared code quality policy](../policies/baseline/code-quality.md) to code work across sessions. Its complete decision rules are in the installed block; using them requires no skill invocation, repository harness, or access to this checkout.
+The `code-quality` block applies the [shared code quality policy](../../policies/baseline/code-quality.md) to code work across sessions. Its complete decision rules are in the installed block; using them requires no skill invocation, repository harness, or access to this checkout.
 
 Project rules, contracts, actual versions, and existing quality tools determine implementation choices. The block guides simplicity, scoped legacy improvements, version-aware official documentation, and honest verification. Maintain language and tool specifics in their owning projects and official sources. Runtime adapters install the instructions into their effective global instruction files; the bundle adds no runtime hook or automatic lint or test runner.
 

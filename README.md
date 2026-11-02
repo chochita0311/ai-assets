@@ -4,9 +4,10 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## What Lives Here
 - [skills/](skills/): reusable skill packages with `SKILL.md` entry contracts, references, templates, and skill-local metadata
-- [agents/](agents/): reusable harness roles, flows, operations, profiles, policies, shared instructions, prompt presets, runtime adapters, and execution templates
+- [harness/](harness/README.md): reusable runtime-neutral roles, flows, operations, profiles, workflow governance, and execution templates
+- [agents/](agents/README.md): shared instructions, prompt presets, and platform-specific runtime adapters
 - [evidence/](evidence/README.md): generalized improvement evidence, reusable knowledge and pending work, organized by asset domain and component
-- [agents/policies/](agents/policies/README.md): session-wide defaults under `baseline/`, harness governance under `harness/`, and evaluation criteria under `review/`
+- [policies/](policies/README.md): session-wide defaults under `baseline/`, shared delegation policy, and evaluation criteria under `review/`
 - [agents/instructions/](agents/instructions/README.md): generated shared local-AI instructions and selectable personal, environment, and machine guidance
 - [agents/presets/codex/](agents/presets/codex/README.md): reusable Codex prompt presets with a numbered catalog and independent full or selective import into local configuration
 - [pets/](pets/README.md): reusable Codex-compatible pet packages, metadata, and spritesheet assets
@@ -16,13 +17,14 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 ## How To Navigate
 - Start with [AGENTS.md](AGENTS.md) for the operational repo map and working rules.
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
-- Use the [improvement record catalog](evidence/README.md) for reusable knowledge and pending improvements across asset domains, stored by component. The [record and exchange contract](agents/policies/harness/improvement-record-contract.md) governs their shared format, placement, import, export and feedback.
-- Read [agents/README.md](agents/README.md) for the shared agent package.
+- Use the [improvement record catalog](evidence/README.md) for reusable knowledge and pending improvements across asset domains, stored by component. The [record and exchange contract](harness/policies/improvement-record-contract.md) governs their shared format, placement, import, export and feedback.
+- Read [harness/README.md](harness/README.md) for shared workflow roles, orchestration, and adoption; [agents/README.md](agents/README.md) covers independent runtime instructions, presets, and adapters.
+- Use the [optional research workflow](harness/flows/research.md) for bounded, resumable investigation in a harness that explicitly adopts it.
 - Use [Codex Prompt Presets](agents/presets/codex/README.md) to list prompts or import all or selected preset numbers on a PC; that package owns its import procedure separately from runtime adapters.
 - Use [Shared Local AI Instructions](agents/instructions/README.md) for shared-bundle generation and agent-led import of applicable personal, environment-specific, and PC-specific guidance. Runtime adapters own local installation.
-- Use [Response Clarity And Meaning Preservation](agents/policies/baseline/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; its generated runtime rules work without a repository harness or skill.
-- Use [Code Quality](agents/policies/baseline/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification. The Codex adapter installs either baseline for Codex.
-- Use [agents/ADOPTION-GUIDE.md](agents/ADOPTION-GUIDE.md) when exporting or refreshing the agent package in a consuming repo.
+- Use [Response Clarity And Meaning Preservation](policies/baseline/response-clarity.md) for the global response baseline, its sources, and content-preservation checks; its generated runtime rules work without a repository harness or skill.
+- Use [Code Quality](policies/baseline/code-quality.md) for session-wide guidance on project rules, simplicity, version-aware official documentation, and scoped verification. The Codex adapter installs either baseline for Codex.
+- Use [harness/ADOPTION-GUIDE.md](harness/ADOPTION-GUIDE.md) when exporting or refreshing the harness package in a consuming repo.
 - Read [pets/README.md](pets/README.md) before adding or changing a pet package.
 - Run [validate_skill_packages.py](scripts/validate_skill_packages.py) after changing a skill package.
 - Use each skill package's `SKILL.md` as the entry contract for that skill.
@@ -75,6 +77,7 @@ separate merge that preserves its existing instructions and settings; see the
 - [pr-descriptor](skills/pr-descriptor/SKILL.md): create and evaluate evidence-based pull request artifacts, and safely apply explicitly requested description updates
 - [refactor-plan](skills/refactor-plan/SKILL.md): plan bounded refactors with parity and merge-safety gates
 - [refine-skill](skills/refine-skill/SKILL.md): audit or improve an existing skill through evidence, failure diagnosis, and comparable validation
+- [research-sadr](skills/research-sadr/SKILL.md): investigate open questions with competing explanations, independent challenge, and evidence-based conclusions
 - [screen-alignment](skills/screen-alignment/SKILL.md): align a screen with an existing design system
 - [workflow-context-sync](skills/workflow-context-sync/SKILL.md): reconcile multi-source workflow context into an explicitly owned target
 

@@ -77,6 +77,11 @@ Exit gate:
   - `[targeted suites or smoke paths]`
 - Review focus:
   - `[contract parity, persistence semantics, side effects, transaction shape, etc.]`
+- Review preparation when completion or parity will be judged:
+  - `[candidate freeze method; both sides' dependency/configuration/environment and guidance identities]`
+  - `[risk-based independence need and competent reviewer availability]`
+  - `[actual hard limits, source/scope/observability, and completion/stop criteria]`
+  - `[finite planning allowance, reassessment point, and integration/verification/cleanup capacity]`
 - Parity audit coverage (required when parity is requested):
   - `[baseline pinned with resolved commit SHA when available]`
   - `[old->new source mapping complete]`
@@ -84,6 +89,8 @@ Exit gate:
   - `[payload/output mapping audited]`
   - `[side-effect paths audited explicitly]`
   - `[failure-mode paths audited explicitly]`
+  - `[path witnesses through terminal consumers, lifecycle, generated/historical artifacts, and recovery]`
+  - `[actual types/predicates/dependency branches; whole-scope and repair-delta recheck after changes]`
 
 ## Intentional Deltas
 

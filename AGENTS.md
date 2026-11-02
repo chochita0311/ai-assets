@@ -8,12 +8,13 @@
 
 ## Codebase Map
 - Scan the repo root before assuming structure.
-- [agents/](agents/) holds reusable harness roles, flows, operations, profiles, policies, and templates.
+- [harness/](harness/README.md) holds reusable runtime-neutral roles, flows, operations, profiles, workflow governance, and templates.
+- [agents/](agents/README.md) holds shared instructions, prompt presets, and platform-specific runtime adapters.
 - [agents/adapters/](agents/adapters/) holds platform-specific runtime bindings and installation procedures.
 - [agents/presets/codex/](agents/presets/codex/README.md) owns reusable prompt presets, their numbered catalog, and full or selective import into local Codex configuration, independently of runtime adapters.
 - [agents/instructions/](agents/instructions/README.md) holds the generated shared local-AI instruction bundle and selectable personal guidance and templates.
-- [agents/templates/](agents/templates/) holds shared planning, execution, evaluation, and non-persistent response scaffolds for consuming repos.
-- [agents/profiles/](agents/profiles/) holds reusable execution-profile presets for consuming repos.
+- [harness/templates/](harness/templates/) holds shared planning, execution, evaluation, and non-persistent response scaffolds for consuming repos.
+- [harness/profiles/](harness/profiles/) holds reusable execution-profile presets for consuming repos.
 - [pets/](pets/) holds reusable Codex-compatible pet packages and their runtime assets; use [Pet Package Guide](pets/README.md) for the package contract.
 - [tools/](tools/README.md) holds standalone reusable utilities organized by provider and tool.
 - [scripts/](scripts/) holds repository-level validation and maintenance tools; keep skill-local deterministic operations inside the owning skill package instead.
@@ -23,13 +24,13 @@
 - Within each skill package, `agents/` holds UI-facing skill metadata.
 - Within each skill package, `references/` holds detailed method, logic, and validation material.
 - Within each skill package, `templates/` holds output scaffolds.
-- [agents/policies/](agents/policies/README.md) holds session-wide defaults under `baseline/`, workflow governance under `harness/`, and evaluation criteria under `review/`.
+- [policies/](policies/README.md) holds session-wide defaults under `baseline/`, shared delegation policy, and evaluation criteria under `review/`; harness workflow governance belongs to [harness/policies/](harness/policies/).
 
 ## Source Of Truth
 - Keep `AGENTS.md` short and operational.
 - Keep [README.md](README.md) as the overview and navigation doc for humans entering the repo.
-- Keep shared harness and evaluation governance under [agents/policies/](agents/policies/) rather than scattering it across role files.
-- Keep platform-neutral delegation rules under [agents/policies/](agents/policies/) and concrete runtime model bindings under [agents/adapters/](agents/adapters/).
+- Keep workflow governance under [harness/policies/](harness/policies/) and shared evaluation criteria under [policies/review/](policies/review/) rather than scattering them across role files.
+- Keep platform-neutral delegation rules under [policies/](policies/) and concrete runtime model bindings under [agents/adapters/](agents/adapters/).
 - Keep marked runtime rules in their policy owners; generate the shared instruction bundle rather than editing a second copy.
 - Keep the repository-wide skill acceptance bar in [Skill Quality Guide](skills/SKILL-QUALITY.md).
 - Keep repository-wide package-name and named cross-skill-reference validation in [validate_skill_packages.py](scripts/validate_skill_packages.py); the quality guide remains normative, and other applicable static checks remain separate.

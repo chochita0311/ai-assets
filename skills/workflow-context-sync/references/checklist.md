@@ -51,4 +51,4 @@ Use this as the final yes-or-no pass.
 
 ## Final Question
 
-- Can a new session start from the resolved target without creating another context file or repeating the same source discovery?
+- For a persisted outcome, can a new session start from the resolved target without creating another context file or repeating the same source discovery?

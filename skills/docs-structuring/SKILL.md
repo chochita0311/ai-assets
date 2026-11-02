@@ -1,6 +1,6 @@
 ---
 name: docs-structuring
-description: Reorganize repository documentation into a clear layered structure with explicit ownership, deduplication, and cross-links. Use when docs are scattered, overlap each other, mix responsibilities, accumulate plans or execution history in knowledge docs, need entrance files such as AGENTS.md or CLAUDE.md aligned, or need to be restructured again as the project grows.
+description: Reorganize repository documentation into a clear layered structure with explicit ownership, deduplication, and cross-links. Use when docs are scattered, overlap each other, mix responsibilities, accumulate plans or execution history in knowledge docs, need entrance files such as AGENTS.md or CLAUDE.md aligned, or need to be restructured again as the project grows. Do not use for isolated sentence edits with no structural impact or content work that does not involve document ownership or organization. Use for product planning or design-system work only when the task is specifically about document structure.
 ---
 
 # Docs Structuring

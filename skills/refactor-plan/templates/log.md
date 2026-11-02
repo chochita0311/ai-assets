@@ -48,6 +48,8 @@ Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff
   - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
 - If `Preserved`, strict baseline audit completed:
   - `Yes | No`
+- Supporting merge-check decision record when parity or merge safety was judged:
+  - `[path to decision record] | Not applicable`
 
 ## Validation
 

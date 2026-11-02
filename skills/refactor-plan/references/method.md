@@ -91,13 +91,24 @@ Use this file for detailed refactor planning, parity analysis, validation design
 
 ## 4) Review for Behavior Parity
 
+### 4.0 Freeze the Comparison and Review Allowance
+
+- Record the requested baseline reference and resolve the actual current branch, tag, or release to an immutable revision. Recheck a requested moving reference at close; report any change and reconcile affected evidence before using it for a current-reference claim.
+- Freeze the candidate separately: use a full commit SHA or an immutable uncommitted bundle with a complete path/content-hash manifest, including additions, removals, and relevant untracked inputs. Do not invent a head SHA or create a commit just for review. Keep a frozen PR review scoped to its commits rather than adding dirty working-tree changes.
+- For each side, record dependency, configuration, and environment identities and the applicable guidance's source/provenance, revision, and content fingerprint. Record observation time, access limits, and reproduction locators. Keep unknown or unavailable inputs explicit. Candidate guidance edits do not authorize new exclusions or relaxed gates; resolve authority under the existing task contract.
+- Before review, identify actual caller or environment hard deadlines and time, tool-use, cost, or attempt ceilings, with their source, scope, and observability; do not invent a cap. Apply each limit to its constrained action, resource, or whole task: stop before breaching it, while continuing other useful permitted work, including analysis of existing evidence, within remaining limits. Declare completion/stop criteria and a separate finite, risk-appropriate planning allowance and reassessment point, accounting for integration, verification, and cleanup capacity.
+- Treat agent-set allowances as revisable checkpoints, not automatic whole-task stops or failed-quality criteria. A critic may challenge their adequacy; the primary may revise the plan within existing scope, authority, and actual limits without another user approval solely to change its own estimate. Record the new information or unresolved concern, expected information gain, rationale, revised allocation, and outstanding commitments; do not silently extend it or impose a universal round count.
+- Carry cumulative observed usage, spent attempts, stale or interrupted snapshots, unresolved concerns, outstanding commitments, remaining actual capacity, and the current and remaining planning allowance across changed inputs and resumed sessions. A changed snapshot or revised plan does not reset consumption. Mark unobservable usage or capacity as unknown rather than inventing it.
+- Keep the primary responsible for user intent, requirements, skill selection, scope, architecture, source authority, security, permissions, persistence, integration, and final acceptance. A review record does not authorize implementation, external publication, or merge.
+
 ### 4.1 Trace Critical Paths End to End
 
-- Trace each important operation across its full path.
+- Trace each important operation from entry through orchestration, query/write, and payload/output to terminal consumers. Include relevant callers, registration/wiring, startup/shutdown, generated code and copied historical artifacts, batch/helpers, and fallback/recovery paths. Changed files and the existing test list alone do not define the full affected flow.
 - Compare old and new call order and identify:
   - removed steps
   - reordered steps
   - newly introduced branches
+- For every material path, record old/new source locators, the contract or branch compared, a concrete witness, review method, result, and any unaudited reason. Retain distinct paths even when they share a cause.
 
 ### 4.2 Check Persistence and Write Equivalence
 
@@ -119,6 +130,8 @@ For every changed write path, verify:
 - Mark each drift as:
   - intentional and approved
   - unintentional and must fix
+- Compare actual value types, null/blank cases, exact predicates, and distinguishing boundary combinations at logic-unit level. Include applicable storage/state combinations such as memory/disk and fresh/existing targets.
+- Inspect the actual old and new dependency implementations and configuration branches reached by the application. An unchanged call name or application body does not establish equivalent library behavior; unavailable dependency evidence leaves the affected conclusion provisional.
 
 ### 4.4 Check Transaction and Failure Model
 
@@ -148,11 +161,13 @@ For every changed write path, verify:
 - Baseline target is explicit:
   - branch, commit, or release compare target is pinned
   - resolved immutable reference (commit SHA) is recorded when available
+- Candidate identity and both sides' dependency/configuration/environment and guidance evidence satisfy [4.0](#40-freeze-the-comparison-and-review-allowance).
 - Old-to-new source mapping is complete for affected flow:
   - entrypoint
   - orchestration/service path
   - repository/query path
   - payload builder/output writer path
+  - terminal consumers and the relevant lifecycle, generated/historical, helper, and recovery paths in [4.1](#41-trace-critical-paths-end-to-end)
 - Query semantics are compared explicitly for each affected query at logic-unit level:
   - join types and join predicates
   - where predicates
@@ -180,6 +195,31 @@ For every changed write path, verify:
   - parity conclusion must be `Unknown` or `Provisional`
   - do not conclude `Preserved`
 
+### 4.8 Obtain an Independent Omission Challenge
+
+- Before a high-risk refactor completion or parity judgment, assess the need for an independent omission challenge without waiting for another user prompt. Triggers include large structural or control-flow changes, framework/dependency migrations, behavior removal, auth/security, data integrity/transactions, concurrency, and multiple consumers. Obtain a fresh challenge when an authorized, competent reviewer is available within actual limits and the current or justifiably revised plan. Keep routine low-risk work proportional and record the risk decision and any required independence gap.
+- Honor applicable delegation admission and named-worker requirements. Without a harness or adapter, use any permitted competent execution of this bounded code-review brief. Do not substitute a narrow evidence scout or command runner for semantic review, or silently replace an explicitly requested worker. If no eligible fresh reviewer is available, continue useful primary analysis and report the resulting acceptance limit; self-review cannot satisfy required independence.
+- Supply full task constraints, frozen baseline/candidate raw code and diff, surrounding code, contracts, relevant callers/terminal consumers, tests, available validation, and review-instruction provenance, revision, fingerprint, and limits. Distinguish actual resource caps and their sources, the planning allowance, and the assignment's return conditions. Withhold author reasoning, favored conclusions, expected findings, and prior candidate lists from initial discovery. Do not hide necessary facts to manufacture independence.
+- Preserve the initial discovery return before sharing arguments for an informed dispute stage. Record actual reviewer/history exposure, instructions, tools and permissions, and unknown runtime fields. Keep author-context, method, source-lineage, and validation-data independence distinct; repeated sources or reused fixtures are not new independent evidence. Role labels or different models alone establish neither independence nor an OS sandbox.
+- Keep the challenge non-editing and non-executing: no source/runtime mutation, reviewed-code or build/test execution, dependency installation, GitHub feedback, acceptance decisions, or further delegation. A reviewer, including an available `review_challenger`, returns bounded validation requests to the primary or an authorized capable validator when execution evidence is needed.
+- Require the return to identify inspected scope, callers and terminal consumers, candidates, guidance provenance, context-independence limits, coverage/validation gaps, and observed usage and remaining capacity. A candidate is evidence for adjudication, not a decision. The worker returns at its assigned boundary; that return does not settle overall coverage or acceptance, which the primary must reassess.
+
+### 4.9 Adjudicate Candidates Against Evidence
+
+- For each candidate, require a concrete trigger, reachability, baseline and candidate behavior, causal location/delta, impact, supporting and counterevidence, severity, and confidence under the active review contract. Preserve that contract's delta eligibility and causality criteria rather than importing another review system's thresholds.
+- Separate new regression, pre-existing defect, authorized intentional delta, and unproven concern. Inspect plausible adjacent occurrences of a supported cause, with separate evidence for each path. Deduplicate repeated claims without losing distinct triggers, causal paths, or impacts; neither agreement nor finding count establishes correctness.
+- Keep claim status (`supported`, `refuted`, `unresolved`) separate from action (`fixed`, `accepted intentional delta`, `retained`, `deferred`). Record source locators, observation/state identities, arguments, counterevidence, decision reason, and remaining uncertainty, including rejected or deferred objections.
+- Prefer discriminating tests, differential execution, source reproduction, or measurement where permitted. Validate fixture inputs, expected values/oracle, and environment equivalence before treating a differential failure as a regression; an invalid fixture is not a reason to change product behavior.
+- For a significant disputed or high-impact claim, or a conflict from adjudicating one's own decision, obtain a separate competent informed adjudicator or objective discriminating validation when needed. Do not assign a judge to every small issue. Preserve unresolved limits if that evidence is unavailable; adjudicator output does not expand authority or replace the primary's final responsibility.
+
+### 4.10 Reconcile Repairs and Stop Within Scope
+
+- After an authorized repair, inspect both baseline -> current candidate across the whole reviewed scope and previously reviewed candidate -> current candidate. Repair confirmation is not automatically fresh omission discovery; label each stage honestly.
+- Invalidate affected witnesses when code, callers/terminal consumers, contracts, dependency/configuration/environment, guidance, or assumptions change. Rebuild the affected evidence rather than reusing a stale pass. Preserve prior claim status, actions, and unresolved issues; zero new candidates does not erase them.
+- Start substantive follow-up only for new evidence, a question/path, changed input or repair, or a concrete unresolved concern. Before another pass, name the material decision it could change, the new information it could supply, and its estimated cost within actual limits; reassess the planning allowance when needed. Do not repeat the same evidence and method merely to obtain agreement.
+- Stop when the declared scope and evidence gates are satisfied. Continue useful, authorized work that can resolve material gaps when a limit blocks only one action or resource. Return an explicitly partial result when evidence, required independence, or material objections cannot be resolved with available means, or when actual limits, scope, or authority prevent further useful authorized work, including at a whole-task deadline. Keep the resource stop, unmet acceptance conditions, and quality verdict distinct. Exhaustion and repeated rereading are not acceptance; no loop must continue until “spotless.”
+- Keep claims scoped to audited contracts and observed checks. Report drift immediately and revise prior parity claims; explicitly retract and correct a contradicted safety or preservation statement. Record the next bounded check and resume condition for remaining work without silently expanding the task.
+
 ## 5) Validation Gates
 
 - Build gate:
@@ -192,6 +232,7 @@ For every changed write path, verify:
   - run at least one representative runtime path when refactoring touches operationally significant flows
 - Full-suite checkpoint:
   - before declaring a phase complete, run the full test suite once on the committed state when practical
+- Build, targeted tests, wiring, startup, and runtime checks establish only their checked scope. Record skipped checks and their acceptance impact; a pass does not replace strict coverage, required independence, or unresolved material objections.
 
 ## 6) Refactoring Anti-Patterns
 

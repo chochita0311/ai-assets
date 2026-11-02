@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-documentation-content-role-validation",
-  "revision": 1,
+  "revision": 2,
   "audience": "public",
   "subjects": [
     {
@@ -181,15 +181,54 @@ skill bodies; they are not cold-discovery tests. Standalone follow-ups had no
 standalone baseline comparison. Individual edit effects, population-wide
 quality gains, cost savings and stable causal improvement are not established.
 
+### Ordinary repository documentation review — 2026-11-02
+
+Six bounded workers read the full bodies of 136 Markdown documents in a reusable
+asset repository, with metadata and code dependencies where needed. The primary
+reconciled the file-level coverage tables and accepted eight local corrections
+across eleven files. The existing ownership layers and separate delivery and
+research flows were retained; no file split or broad rewrite was justified.
+
+The corrections kept qualifications attached to their rules: technical-block
+retry versus new-run resource resumption; current mapping versus historical
+layout; discovery exclusions; bounded versus explicitly completed exhaustive
+review; persistence-dependent handoff; and planning versus policy-write
+authority. A publishing explanation was aligned with its existing implementation.
+A separate publication helper actually failed its documented pre-draft capture
+contract and required a code/test repair, rather than weakening the prose; that
+resource evidence belongs to [PR-description concurrency validation](../pr-descriptor/publication-concurrency-validation.md).
+
+An independent reviewer checked complete changed units in all nine Markdown
+files against their before/after snapshots and owning contracts. It found no
+supported meaning, authority or lifecycle regression. A separate code challenger
+reviewed the helper delta and a bounded verifier checked candidate hashes,
+unchanged-file scope, packages and links. Those reviews support this bounded
+maintenance outcome; they do not establish all unchanged files' runtime behavior,
+each edit's causal benefit, or stable improvement over another review strategy.
+
+The reviewed working tree already included earlier session changes. The later
+eleven-file repair was compared with its own captured before state, not treated
+as the entire Git base-to-candidate delta. Before/after bodies and preservation
+maps existed during verification; task-owned copies were deleted when that
+purpose ended. The retained evidence is the conversation's reports and final
+source, not a publicly replayable snapshot bundle. Earlier subject fingerprints
+above still identify their own trials and are not replaced with current hashes.
+The platform quick-validator was unavailable during that pass because PyYAML
+was absent; repository and narrow metadata/resource checks passed. During the
+subsequent closeout, an isolated temporary environment supplied PyYAML and all
+twelve current skill entries passed the actual platform validator. This later
+check does not retroactively turn the earlier unrun check into a pass.
+
 ## Work And Acceptance
 
-Completed work comprises the authorized eleven-file package update, aligned
+The earlier matched-trial work comprised the authorized eleven-file package update, aligned
 metadata/checklists/examples, bounded author checks, independent source review,
 matched executions and single-package follow-ups. No package correction was
-justified by the independent reviews. There is no active experiment or assigned
+justified by those independent reviews. There is no active experiment or assigned
 performer in this record.
 
-The remaining work is an evidence gap, not an unimplemented package fix. On a
+The additional ordinary repository review above completed its bounded local
+repairs. The remaining work is an evidence gap, not an unimplemented package fix. On a
 new ordinary documentation-maintenance request, or a concrete recurrence of
 mixed-content drift, select a small real guide/work/evidence set and establish
 task-specific authority and budget before testing. Readiness is waiting for
@@ -256,3 +295,9 @@ association is published.
   was corrected to distinguish ownership from catalog discovery and explicitly
   state the matched producers' exposure to both skill bodies. These reviews and
   wording corrections add no behavioral trial and change no tested package bytes.
+
+- Revision 2, 2026-11-02: retained the ordinary whole-repository review and
+  independent preservation check, linked the separately owned helper repair,
+  and distinguished historical validator unavailability from the later actual
+  platform check. The earlier comparison identities and broader evidence gap
+  remain unchanged; this observation does not establish causal improvement.

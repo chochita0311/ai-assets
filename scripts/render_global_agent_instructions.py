@@ -15,22 +15,22 @@ SOURCES = (
     (
         "response-clarity",
         "Response Clarity And Meaning Preservation",
-        Path("agents/policies/baseline/response-clarity.md"),
+        Path("policies/baseline/response-clarity.md"),
     ),
     (
         "competence-routing",
         "Competence-First Delegation",
-        Path("agents/policies/harness/competence-first-delegation.md"),
+        Path("policies/competence-first-delegation.md"),
     ),
     (
         "operator-context-continuity",
         "Operator Context Continuity",
-        Path("agents/policies/harness/operator-briefing-and-review-receipts.md"),
+        Path("harness/policies/operator-briefing-and-review-receipts.md"),
     ),
     (
         "code-quality",
         "Code Quality",
-        Path("agents/policies/baseline/code-quality.md"),
+        Path("policies/baseline/code-quality.md"),
     ),
 )
 HEADER = (

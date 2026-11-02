@@ -38,7 +38,7 @@ class TargetError(PublicationError):
 
 
 class CandidateError(PublicationError):
-    """The candidate or backup file is unsafe."""
+    """The candidate file or captured baseline is unsafe."""
 
 
 class ConcurrentUpdateError(PublicationError):
@@ -150,21 +150,14 @@ class GhRemote:
         )
 
 
-def _read_candidate(path: Path) -> str:
+def _read_body_file(path: Path, role: str) -> str:
     if not path.is_file():
-        raise CandidateError(f"candidate file does not exist: {path}")
+        raise CandidateError(f"{role} file does not exist: {path}")
     try:
-        return path.read_text(encoding="utf-8")
+        with path.open(encoding="utf-8", newline="") as stream:
+            return stream.read()
     except (OSError, UnicodeError) as error:
-        raise CandidateError(f"could not read candidate file: {path}") from error
-
-
-def _write_backup(path: Path, body: str) -> None:
-    try:
-        with path.open("x", encoding="utf-8", newline="") as stream:
-            stream.write(body)
-    except OSError as error:
-        raise CandidateError(f"could not create exclusive backup file: {path}") from error
+        raise CandidateError(f"could not read {role} file: {path}") from error
 
 
 def _checked_snapshot(
@@ -186,37 +179,51 @@ def publish_pr_description_transaction(
     pr_url: str,
     candidate_file: str | Path,
     backup_file: str | Path,
+    expected_updated_at: str,
     publish_current_turn: bool,
     allow_clear_current_turn: bool = False,
     remote: PullRequestRemote,
 ) -> PullRequestSnapshot:
-    """Run one authorized, single-write PR-description transaction."""
+    """Publish against the body and marker captured before candidate drafting."""
 
     if not publish_current_turn:
         raise AuthorizationError(
             "publication requires explicit authorization from the current turn"
         )
     target = PullRequestTarget.parse(pr_url)
+    if not isinstance(expected_updated_at, str) or not expected_updated_at.strip():
+        raise CandidateError(
+            "expected updatedAt must be the non-empty marker captured before drafting"
+        )
     candidate_path = Path(candidate_file).resolve()
     backup_path = Path(backup_file).resolve()
     if candidate_path == backup_path:
         raise CandidateError("candidate and backup files must be separate")
 
-    candidate_body = _read_candidate(candidate_path)
+    candidate_body = _read_body_file(candidate_path, "candidate")
     if candidate_body == "" and not allow_clear_current_turn:
         raise CandidateError(
             "empty candidate requires an explicit current-turn clear request"
         )
 
+    captured = PullRequestSnapshot(
+        body=_read_body_file(backup_path, "backup"),
+        updated_at=expected_updated_at,
+    )
     initial = _checked_snapshot(remote, target)
-    _write_backup(backup_path, initial.body)
+    if initial != captured:
+        raise ConcurrentUpdateError(
+            "PR body or updatedAt does not match the captured baseline; "
+            "no description write was attempted"
+        )
 
-    if _read_candidate(candidate_path) != candidate_body:
+    if _read_body_file(candidate_path, "candidate") != candidate_body:
         raise CandidateError("candidate file changed after validation")
     current = _checked_snapshot(remote, target)
-    if current.updated_at != initial.updated_at:
+    if current != captured:
         raise ConcurrentUpdateError(
-            "PR updatedAt changed after capture; no description write was attempted"
+            "PR body or updatedAt does not match the captured baseline; "
+            "no description write was attempted"
         )
 
     remote.publish(target, candidate_path)
@@ -233,7 +240,17 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("pr_url", help="Exact full PR URL")
     parser.add_argument("--candidate-file", required=True, type=Path)
-    parser.add_argument("--backup-file", required=True, type=Path)
+    parser.add_argument(
+        "--backup-file",
+        required=True,
+        type=Path,
+        help="Existing original-body backup captured before drafting; never overwritten",
+    )
+    parser.add_argument(
+        "--expected-updated-at",
+        required=True,
+        help="PR updatedAt captured with the backup before drafting",
+    )
     parser.add_argument(
         "--publish-current-turn",
         action="store_true",
@@ -254,6 +271,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             pr_url=arguments.pr_url,
             candidate_file=arguments.candidate_file,
             backup_file=arguments.backup_file,
+            expected_updated_at=arguments.expected_updated_at,
             publish_current_turn=arguments.publish_current_turn,
             allow_clear_current_turn=arguments.allow_clear_current_turn,
             remote=GhRemote(),

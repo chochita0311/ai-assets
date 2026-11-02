@@ -12,7 +12,7 @@ Use this as the final yes-or-no pass.
 - If target or persistence resolution was needed, was it kept outside this skill?
 - Did every selected material claim meet the decision-sufficient stop condition?
 - Are no accessible unchecked sources likely to change a material disposition or confidence?
-- Does the report avoid implying whole-target completeness?
+- Does the report avoid implying whole-target completeness from the bounded stop condition alone, and claim exhaustive coverage only when the user explicitly requested it and that coverage was completed?
 
 ## Evidence And Judgment
 

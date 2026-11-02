@@ -6,17 +6,19 @@
 - Adapt the shared competence-first delegation policy to a personal Codex runtime.
 - Keep stable role names separate from replaceable model bindings.
 - Provide installable custom-agent files and install the shared, model-neutral managed regions into the global Codex `AGENTS.md`.
+- Provide an optional research worker and a separate local-discovery path for the complete research method package.
 - Import applicable personal guidance and generic environment and machine templates from the shared instruction library.
 - Provide an optional operator-context recognition hook without moving repo-local continuity policy into the personal runtime.
 - Provide a root-only, read-only lifecycle audit and a terminal-native weekly runner without making the audit a source of replacement authority.
 
 ## Ownership
-- [Response Clarity And Meaning Preservation](../../policies/baseline/response-clarity.md) owns the platform-neutral response policy, preservation checks, examples, and sources.
-- [Code Quality](../../policies/baseline/code-quality.md) owns platform-neutral guidance on project conformity, simplicity, official documentation, and verification evidence.
-- [Competence-First Delegation](../../policies/harness/competence-first-delegation.md) owns the platform-neutral policy.
-- [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md) owns detailed continuity triggers, output semantics, and non-interference rules.
-- [Operator Briefing Template](../../templates/operator-briefing.md) owns the non-persistent response scaffold.
+- [Response Clarity And Meaning Preservation](../../../policies/baseline/response-clarity.md) owns the platform-neutral response policy, preservation checks, examples, and sources.
+- [Code Quality](../../../policies/baseline/code-quality.md) owns platform-neutral guidance on project conformity, simplicity, official documentation, and verification evidence.
+- [Competence-First Delegation](../../../policies/competence-first-delegation.md) owns the platform-neutral policy.
+- [Operator Briefing And Review Receipts](../../../harness/policies/operator-briefing-and-review-receipts.md) owns detailed continuity triggers, output semantics, and non-interference rules.
+- [Operator Briefing Template](../../../harness/templates/operator-briefing.md) owns the non-persistent response scaffold.
 - [custom-agents/](custom-agents/) owns the canonical Codex custom-agent files and their concrete model bindings.
+- [Research SADR](../../../skills/research-sadr/SKILL.md) owns the research method and independent-inquiry protocol; the optional worker loads the exact package selected by the primary.
 - [profiles/](profiles/) owns canonical non-interactive root-agent profiles and their concrete model bindings.
 - [Shared runtime instructions](../../instructions/standard.md) are the generated, model-neutral delivery bundle: self-contained response and code quality baselines, delegation routing, and conditional operator-context recognition. Policy documents own its marked rules; this adapter owns Codex installation. The bundle does not install the detailed repository continuity policy.
 - [Shared Local AI Instructions](../../instructions/README.md) owns bundle generation and the reference library and import guide for personal, environment-specific, and PC-specific guidance. Its selectable personal preferences are distinct from the managed common blocks.
@@ -26,6 +28,7 @@
 
 ## Official Codex References
 - [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents): custom-agent locations, required fields, model precedence, inherited permissions, capability reductions, and delegation behavior
+- [Build skills](https://learn.chatgpt.com/docs/build-skills): complete local skill packages, discovery locations, symlink support, and explicit or implicit invocation
 - [Custom instructions with AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md): global and project instruction discovery
 - [Models](https://learn.chatgpt.com/docs/models): recommended models, special-purpose models, and deprecation guidance
 - [Codex changelog](https://learn.chatgpt.com/docs/changelog): model launches and lifecycle announcements
@@ -43,7 +46,8 @@ agents/adapters/codex/
 ├── custom-agents/
 │   ├── evidence_scout.toml
 │   ├── bounded_verifier.toml
-│   └── review_challenger.toml
+│   ├── review_challenger.toml
+│   └── research_worker.toml
 ├── profiles/
 │   └── model-binding-audit.config.toml
 ├── scripts/
@@ -62,6 +66,8 @@ agents/adapters/codex/
 | `custom-agents/evidence_scout.toml` | regular-file copy at `<codex-home>/agents/evidence_scout.toml` |
 | `custom-agents/bounded_verifier.toml` | regular-file copy at `<codex-home>/agents/bounded_verifier.toml` |
 | `custom-agents/review_challenger.toml` | regular-file copy at `<codex-home>/agents/review_challenger.toml` |
+| `custom-agents/research_worker.toml` | optional regular-file copy at `<codex-home>/agents/research_worker.toml` |
+| `../../../skills/research-sadr/` (complete package) | optional package-directory symlink or complete copy at `~/.agents/skills/research-sadr/`; see [Standalone Research Skill](#standalone-research-skill) |
 | `profiles/model-binding-audit.config.toml` | regular-file copy at `<codex-home>/model-binding-audit.config.toml` |
 | `scripts/run-model-binding-audit.sh` | executed in place by the installed LaunchAgent |
 | `launchd/model-binding-audit.template.plist` | rendered machine-local file at `~/Library/LaunchAgents/<approved-label>.plist` after approval; never a symlink to the template |
@@ -72,7 +78,7 @@ The audit runner executes from its canonical path under `scripts/`; it is not co
 
 Existing installations that link an old machine-specific plist require a separately approved local-file migration before that source is retired. Preserve the installed label, schedule, model binding, and paths unless their change is also approved; see [Installation And Operation](model-binding-audit.md#installation-and-operation).
 
-This mapping installs personal runtime assets only. It does not export the shared operator policy or template into a consuming repo. Follow [Agent System Adoption Guide](../../ADOPTION-GUIDE.md) for that repository-local installation.
+This mapping installs personal runtime assets only. It does not export the shared operator policy or template into a consuming repo. Follow [Agent System Adoption Guide](../../../harness/ADOPTION-GUIDE.md) for that repository-local installation.
 
 ## Worker Permissions
 
@@ -127,6 +133,21 @@ After an approved canonical TOML change, repeat the TOML copy and runtime verifi
 
 On macOS, the optional weekly LaunchAgent requires separate installation approval and a successful manual audit. Follow [model-binding-audit.md](model-binding-audit.md#installation-and-operation) for validation, installation, status, and failure handling.
 
+## Standalone Research Skill
+
+Install [the complete research-sadr package](../../../skills/research-sadr/) only when local skill discovery is requested. Codex scans `~/.agents/skills` for user skills and supports symlinked package folders. Explicit skill invocation and description-based discovery are separate from a named worker invocation. [Official skill discovery](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) defines this behavior.
+
+For an approved installation:
+
+1. Resolve the intended source revision and enumerate the entire package, including `SKILL.md`, both references and `agents/openai.yaml`, plus any additional files in that revision. Inspect the destination and preserve its prior state; resolve local differences, existing links and name collisions before replacement.
+2. Use a package-directory symlink to the approved local source when following a maintained checkout is intended, or stage and install a complete byte-preserving copy when an independent snapshot is intended. Preserve relative links. Recheck the source and destination before replacing only the approved entry; do not copy through an unresolved link. This skill-folder convention does not change the worker TOML's regular-file requirement.
+3. Verify the resolved package file set, contents and internal links against the selected source. A symlink follows later source edits; record the actual revision and content fingerprints for each research packet instead of treating the installation date or name as a pin.
+4. In a fresh session, confirm the discovered skill's actual path, invoke `$research-sadr`, and test a complex research request plus a narrow-lookup negative control. If discovery is missing, restart Codex and inspect the effective skill settings; report any remaining gap. Retain recovery artifacts through verification and remove task-owned staging and backups after their purpose ends.
+
+The skill works without this worker or a harness. Installing it neither installs `research_worker` nor authorizes delegation. Conversely, the worker loads the exact method package supplied in its packet and does not require global skill discovery.
+
+For harness research, the [adoption guide](../../../harness/ADOPTION-GUIDE.md#optional-research) requires the complete pinned package at `docs/agents/methods/research-sadr/` and directly loads its `SKILL.md`. That project-local installation is sufficient; no native `.agents/skills` entry or Codex worker belongs in the runtime-neutral payload. Never substitute a discovered global same-name skill for the pinned method.
+
 ## Audit Profile
 
 `model-binding-audit` is a dedicated non-interactive root profile, not a worker. It is read-only, disables subagents, and binds one reviewed lightweight model for official lifecycle detection. The runner preflights the current official Codex manual through `openai-docs`, rejects unavailable or mismatched execution instead of falling back, and returns any `REVIEW_REQUIRED` result to a competence-qualified primary agent for the replacement decision.
@@ -151,7 +172,7 @@ On macOS, the optional weekly LaunchAgent requires separate installation approva
 
 This is one Codex implementation of the portable [independent reviewer brief](../../../skills/gh-review-pr/references/review-criteria.md#independent-reviewer-brief). The skill defines the review role without requiring this adapter, this worker name or any model binding. Another authorized competent reviewer can perform the role. This adapter owns only the concrete Codex configuration and installation.
 
-The primary may invoke the installed worker when the active task's skill, project instructions or user request authorizes an independent review and the competence, context, permission and allowance checks pass. The worker description is discovery guidance, not a background router. In `gh-review-pr`, the skill's risk and independence rules determine when a challenge is required. Keep the semantic gates with the supplied contract rather than duplicating them in this adapter or modifying common harness routing to activate the worker.
+The primary may invoke the installed worker when the active task's skill, project instructions or user request authorizes an independent review and the competence, context, permission and allowance checks pass. The worker description is discovery guidance, not a background router. In `gh-review-pr`, the skill's risk and independence rules determine when a challenge is required. The approved-feature loop uses [Execution Loop Governance](../../../harness/policies/execution-loop-governance.md#independent-code-challenge); local refactor checkpoints use [refactor-plan](../../../skills/refactor-plan/SKILL.md) when available. Those task owners retain risk routing and semantic gates; this adapter supplies the worker binding and installation only.
 
 Pass a no-history task packet with raw immutable evidence and the applicable role brief, not the implementation conversation or expected findings. Use a committed base/head pair for a PR. For a local candidate, the primary supplies an immutable build/bundle with exact source identifiers; no commit is created merely to obtain an identifier. Reconcile returned candidates through the original gates. If a required independent challenge is unavailable, preserve the owning contract's gap and draft/acceptance rules; never relabel the same primary's self-review as independent.
 
@@ -170,6 +191,18 @@ Before relying on this binding, verify its exact registered name, actual model/e
 
 Keep observed results and remaining runtime acceptance in the [review-challenger validation record](../../../evidence/agents/codex/review-challenger-validation.md); source publication does not establish installation or activation.
 
+### `research_worker` (optional)
+
+Use this capable research support role for a bounded fresh exploration, challenge, or later informed claim adjudication after the primary selects the method and resolves scope, authority and permitted evidence access. Assign these responsibilities separately as needed; they are not a mandatory cast or a second orchestrator. The primary retains architecture, source-of-truth, permissions, persistence, integration, final judgment and completion. The initial binding is `gpt-6.1-sol` / `max`; suitability and availability require the checks below.
+
+Pass a no-history packet for fresh discovery with the question, full constraints and acceptance criteria, raw evidence access, exact method path/revision/fingerprint, allowed analysis, actual limits, planning allowance and return conditions. Withhold the author's favored answer; preserve the initial return before later exchange. Supply both sides for informed adjudication and record that changed context. Follow the selected [independent-inquiry protocol](../../../skills/research-sadr/references/independent-inquiry.md); the TOML defines the runtime boundary, not another research method. Returns include evidence, alternatives, methods, counterevidence, provenance and gaps; claim validity remains separate from the primary's response action.
+
+The worker disables memories to reduce prior-context input and permission requests to keep escalation with the primary. Apps and plugins remain inherited because approved raw evidence may live in connected sources; the packet still restricts reads, analysis and destinations. It permits explicitly assigned task scratch, but no durable edits, external writes, untrusted source-program execution or further delegation. These are role constraints under inherited parent permissions, not an independent sandbox; see [Worker Permissions](#worker-permissions).
+
+Before relying on the binding, use a fresh runtime to verify the exact registered name, actual model/effort, method and instruction identities/fingerprints, input history, inherited permissions and feature reductions from observable runtime evidence. Record unexposed fields as unknown; file equality and worker self-report do not establish activation. Then test answer-isolated exploration that can find an alternative framing, a challenge with a legitimate null result, an informed dispute with evidence on both sides, and a needed-source access gap. Verify support, counterevidence and method applicability, honest partial returns under actual limits, and the routing controls below. Include a source available only through an approved app or plugin to check the inherited-access choice. Confirm the binding appears in the existing audit's discovered manifest; no new scheduler is required.
+
+The existing workers keep their roles and bindings. In particular, code-change omission review remains with `review_challenger` under its owning contract; the research worker does not replace it. Optional unavailability leaves feasible research and explicit self-review with the primary, while any required independence or evidence gap remains open.
+
 Do not add an automatically invoked code-writing worker until real runs show that its task class is consistently bounded, reversible, and cheaper to review than direct primary-agent work.
 
 ## Routing Validation Cases
@@ -181,6 +214,10 @@ Do not add an automatically invoked code-writing worker until real runs show tha
 | Broad branch diff evidence with file and symbol citations | `evidence_scout` |
 | Several exact test commands plus failure clustering | `bounded_verifier` |
 | Authorized independent omission challenge with frozen evidence and a competent installed binding | `review_challenger`; primary adjudicates the candidates |
+| Authorized complex research with a bounded raw-evidence packet and a competent installed binding | `research_worker` for the assigned exploration, challenge or informed adjudication; primary integrates and decides |
+| Narrow factual lookup, routine small fix, or prose rewrite without a research question | primary agent; no research worker or research skill |
+| Research requiring unresolved scope, authority, persistence or final acceptance decisions | primary resolves those decisions before any bounded research delegation |
+| Fresh research discovery packet already includes the author's answer | disclose informed context; create a clean packet and fresh invocation if answer isolation is required |
 | The same omission-review role on a runtime without this adapter | another authorized competent execution under the supplied role brief; no adapter dependency |
 | Routine task with no material need for an independent review | primary agent |
 | Requirement, architecture, security, persistence, publication, or final acceptance decisions | primary agent |
@@ -207,16 +244,16 @@ For an authorized baseline installation or update:
 
 ## Response Clarity
 
-Install the `response-clarity` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#response-clarity) owns its self-contained delivery contract, preservation workflow, harness coexistence, and evidence limits; the [policy](../../policies/baseline/response-clarity.md) owns the rules and detailed method.
+Install the `response-clarity` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#response-clarity) owns its self-contained delivery contract, preservation workflow, harness coexistence, and evidence limits; the [policy](../../../policies/baseline/response-clarity.md) owns the rules and detailed method.
 
 ## Code Quality
 
-Install the `code-quality` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#code-quality) owns its cross-session delivery contract and synchronization boundary; the [policy](../../policies/baseline/code-quality.md) owns the code-work decision rules and evaluation limits.
+Install the `code-quality` region through [Baseline Installation](#baseline-installation). The [shared instruction guide](../../instructions/README.md#code-quality) owns its cross-session delivery contract and synchronization boundary; the [policy](../../../policies/baseline/code-quality.md) owns the code-work decision rules and evaluation limits.
 
 ## Operator Context Continuity
 
 The managed AGENTS fragment includes a low-noise operator-context recognition hook. It lets imported Codex agents notice relevant ordinary-language triggers without requiring a skill command.
 
-The hook is supported only when the current consuming repo exposes [Operator Briefing And Review Receipts](../../policies/harness/operator-briefing-and-review-receipts.md). Target activation or resumption produces a Work Briefing only when prior context materially affects understanding or execution. If the policy is unavailable or no meaningful delta exists, the hook preserves the normal response without creating a substitute artifact.
+The hook is supported only when the current consuming repo exposes [Operator Briefing And Review Receipts](../../../harness/policies/operator-briefing-and-review-receipts.md). Target activation or resumption produces a Work Briefing only when prior context materially affects understanding or execution. If the policy is unavailable or no meaningful delta exists, the hook preserves the normal response without creating a substitute artifact.
 
-Install the detailed policy and template through the repository-local [Agent System Adoption Guide](../../ADOPTION-GUIDE.md), not under `~/.codex/`. The personal adapter remains an entrance-level recognition layer and never becomes a second source of continuity truth.
+Install the detailed policy and template through the repository-local [Agent System Adoption Guide](../../../harness/ADOPTION-GUIDE.md), not under `~/.codex/`. The personal adapter remains an entrance-level recognition layer and never becomes a second source of continuity truth.

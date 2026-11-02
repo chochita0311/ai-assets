@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research SADR"
+  short_description: "Research with competing explanations and evidence"
+  default_prompt: "Use $research-sadr to investigate this open question, test competing explanations, and report the strongest supported conclusion and remaining uncertainty."

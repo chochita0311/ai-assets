@@ -34,6 +34,16 @@ Examples:
   - `...`
 - Baseline certainty:
   - `Confirmed | Provisional`
+- Candidate full commit SHA or immutable bundle/manifest identity:
+  - `...`
+- Baseline / candidate dependency, configuration, and environment identities:
+  - `...`
+- Baseline / candidate guidance source, authority, revision, and content fingerprint:
+  - `...`
+- Observation time, access limits, and evidence locators:
+  - `...`
+- Requested moving reference rechecked at close; change and reconciliation:
+  - `...`
 
 ## Changed Surface
 
@@ -62,12 +72,40 @@ Examples:
 - Runtime / smoke / manual verification:
   - `...`
 
+## Review Receipt
+
+- Risk and independent-challenge decision:
+  - `...`
+- Actual hard limits, source/scope/observability, and remaining capacity:
+  - `...`
+- Current and remaining planning allowance and reassessment point; revised allocation, new information/reason, and outstanding commitments:
+  - `...`
+- Cumulative observed usage and spent attempts (including stale/interrupted) across inputs/sessions:
+  - `...`
+- Worker return boundary and remaining overall coverage or acceptance work:
+  - `...`
+- Review stage and raw packet identity:
+  - `Initial discovery | Informed dispute | Repair confirmation | Self-review`
+  - `...`
+- Reviewer, actual history/instruction exposure, tools/permissions, and unobserved runtime fields:
+  - `...`
+- Context / method / source-lineage / validation-data independence and limits:
+  - `...`
+- Initial return and later dispute evidence locators:
+  - `...`
+- Required independence or execution-validation gaps and acceptance impact:
+  - `None | ...`
+
 ## Strict Parity Audit Coverage
 
 - Baseline pinned to immutable target (commit SHA):
   - `Yes | No`
 - Source mapping complete (old -> new paths):
   - `Yes | No`
+- Terminal consumers, lifecycle, generated/historical, helper, and recovery paths covered:
+  - `Yes | No | Not applicable with reason`
+- Actual types, predicates, boundary combinations, and old/new dependency branches compared:
+  - `Yes | No | Not applicable with reason`
 - Query/write semantics audited at logic-unit level:
   - `Yes | No`
 - Payload/output mapping audited field-by-field:
@@ -77,6 +115,30 @@ Examples:
 - Failure-mode paths audited explicitly:
   - `Yes | No`
 - Any unaudited relevant path:
+  - `None | ...`
+
+| Material old/new path or logic unit | Contract / branch | Witness and method | Result | Unaudited reason / limit |
+| --- | --- | --- | --- | --- |
+| ... | ... | ... | ... | ... |
+
+## Candidate Adjudication
+
+| Candidate | Trigger / reachability | Baseline -> candidate behavior | Causal location / delta / impact | Supporting / counterevidence and fixture validity | Severity / confidence | Category | Claim status | Action / reason / remaining limit |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ... | ... | ... | ... | ... | ... | New regression / Pre-existing defect / Authorized intentional delta / Unproven concern | Supported / Refuted / Unresolved | Fixed / Accepted intentional delta / Retained / Deferred; ... |
+
+- Significant dispute or self-adjudication conflict; informed adjudicator or discriminating validation:
+  - `Not needed with reason | ...`
+
+## Changed-Input Reconciliation
+
+- Previous reviewed candidate identity:
+  - `... | First review`
+- Baseline -> current whole-scope review and previous candidate -> current repair-delta review:
+  - `... | Not applicable with reason`
+- Changed code, callers/consumers, contracts, dependencies/configuration/environment, guidance, or assumptions; invalidated and renewed witnesses:
+  - `None | ...`
+- Carried candidate statuses/actions and corrected or retracted earlier claims:
   - `None | ...`
 
 ## Merge Assessment
@@ -116,6 +178,8 @@ Examples:
 ## Next Action
 
 - `...`
+- Stop or return reason, remaining gaps and acceptance impact, next bounded check, and resume condition:
+  - `...`
 ```
 
 ## Usage Rules
@@ -134,4 +198,4 @@ Examples:
 - If runtime evidence is user-verified or externally observed rather than directly executed, say that explicitly.
 - If the full test suite was not run, record that plainly instead of implying broader confidence.
 - If the answer is “not yet,” the log should still say what blocks merge and what to do next.
-- `Behavioral parity vs baseline = Preserved` is valid only when Strict Parity Audit Coverage is fully satisfied, including side-effect and failure-mode coverage.
+- Apply [the review and claim gates](../references/method.md#4-review-for-behavior-parity) before completing the assessment; this form records their evidence and does not replace the method.

@@ -1,6 +1,6 @@
 ---
 name: refactor-plan
-description: Plan or update structured refactoring work when the user asks to refactor, split a refactor into phases, preserve behavior while changing structure, introduce intentional semantic cleanup with explicit scope, or create a reusable refactoring tracking document. Use when a codebase needs a clear phased refactor plan, invariants, validation gates, and merge-ready checkpoints.
+description: Plan or update structured refactoring work when the user asks to refactor, split a refactor into phases, preserve behavior while changing structure, introduce intentional semantic cleanup with explicit scope, or create a reusable refactoring tracking document. Use when a codebase needs a clear phased refactor plan, invariants, validation gates, or a refactor parity or merge checkpoint. Do not use for general code reviews or PR publication.
 ---
 
 # Refactor Plan
@@ -9,12 +9,14 @@ Use this skill when the task is to plan refactoring work, not to immediately imp
 
 This skill is general-purpose. It should travel well across repositories, stacks, and languages.
 
+Use it without requiring a harness, runtime adapter, or particular reviewer. The method owns refactor review decisions; available reviewers supply bounded evidence under the task's authority.
+
 ## Workflow
 
 1. Read [references/method.md](references/method.md) and the target repository's guidance, nearby plans, architecture notes, and actual code boundaries.
 2. Classify the work as `Structural`, `Behavioral`, or `Semantic`, and separate parity-preserving work from intentional deltas.
 3. Extend the existing track or create a new one according to the method's ownership and continuity rules.
-4. Build bounded steps around an explicit baseline, invariants, targets, validation, and exit gates.
+4. Build bounded steps around an explicit baseline, invariants, targets, validation, and exit gates. Before a parity or completion judgment, apply the method's frozen-comparison, independent-challenge, adjudication, and re-review gates.
 5. Write only the requested plan, log, or merge-check artifact using the routed template.
 6. Finish with [references/checklist.md](references/checklist.md) as the short final validation pass.
 
@@ -44,7 +46,7 @@ This skill is general-purpose. It should travel well across repositories, stacks
 
 ## Bundled References
 
-- Use the detailed planning and parity method in [references/method.md](references/method.md).
+- Use the detailed planning and parity method in [references/method.md](references/method.md): sections 0–3 for planning, 4 for frozen comparisons and review, and 5–7 for validation and merge scope.
 - Use the final validator in [references/checklist.md](references/checklist.md).
 - Use the plan template in [templates/plan.md](templates/plan.md).
 - Use the log template in [templates/log.md](templates/log.md).
@@ -120,12 +122,13 @@ Activation boundary:
 - If the user is only exploring plan options without merge judgment, keep parity provisional and do not force strict conclusions.
 
 Required behavior:
-- Pin an explicit compare baseline (branch/commit/release target) and record an immutable reference (resolved commit SHA) when available.
+- Freeze the explicit compare baseline and actual candidate using the method's [comparison identity rules](references/method.md#40-freeze-the-comparison-and-review-allowance); a complete immutable uncommitted bundle is allowed.
 - Build a source mapping of affected old-path to new-path for the full execution flow.
 - Apply the strict baseline audit in [references/method.md](references/method.md), including relevant query, write, output, side-effect, and failure-mode semantics.
 
 Claim rules:
 - If any relevant path is not audited, parity status must be `Unknown/Provisional`.
+- Keep required independence gaps and material unresolved objections explicit; they prevent an unqualified completion or merge-safety claim.
 - Do not use confidence language to mask missing audit coverage.
 - `Behavioral parity = Preserved` is valid only when strict audit coverage is complete, including side-effect and failure-mode coverage.
 - If drift is found mid-audit, report it immediately and revise prior parity claims.

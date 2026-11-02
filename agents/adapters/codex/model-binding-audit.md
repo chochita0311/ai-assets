@@ -10,7 +10,7 @@ This audit discovers and reports drift. It does not edit model bindings, select 
 
 - Canonical worker bindings: [custom-agents/](custom-agents/)
 - Canonical audit binding: [profiles/model-binding-audit.config.toml](profiles/model-binding-audit.config.toml)
-- Binding and fallback policy: [Competence-First Delegation](../../policies/harness/competence-first-delegation.md)
+- Binding and fallback policy: [Competence-First Delegation](../../../policies/competence-first-delegation.md)
 - Codex adapter lifecycle: [README.md](README.md#model-binding-lifecycle)
 - Authoritative lifecycle sources:
   - [Codex models](https://learn.chatgpt.com/docs/models)

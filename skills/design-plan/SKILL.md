@@ -97,6 +97,6 @@ Use this order unless the repository defines a stricter owner:
   - or a combination
 
 ## Handoff Rule
-- If the outcome becomes stable design law, move it into `docs/policies/design/`.
+- If the outcome becomes stable design law, hand it off for promotion into `docs/policies/design/`; apply that policy change only when the user separately asks for constitution changes.
 - If the outcome remains active cleanup or rollout work, keep it in the design plan.
 - Stop after creating or updating the planning track unless the user separately asks for constitution changes or implementation.

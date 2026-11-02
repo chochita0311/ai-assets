@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "hc-skill-trigger-example",
-  "revision": 4,
+  "revision": 5,
   "audience": "public",
   "subjects": [{"kind": "skill", "key": "example/document-link-audit", "source_revision": null, "content_sha256": null}],
   "work": {"basis": "not-applicable", "state": "not-applicable", "readiness": "not-applicable"},
@@ -86,7 +86,7 @@ negative requests while retaining the baseline. Confidence in a behavioral
 benefit is unestablished; no durable empirical lesson is claimed.
 
 The owning skill package controls its description and domain method. The
-[Harness Improvement policy](../../../agents/policies/harness/harness-improvement.md)
+[Harness Improvement policy](../../../harness/policies/harness-improvement.md)
 owns the comparison and public-case boundary. Revisit after actual evidence,
 changed skill scope, model/tool changes or contrary outcomes.
 
@@ -113,3 +113,7 @@ publication, consumer installation and runtime activation: not established.
 - Revision 4, 2026-10-23: moved into the repository-level evidence layer,
   retaining the same subject ownership, record ID, conditions and assessment
   states. This location change adds no execution, closure or empirical support.
+- Revision 5, 2026-11-02: updated the current Harness Improvement policy link
+  after its source relocation. Retained the fictional subject, unknown source
+  identities, synthetic inputs, controls and assessment states. Navigation
+  maintenance adds no execution, empirical support or installation evidence.

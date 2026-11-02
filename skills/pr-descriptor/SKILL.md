@@ -46,14 +46,14 @@ Treat PR-description publication as an overwrite-capable external mutation.
 
 When publication is authorized, follow the applicable local or repository procedure while preserving these minimum safeguards:
 
-When `gh` is supported, run [pr_description_transaction.py](scripts/pr_description_transaction.py); pass its publication flag only for current-turn authorization and its clear flag only for a current-turn explicit clear request.
-
 1. Resolve the exact PR and the supported mutation mechanism
 2. Capture the current body and a concurrency marker such as `updatedAt`, and keep the body as a separate backup
 3. Write the complete candidate body to a different file, then verify that the file exists, contains the intended artifact, and is non-empty unless the user explicitly asked in the current turn to clear the description
 4. Re-read the concurrency marker immediately before publishing and stop without writing if it changed
 5. Publish from the candidate file; never use stdin such as `--body-file -`, an inline body argument, command substitution, or another mechanism that can silently turn missing input into an empty description
 6. Fetch the published body and verify that it matches the candidate before reporting success
+
+When `gh` is supported, complete steps 1–3 before running [pr_description_transaction.py](scripts/pr_description_transaction.py) for the final checks, publication, and verification. Pass the full PR URL, `--candidate-file`, the existing original-body `--backup-file`, and the `--expected-updated-at` captured before drafting. The helper checks both the body and marker against that capture at entry and immediately before writing; it never creates or overwrites the backup. Pass `--publish-current-turn` only for current-turn publication authorization and `--allow-clear-current-turn` only for a current-turn explicit clear request.
 
 ### Failure and recovery
 
