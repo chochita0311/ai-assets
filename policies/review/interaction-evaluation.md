@@ -55,6 +55,43 @@
 - Temporary copy, debug-facing labels, or source-oriented state descriptions should not leak into the user-visible surface.
 - If loading or recovery states are required, they should appear intentional and bounded rather than as raw implementation leakage.
 
+#### Initialization And Recovery Check Sequence
+
+For an affected surface whose presentation or action readiness changes through
+asynchronous initialization or refresh, apply the existing state, continuity and
+evidence rules through the following checks. Select the phases relevant to the
+approved change; a settled screenshot alone does not cover earlier phases.
+
+- Begin observation before the initialization or interaction under review.
+  Compare applicable initial, pending, ready, failed and recovered states on a
+  first visit and revisit. Keep normal-speed observations distinct from injected
+  delay or failure, and identify the surface and state owner being compared.
+- Keep confirmed empty, unreadable or unavailable data, and not-yet-known action
+  readiness distinct. Exercise relevant category or scope changes, retry and
+  refresh: a navigation or transient message clear must not silently erase an
+  unresolved read failure. Gate each action by its actual confirmed prerequisites;
+  one unknown dependency does not automatically disable unrelated actions.
+- When initialization assets and data requests can fail independently, test both
+  boundaries. If an initial gate isolates the background, verify that an approved
+  active surface or recovery path remains usable when the controller cannot
+  initialize, while preserving isolation and relevant URL scope. This is not a
+  requirement for whole-application no-script support or a universal timeout.
+- Compare initial rendering and subsequent updates that represent the same
+  lifecycle state. A missing artifact or empty output must not imply an earlier
+  lifecycle state or silently replace confirmed content contrary to the approved
+  preservation rule. Check the relevant polling, category or retry consumer as
+  well as the first rendered page.
+- A claim of stability across phases needs actual observations from the phases
+  being compared. Empty evidence, one instant, or repeated observations from only
+  one phase cannot establish that transition. Validate the sampling/oracle path;
+  collect the missing evidence or mark it unverified under the coverage rules.
+  Keep captured sample counts, phase coverage and actual rendered observations
+  distinct from independent scenario counts or compositor-paint measurements.
+
+Fixture values, viewport boundaries, skeleton use, motion and persistence rules
+remain with the consuming product. Do not turn this sequence into an exhaustive
+screen/state cross-product or infer guidance effectiveness from a passing run.
+
 #### Staged Handoff Timing
 
 - Outgoing surface exit, incoming surface entry, and persistent-shell state changes should be timed as separate parts of one handoff.

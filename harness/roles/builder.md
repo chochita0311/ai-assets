@@ -20,21 +20,21 @@
 - Implement only the approved feature boundary.
 - Do not absorb desirable extras found during implementation.
 - If the active execution contract is insufficient, report the gap to the Orchestrator instead of improvising; follow [Execution Loop Governance](../policies/execution-loop-governance.md#technical-block-exception) for technical blockers and post-run routing.
-- Preserve existing regression surfaces named by the feature and spec.
+- Preserve the regression surfaces named by the feature/spec and the approved contracts on actual affected consumer paths found during build. Apply [Change Impact And Regression Scope](../policies/execution-loop-governance.md#change-impact-and-regression-scope) when tracing and handing off that boundary.
 - Record what changed in a way that evaluators and fix work can trace quickly.
 - Stay inside the assigned surface lane unless the orchestrator or spec explicitly authorizes cross-lane work.
-- When changing a contract surface, update the producer, consumer, generated artifact, or policy surfaces named by the spec.
+- Complete necessary producer, consumer, generated artifact and policy updates identified by the spec or actual causal path, within the approved contract and lane. Report unresolved scope or contract meaning through the existing return rules.
 - Do not use destructive replacement of active interactive surfaces unless the spec clearly allows it and the resulting controls remain fully functional.
 - If implementation recreates interactive controls during rerender, rehydration, or state rebuild, verify that navigation, repeated actions, and other required interactions still work after the replacement.
 
 ## Required Output
 Report:
 
-1. changed surfaces
+1. changed surfaces, shared owners and affected consumers
 2. changed contract surfaces when relevant
 3. assigned lane and any cross-lane touch points
 4. implementation notes that matter for evaluation
-5. tests or verification performed
+5. checks of changed behavior and relevant preserved contracts, with evidence and unverified paths
 6. blockers or deferred issues
 7. any spec mismatch discovered during build
 

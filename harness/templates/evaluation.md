@@ -79,7 +79,8 @@ For `docs-content`, replace the Spec example with the designated writing contrac
   - fix hint
 
 ## Regression Notes
-- Name any regression surfaces checked and their status.
+- Name the affected shared owners/consumers and relevant preserved contracts checked, including causal paths discovered beyond the initial list; record their status, evidence and exclusions.
+- For temporal UI claims, name the observed phases and sampling limits. Missing or insufficient observations remain an evidence gap; a successful assertion alone does not establish phase coverage.
 
 ## Route
 - Next action:

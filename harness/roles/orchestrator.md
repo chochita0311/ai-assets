@@ -52,6 +52,7 @@ contracts, define one universal lifecycle or replace a selected method.
 - Reconcile changed inputs and claim validity on resume. Integrate evidence,
   choose the next discriminating action or governed return path, and perform
   the selected governance's closeout checks before claiming completion.
+- For delivery work, apply [Change Impact And Regression Scope](../policies/execution-loop-governance.md#change-impact-and-regression-scope) to establish the affected and preserved behavior boundary, assign the relevant evaluators, and check coverage and acceptance gaps before closing.
 - Apply the selected flow's control decisions and required outputs. Keep
   its approval, retry, escalation and termination rules intact; report the
   resulting route and reason without inventing role-local states.

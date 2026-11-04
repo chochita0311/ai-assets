@@ -37,6 +37,7 @@ classification, return paths and termination.
 ### Control Rules
 
 - Apply the execution-profile policy to choose the smallest fitting profile, declare any surface lanes, and select only the required evaluators.
+- Apply [Change Impact And Regression Scope](#change-impact-and-regression-scope) at delivery entry, dependency changes and closeout; hand the affected and preserved behavior boundary to build and evaluation roles.
 - Apply the execution-loop governance policy to active-feature concurrency, run-unit boundaries, heuristic handling, evidence gaps, failure classification, return and review timing, and termination.
 
 ### Control Decisions
@@ -264,6 +265,39 @@ Do not start executable spec work when:
 - Use fix logs that also reference the active run ID.
 - Use fix logs that reference the active attempt when the same run has multiple passes.
 - Use heuristic backlog entries for non-blocking suggestion accumulation.
+
+## Change Impact And Regression Scope
+
+For delivery changes, establish a proportionate impact boundary before build and
+refresh it when new dependencies are found. Follow actual calls, data, storage,
+rendering and execution paths to shared owners and affected consumers, including
+paths absent from the initial regression list. Record the intended behavior
+change and the existing approved contracts that must remain true.
+
+- The Builder completes causally necessary producer, consumer, fixture, generated
+  artifact and owner-document updates within the approved boundary and lane.
+  Another file or module alone does not require a new approval; unresolved
+  product meaning, ownership, acceptance or lane authority follows the existing
+  spec/planning return rules. File adjacency alone does not justify extra work.
+- Keep the footprint and checks in the existing spec, build handoff or evaluation
+  record: changed behavior, shared owner, affected consumers, preserved contracts,
+  evidence and exclusions. Select representative positive, empty, unavailable,
+  failure or recovery conditions when they distinguish those contracts. Scale
+  checks to actual propagation and risk; do not require a whole-application
+  viewport/state/host cross-product for every fix.
+- Before completion, review substantive candidate changes against the intended
+  result and necessary dependencies, distinguishing pre-existing or concurrent
+  edits. Investigate unexplained changes and regressions instead of absorbing
+  unrelated cleanup or reverting another actor's work.
+- The Orchestrator assigns applicable contract, design and functional checks and
+  verifies their coverage and acceptance impact at closeout. Evaluators verify
+  changed behavior and representative preserved consumers, recording unobserved
+  paths explicitly. A source check or isolated process does not establish that
+  active clients loaded the same code, assets or persisted contract; verify the
+  relevant delivery boundary or retain that gap under the existing coverage rules.
+
+These controls apply to implementation fixes that preserve a contract as well as
+contract changes. They add no workflow state, artifact type or approval gate.
 
 ## Post-Contract Regression Check
 - When a run changes a source-of-truth contract, generated-data contract, identity model, route contract, schema, payload, command contract, or integration boundary, the run should check for stale assumptions in:

@@ -18,7 +18,8 @@
 
 ## Core Rules
 - Evaluate only what the feature and spec actually require.
-- Check normal flow, failure flow, empty or loading states when they are in scope, and named regression surfaces.
+- Check normal flow, failure flow, empty or loading states when they are in scope, including named regression surfaces and actual affected consumers identified in the handoff under [Change Impact And Regression Scope](../policies/execution-loop-governance.md#change-impact-and-regression-scope).
+- For changed initialization, readiness or refresh behavior, verify the phases required by the active contract; apply the [initialization and recovery check sequence](../../policies/review/interaction-evaluation.md#initialization-and-recovery-check-sequence) when that review asset is installed. Validate observation sufficiency before treating a temporal assertion as evidence of stability; record missing phases as unverified.
 - Separate true behavioral defects from missing planned scope.
 - Route schema, payload, generated artifact, identity, source-of-truth, or integration-boundary findings to Contract Evaluator unless they directly manifest as runtime behavior defects.
 - Prefer deterministic pass or fail language over vague QA commentary.

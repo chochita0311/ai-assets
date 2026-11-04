@@ -49,6 +49,8 @@ Current records have responsible owners in harness, agents, policies and skills.
 | [ir-code-quality-human-readability](policies/code-quality/human-readable-code-validation.md) | Code Quality, generated shared instructions | Human-readable code guidance and validation limits |
 | [ir-harness-improvement-adoption-review](harness/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
 | [ir-ui-requested-control-rendering](policies/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment` | Requested controls and rendered geometry |
+| [ir-change-impact-preservation](harness/execution-loop-governance/change-impact-and-preservation.md) | Delivery governance, Orchestrator, Builder and evaluator handoffs | Actual impact paths and preservation handoffs |
+| [ir-ui-initialization-recovery-evidence](policies/interaction-evaluation/initialization-and-recovery-evidence.md) | Interaction/Design Evaluation, initialization and recovery | Initialization, recovery and sufficient UI observations |
 | [ir-ui-state-transition-contracts](policies/interaction-evaluation/state-transition-contracts.md) | Interaction Evaluation, Design Evaluation, `skills/screen-alignment` | Stateful controls and committed intent |
 | [ir-ui-native-host-evidence](policies/interaction-evaluation/native-host-evidence.md) | Interaction Evaluation, `skills/screen-alignment` | Native host and end-to-end evidence |
 | [ir-skill-distribution-contract](skills/skill-distribution/skill-distribution-contract.md) | `skills` | Skill distribution and removal contract |

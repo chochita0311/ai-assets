@@ -35,6 +35,8 @@
   - whether interaction handlers must survive or be rebound after rebuild
   - whether URL state, pagination, or local mode state must persist across transitions
 
+- When the change affects initialization, loading, action readiness or recovery, specify the applicable states, state owners, required fallback and evidence phases in the active contract. Use the [initialization and recovery check sequence](../../policies/review/interaction-evaluation.md#initialization-and-recovery-check-sequence) when that review asset is installed.
+
 ## Visual Contract Rule
 - When the feature affects visible layout, the spec should lock the minimum visual containment rules needed for safe build and evaluation.
 - Examples:
