@@ -46,6 +46,7 @@ Current records have responsible owners in harness, agents, policies and skills.
 
 | Record | Subjects | Title |
 |---|---|---|
+| [ir-code-quality-human-readability](policies/code-quality/human-readable-code-validation.md) | Code Quality, generated shared instructions | Human-readable code guidance and validation limits |
 | [ir-harness-improvement-adoption-review](harness/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
 | [ir-ui-requested-control-rendering](policies/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment` | Requested controls and rendered geometry |
 | [ir-ui-state-transition-contracts](policies/interaction-evaluation/state-transition-contracts.md) | Interaction Evaluation, Design Evaluation, `skills/screen-alignment` | Stateful controls and committed intent |
