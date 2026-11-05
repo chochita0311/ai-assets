@@ -1,0 +1,7 @@
+interface:
+  display_name: "Clean Code"
+  short_description: "Simplify code and clarify responsibility boundaries"
+  default_prompt: "Use $clean-code to examine the requested code, remove unnecessary complexity within scope, preserve required behavior, and verify both behavior and readability."
+
+policy:
+  allow_implicit_invocation: true

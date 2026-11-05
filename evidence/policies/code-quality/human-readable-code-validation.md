@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-code-quality-human-readability",
-  "revision": 1,
+  "revision": 2,
   "audience": "public",
   "subjects": [
     {
@@ -86,9 +86,13 @@ Ownership decisions are:
 | [Codex adapter](../../../agents/adapters/codex/README.md#baseline-installation) | Retain the existing installation and equality-check procedure; no new hook, background evaluator, or worker binding was needed. |
 | [Refactor Plan](../../../skills/refactor-plan/SKILL.md) and consuming projects | Keep phased refactoring and parity judgments in the existing skill; keep concrete public/internal boundaries and allowed dependencies in project guidance and checks. |
 
-A possible separate design skill was discussed, not created. Reconsider it only
-if a distinct detailed procedure repeatedly earns its cost beyond the baseline
-and existing refactoring method. Description-based skill selection is not a
+A separate design skill was deferred in the initial investigation because a
+distinct procedure had not demonstrated recurring benefit beyond the baseline
+and existing refactoring method. A later explicit creation request led to the
+[Clean Code candidate](../../../skills/clean-code/SKILL.md), which operationalizes
+diagnosis, bounded intervention, and structural verification. That request
+changes implementation scope; it does not establish the candidate's incremental
+benefit. Description-based skill selection is not a
 guaranteed interception mechanism, so required guidance must not depend on a
 skill being selected. Reading official API documentation also does not validate
 where a project's responsibilities belong. Language-specific examples from Go,
@@ -240,8 +244,9 @@ No such production comparison or allowance is established by this record.
 
 Keep the effectiveness claim unresolved until those observations discriminate
 between the baseline and refinement. Revisit or narrow rules if they increase
-ceremony, fragmentation, hidden coupling, or lost contracts. Reconsider a
-separate skill only when recurring detailed work and benefit justify its cost.
+ceremony, fragmentation, hidden coupling, or lost contracts. The later Clean Code
+candidate still needs evidence that its detailed procedure earns its cost;
+its creation does not resolve this policy's effectiveness question.
 Runtime installation is a separate authorized merge through the existing adapter,
 followed by content-equality and fresh-session checks; it is not completed here.
 
@@ -260,8 +265,8 @@ responsibility/ownership analysis, meaningful naming, mutable-state safeguards,
 provider-neutral official-source retrieval, and structural completion alongside
 behavioral verification. Existing project authority, scope, compatibility,
 performance, valid single-use abstractions, and proportional verification remain.
-No new skill, adapter behavior, renderer logic, executable tests, production code,
-or runtime installation was introduced.
+That policy refinement introduced no new skill, adapter behavior, renderer logic,
+executable tests, production code, or runtime installation.
 
 Public-fitness review by the primary retained the problem structure, contrary
 results, conditions, adoption authority, and evidence limits while excluding
@@ -280,3 +285,7 @@ push, and consumer activation must be verified separately from this record.
   restructuring or meaning repair. Kept real-code effectiveness and runtime
   installation unresolved; no standalone session log or new skill/adapter was
   created.
+- 2026-11-05, revision 2: distinguished the initial skill deferral from the later
+  explicitly requested Clean Code candidate. Linked its canonical package and
+  retained the original null result, adoption rationale, and unresolved
+  effectiveness question; creation is not evidence of improved coding outcomes.

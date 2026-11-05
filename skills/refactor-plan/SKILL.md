@@ -1,6 +1,6 @@
 ---
 name: refactor-plan
-description: Plan or update structured refactoring work when the user asks to refactor, split a refactor into phases, preserve behavior while changing structure, introduce intentional semantic cleanup with explicit scope, or create a reusable refactoring tracking document. Use when a codebase needs a clear phased refactor plan, invariants, validation gates, or a refactor parity or merge checkpoint. Do not use for general code reviews or PR publication.
+description: Create or update refactoring plans, phased tracks, and tracking documents for structural, behavioral, or intentional semantic changes. Use when the task needs explicit refactoring scope, invariants, phase boundaries, validation gates, or a refactor parity or merge checkpoint. Do not use for ordinary implementation or cleanup that needs no planning artifact or parity/merge decision, general code reviews, or PR publication.
 ---
 
 # Refactor Plan
