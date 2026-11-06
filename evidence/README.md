@@ -48,6 +48,7 @@ Current records have responsible owners in harness, agents, policies and skills.
 |---|---|---|
 | [ir-code-quality-human-readability](policies/code-quality/human-readable-code-validation.md) | Code Quality, generated shared instructions | Human-readable code guidance and validation limits |
 | [ir-clean-code-validation](skills/clean-code/validation.md) | `skills/clean-code`, `skills/refactor-plan` | Clean Code author checks, replayable cases, discovery boundaries, and effectiveness limits |
+| [ir-design-deslop-validation](skills/design-deslop/validation.md) | `skills/design-deslop` | Inspectable DOM and component/whole-screen HTML review, partial choices, agent handoff, and preservation cases |
 | [ir-harness-improvement-adoption-review](harness/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
 | [ir-ui-requested-control-rendering](policies/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment` | Requested controls and rendered geometry |
 | [ir-change-impact-preservation](harness/execution-loop-governance/change-impact-and-preservation.md) | Delivery governance, Orchestrator, Builder and evaluator handoffs | Actual impact paths and preservation handoffs |

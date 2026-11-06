@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fieldbook — Notes</title>
+  <link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="notebook.css">
+  <script src="notebook.js" defer></script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Demo pages"><a href="notebook.html" aria-current="page">Fieldbook</a><a href="galaxy.html">Nightfold</a><a href="queue.html">Release desk</a></nav>
+  <main>
+    <header class="notebook-hero surface">
+      <span class="hero-badge">✦ Your knowledge, amplified</span>
+      <p class="eyebrow">A home for every idea</p>
+      <h1>Your notes, beautifully connected.</h1>
+      <p>Find the thread. Keep the spark. Make room for your next great idea.</p>
+      <div class="hero-pills"><span>Thoughtfully organized</span><span>Built for clarity</span><span>Always in your flow</span></div>
+    </header>
+    <div class="notebook-layout">
+      <section aria-labelledby="notes-heading">
+        <div class="section-title"><div><p class="eyebrow">Your personal knowledge hub</p><h2 id="notes-heading">All notes</h2></div><span class="total-badge">8 ideas, endless possibilities</span></div>
+        <form id="note-filters" class="note-filters surface" role="search" aria-label="Find notes">
+          <label>Search notes<input id="note-search" type="search" placeholder="Title or note text"></label>
+          <label>Category<select id="note-category"><option value="">All categories</option><option>Research</option><option>Decision</option><option>Draft</option></select></label>
+          <label>Tag<select id="note-tag"><option value="">All tags</option><option>accessibility</option><option>interviews</option><option>release</option><option>writing</option></select></label>
+          <label>Order<select id="note-order"><option value="updated">Recently edited</option><option value="title">Title A–Z</option></select></label>
+          <button type="reset">Reset filters</button>
+        </form>
+        <p id="note-count" class="result-count" role="status" aria-live="polite"></p>
+        <div id="note-list" class="note-grid" aria-label="Matching notes"></div>
+        <p id="note-empty" class="surface empty-note" hidden>No notes match these filters. Try another word or reset the filters.</p>
+      </section>
+      <aside id="reading-board" class="reading-board surface" aria-labelledby="reading-heading">
+        <p class="eyebrow">Small steps, bright ideas</p><h2 id="reading-heading">This week’s reading</h2>
+        <p class="muted">A separate checklist for your reading plan.</p>
+        <label><input type="checkbox" value="interview-guide"> Revisit the interview guide</label>
+        <label><input type="checkbox" value="release-checklist"> Read the release checklist</label>
+        <label><input type="checkbox" value="plain-language"> Compare plain-language drafts</label>
+        <p id="reading-progress" role="status" aria-live="polite">0 of 3 read</p>
+        <details><summary>How categories and tags work</summary><p>Each note has one category: Research, Decision, or Draft. Tags describe topics and can cross those categories. The reading checklist is independent of note filters.</p></details>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

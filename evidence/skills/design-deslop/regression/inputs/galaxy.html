@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nightfold — Evening watch</title>
+  <link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="galaxy.css">
+  <script src="galaxy.js" defer></script>
+</head>
+<body class="nightfold">
+  <nav class="site-nav" aria-label="Demo pages"><a href="notebook.html">Fieldbook</a><a href="galaxy.html" aria-current="page">Nightfold</a><a href="queue.html">Release desk</a></nav>
+  <main>
+    <header class="sky-hero"><div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div><p class="eyebrow">The night is a place to wander</p><h1>Keep a little<br><em>afterglow.</em></h1><p>A small observing club’s imaginary sky journal.</p><span class="night-caption">Demo night · May 8 · Stories above the city</span></header>
+    <div class="sky-layout">
+      <section id="evening-watch" aria-labelledby="watch-heading">
+        <div class="sky-section-title"><div><p class="eyebrow">A luminous collection</p><h2 id="watch-heading">Evening watch</h2></div><p id="saved-count" role="status" aria-live="polite">0 saved for tonight</p></div>
+        <form id="sky-filters" class="sky-filters" role="search" aria-label="Find sky entries"><label>Find an entry<input id="sky-search" type="search" placeholder="Name or field note"></label><label>Object type<select id="sky-type"><option value="">All objects</option><option>Cloud</option><option>Cluster</option><option>Satellite</option></select></label><label class="saved-filter"><input id="sky-saved" type="checkbox"> Saved only</label></form>
+        <p id="sky-count" class="muted" role="status" aria-live="polite"></p>
+        <div id="sky-list" class="sky-grid"></div><p id="sky-empty" hidden>No matching entries. Try a different word or object type.</p>
+      </section>
+      <aside id="club-bulletin" class="club-bulletin" aria-labelledby="club-heading"><p class="eyebrow">From the club</p><h2 id="club-heading">Small transmissions</h2><label>Show notes from<select id="bulletin-month"><option value="may">May</option><option value="april">April</option></select></label><div id="bulletin-list"></div></aside>
+    </div>
+  </main>
+</body>
+</html>

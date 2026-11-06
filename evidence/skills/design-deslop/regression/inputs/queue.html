@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Release desk — Review queue</title>
+  <link rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="queue.css">
+  <script src="queue.js" defer></script>
+</head>
+<body class="release-desk">
+  <nav class="site-nav" aria-label="Demo pages"><a href="notebook.html">Fieldbook</a><a href="galaxy.html">Nightfold</a><a href="queue.html" aria-current="page">Release desk</a></nav>
+  <main>
+    <header class="queue-header"><h1>Review queue</h1><p>Choose the next item to review. All owners and items below are sample data.</p></header>
+    <form id="queue-filters" class="queue-filters" role="search" aria-label="Find review items"><label>Search items<input id="queue-search" type="search" placeholder="Title or owner"></label><label>Status<select id="queue-status"><option value="">All statuses</option><option>Ready</option><option>Needs info</option><option>Scheduled</option></select></label><label class="mine-filter"><input id="queue-mine" type="checkbox"> Assigned to me (Robin)</label><button type="reset">Clear filters</button></form>
+    <p id="queue-count" class="queue-count" role="status" aria-live="polite"></p>
+    <div class="table-scroll" role="region" aria-label="Review items, scroll horizontally on small screens" tabindex="0"><table><caption class="visually-hidden">Release review items ordered by due date</caption><thead><tr><th scope="col">Item</th><th scope="col">Status</th><th scope="col">Owner</th><th scope="col">Due</th></tr></thead><tbody id="queue-list"></tbody></table></div>
+    <p id="queue-empty" hidden>No items match. Clear the filters to see the full queue.</p>
+    <p class="queue-help">Open an item’s review notes to see its next action. Dates use YYYY-MM-DD; the list is ordered by due date.</p>
+  </main>
+</body>
+</html>

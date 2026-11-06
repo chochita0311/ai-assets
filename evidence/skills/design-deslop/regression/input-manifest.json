@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "input_files": {
+    "DESIGN.md": {
+      "sha256": "74343bbc2ddf7dbfbf2eec072eade6e3a48bb69c5e79b69dc21670cff6e81e3d",
+      "bytes": 4290
+    },
+    "README.md": {
+      "sha256": "840d23a44d68e591fe0c555b9deef747cd11d0dcbd39e17cf3d203f5fbd4b6c0",
+      "bytes": 872
+    },
+    "TASKS.md": {
+      "sha256": "93143e74c1c86da77893979c3179a7ac2057186ae53c0e010b297a5989832354",
+      "bytes": 1880
+    },
+    "galaxy.css": {
+      "sha256": "dd2d5c9316fefe74f1a408a1e7c8af0fc4f82f034380a41c94a04036ea90c1e6",
+      "bytes": 4911
+    },
+    "galaxy.html": {
+      "sha256": "ac60adaa80d83905df151472b05db73c3ab35d08b4502e81eae08de53eb2e9b2",
+      "bytes": 2288
+    },
+    "galaxy.js": {
+      "sha256": "dc3f6c3f256533903eb3abd0a0192fc593171852f8ab27e89d8c4982d66f3131",
+      "bytes": 3801
+    },
+    "handoffs/earlier-list-review.md": {
+      "sha256": "9620c0bac6109ad4b2465af83ee105367438dfeed60672ec065c63d06994e28e",
+      "bytes": 1051
+    },
+    "handoffs/list-options.md": {
+      "sha256": "25229cf6e9b0b431e2cacaea72544bb57f83f2c6ce6368047aff7c3fe6491761",
+      "bytes": 1820
+    },
+    "notebook.css": {
+      "sha256": "f816927b912f54ed2771e9ea33aca9adc710cc8d1c20ac83959a71d97b28ab49",
+      "bytes": 3963
+    },
+    "notebook.html": {
+      "sha256": "522572e7cb1f0c41f741113ae67609f27840aeb599f1c95c96788e87a306e5d4",
+      "bytes": 3325
+    },
+    "notebook.js": {
+      "sha256": "8d0d7d87d6eef390f1f45a2ca048c2e745e584dcca4a152f867b976147ff66aa",
+      "bytes": 5269
+    },
+    "queue.css": {
+      "sha256": "78f8417396ae41138e4ddd09ddb19fa49e00fc96d7ed59c27da26f0ef2bd6754",
+      "bytes": 1910
+    },
+    "queue.html": {
+      "sha256": "f74b01364b979d13d450a3108f9ef375a574cef2745c06eee970c85a58a0ed3c",
+      "bytes": 1910
+    },
+    "queue.js": {
+      "sha256": "68d11b2afc7dc12df17b066e1faa69bda13ec4e0f1895c4f4188d1dca2f4366e",
+      "bytes": 2392
+    },
+    "tokens.css": {
+      "sha256": "2cd668f5da40536ba2fc522eae86a40561cf73460c72ec9649ec130256001a30",
+      "bytes": 1768
+    }
+  }
+}

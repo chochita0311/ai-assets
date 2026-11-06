@@ -1,0 +1,79 @@
+--- a/galaxy.css
++++ b/galaxy.css
+@@ -11,26 +11,28 @@
+ .orbit-two { top: 20px; right: 9%; transform: rotate(40deg) scaleX(.58); border-color: #7bdfdf91; }
+ .orbit-one::after { content: ""; width: 18px; height: 18px; border-radius: 50%; background: #ffd0b4; box-shadow: 0 0 35px 10px #d7879952; position: absolute; left: 30px; top: 55px; }
+ .sky-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 2rem; align-items: start; }
+-.sky-section-title { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: .5rem; }
+-.sky-section-title h2 { font-family: Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 1rem; }
+-.sky-section-title .eyebrow { color: #c4a5dc; font-size: .66rem; margin-bottom: .4rem; }
+-#saved-count { font-size: .8rem; color: #d0b3f7; }
+-.sky-filters { display: flex; gap: 1rem; align-items: end; flex-wrap: wrap; padding: 1rem; border: 1px solid #6350767d; border-radius: 18px; background: #261c3c99; }
+-.sky-filters > label { display: flex; flex: 1; min-width: 140px; flex-direction: column; font-size: .8rem; gap: .4rem; }
+-.sky-filters .saved-filter { flex-direction: row; align-items: center; min-height: 42px; flex: 0 1 auto; white-space: nowrap; }
+-#sky-count { font-size: .8rem; margin: 1rem 0; }
+-.sky-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+-.sky-card { padding: 1.4rem; border: 1px solid #7158838c; border-radius: 22px; background: linear-gradient(145deg, #302143d9, #1a172dd9); box-shadow: 0 0 24px #9263b214; }
+-.sky-card .eyebrow { font-size: .62rem; color: #d4afdb; margin-bottom: .8rem; }
+-.sky-emblem { display: block; width: 44px; height: 44px; margin-bottom: 1rem; background: radial-gradient(circle at 35% 35%, #ffd9b7, #b86eaa 38%, #704a9c 60%, transparent 67%); border-radius: 50%; box-shadow: 0 0 30px #b76fa64d; }
+-.sky-card h3 { font-family: Georgia, serif; font-size: 1.4rem; font-weight: 400; margin-bottom: .5rem; }
+-.sky-card p:not(.eyebrow) { font-size: .85rem; color: #d5c9e3; }
+-.sky-window { display: inline-block; padding: .3rem .6rem; border: 1px solid #80628670; border-radius: 99px; font-size: .73rem; color: #f3c4d1; margin-bottom: 1rem; }
+-.sky-actions { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+-.sky-actions button { font-size: .8rem; border-radius: 99px; }
+-.sky-actions button[aria-pressed="true"] { color: #ffe1c7; border-color: #bc849c; }
+-.sky-card details { font-size: .8rem; margin-top: 1rem; border-top: 1px solid #65507475; padding-top: .8rem; }
+-.sky-card details p { margin: .6rem 0 0; }
++#evening-watch .sky-section-title { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; margin-bottom: 1.25rem; }
++#evening-watch .sky-section-title h2 { font-family: Georgia, serif; font-size: 2.15rem; font-weight: 400; margin: 0; }
++#evening-watch #saved-count { font-size: .8rem; color: #d0b3f7; margin: 0; }
++#evening-watch .sky-filters { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(150px, .85fr) auto; gap: 1rem; align-items: end; }
++#evening-watch .sky-filters > label { display: flex; min-width: 0; flex-direction: column; font-size: .8rem; gap: .4rem; }
++#evening-watch .sky-filters input[type="search"], #evening-watch .sky-filters select { min-width: 0; width: 100%; }
++#evening-watch .sky-filters .saved-filter { flex-direction: row; align-items: center; min-height: 42px; white-space: nowrap; }
++#evening-watch #sky-count { font-size: .8rem; margin: 1rem 0; }
++#evening-watch .sky-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
++#evening-watch .sky-card { padding: 1.4rem; border: 1px solid #7158838c; border-radius: 22px; background: radial-gradient(ellipse at 0 0, #c577a321, transparent 65%), linear-gradient(145deg, #282040ed, #1a172ded); box-shadow: 0 0 24px #9263b214; }
++#evening-watch .sky-type { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #c6c4ef; margin-bottom: .5rem; }
++#evening-watch .sky-card h3 { font-family: Georgia, serif; font-size: 1.65rem; font-weight: 400; margin-bottom: .65rem; }
++#evening-watch .sky-excerpt, #evening-watch .sky-card details p { font-size: .85rem; color: #d5c9e3; }
++#evening-watch .sky-excerpt { min-height: 2.55rem; margin-bottom: 1rem; }
++#evening-watch .sky-window { display: flex; flex-direction: column; gap: .1rem; margin: 0; }
++#evening-watch .sky-window span:first-child { font-size: .68rem; color: var(--muted); }
++#evening-watch .sky-window span:last-child { font-size: .85rem; color: #ffc5b5; font-variant-numeric: tabular-nums; }
++#evening-watch .sky-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .75rem; }
++#evening-watch .sky-actions button { font-size: .8rem; border-radius: 99px; }
++#evening-watch .sky-actions button[aria-pressed="true"] { color: #ffe1c7; border-color: #bc849c; background: #493044; box-shadow: 0 0 16px #d7879926; }
++#evening-watch .sky-card details { font-size: .8rem; margin-top: 1rem; border-top: 1px solid #65507475; padding-top: .8rem; }
++#evening-watch .sky-card details p { margin: .6rem 0 0; }
+ .club-bulletin { border-left: 1px solid #6a517477; padding-left: 1.25rem; }
+ .club-bulletin .eyebrow { color: #d3b3e7; font-size: .66rem; }
+ .club-bulletin h2 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; }
+@@ -39,4 +41,4 @@
+ .club-bulletin h3 { font-size: .9rem; margin-bottom: .4rem; }
+ .club-bulletin article p { font-size: .8rem; color: var(--muted); margin-bottom: 0; }
+ @media (max-width: 900px) { .sky-layout { grid-template-columns: 1fr; } .club-bulletin { border-left: 0; border-top: 1px solid #6a517477; padding: 1.25rem 0 0; } }
+-@media (max-width: 600px) { .sky-hero { padding: 3rem 1.5rem; } .orbit { opacity: .5; right: -45%; } .sky-grid { grid-template-columns: 1fr; } }
++@media (max-width: 600px) { .sky-hero { padding: 3rem 1.5rem; } .orbit { opacity: .5; right: -45%; } #evening-watch .sky-grid { grid-template-columns: 1fr; } #evening-watch .sky-filters { grid-template-columns: minmax(0, 1fr) auto; } #evening-watch .sky-filters > label:first-child { grid-column: 1 / -1; } #evening-watch .sky-excerpt { min-height: 0; } }
+--- a/galaxy.html
++++ b/galaxy.html
+@@ -12,7 +12,7 @@
+     <header class="sky-hero"><div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div><p class="eyebrow">The night is a place to wander</p><h1>Keep a little<br><em>afterglow.</em></h1><p>A small observing club’s imaginary sky journal.</p><span class="night-caption">Demo night · May 8 · Stories above the city</span></header>
+     <div class="sky-layout">
+       <section id="evening-watch" aria-labelledby="watch-heading">
+-        <div class="sky-section-title"><div><p class="eyebrow">A luminous collection</p><h2 id="watch-heading">Evening watch</h2></div><p id="saved-count" role="status" aria-live="polite">0 saved for tonight</p></div>
++        <div class="sky-section-title"><h2 id="watch-heading">Evening watch</h2><p id="saved-count" role="status" aria-live="polite">0 saved for tonight</p></div>
+         <form id="sky-filters" class="sky-filters" role="search" aria-label="Find sky entries"><label>Find an entry<input id="sky-search" type="search" placeholder="Name or field note"></label><label>Object type<select id="sky-type"><option value="">All objects</option><option>Cloud</option><option>Cluster</option><option>Satellite</option></select></label><label class="saved-filter"><input id="sky-saved" type="checkbox"> Saved only</label></form>
+         <p id="sky-count" class="muted" role="status" aria-live="polite"></p>
+         <div id="sky-list" class="sky-grid"></div><p id="sky-empty" hidden>No matching entries. Try a different word or object type.</p>
+--- a/galaxy.js
++++ b/galaxy.js
+@@ -16,7 +16,7 @@
+     const article = document.createElement("article");
+     article.className = "sky-card";
+     article.id = entry.id;
+-    article.innerHTML = `<span class="sky-emblem" aria-hidden="true"></span><p class="eyebrow">Discover your next wonder</p><h3>${entry.name}</h3><p>${entry.excerpt}</p><span class="sky-window">Demo window · ${entry.window}</span><div class="sky-actions"><span>${entry.type}</span><button type="button" data-save="${entry.id}" aria-pressed="${savedEntries.has(entry.id)}">${savedEntries.has(entry.id) ? "Saved" : "Save for tonight"}</button></div><details><summary>Read field note</summary><p>${entry.note}</p></details>`;
++    article.innerHTML = `<p class="sky-type">${entry.type}</p><h3>${entry.name}</h3><p class="sky-excerpt">${entry.excerpt}</p><div class="sky-actions"><p class="sky-window"><span>Demo window</span><span>${entry.window}</span></p><button type="button" data-save="${entry.id}" aria-pressed="${savedEntries.has(entry.id)}">${savedEntries.has(entry.id) ? "Saved" : "Save for tonight"}</button></div><details><summary>Read field note</summary><p>${entry.note}</p></details>`;
+     list.append(article);
+   }
+   document.querySelector("#sky-count").textContent = `${matches.length} of ${skyEntries.length} entries`;

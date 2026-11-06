@@ -1,0 +1,158 @@
+--- a/notebook.css
++++ b/notebook.css
+@@ -1,43 +1,60 @@
+-.notebook-hero { text-align: center; padding: 2.3rem 1.5rem; background: linear-gradient(120deg, #f0edff, #f9f4fe 60%, #edf6ff); margin-bottom: 2rem; }
+-.hero-badge { display: inline-block; padding: .45rem .9rem; background: white; border: 1px solid #dbd3fa; border-radius: 99px; color: #6652b6; font-size: .8rem; margin-bottom: 1rem; }
+-.notebook-hero .eyebrow { color: #7963a1; margin-bottom: .5rem; }
+-.notebook-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -.04em; margin-bottom: .65rem; }
+-.notebook-hero > p:not(.eyebrow) { color: var(--muted); }
+-.hero-pills { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+-.hero-pills span { padding: .3rem .6rem; border-radius: 99px; background: #ffffffa6; font-size: .75rem; color: #665b79; }
+-.notebook-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 1.5rem; align-items: start; }
+-.section-title { display: flex; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+-.section-title h2 { margin-bottom: 0; }
+-.section-title .eyebrow { color: var(--muted); margin-bottom: .25rem; }
+-.total-badge { border-radius: 99px; padding: .45rem .7rem; color: #6d59a3; background: #eee8ff; font-size: .72rem; text-align: center; }
+-.note-filters { display: grid; grid-template-columns: minmax(150px, 2fr) repeat(3, minmax(105px, 1fr)); gap: .7rem; padding: 1rem; }
++body {
++  --paper: #fbfaf7;
++  --surface: #fffefa;
++  --line: #deddd9;
++  --muted: #5c6370;
++  background: var(--paper);
++}
++.site-nav { border-bottom: 1px solid var(--line); }
++.notebook-header { padding: 1rem 0 1.75rem; margin-bottom: 1.5rem; border-bottom: 3px solid var(--ink); }
++.notebook-header h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; letter-spacing: -.04em; margin-bottom: .65rem; }
++.notebook-header p { color: var(--muted); margin: 0; }
++.notebook-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 2.5rem; align-items: start; }
++.section-title { margin-bottom: 1rem; }
++.section-title h2 { font-size: 1.1rem; margin: 0; }
++.note-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: .75rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+ .note-filters label { display: flex; flex-direction: column; gap: .3rem; font-size: .78rem; font-weight: 650; min-width: 0; }
+-.note-filters input, .note-filters select { width: 100%; font-size: .85rem; }
+-.note-filters button { grid-column: 4; font-size: .8rem; }
+-.result-count { color: var(--muted); font-size: .85rem; margin: 1rem 0; }
+-.note-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+-.note-card { padding: 1.2rem; background: linear-gradient(155deg, #fff 75%, #f3f1fc); }
+-.note-topline { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .8rem; }
+-.note-symbol { width: 37px; height: 37px; border-radius: 11px; display: grid; place-items: center; color: #7862bc; background: #ece6ff; font-size: 1.2rem; }
+-.note-kicker { font-size: .66rem; color: #7b6e98; text-transform: uppercase; letter-spacing: .09em; }
+-.note-card h3 { font-size: 1.02rem; line-height: 1.4; margin-bottom: .6rem; }
+-.note-excerpt { color: var(--muted); font-size: .86rem; margin-bottom: .9rem; }
+-.note-meta { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0; }
+-.category-label, .tag-label { font-size: .72rem; border-radius: 99px; padding: .2rem .55rem; }
+-.category-label { background: #eae4fb; color: #514187; font-weight: 700; }
+-.tag-label { background: #f1f3f7; color: #536173; border: 1px solid #e3e7ed; }
+-.note-date, .review-due { font-size: .74rem; color: var(--muted); margin: .6rem 0; }
+-.review-due { color: #70431b; }
+-.note-card details { font-size: .8rem; border-top: 1px solid var(--line); padding-top: .7rem; }
+-.note-card details p { margin: .6rem 0 0; }
+-.reading-board { padding: 1.25rem; }
+-.reading-board h2 { font-size: 1.1rem; }
+-.reading-board .eyebrow { color: #7b6e98; font-size: .65rem; }
++.note-filters label:first-child { grid-column: 1 / -1; }
++.note-filters input, .note-filters select { width: 100%; font-size: .875rem; border-radius: 4px; }
++.note-filters button { align-self: end; font-size: .8rem; border-radius: 4px; }
++.result-count { color: var(--muted); font-size: .8rem; margin: 1rem 0 .5rem; }
++.note-list { border-top: 1px solid var(--ink); }
++.note-row { display: grid; grid-template-columns: minmax(0, 1fr) 132px; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
++.note-row h3 { font-size: 1.05rem; line-height: 1.4; margin-bottom: .35rem; }
++.note-excerpt { color: var(--muted); font-size: .875rem; margin-bottom: .65rem; }
++.note-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: .35rem 1rem; margin-bottom: .45rem; font-size: .75rem; }
++.category-label { color: #514187; font-weight: 700; }
++.note-tags { color: var(--muted); }
++.tag-label + .tag-label::before { content: ", "; }
++.meta-label { font-weight: 400; margin-right: .25rem; color: var(--muted); }
++.note-dates { font-size: .75rem; font-variant-numeric: tabular-nums; }
++.note-date { color: var(--muted); margin: 0; }
++.note-date span, .review-due span { display: block; }
++.note-dates time { white-space: nowrap; }
++.review-due { color: #70431b; margin: .75rem 0 0; padding-left: .5rem; border-left: 2px solid #a76c31; }
++.note-row details { font-size: .85rem; }
++.note-row summary { width: fit-content; min-height: 36px; padding: .4rem 0; color: var(--accent); }
++.note-row details[open] summary { font-weight: 650; }
++.note-row details p { max-width: 65ch; margin: .35rem 0 0; padding-left: .85rem; border-left: 2px solid var(--line); line-height: 1.65; }
++.reading-board { padding: 1.15rem; border-top: 3px solid #685693; background: #f1eef6; }
++.reading-board h2 { font-size: 1rem; margin-bottom: .55rem; }
+ .reading-board > p, .reading-board details { font-size: .8rem; }
+-.reading-board > label { display: flex; align-items: start; gap: .6rem; padding: .8rem 0; font-size: .82rem; border-bottom: 1px solid var(--line); }
+-.reading-board input { flex: 0 0 auto; }
++.reading-board > label { display: flex; align-items: start; gap: .6rem; padding: .8rem 0; font-size: .82rem; border-bottom: 1px solid #d9d3e2; }
++.reading-board input { flex: 0 0 auto; margin: .15rem 0 0; }
+ #reading-progress { font-weight: 700; margin: 1rem 0; }
++.reading-board summary { padding: .25rem 0; }
+ .reading-board details p { margin: .6rem 0 0; }
+-.empty-note { padding: 1rem; }
+-@media (max-width: 1000px) { .notebook-layout { grid-template-columns: minmax(0, 1fr); } .reading-board { max-width: none; } }
+-@media (max-width: 640px) { .note-grid { grid-template-columns: 1fr; } .note-filters { grid-template-columns: 1fr 1fr; } .note-filters label:first-child { grid-column: 1 / -1; } .note-filters button { grid-column: auto; align-self: end; } .section-title { align-items: start; } }
++.empty-note { padding: 1.5rem 0; color: var(--muted); }
++@media (max-width: 1000px) {
++  .notebook-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
++}
++@media (max-width: 640px) {
++  .notebook-header { padding: .75rem 0 1.25rem; margin-bottom: 1.25rem; }
++  .notebook-header p { font-size: .875rem; }
++  .note-filters { grid-template-columns: 1fr 1fr; }
++  .note-filters button { min-height: 42px; }
++  .note-row { grid-template-columns: minmax(0, 1fr); gap: .5rem; padding: 1rem 0; }
++  .note-dates { display: flex; flex-wrap: wrap; gap: .4rem 1rem; }
++  .note-date span, .review-due span { display: inline; margin-right: .25rem; }
++  .review-due { margin: 0; }
++}
+--- a/notebook.html
++++ b/notebook.html
+@@ -9,17 +9,14 @@
+ <body>
+   <nav class="site-nav" aria-label="Demo pages"><a href="notebook.html" aria-current="page">Fieldbook</a><a href="galaxy.html">Nightfold</a><a href="queue.html">Release desk</a></nav>
+   <main>
+-    <header class="notebook-hero surface">
+-      <span class="hero-badge">✦ Your knowledge, amplified</span>
+-      <p class="eyebrow">A home for every idea</p>
+-      <h1>Your notes, beautifully connected.</h1>
+-      <p>Find the thread. Keep the spark. Make room for your next great idea.</p>
+-      <div class="hero-pills"><span>Thoughtfully organized</span><span>Built for clarity</span><span>Always in your flow</span></div>
++    <header class="notebook-header">
++      <h1>Notebook</h1>
++      <p>Research, decisions, and drafts. Pick up the thread.</p>
+     </header>
+     <div class="notebook-layout">
+       <section aria-labelledby="notes-heading">
+-        <div class="section-title"><div><p class="eyebrow">Your personal knowledge hub</p><h2 id="notes-heading">All notes</h2></div><span class="total-badge">8 ideas, endless possibilities</span></div>
+-        <form id="note-filters" class="note-filters surface" role="search" aria-label="Find notes">
++        <div class="section-title"><h2 id="notes-heading">All notes</h2></div>
++        <form id="note-filters" class="note-filters" role="search" aria-label="Find notes">
+           <label>Search notes<input id="note-search" type="search" placeholder="Title or note text"></label>
+           <label>Category<select id="note-category"><option value="">All categories</option><option>Research</option><option>Decision</option><option>Draft</option></select></label>
+           <label>Tag<select id="note-tag"><option value="">All tags</option><option>accessibility</option><option>interviews</option><option>release</option><option>writing</option></select></label>
+@@ -27,11 +24,11 @@
+           <button type="reset">Reset filters</button>
+         </form>
+         <p id="note-count" class="result-count" role="status" aria-live="polite"></p>
+-        <div id="note-list" class="note-grid" aria-label="Matching notes"></div>
+-        <p id="note-empty" class="surface empty-note" hidden>No notes match these filters. Try another word or reset the filters.</p>
++        <div id="note-list" class="note-list" aria-label="Matching notes"></div>
++        <p id="note-empty" class="empty-note" hidden>No notes match these filters. Try another word or reset the filters.</p>
+       </section>
+-      <aside id="reading-board" class="reading-board surface" aria-labelledby="reading-heading">
+-        <p class="eyebrow">Small steps, bright ideas</p><h2 id="reading-heading">This week’s reading</h2>
++      <aside id="reading-board" class="reading-board" aria-labelledby="reading-heading">
++        <h2 id="reading-heading">This week’s reading</h2>
+         <p class="muted">A separate checklist for your reading plan.</p>
+         <label><input type="checkbox" value="interview-guide"> Revisit the interview guide</label>
+         <label><input type="checkbox" value="release-checklist"> Read the release checklist</label>
+--- a/notebook.js
++++ b/notebook.js
+@@ -21,10 +21,10 @@
+   list.replaceChildren();
+   for (const note of matches) {
+     const article = document.createElement("article");
+-    article.className = "note-card surface";
++    article.className = "note-row";
+     article.id = note.id;
+     // All strings below are fixed synthetic fixture data, never user input.
+-    article.innerHTML = `<div class="note-topline"><span class="note-symbol" aria-hidden="true">✦</span><span class="note-kicker">A spark worth keeping</span></div><h3>${note.title}</h3><p class="note-excerpt">${note.excerpt}</p><div class="note-meta"><span class="category-label">${note.category}</span>${note.tags.map(tag => `<span class="tag-label">#${tag}</span>`).join("")}</div><p class="note-date">Edited <time datetime="${note.updated}">${note.updated}</time></p>${note.review ? `<p class="review-due">Review due <time datetime="${note.review}">${note.review}</time></p>` : ""}<details><summary>Read note</summary><p>${note.body}</p></details>`;
++    article.innerHTML = `<div class="note-content"><h3>${note.title}</h3><p class="note-excerpt">${note.excerpt}</p><div class="note-meta"><span class="category-label"><span class="meta-label">Category</span> ${note.category}</span><span class="note-tags"><span class="meta-label">Tags</span> ${note.tags.map(tag => `<span class="tag-label">${tag}</span>`).join("")}</span></div><details><summary>Read note<span class="visually-hidden">: ${note.title}</span></summary><p>${note.body}</p></details></div><div class="note-dates"><p class="note-date"><span>Edited</span> <time datetime="${note.updated}">${note.updated}</time></p>${note.review ? `<p class="review-due"><span>Review due</span> <time datetime="${note.review}">${note.review}</time></p>` : ""}</div>`;
+     list.append(article);
+   }
+   document.querySelector("#note-count").textContent = `${matches.length} of ${notes.length} notes`;

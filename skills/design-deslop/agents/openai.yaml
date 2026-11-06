@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design De-slop"
+  short_description: "Compare UI changes, keep parts, and request the next draft"
+  default_prompt: "Use $design-deslop to create a quiet HTML review with inspectable before/after DOM, component and selected-combination views, whole or partial choices, and a readable request I can send back before applying changes."
