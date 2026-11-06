@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-change-impact-preservation",
-  "revision": 1,
+  "revision": 2,
   "audience": "public",
   "subjects": [
     {
@@ -117,6 +117,38 @@ clarification. They do not reconstruct the instructions actually supplied during
 historical product work. No controlled guidance comparison or forward task test
 has been performed; preventive effect is **not assessed**.
 
+### Later Capability And Delivery-Closure Evidence
+
+Private delivery receipts reviewed on 2026-11-06 add the following impact paths.
+They report local executions with synthetic data, not public reproductions.
+The account preserves caller, ownership and failure relationships while omitting
+private app identities, exact build fingerprints, paths and task associations.
+
+| Recorded change | Impact path and reported closure | Limit |
+| --- | --- | --- |
+| Omit unavailable capabilities from a packaged edition | Hiding navigation alone left imports, startup hooks, route handlers, legacy reader links and visible settings/recovery consumers depending on excluded features. The capability boundary was applied before those dependencies, and surviving consumers used their included owner. Checks also preserved stored excluded records and the other edition's supported behavior. | This was a packaging boundary, not authority to delete retained data or remove the capability from every edition. Existing positive-state suppression and actual-consumer rules already applied. |
+| Match help to delivered behavior | Only shipped app guides were localized; a later correction placed one language option at the guide contents owner rather than repeating it per article. Topic/URL/history and the surrounding app language retained their distinct owners. Storage and cleanup copy also had to describe the included handler rather than an excluded feature. | Guide-only language selection did not authorize global application localization or rewriting unrelated repository docs. Correct copy still needed real behavior evidence. |
+| Expose storage boundaries truthfully | Measurements distinguished app-owned data/cache, shared model storage and free space on each relevant volume, including partial or unavailable reads. Cleanup wording preserved the difference between disposable app cache and shared files used elsewhere. | Unknown was not zero, shared totals were not app-exclusive usage, and documentation of another operating system's expected paths did not establish execution there. Exact paths, units and deletion authority remain product-owned. |
+| Replace an identifiable canonical build | A candidate was checked before replacement of owned app/archive/checksum outputs. Review and failure witnesses exposed interruption after renaming the old output; publication kept a recoverable backup through that boundary and retained it if recovery failed. A separate delivery-location correction restored the established final output owner after verified staging. | Staging was not final delivery. Dirty source required a content fingerprint in addition to its commit; a changing-input candidate was rejected. These checks did not establish public signing, recipient installation or another operating-system build. |
+
+Static review candidates were adjudicated through primary before/after witnesses;
+reviewers did not perform runtime validation or approve acceptance. Fixture/oracle
+assumptions that disagreed with actual viewport or path behavior were corrected
+separately from product defects, with earlier failures retained. This is scoped
+support for impact closure, not a comparative assessment of reviewer quality.
+
+The existing governance, positive-state suppression, source/runtime identity and
+action/status scope rules already cover these relationships. No further harness
+role, flow, template or tool-binding change is justified by this export. No
+controlled guidance comparison or new product run was made; preventive effect
+remains **not assessed**.
+
+Source inspection for revision 2 used `harness/policies/execution-loop-governance.md` at common-source
+commit `19e14c8d48fc9ba3106219969f6ca70802479032`
+(SHA-256 `ef7831920f523adbc5d5164dc6a275633fd09522d75d2928040aa0d45b5abb4d`).
+Historical subject fingerprints above remain unchanged. This identifies the
+compared shared source, not the instructions loaded during product executions.
+
 ## Work And Acceptance
 
 This reference assigns no task or experiment. The authorized common-source work
@@ -151,6 +183,12 @@ Unresolved product meaning, ownership, acceptance or lane authority follows
 existing spec/planning returns. Retain actual delivery and evidence gaps at their
 owning task rather than claiming that a source pass updated active clients.
 
+Revision 2 updates evidence under the existing owner and leaves implemented
+governance unchanged. It creates no pending work for product corrections already
+completed. Recipient, physical-input, signing and untested-platform gaps remain
+with the product acceptance owner; they are not new common-source assignments.
+This local export performs no commit, push, installation or consumer refresh.
+
 ## History
 
 - 2026-11-04 — Revision 1. Added this distinct handoff question after checking the
@@ -158,3 +196,7 @@ owning task rather than claiming that a source pass updated active clients.
   Private identifiers, paths, source artifacts and exchange associations remain
   private. Generalization preserves the consumer relationship and counterevidence;
   it does not present changed public examples as reproduced private outcomes.
+- 2026-11-06 — Revision 2. Added capability-dependency closure, guide-only
+  language/storage truthfulness and interruption-safe canonical publication
+  observations. Retained existing governance because it already covers actual
+  consumers and preserved contracts; added no universal platform or build policy.

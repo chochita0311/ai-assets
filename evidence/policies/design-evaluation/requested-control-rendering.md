@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-requested-control-rendering",
-  "revision": 2,
+  "revision": 3,
   "audience": "public",
   "subjects": [
     {
@@ -51,7 +51,8 @@
   "relations": {
     "related": [
       "ir-ui-state-transition-contracts",
-      "ir-ui-native-host-evidence"
+      "ir-ui-native-host-evidence",
+      "ir-ui-initialization-recovery-evidence"
     ],
     "supersedes": []
   }
@@ -107,6 +108,33 @@ Illustrative controls for future use, with expected rather than observed outcome
 - A long list reaches its real last item without a hidden descendant adding blank
   depth; needed accessible labels and intentional local scrolling remain usable.
 
+### Later Painted-Icon And Compact-Host Evidence
+
+Private receipts reviewed on 2026-11-06 add two rendered geometry observations.
+The source review did not rerun their UI scenarios publicly; private captures and
+product-specific dimensions remain at their original owner.
+
+| Recorded condition | Observation and reported correction | Limit |
+| --- | --- | --- |
+| Bundled external SVG symbols | The controls and SVG elements existed and had nonzero geometry while glyphs were outside the visible viewport because nested symbol and outer viewport coordinates disagreed. Correcting that coordinate relationship restored the painted icons. | Element presence and a nonzero bounding box had not proved visible artwork. Locally bundled official vector assets and their license were distinct from an external font dependency; the lesson does not prescribe a particular icon provider. |
+| Compact native layout | A narrow-layout rule changed sticky positioning while retaining a host offset already reserved by parent padding. The rail extended beyond the short window and pushed the footer offscreen; the host-specific positioning correction restored the intended frame and last controls. | A wide browser screenshot did not establish compact embedded-host reachability. Visible first controls did not establish the final item or footer. Exact reserved space and breakpoint values remain product-owned. |
+
+The existing [painted-geometry check](../../../policies/review/design-evaluation.md#reference-geometry-uses-internal-insets),
+[scroll-frame check](../../../policies/review/design-evaluation.md#bounded-scroll-frame-and-end-inset-integrity)
+and [rendered viewport evidence](../../../policies/review/design-evaluation.md#rendered-state-and-viewport-evidence)
+already require the relevant distinctions. This revision adds support and an
+execution-gap example without duplicating those rules or changing the standalone
+alignment skill. Pointer-origin feedback is covered by the related
+[initialization record](../interaction-evaluation/initialization-and-recovery-evidence.md),
+not counted as an additional geometry experiment. Guidance effect remains
+**not assessed**.
+
+Source inspection for revision 3 used `policies/review/design-evaluation.md` at common-source
+commit `19e14c8d48fc9ba3106219969f6ca70802479032`
+(SHA-256 `d92bae8dc81b1d57507e66c77eb56c40718c31da12976a80c876c9e2d253e3aa`).
+Historical subject fingerprints above remain unchanged. This identifies the
+compared shared source, not the instructions loaded during product executions.
+
 ## Work And Acceptance
 
 This is a reference record, with no separately assigned execution task or budget.
@@ -145,6 +173,11 @@ and observed activation remain separate; this record establishes no installation
 or runtime use. Exchange provenance is session-only; no private exchange owner was
 configured for this export.
 
+Revision 3 retains the existing rule implementation and draft case status.
+It does not establish a new public UI reproduction, guidance-effect result,
+consumer installation, commit or push. The new private exchange receipt stays
+with the originating task; the earlier session-only receipt remains historical.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created a generalized reference record for requested
@@ -155,3 +188,7 @@ configured for this export.
   source relocation. Retained historical subject keys, source revisions and
   content fingerprints, observations and assessment states. Navigation
   maintenance adds no execution, empirical support or installation evidence.
+- 2026-11-06 — Revision 3. Added external-symbol paint and short native-rail
+  evidence. Existing geometry/viewport rules were sufficient; this revision is
+  evidence maintenance, with no additional design-policy or skill rule. Retained
+  the earlier cases and their original evidence limits.

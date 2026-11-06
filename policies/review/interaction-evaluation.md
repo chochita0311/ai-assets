@@ -81,6 +81,7 @@ approved change; a settled screenshot alone does not cover earlier phases.
   lifecycle state or silently replace confirmed content contrary to the approved
   preservation rule. Check the relevant polling, category or retry consumer as
   well as the first rendered page.
+- When layout-dependent behavior can initialize before styles, fonts or asynchronous content settle, exercise the affected delayed or failed readiness path. Check usable current measurements, the final anchor relationship and readable bounds after layout settles, and absence of exposed measurement positions. Visibility or an error-free console alone does not establish correct geometry; compare the property actually claimed.
 - A claim of stability across phases needs actual observations from the phases
   being compared. Empty evidence, one instant, or repeated observations from only
   one phase cannot establish that transition. Validate the sampling/oracle path;
@@ -149,6 +150,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 
 - For packaged or embedded clients, startup evidence should reach the first meaningful rendered page and its required routes. A running process, open window, or successful health endpoint does not establish a usable or authenticated UI. Include fresh and retained launch state when the changed startup contract depends on it.
 - For a native chooser or other operating-system action, exercise the rendered control through the actual supported host, the native interaction, and the resulting application state. A mocked bridge, admitted API request, or visible helper panel establishes only that checked segment. Verify a valid selection, cancellation, and relevant failure paths; cancellation must preserve the prior draft when the contract promises it.
+- Keep diagnostic changes to asset delivery, readiness timing, focus, activation and input routing explicit. A fixture that changes those conditions can miss a delivered-host defect; compare the relevant original delivery path before treating its pass as equivalent. Match the layers actually claimed: executable-code parity after re-signing is different from whole-file byte identity.
 - Identify the source revision, served or bundled assets, backend, and native host actually exercised, including unchanged or reused layers. A browser check, isolated embedded-view probe, and running packaged app are distinct targets; apply [Active Runtime And Mixed-Version Evidence](#active-runtime-and-mixed-version-evidence) when those layers can refresh independently.
 - State the input mechanism with the observation: script-dispatched events, browser automation, operating-system events injected into an isolated view, or physical input in the target app. An event reported as trusted does not by itself establish physical input or execution in the target host.
 - Check the hosts and input paths required by the affected product contract. Mark missing host or end-to-end evidence as unverified rather than promoting a partial probe to full acceptance; the owning acceptance contract decides whether the gap blocks delivery.
@@ -195,6 +197,9 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - Direct entry into a detail route should restore enough surrounding navigation context for the user to understand where the item belongs.
 - If the same detail item reached from a list expands or highlights a category, collection, or parent group, a direct URL entry should produce the same orientation state.
 - Evaluators should compare list-driven entry and direct-link entry for active navigation state, expanded groups, and visible parent labels.
+- When restoration depends on asynchronous rendering, check pending and settled content, background suspension and resumed callbacks where supported. An early page lifecycle event or an intact stored snapshot does not establish restored scroll, selection or view state; verify the result after relevant late callbacks, and ensure superseded work cannot overwrite the current entry.
+- If application-owned history is bounded separately from host history, exercise replacement, reload, branch creation and retained or unknown-entry boundaries. Available traversal must agree with the approved reachable history, without re-admitting an evicted entry merely because the host still retains it. The capacity and boundary recovery remain product decisions.
+- Distinguish entry-owned restoration from current window or user preferences. A back/forward cache restore must follow each owner's approved lifetime rather than silently restoring an obsolete preference with the document.
 
 #### Hierarchical Browse-To-Preview Continuity
 
@@ -229,6 +234,12 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - Component-level interaction code should own local affordances, visible state, and emitted intents; route delays, shell classes, global storage, and cross-surface animation timing should belong to an explicit shell or navigation coordinator.
 - If a component accumulates route-specific timers, body classes, storage markers, and unrelated surface checks, evaluators should flag the ownership drift even when the visible behavior currently passes.
 - A component may expose a small controller or event surface for orchestration, but evaluators should confirm that the component can still be understood as the owner of its own interaction contract rather than the owner of the page transition.
+
+#### Shell And Local Keyboard Ownership
+
+- Exercise shared commands from affected local controls that also consume the same keys. Recognized shell commands should reach their approved owner while ordinary local input remains local; compare modifier combinations, editable controls and composition rather than inferring behavior from a handler in isolation.
+- Dismissal and global shortcuts must preserve active text composition under the supported input contract. Scripted composition events check event routing, while actual operating-system IME behavior remains a separate observation.
+- Test commands while each affected native or custom modal or inert region owns interaction. A guard for one dialog implementation does not establish isolation for another; shell navigation and focus changes must respect the actual active owner.
 
 ### Execution Confirmation And Action Ownership
 
@@ -328,6 +339,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - If a grace period bridges the gap, keep it finite and cancel obsolete dismissal on reentry or supersession by another inspection. Test slow traversal, leaving both regions, rapid reentry, and switching triggers. Timing and gap geometry follow the approved interaction rather than a universal delay or corridor shape.
 - Test genuine keyboard entry, focus transfer, and release separately from incidental focus retained after a mouse click. Focus should retain or release the panel according to its actual input ownership and approved reading contract.
 - Users should be able to read, select text, and scroll inside the panel without an invisible gap overlay stealing canvas drag, zoom, or other surrounding input. Verify full approved access through keyboard and touch as well as pointer traversal.
+- When keyboard focus scrolls an offscreen trigger into view, distinguish that focus-owned scroll from a dismissal gesture. Check the resulting anchor and the approved ownership on scroll, blur, resize and explicit dismissal, including the last reachable controls in a short viewport.
 
 #### Compact Control Menu Placement
 
@@ -384,6 +396,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - Failure should preserve or restore the prior visible state and place bounded feedback beside the owning action without replacing the primary task.
 - Evaluators should test rows with and without optional child controls, list and detail entry points, parent-link isolation, idle/hover/focus/pressed presentation, mutation failure, and the exact scroll and focus positions before and after activation.
 - When a utility shows help or result feedback, evaluate its declared anchor independently of pointer position. Small movement within the control should not move control-anchored feedback; parent clipping, usable viewport bounds, and approved alternate placement should keep it readable. Native and custom tooltips on the same control should not compete or duplicate the explanation.
+- Evaluate action availability, help visibility, accessible identity and the hit cursor separately. A disabled action may retain approved hover help; removal of unavailable-state copy does not by itself remove that help. If a wrapper receives pointer events for a disabled control, test the actual hit surface, no activation and no unintended parent or native window-drag action. Preserve the approved accessible explanation; retaining hover help does not by itself require making a disabled control focusable.
 - Base success feedback on the confirmed action result and keep pending, successful, and failed outcomes truthful. Verify the product-approved recovery path; for a copy action this may include inspecting and selecting the intended complete value for manual copying. Inspection or recovery should preserve the primary task's identity and context.
 - Define the lifetimes of the operation outcome, feedback visibility, and hover/focus ownership separately. Exit, blur, explicit dismissal, and timeout should follow that contract rather than accidentally cancel or prolong one another. Reentry and repeat activation should preserve or restart the declared deadline coherently; superseded asynchronous results and callbacks must not overwrite the latest action.
 - Check that the glyph, visible message, and accessible state remain coherent through confirmation and reset. Keep help presentation distinct from outcome announcements so incidental pointer movement does not cause repeated unnecessary announcements. Duration, anchor direction, and glyph styling remain product choices.

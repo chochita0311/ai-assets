@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-initialization-recovery-evidence",
-  "revision": 1,
+  "revision": 2,
   "audience": "public",
   "subjects": [
     {
@@ -129,6 +129,37 @@ loaded instructions. A passing command, two reviewers agreeing or a later produc
 correction does not establish a causal effect of this check sequence. Guidance
 change effect is **not assessed** without a controlled comparison.
 
+### Later Style Readiness And Restoration Evidence
+
+Additional private task receipts reviewed on 2026-11-06 retain observations from
+a packaged embedded-view path and synthetic-data probes. They are reported
+executions, not new public reproductions. Earlier rows and their limits remain
+historical; the new events below add different readiness conditions.
+
+| Recorded condition | Observation and reported correction | Counterevidence and limit |
+| --- | --- | --- |
+| Styles arrive after the controller | A diagnostic copy using the original frozen backend and delayed stylesheet delivery observed empty style values cached as non-finite metrics. After styles loaded, help remained at the viewport origin. Reading usable measurements when displaying, waiting for applicable style readiness, measuring without visible exposure and reconciling still-owned hover addressed the recorded path. | A prior fixture with styles already loaded showed valid geometry. It changed the loading conditions and did not refute the delivered-path failure. The probe appended diagnostic code; it was not an uninstrumented physical-hover test. |
+| Anchored feedback near the layout edge | A scrollbar consumed usable width; nominal window width allowed final text reflow after positioning. Measuring the usable layout viewport and keeping measurement and final box geometry consistent corrected the observed bounds. | Visibility, key labels and an error-free console had passed earlier while position was wrong. The position/size assertion was missing; those earlier checks retain their narrower meaning. |
+| Rendering completes after history restoration | An early lifecycle callback released restoration before delayed content was ready. Later layout and queued callbacks could overwrite the saved scroll. Pending/settled ownership and current-entry guards addressed the recorded ordering. | A hidden embedded view suspended animation frames even though font readiness and the stored snapshot were intact. The corrected probe checked an applicable ready-state restore plus guarded reconciliation after resumed frames; storage presence alone had not established visible restoration. |
+
+The correction receipts include later geometry and restoration observations,
+including after affected queued work. The background/resume and host conditions
+remain explicit; they do not establish foreground physical input, every render
+module, or all recipient environments. The same style-loading event is discussed
+in the [host-evidence record](native-host-evidence.md); that is a different evidence
+question, not another independent execution.
+
+The export statically compared the accepted common-rule baseline with the current
+source before the bounded readiness clarification. It did not reconstruct all
+historical loaded instructions or compare guidance variants. Guidance effect
+remains **not assessed**.
+
+Source inspection for revision 2 used `policies/review/interaction-evaluation.md` at common-source
+commit `19e14c8d48fc9ba3106219969f6ca70802479032`
+(SHA-256 `ea936f4844073807d5a2152419608da0a783c8ab95ef5144c5f6f2f977e862c8`).
+Historical subject fingerprints above remain unchanged. This identifies the
+compared shared source, not the instructions loaded during product executions.
+
 ## Work And Acceptance
 
 This reference starts no product run or experiment. The authorized common-source
@@ -158,6 +189,12 @@ Private source identifiers and exchange links stay private. Case acceptance is
 draft, independent of source-rule implementation. This source update establishes
 neither consumer installation, observed use nor improved future task outcomes.
 
+For revision 2, the authorized export adds a bounded style/layout-readiness
+clarification to the existing initialization sequence. Existing requirements for
+phase observations and truthful host evidence already applied; this correction
+does not establish that a missing rule caused the product failure. No consumer
+refresh, runtime replay, commit or push is performed by this export.
+
 ## History
 
 - 2026-11-04 — Revision 1. Added the distinct initialization/readiness evidence
@@ -165,3 +202,7 @@ neither consumer installation, observed use nor improved future task outcomes.
   records. Generalization retains failure and recovery predicates while removing
   identifying values and product-specific measurements. Public examples remain
   unexecuted and the original product evidence retains its scope limits.
+- 2026-11-06 — Revision 2. Added style-readiness, geometry-oracle and delayed
+  restoration observations, including the passing-fixture counterexample and
+  hidden-frame boundary. Clarified the existing initialization check at its
+  policy owner; retained draft case acceptance and unverified physical boundaries.

@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-native-host-evidence",
-  "revision": 2,
+  "revision": 3,
   "audience": "public",
   "subjects": [
     {
@@ -51,7 +51,8 @@
   "relations": {
     "related": [
       "ir-ui-requested-control-rendering",
-      "ir-ui-state-transition-contracts"
+      "ir-ui-state-transition-contracts",
+      "ir-ui-initialization-recovery-evidence"
     ],
     "supersedes": []
   }
@@ -109,6 +110,38 @@ Illustrative future controls, not newly executed:
 - Name host, served or bundled revision, and input source. Use a partial probe to
   support its observed segment while leaving missing end-to-end evidence open.
 
+### Later Delivered-Path And Probe Evidence
+
+Private receipts reviewed on 2026-11-06 add the following observed distinctions.
+Raw captures, private runtime identities and associations remain private. Reported
+product executions are not public reruns, and source validation of this revision
+does not replace the product observations.
+
+| Recorded condition | Evidence obtained | Boundary retained |
+| --- | --- | --- |
+| Fixture versus frozen delivery | A fixture that served already-styled content passed help visibility and labels. A private copy of the actual native host, using the original frozen backend through a diagnostic proxy with delayed styles, reproduced cached non-finite metrics and origin-pinned feedback. Later affected probes checked anchor coordinates and final bounds. | The proxy changed timing and appended diagnostic code to a controller asset. Original frozen assets/headers were checked separately; the diagnostic path was not an entirely unmodified app or physical hover. This is the style event in the [initialization record](initialization-and-recovery-evidence.md), not independent support. |
+| Host identity after diagnostic packaging | The private app copy required re-signing. File-backed executable sections matched the production host while signature bytes differed; frozen-backend and served-asset identity had their own checks. | Code-section equality did not establish whole-file identity or recipient installation. Browser mocks and isolated engine observations remained separately scoped. |
+| Disabled-control hit path | Computed DOM hit testing and pointer events reached a wrapper for disabled navigation controls; approved name/shortcut help remained while the actual hit cursor showed the forbidden state. Browser checks separately verified no activation; an installed-SDK routing check covered avoiding native window drag through that wrapper. | The checked no-action and SDK paths did not prove every physical hit path. Script events and SDK dispatch checks were named separately from operating-system input. |
+| Probe interference | Earlier returns included a synthetic child target, lost activation and a focused skip-link covering the intended hit surface. Controlled activation and the normal hit surface produced the later scoped pass while earlier failures were retained. | These were probe-condition corrections, not additional product repairs or evidence of guidance effectiveness. A setup failure must be diagnosed rather than removed or silently counted as a product defect. |
+
+Hidden embedded-view restoration also depended on suspended animation frames and
+later queued work. That probe supported its observed functional sequence, not a
+foreground physical interaction claim. Direct visual comparison with a named
+reference application, real OS IME, recipient-machine behavior and an untested
+operating-system build remained unobserved; source portability notes did not
+close those gaps.
+
+These events support a bounded diagnostic-condition clarification in the existing
+host-evidence policy. The actual source baseline was compared with the accepted
+import baseline before editing. No new runtime trials or guidance comparison
+were run for this export; effect remains **not assessed**.
+
+Source inspection for revision 3 used `policies/review/interaction-evaluation.md` at common-source
+commit `19e14c8d48fc9ba3106219969f6ca70802479032`
+(SHA-256 `ea936f4844073807d5a2152419608da0a783c8ab95ef5144c5f6f2f977e862c8`).
+Historical subject fingerprints above remain unchanged. This identifies the
+compared shared source, not the instructions loaded during product executions.
+
 ## Work And Acceptance
 
 No separate runtime task or budget is assigned by this reference record. The
@@ -142,6 +175,13 @@ source changes described here; no installation or future reliability is establis
 Exchange provenance is session-only because no private exchange owner was
 configured for this export.
 
+Revision 3 implements only a bounded diagnostic-condition clarification at
+the existing Interaction Evaluation owner. Existing host, input-mechanism and
+layer-identity duties remain in force; no standalone skill change was necessary.
+This export is local source maintenance with no commit, push or consumer refresh.
+Its private exchange association is retained by the originating task owner;
+the earlier session-only exchange statement remains historical.
+
 ## History
 
 - 2026-10-26 — Revision 1. Matched the public collection and created one host-evidence
@@ -152,3 +192,7 @@ configured for this export.
   revisions and content fingerprints, observations and assessment states.
   Navigation maintenance adds no execution, empirical support or installation
   evidence.
+- 2026-11-06 — Revision 3. Added delivered-path timing, diagnostic code/asset
+  identity, disabled hit-surface and probe-interference evidence. Preserved
+  earlier observations and physical/recipient limits. The source clarification
+  does not imply a public reproduction, installation or improved agent outcome.

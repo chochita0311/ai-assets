@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-state-transition-contracts",
-  "revision": 2,
+  "revision": 4,
   "audience": "public",
   "subjects": [
     {
@@ -57,7 +57,8 @@
   "relations": {
     "related": [
       "ir-ui-requested-control-rendering",
-      "ir-ui-native-host-evidence"
+      "ir-ui-native-host-evidence",
+      "ir-ui-initialization-recovery-evidence"
     ],
     "supersedes": []
   }
@@ -122,6 +123,33 @@ Illustrative future controls, with expected outcomes:
   data and stable ties. Manual, chronological, and per-group order stay unchanged
   when a label or display format alone changes.
 
+### Later Navigation And Input-Ownership Evidence
+
+Additional private receipts reviewed on 2026-11-06 report executions with
+synthetic data. They extend the state-ownership question; the generalized account
+was not rerun publicly and does not disclose original captures or runtime state.
+
+| Recorded condition | Observation and reported correction | Limit |
+| --- | --- | --- |
+| App history over host history | The app retained fewer entries than its embedded host. Unknown or evicted host markers could be appended again and expose out-of-contract traversal; explicit retained-entry boundaries corrected that case. Replacement also needed to replace app identity rather than grow it while native history length stayed unchanged. | Capacity is product-owned. Host history length alone did not establish app traversal availability. Reload, new-branch behavior and direct entry retain their separate contract. |
+| Entry versus current-window preference | Restoring a cached document could restore an obsolete sidebar state. Reading the current window-owned preference on revisit preserved its approved lifetime separately from entry-owned scroll and selection. | This did not turn a window preference into a database or cross-device setting. The delayed-render restoration event is described in the [initialization record](initialization-and-recovery-evidence.md), not counted again here. |
+| Shell shortcut versus local arrow handler | A focused local splitter consumed modified arrows before a bubbling shell command. Owning only recognized global combinations at the earlier event phase corrected the checked traversal without consuming ordinary local arrows. | Another shared consumer had static protection without its own positive runtime witness. Handler inspection was not that missing witness. |
+| Modal and composition ownership | A custom modal used a different inert boundary from a native dialog, allowing shared shortcuts through an incomplete guard. Separately, a hint dismissal handler consumed composing Escape before the input. Guards for the actual modal/inert owner and composition state corrected the corresponding scripted witnesses. | Programmatic event-routing checks did not establish real operating-system IME behavior. Capture priority is not permission to bypass active modal or text input ownership. |
+| Disabled action and retained help | The approved disabled state retained its short action name and shortcut help while forbidding activation. Removing only unavailable-state wording did not authorize removing all help. Wrapper hit targets required separate cursor, no-action and native drag checks. | Help visibility, keyboard focusability, accessible identity and execution availability are independent product decisions. The same host hit-path evidence is described in the [native record](native-host-evidence.md), without another independent execution. |
+| Focus scroll into an offscreen item | Keyboard navigation scrolled a later menu item into view, but a global scroll dismissal removed its focus-owned hint. Preserving the current keyboard owner while reanchoring corrected the checked path; explicit dismissal and other release paths remained distinct. | A first-item hover pass did not cover a short viewport or later keyboard targets. Pointer, keyboard and supported touch access retain their approved contracts. |
+
+The source additions clarify restoration, shared/local command ownership,
+focus-owned scrolling and disabled help within Interaction Evaluation. Existing
+anchoring and modal isolation duties already covered parts of these events;
+this is not evidence that more rules would have prevented them. No controlled
+guidance comparison was run; effect remains **not assessed**.
+
+Source inspection for revision 3 used `policies/review/interaction-evaluation.md` at common-source
+commit `19e14c8d48fc9ba3106219969f6ca70802479032`
+(SHA-256 `ea936f4844073807d5a2152419608da0a783c8ab95ef5144c5f6f2f977e862c8`).
+Historical subject fingerprints above remain unchanged. This identifies the
+compared shared source, not the instructions loaded during product executions.
+
 ## Work And Acceptance
 
 This reference record assigns no separate task or runtime budget. The maintainer
@@ -156,8 +184,14 @@ verified by public readers through this projection.
 
 Revisit when contrary evidence or a changed commit, save, or sorting contract
 invalidates applicability. Source changes do not establish consumer refresh,
-installation, activation, or better agent behavior. Exchange provenance is
-session-only because no private exchange owner was configured for this export.
+installation, activation, or better agent behavior. Exchange provenance for the earlier export was
+session-only because no private exchange owner was configured for that export.
+
+Revision 3 adds no new skill, persistence layer or universal keymap. It
+implements the bounded checks at the existing shared policy owner; case acceptance
+remains draft. Required product or physical-input checks keep their task owners.
+The export does not commit, push, refresh consumers or claim observed runtime use
+of the revised guidance; private exchange provenance remains at the task owner.
 
 ## History
 
@@ -169,3 +203,11 @@ session-only because no private exchange owner was configured for this export.
   keys, source revisions and content fingerprints, observations and assessment
   states. Navigation maintenance adds no execution, empirical support or
   installation evidence.
+- 2026-11-06 — Revision 3. Added bounded-history, per-window preference,
+  shortcut/modal/composition, disabled-help and focus-scroll evidence. Added
+  focused evaluation checks at the existing policy owner, retaining historical
+  observations, product-owned capacities and the real-IME/physical-input gap.
+- 2026-11-06 — Revision 4. Clarified that the session-only exchange statement
+  describes the earlier export; the later revision retains its private task-owned
+  provenance. This temporal clarification adds no execution, guidance effect,
+  work assignment or adoption change.
