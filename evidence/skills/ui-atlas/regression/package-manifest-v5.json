@@ -1,0 +1,24 @@
+{
+  "schema": "ui-atlas-package-evidence/v1",
+  "package_sha256": "790cd45ab9008260cc229485bb68a6446532bdb3ae349a924734e55e2b92db0b",
+  "files": {
+    "SKILL.md": "24c58bbeda62eaab449e730eb81312ccfd4db6a94f6e4c830b6e0ac99131f393",
+    "agents/openai.yaml": "44ea7b43a60e497bd3d9580e6b5b39b7583db1bc00413fe9aebee904597174ca",
+    "assets/canvas.js": "24d27c5fef4fc4a3c97a4664ae85b363f96c260fc13a1fd4e5bbf9f78ad2532a",
+    "assets/catalog.js": "5e3fe70dd87e996a26678b89c31d7f766668fcc673f234f9339c9718c2789e42",
+    "assets/frame.js": "4c5cdcefafb0e63103712760807e97255038ae98f6a498cc2b79504bc4734f52",
+    "assets/geometry.js": "7fd9652f7fbea8bc17601c04e027fd2d9207af39fa4372dfd5a07684925b49c6",
+    "assets/notes.js": "edec2e1334b486c99f98f724e7935de9e8f6dd8fd7a58a17d379374a59e2d7c4",
+    "assets/observe.js": "56f8dc822c3461f73fe4fa5fe229722936e97dd5655069d5cb0af4e10542b141",
+    "assets/sections.js": "f79fbca70ccc0f284d01ebe31eaf7188f6d327a56e5d977fd854865c495c8485",
+    "assets/snapshot.js": "7c7f76fb699b50115e4eabc849252c143bfadd086c1ab5d3f4bbf1824cee209c",
+    "assets/viewer.css": "f38661dee8a22f65b81046e749fcfba5576cf180ab49295810349931a5032a68",
+    "assets/viewer.html": "dcfcb11cf3604e55279a316c09162d43770ed8bd544dae4a9b47bfd46905e597",
+    "assets/viewer.js": "63a9d2b7c8514f6586e328c02f1610dac111d337b7cc7b74486d93cedee64e72",
+    "references/artifact-workspace.md": "28fc4c3a42e222a00ea198a18a9986573ae3b454512af4b1fcd745fa532be055",
+    "references/capture-and-artifacts.md": "30d55777397449780ccf3e1845257a7294f9c58a6553fd0aff3ec5f3c18af24a",
+    "scripts/atlas.py": "b3462e8f48aa70bb4d8f6da9fd5fa8def6cc9abffbad11140e4d91de4bd5b180",
+    "scripts/capture.py": "f4bf6080f57be0d66de99f7ccf81c07d31d5f3eb88ad6cff26ed7f0f5096c9cd",
+    "scripts/workspace.py": "46cac9cd3e3d1428c95808dc64865a7313ca25f8ad9082b0ed268a55e480f5e7"
+  }
+}

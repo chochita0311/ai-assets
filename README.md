@@ -81,6 +81,7 @@ separate merge that preserves its existing instructions and settings; see the
 - [refine-skill](skills/refine-skill/SKILL.md): audit or improve an existing skill through evidence, failure diagnosis, and comparable validation
 - [research-sadr](skills/research-sadr/SKILL.md): investigate open questions with competing explanations, independent challenge, and evidence-based conclusions
 - [screen-alignment](skills/screen-alignment/SKILL.md): align a screen with an existing design system
+- [ui-atlas](skills/ui-atlas/SKILL.md): inspect existing screens, selectable DOM elements and payload-driven states on a local pan-and-zoom canvas; keep consumer outputs in `.artifacts/ui-atlas/` by default
 - [workflow-context-sync](skills/workflow-context-sync/SKILL.md): reconcile multi-source workflow context into an explicitly owned target
 
 ## Repository Intent

@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Atlas"
+  short_description: "Inspect selectable app states on a zoomable DOM canvas"
+  default_prompt: "Use $ui-atlas to map this app into a reproducible DOM canvas with named sections, selectable elements, state comparison, payloads, and feedback linked to its location. Use .artifacts/ui-atlas/ unless the user or repository has an established artifact owner."
