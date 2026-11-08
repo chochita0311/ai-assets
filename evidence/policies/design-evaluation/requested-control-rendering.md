@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-requested-control-rendering",
-  "revision": 3,
+  "revision": 4,
   "audience": "public",
   "subjects": [
     {
@@ -135,6 +135,25 @@ commit `19e14c8d48fc9ba3106219969f6ca70802479032`
 Historical subject fingerprints above remain unchanged. This identifies the
 compared shared source, not the instructions loaded during product executions.
 
+### Later Scroll-End And Inline-Editor Geometry Evidence
+
+Private source and UI observations reviewed on 2026-11-08 add the following
+relationships. The public account omits original content and does not rerun the
+reported scenarios.
+
+| Requested relationship | Observation and reported correction | Limit |
+| --- | --- | --- |
+| Horizontal chart end spacing | As the viewport narrowed below the chart's intrinsic width, outside-frame padding did not retain the separation after the last bar. Putting the trailing inset in the scrollable chart content retained it at the reachable end. | Compare both ends, the overflow threshold and the final bar/label; a left-edge pass does not prove a right-edge minimum. Exact spacing and chart extent remain product decisions. |
+| Independent pin during title editing | Adding a relatively positioned utility wrapper changed the containing block of an absolute pin on narrow rows. Keeping the original containing block while controlling stacking restored the intended hit target; long-title normal/edit states were checked across narrow and wide widths without row growth or page overflow. | A stacking or container-box change can affect another action even when its markup is untouched. Source styles or one wide screenshot do not establish rendered hit geometry. This is the same inline-edit event as the [state record](../interaction-evaluation/state-transition-contracts.md), not an independent repetition. |
+| Requested help glyph | The requested circled question mark used the established bundled vector family with the Docs control's accessible identity and hit area retained. | The requested shape does not imply a new icon system, bitmap generation or a universal choice for documentation controls. |
+
+[Bounded Scroll Frame And End-Inset Integrity](../../../policies/review/design-evaluation.md#bounded-scroll-frame-and-end-inset-integrity)
+now makes the horizontal intrinsic-content threshold explicit. Existing painted
+geometry and scope checks already cover the other two relationships, so no
+additional skill or icon-policy change is justified. Reported source/browser
+checks do not establish installed-native delivery or every physical input path.
+Guidance effect remains **not assessed**.
+
 ## Work And Acceptance
 
 This is a reference record, with no separately assigned execution task or budget.
@@ -178,6 +197,10 @@ It does not establish a new public UI reproduction, guidance-effect result,
 consumer installation, commit or push. The new private exchange receipt stays
 with the originating task; the earlier session-only receipt remains historical.
 
+Revision 4 preserves historical evidence and all independent record states.
+Only the existing scroll-inset policy owner gains a bounded clarification; no
+commit, push, consumer refresh or new runtime reproduction is performed.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created a generalized reference record for requested
@@ -192,3 +215,4 @@ with the originating task; the earlier session-only receipt remains historical.
   evidence. Existing geometry/viewport rules were sufficient; this revision is
   evidence maintenance, with no additional design-policy or skill rule. Retained
   the earlier cases and their original evidence limits.
+- 2026-11-08 — Revision 4. Added intrinsic horizontal end spacing, narrow containing-block hit geometry and retained vector-family evidence. Clarified the existing scroll-end check without prescribing dimensions.

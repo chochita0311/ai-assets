@@ -47,15 +47,16 @@ Current records have responsible owners in harness, agents, policies and skills.
 | Record | Subjects | Title |
 |---|---|---|
 | [ir-code-quality-human-readability](policies/code-quality/human-readable-code-validation.md) | Code Quality, generated shared instructions | Human-readable code guidance and validation limits |
+| [ir-result-preserving-performance](policies/code-quality/result-preserving-performance.md) | Code Quality, `skills/clean-code`, database/filesystem/index work | Result-preserving aggregation, batching, cache lifetimes and measured-path limits |
 | [ir-clean-code-validation](skills/clean-code/validation.md) | `skills/clean-code`, `skills/refactor-plan` | Clean Code author checks, replayable cases, discovery boundaries, and effectiveness limits |
 | [ir-design-deslop-validation](skills/design-deslop/validation.md) | `skills/design-deslop` | Inspectable DOM and component/whole-screen HTML review, partial choices, agent handoff, and preservation cases |
 | [ir-ui-atlas-validation](skills/ui-atlas/validation.md) | `skills/ui-atlas` | Selectable DOM canvas; correspondence, feedback recovery and materialization repairs with bounded regression evidence |
 | [ir-harness-improvement-adoption-review](harness/harness-improvement/harness-improvement-adoption-review.md) | Harness Improvement, run/evaluation templates, `skills/refine-skill` | Harness improvement adoption review |
-| [ir-ui-requested-control-rendering](policies/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment`, painted glyphs and compact hosts | Requested controls and rendered geometry |
-| [ir-change-impact-preservation](harness/execution-loop-governance/change-impact-and-preservation.md) | Delivery governance, Orchestrator, Builder and evaluator handoffs, capability and artifact closure | Actual impact paths and preservation handoffs |
+| [ir-ui-requested-control-rendering](policies/design-evaluation/requested-control-rendering.md) | Design Evaluation, `skills/screen-alignment`, painted glyphs and compact hosts | Requested controls, scroll-end insets and rendered hit geometry |
+| [ir-change-impact-preservation](harness/execution-loop-governance/change-impact-and-preservation.md) | Delivery governance, Orchestrator, Builder and evaluator handoffs, capability and artifact closure | Actual impact paths, schema/user-state preservation and eligibility handoffs |
 | [ir-ui-initialization-recovery-evidence](policies/interaction-evaluation/initialization-and-recovery-evidence.md) | Interaction/Design Evaluation, initialization, style readiness and recovery | Initialization, recovery and sufficient UI observations |
-| [ir-ui-state-transition-contracts](policies/interaction-evaluation/state-transition-contracts.md) | Interaction Evaluation, Design Evaluation, `skills/screen-alignment`, history and input ownership | Stateful controls and committed intent |
-| [ir-ui-native-host-evidence](policies/interaction-evaluation/native-host-evidence.md) | Interaction Evaluation, `skills/screen-alignment`, delivery and probe conditions | Native host and end-to-end evidence |
+| [ir-ui-state-transition-contracts](policies/interaction-evaluation/state-transition-contracts.md) | Interaction Evaluation, Design Evaluation, `skills/screen-alignment`, history and input ownership | Stateful controls, inline caret entry and committed intent |
+| [ir-ui-native-host-evidence](policies/interaction-evaluation/native-host-evidence.md) | Interaction Evaluation, `skills/screen-alignment`, delivery and probe conditions | Native host, reference-app input and scoped permission evidence |
 | [ir-skill-distribution-contract](skills/skill-distribution/skill-distribution-contract.md) | `skills` | Skill distribution and removal contract |
 | [ir-skill-benchmark-prerequisites](skills/skill-benchmark/skill-benchmark-prerequisites.md) | `skills` | Shared skill benchmark prerequisites |
 | [ir-refine-skill-discovery-validation](skills/refine-skill/refine-skill-discovery-validation.md) | `skills/refine-skill` | Refine-skill discovery and static-audit validation |

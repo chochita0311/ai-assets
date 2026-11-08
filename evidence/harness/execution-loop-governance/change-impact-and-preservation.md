@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-change-impact-preservation",
-  "revision": 2,
+  "revision": 3,
   "audience": "public",
   "subjects": [
     {
@@ -149,6 +149,25 @@ commit `19e14c8d48fc9ba3106219969f6ca70802479032`
 Historical subject fingerprints above remain unchanged. This identifies the
 compared shared source, not the instructions loaded during product executions.
 
+### Later Schema, Ownership And Workspace Eligibility Evidence
+
+Private product receipts and selected source/tests reviewed on 2026-11-08 add
+three preservation paths. They describe observed product work; this export did
+not execute a public reproduction or migrate a personal runtime database.
+
+| Change and owner | Reported preservation and distinguishing controls | Limit |
+| --- | --- | --- |
+| Physical order of a nullable display-title column | Fresh and admitted existing tables put the user override after the source title. A verified backup preceded a validated SQLite rebuild. IDs, parent/child links, events, pins, frozen usage, explicit indexes and existing overrides survived. Unknown columns, triggers or constraints refused the rebuild; checks went beyond column metadata to constraints such as CHECK/collation. A copy failure restored table/data/indexes and FK setting, and repeated startup did not rebuild again. | Column-order requirements are product-specific; this is not a recommendation to rebuild tables for cosmetic changes. A read-only real-database preflight proved only the inspected shape and FK status, not a completed runtime migration. |
+| Source title versus user override | Eligible primary-work records accepted bounded single-line overrides; blank input stored SQL NULL and restored the source label. Imported or forced reprocessing preserved the override. Pins and chart labels used it while source-backed search evidence retained its original owner; child records stayed read-only. | A title shown to users and a title used as imported evidence need not have the same write owner. Do not treat user-owned fields as rebuildable ingestion output. Exact validation bounds remain with the product contract. |
+| Shared workspace registry versus visible projects | Session working directories and document-owning folders could both populate a shared registry. Finding an ancestor's .git entry did not prove the user had opened a project or that a path mention in session text triggered collection. The visible list was narrowed to paths with eligible primary work in the selected sources, retaining registry rows. Admitted synchronization refreshed known path presence even without reparsing unchanged source files, so a removed then restored folder recovered its status while identity, pins and frozen facts survived. | Shared storage membership, Git ancestry, presentation eligibility and current filesystem presence are different claims. The ancestry rule checked .git existence, not a guaranteed directory type or a complete Git validation. This fix did not authorize registry deletion, filesystem crawling from prose, or history rewriting. |
+
+Existing impact and ownership governance already covers these dependencies; no
+new harness role, flow, template or global migration policy is added. Product
+checks were same-author and bounded to source/browser/package delivery. The
+related [performance case](../../policies/code-quality/result-preserving-performance.md)
+owns repeated-work and cache-lifetime observations from the same work episode;
+cross-reference is not independent evidence. Guidance effect is **not assessed**.
+
 ## Work And Acceptance
 
 This reference assigns no task or experiment. The authorized common-source work
@@ -189,6 +208,11 @@ completed. Recipient, physical-input, signing and untested-platform gaps remain
 with the product acceptance owner; they are not new common-source assignments.
 This local export performs no commit, push, installation or consumer refresh.
 
+Revision 3 adds evidence under the existing governance owner. Previously
+completed product corrections are not new pending common work. Work/readiness,
+historical fingerprints and adoption states are unchanged; no commit, push,
+installation, consumer refresh or native product replacement is performed.
+
 ## History
 
 - 2026-11-04 — Revision 1. Added this distinct handoff question after checking the
@@ -200,3 +224,4 @@ This local export performs no commit, push, installation or consumer refresh.
   language/storage truthfulness and interruption-safe canonical publication
   observations. Retained existing governance because it already covers actual
   consumers and preserved contracts; added no universal platform or build policy.
+- 2026-11-08 — Revision 3. Added backed-up admitted migration, imported/user-title ownership and registry/display/presence evidence. Retained existing governance and runtime-migration limits.

@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-state-transition-contracts",
-  "revision": 4,
+  "revision": 6,
   "audience": "public",
   "subjects": [
     {
@@ -150,6 +150,26 @@ commit `19e14c8d48fc9ba3106219969f6ca70802479032`
 Historical subject fingerprints above remain unchanged. This identifies the
 compared shared source, not the instructions loaded during product executions.
 
+### Later Inline-Title Editing Evidence
+
+Private receipts reviewed on 2026-11-08 report source/browser/package checks of an
+inline, user-owned title override. This is additional generalized private
+evidence; the scenarios were not rerun publicly. The historical source title and
+user override had separate owners; clearing the override restored the source
+label rather than deleting imported evidence.
+
+| Checked transition | Observation and reported correction | Limit |
+| --- | --- | --- |
+| Pointer entry versus keyboard entry | Focusing and selecting the whole title prevented insertion at the clicked location. Capturing the rendered label's DOM caret before hiding it, then mapping its UTF-16 offset into the input, preserved a collapsed pointer caret; the supported range-based engine fallback was also exercised. Keyboard activation intentionally started at the end. | The reported click near the middle of the title and other text/padding points support their checked paths, not every font, truncation or engine. Whole-value selection remains valid when a different product explicitly requests it. |
+| Recognizable editable field | Existing outline, surface and elevation roles exposed the field without changing row or heading height. Matching painted padding and interactive bounds prevented a click on the apparent field edge from following the surrounding row link. Independent title, destination and pin targets were checked at narrow and wide widths with long mixed-language/emoji labels. | Foreign reference styling was not copied as a design system. The containing-block event is retained in the [geometry record](../design-evaluation/requested-control-rendering.md), not an additional execution. |
+| Save, clear and recover | Browser checks covered save/blur, clearing to source, cancellation, pending exclusion, persisted reload, failure with retained draft and retry, and an executable form without client script. Scope, page, order, scroll, pinned labels and child orientation retained their approved owners. | Scripted composition checks covered event routing; physical OS composition remained unverified. Source/browser/package checks did not rebuild the installed native app. |
+
+The bounded addition to [In-Place Utility Action Continuity](../../../policies/review/interaction-evaluation.md#in-place-utility-action-continuity)
+makes text-entry and visible-hit-bound checks explicit. It does not prescribe
+autosave, one reference application's styling, or a universal caret position.
+Same-author product validation is not independent review or a comparison of
+guidance revisions; guidance effect remains **not assessed**.
+
 ## Work And Acceptance
 
 This reference record assigns no separate task or runtime budget. The maintainer
@@ -193,6 +213,11 @@ remains draft. Required product or physical-input checks keep their task owners.
 The export does not commit, push, refresh consumers or claim observed runtime use
 of the revised guidance; private exchange provenance remains at the task owner.
 
+Revision 5 adds bounded inline-edit evaluation notes and reference evidence.
+Existing work/readiness, historical subjects and draft case acceptance remain.
+This export writes source only: no commit, push, consumer refresh, installed
+native replacement or new product task is implied.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created the state-transition reference after matching
@@ -211,3 +236,7 @@ of the revised guidance; private exchange provenance remains at the task owner.
   describes the earlier export; the later revision retains its private task-owned
   provenance. This temporal clarification adds no execution, guidance effect,
   work assignment or adoption change.
+- 2026-11-08 — Revision 5. Added pointer/keyboard caret, editing recognition, field hit bounds and save/recovery evidence, preserving source ownership and physical-input limits.
+- 2026-11-08 — Revision 6. Clarified that the reported pointer click was near
+  the middle of the title, avoiding confusion with the middle mouse button.
+  The observation, evidence limits and independent record states are unchanged.

@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-native-host-evidence",
-  "revision": 3,
+  "revision": 4,
   "audience": "public",
   "subjects": [
     {
@@ -142,6 +142,42 @@ commit `19e14c8d48fc9ba3106219969f6ca70802479032`
 Historical subject fingerprints above remain unchanged. This identifies the
 compared shared source, not the instructions loaded during product executions.
 
+### Later Reference-App Observation And Permission Recovery
+
+Private receipts reviewed on 2026-11-08 distinguish a user-designated native macOS
+reference from the application being changed. Initially Apple Events, screen
+capture and UI access were unavailable. After the user's grants, capture and
+System Events control reads succeeded; a separate helper's system-wide
+Accessibility query still failed. These are dated, helper-specific outcomes,
+not proof that every automation path was blocked or subsequently enabled.
+Automation, screen recording and Accessibility application access are distinct
+permission scopes. The application permission list under Privacy & Security
+also differs from general Accessibility feature categories such as vision or
+hearing; a recovery instruction must name the intended setting.
+
+An accessibility action addressed at a location did not establish a pointer
+insertion point. A guarded operating-system pointer event at the reference
+window, followed by the focused control's selection-range read, showed a
+collapsed caret at the clicked text location. A white, outlined, subtly elevated
+editing field was also observed. The observation did not type, remove or replace
+note text, nor use Escape to cancel a pre-existing draft. Window identity and
+geometry guarded the click; raw captures were removed and note contents remain
+private. Injected operating-system input is not a claim of physical mouse use.
+
+This closes only the earlier absence of direct reference-app observation for
+that later task; it does not retroactively change the historical November 6
+coverage. The target application's source, browser and package-byte checks are
+separate: its installed native artifact was not rebuilt or replaced. A
+lifespan-disabled server fixture also produced initialization errors; a normal
+startup with automatic collection disabled passed the affected status and edit
+paths. That was a fixture correction, not evidence of a product repair.
+
+The existing host-evidence notes gain a bounded check for observation permissions,
+helper identity, semantic press versus pointer input, and reference versus target
+delivery. No new tool, permission scheme or runtime binding is introduced. No
+public reproduction, independent review or guidance comparison ran; effect is
+**not assessed**. Public readers cannot inspect the private original observation.
+
 ## Work And Acceptance
 
 No separate runtime task or budget is assigned by this reference record. The
@@ -182,6 +218,10 @@ This export is local source maintenance with no commit, push or consumer refresh
 Its private exchange association is retained by the originating task owner;
 the earlier session-only exchange statement remains historical.
 
+Revision 4 adds a scoped reference-observation check at the existing policy
+owner. Prior work/readiness and adoption states are retained. The export performs
+no commit, push, installation, consumer refresh or native product rebuild.
+
 ## History
 
 - 2026-10-26 — Revision 1. Matched the public collection and created one host-evidence
@@ -196,3 +236,4 @@ the earlier session-only exchange statement remains historical.
   identity, disabled hit-surface and probe-interference evidence. Preserved
   earlier observations and physical/recipient limits. The source clarification
   does not imply a public reproduction, installation or improved agent outcome.
+- 2026-11-08 — Revision 4. Added helper-specific permission recovery, semantic press versus pointer-caret evidence, draft-preserving observation and reference/target delivery limits. Historical host gaps remain dated.
