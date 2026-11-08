@@ -4,8 +4,9 @@ from html import escape
 import json
 from pathlib import Path
 from uuid import uuid4
+from urllib.parse import quote
 
-from atlas import ID, STATUSES, read_json, require
+from atlas import ASSETS, ID, STATUSES, read_json, require
 
 SCHEMA = "ui-atlas.workspace/v1"
 
@@ -67,29 +68,35 @@ def catalog(root):
         status = "일부 실패" if incomplete else "실행 완료"
         freshness = {"matched": "생성 시 소스 일치", "changed": "소스 변경 · 갱신 필요", "unavailable": "소스 확인 불가"}.get(
             data.get("freshness", {}).get("status"), "생성 시 소스 검사 기록 없음")
-        entry = (f'<a href="runs/{escape(run.name, quote=True)}/index.html">{escape(data["title"])}</a>'
-                 f'<span>{status} · {rendered}개 장면 · 실패 {failed} · 범위 확인 {gaps}</span>'
-                 f'<span>{freshness}</span>'
-                 f'<small>{escape(run.name)}</small>')
+        entry = {"key": run.name, "url": f"runs/{quote(run.name, safe='')}/index.html",
+                 "title": data["title"], "status": status, "rendered": rendered,
+                 "failed": failed, "gaps": gaps, "freshness": freshness}
         groups.setdefault(data["id"], []).append(entry)
+
+    def entry_html(entry):
+        return (f'<a href="{escape(entry["url"], quote=True)}">{escape(entry["title"])}</a>'
+                f'<span>{entry["status"]} · {entry["rendered"]}개 장면 · 실패 {entry["failed"]} · 범위 확인 {entry["gaps"]}</span>'
+                f'<span>{entry["freshness"]}</span><small>{escape(entry["key"])}</small>')
+
     sections = []
     for atlas_id, entries in groups.items():
-        history = '<details><summary>이전 실행</summary><ul>' + ''.join('<li>' + item + '</li>' for item in entries[1:]) + '</ul></details>' if len(entries) > 1 else ''
-        sections.append(f'<section><h2>{escape(atlas_id)}</h2><p class="label">최근 열 수 있는 실행</p><div>{entries[0]}</div>{history}</section>')
+        history = '<details><summary>이전 실행</summary><ul>' + ''.join('<li>' + entry_html(item) + '</li>' for item in entries[1:]) + '</ul></details>' if len(entries) > 1 else ''
+        sections.append(f'<section><h2>{escape(atlas_id)}</h2><p class="label">최근 열 수 있는 실행</p><div>{entry_html(entries[0])}</div>{history}</section>')
     pending = ''.join('<li>' + escape(name) + '</li>' for name in unfinished)
-    html = '''<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UI Atlas</title><style>
-body{font:14px/1.6 system-ui,sans-serif;background:#f4f4f6;color:#29292e;max-width:900px;margin:48px auto;padding:0 24px}
-h1{font-size:24px}h2{font-size:16px}section{background:white;padding:20px 24px;margin:18px 0;border:1px solid #e5e5eb;border-radius:10px}
-a{color:#6542cf}span,small{display:block}small,.label{color:#72727c;font-size:12px}details{margin-top:16px}li{margin:12px 0;list-style:none}summary{cursor:pointer}
-</style><h1>UI Atlas</h1><p>최신 관찰과 이전 실행. 범위 확인에는 미확인·미구현·해당 없음 상태가 포함됩니다. 실행 완료는 앱 전체 검증을 뜻하지 않습니다.</p>'''
-    html += ''.join(sections) or '<p>아직 생성된 전개도가 없습니다.</p>'
+    catalog_html = ''.join(sections) or '<p>아직 생성된 전개도가 없습니다.</p>'
     if pending:
-        html += '<section><h2>생성 중 또는 중단된 실행</h2><ul>' + pending + '</ul></section>'
+        catalog_html += '<section><h2>생성 중 또는 중단된 실행</h2><ul>' + pending + '</ul></section>'
     if unreadable:
-        html += '<section><h2>읽을 수 없는 실행</h2><p>원본 파일은 보존했습니다. 다른 실행은 계속 열거나 생성할 수 있습니다.</p><ul>'
-        html += ''.join('<li>' + escape(name) + '<small>' + escape(reason) + '</small></li>' for name, reason in unreadable)
-        html += '</ul></section>'
+        catalog_html += '<section><h2>읽을 수 없는 실행</h2><p>원본 파일은 보존했습니다. 다른 실행은 계속 열거나 생성할 수 있습니다.</p><ul>'
+        catalog_html += ''.join('<li>' + escape(name) + '<small>' + escape(reason) + '</small></li>' for name, reason in unreadable)
+        catalog_html += '</ul></section>'
+    payload = json.dumps({"groups": [{"id": key, "runs": entries} for key, entries in groups.items()],
+                          "unfinished": unfinished,
+                          "unreadable": [{"name": name, "reason": reason} for name, reason in unreadable]},
+                         ensure_ascii=False).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')
+    html = (ASSETS / 'workspace.html').read_text(encoding='utf-8')
+    html = html.replace('ATLAS_CATALOG', catalog_html).replace('WORKSPACE_PAYLOAD', payload)
+    html = html.replace('/* ATLAS_WORKSPACE */', (ASSETS / 'workspace.js').read_text(encoding='utf-8'))
     # Unique staging supports simultaneous writers without sharing a temp file.
     # A catalog refresh can always reconstruct the entry from retained runs.
     temporary = root / "tmp" / ("catalog-" + uuid4().hex + ".html")

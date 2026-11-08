@@ -19,6 +19,7 @@ import atlas
 from capture import recipe_identity
 from viewer_checks import check_review_navigation
 from workspace_checks import WorkspaceTests
+from workspace_browser_checks import check_workspace_navigation
 from usability_checks import check_usability
 from reliability_checks import check_reliability
 from conflict_checks import check_conflicts
@@ -209,7 +210,7 @@ def observer_checks(browser):
     page.close()
 
 
-def browser_check(browser_path):
+def browser_check(browser_path, workspace_only=False):
     from playwright.sync_api import sync_playwright
     source = Path(__file__).parent / "inputs"
     class Handler(SimpleHTTPRequestHandler):
@@ -256,6 +257,12 @@ def browser_check(browser_path):
             assert not list((owner/'run').rglob('*.png')), "Screenshots must not be a canvas dependency"
             assert manifest['frames'][0]['payload']['routes'][0]['hold'] is True
             assert manifest['frames'][1]['payload']['routes'][0]['hold'] is False
+            if workspace_only:
+                with sync_playwright() as p:
+                    browser=p.chromium.launch(executable_path=str(browser_path))
+                    try:check_workspace_navigation(browser, owner)
+                    finally:browser.close()
+                return
             with sync_playwright() as p:
                 browser=p.chromium.launch(executable_path=str(browser_path))
                 observer_checks(browser)
@@ -379,6 +386,7 @@ def browser_check(browser_path):
                 check_reliability(browser, owner)
                 check_conflicts(browser, owner)
                 check_projection(browser, owner, browser_path)
+                check_workspace_navigation(browser, owner)
                 browser.close()
             print('Browser checks passed: real DOM, geometry, modal, disabled-element picking, pointer zoom/pan, frame layout persistence, payload, replay, cross-tab notes, legacy import, isolated preview, narrow provenance, terminal failure.')
         finally:
@@ -386,8 +394,11 @@ def browser_check(browser_path):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--browser',type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--browser',type=Path)
+    parser.add_argument('--workspace-only',action='store_true',help='Run workspace navigation browser witnesses only')
+    args=parser.parse_args()
+    if args.workspace_only and not args.browser:parser.error('--workspace-only requires --browser')
     suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromTestCase(case) for case in (PackageTests, WorkspaceTests))
     result=unittest.TextTestRunner(verbosity=2).run(suite)
     if not result.wasSuccessful():sys.exit(1)
-    if args.browser:browser_check(args.browser)
+    if args.browser:browser_check(args.browser,args.workspace_only)

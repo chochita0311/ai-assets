@@ -1,24 +1,27 @@
 {
   "schema": "ui-atlas-package-evidence/v1",
-  "package_sha256": "496268507e4be4e7da6b570762ec6c925cf6ea2aa2aae3e2cb246d8e6e6711bb",
+  "package_sha256": "fde12dab7511314b6264155bb67ba231d17940ca5fa8c243b4e7303cf45fd202",
   "files": {
-    "SKILL.md": "24c58bbeda62eaab449e730eb81312ccfd4db6a94f6e4c830b6e0ac99131f393",
+    "SKILL.md": "80ba377f6bd0cfed1133ffe0350eb5ac1ebce4461af04be976b1f06d452a57bf",
     "agents/openai.yaml": "44ea7b43a60e497bd3d9580e6b5b39b7583db1bc00413fe9aebee904597174ca",
-    "assets/canvas.js": "24d27c5fef4fc4a3c97a4664ae85b363f96c260fc13a1fd4e5bbf9f78ad2532a",
+    "assets/canvas.js": "410c44764dedc28a49ff2b6e5cebf2344d139e90b876e9cc590b9b68bb5a1700",
     "assets/catalog.js": "4875387fa75527506903630c818a692cdf9a8d4e402fa8fd54eb9c94a04359db",
     "assets/frame.js": "454566005eb1a1f994bd1ac9e37915a73e592edf227ba3d43db7af18f14c37cc",
     "assets/geometry.js": "8885ec802af890f7c9c53529ffbc59ca337f1a4ed82e0bf8b50a49d4b7070eb9",
     "assets/notes.js": "7e6fcc5113e60445194691815727ef790cfd1b9cecb61503545e725adf934e61",
     "assets/observe.js": "56f8dc822c3461f73fe4fa5fe229722936e97dd5655069d5cb0af4e10542b141",
     "assets/sections.js": "f79fbca70ccc0f284d01ebe31eaf7188f6d327a56e5d977fd854865c495c8485",
+    "assets/sheet-picker.js": "9e0e214eb8708fd5fd349efffcc11eb964a22d9f0d660d3ebf4cfd9190b18990",
     "assets/snapshot.js": "a68ad393b347dcd364c8b613086c006cd69e08512621e328d3d14735224802e0",
-    "assets/viewer.css": "4d762cba705e82543103d039e809ec54ab44f8ae9fb9c41a51de026b15315ea3",
-    "assets/viewer.html": "6a9cf6a3af582b41500c23af2ca3637a199232b08d0116de2fa916655964a857",
-    "assets/viewer.js": "9ea3c8de168988217c647741d63dd7f1cdcdd324a5254c3ab1f183566e5e6117",
-    "references/artifact-workspace.md": "eb9d5c279c375647301fbedbbec55374e96c742a840c3377f2e670dea6d804e9",
-    "references/capture-and-artifacts.md": "23c33464f0c9cb0b5d9eaf62d994f3d177136a1c06e861a77911252c8a16f6f7",
-    "scripts/atlas.py": "1321723a61539552ae9d550ef5ca2db19449ad908180f7b14e80d5bdcbcaf504",
+    "assets/viewer.css": "e63819db0a7c08b1882a32476583b666fdc6b07b191ab921c994076813a6145d",
+    "assets/viewer.html": "2045e95839a32bab76439562fb42fbe528ccdc728536e99c251ef8cd68c90fc3",
+    "assets/viewer.js": "d14500674f580cbf7a0df3f42d499396e722894fa668ed6cd944a43661b70265",
+    "assets/workspace.html": "38a79873acc561b83eb21c749c41c1f4a1800228488cec72a6bdbe3092a9fe17",
+    "assets/workspace.js": "50fdb95b17b31809b5c57d0fc2f78349d9b7e1dd0429c33f5e04c36f8e05973a",
+    "references/artifact-workspace.md": "9f5bc590b0a7232a14d75d501c35524352130f2b34664a275494a726417682f8",
+    "references/capture-and-artifacts.md": "6962539c56c7392403287d598051c16bef98050e43c775930bf728dc70b8ac6d",
+    "scripts/atlas.py": "cad9de84ae3203f12559eaab52e17302b77e0dde99f092d4f682f2df3cee392d",
     "scripts/capture.py": "222dfb87ef7130691ceead253af3c8e954fc4db4eae3ba17493a6966e7bcd33c",
-    "scripts/workspace.py": "46cac9cd3e3d1428c95808dc64865a7313ca25f8ad9082b0ed268a55e480f5e7"
+    "scripts/workspace.py": "64d039044afb4b836189c064c08bde68bda6506ad3b015993ce9ff818c90ecda"
   }
 }

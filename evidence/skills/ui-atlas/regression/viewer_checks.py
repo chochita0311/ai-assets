@@ -14,7 +14,33 @@ def set_zoom(page, value):
     page.wait_for_timeout(50)
 
 
+def check_pan_tools(page):
+    surface = page.locator('#canvas')
+    box = surface.bounding_box()
+    x, y = box['x'] + box['width'] / 2, box['y'] + box['height'] / 2
+    for mode in ('hand', 'space'):
+        page.locator('#hand-tool' if mode == 'hand' else '#select-tool').click()
+        surface.focus()
+        if mode == 'space':
+            page.keyboard.down('Space')
+        try:
+            before = camera(page)
+            page.mouse.move(x, y)
+            page.mouse.down()
+            page.mouse.move(x + 60, y + 35, steps=6)
+            page.mouse.up()
+            after = camera(page)
+            assert abs(after['x'] - before['x'] - 60) < 1, (mode, before, after)
+            assert abs(after['y'] - before['y'] - 35) < 1, (mode, before, after)
+        finally:
+            if mode == 'space':
+                page.keyboard.up('Space')
+    page.locator('#select-tool').click()
+    page.locator('#fit-all').click()
+
+
 def check_review_navigation(page):
+    check_pan_tools(page)
     page.locator('[data-panel="screens"]').click()
     page.locator('#search').fill('두 번째 노트')
     page.locator('.search-result[data-node-result]').first.click()

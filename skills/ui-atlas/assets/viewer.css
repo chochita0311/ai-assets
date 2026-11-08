@@ -34,6 +34,20 @@ h1 { font-size: 12px; font-weight: 550; margin: 0; overflow: hidden; text-overfl
 .menu button { display: flex; justify-content: flex-start; width: 100%; padding: 8px 10px; }
 .workspace { display: flex; height: calc(100dvh - 48px); }
 .sidebar { width: 220px; flex-shrink: 0; background: white; border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 2; }
+.sheet-picker { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.sheet-picker label { display: block; color: var(--muted); font-size: 10px; margin-bottom: 5px; }
+#sheet-select { width: 100%; min-width: 0; height: 32px; }
+#sheet-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#workspace-catalog { width: min(760px, calc(100vw - 36px)); }
+#workspace-search { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 5px; }
+.workspace-group { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 8px; }
+.workspace-group h3, .workspace-group summary { font-size: 11px; margin: 6px; }
+.workspace-group summary { cursor: pointer; color: var(--muted); }
+.workspace-run { width: 100%; display: flex; align-items: flex-start; flex-direction: column; padding: 10px; white-space: normal; text-align: left; }
+.workspace-run strong, .workspace-run small { max-width: 100%; overflow-wrap: anywhere; }
+.workspace-run strong { font-size: 12px; font-weight: 550; }
+.workspace-run small { font-size: 10px; color: var(--muted); }
+.workspace-run .current-sheet { color: var(--accent); }
 .panel-tabs { display: flex; align-items: center; gap: 3px; min-height: 44px; padding: 7px 10px; border-bottom: 1px solid var(--line); }
 .panel-tabs button { font-size: 11px; padding: 4px 9px; color: var(--muted); }
 .panel-tabs button.active { background: #f4f4f7; color: var(--ink); font-weight: 650; }

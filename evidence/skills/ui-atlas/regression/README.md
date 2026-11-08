@@ -17,10 +17,13 @@ existing Chromium executable:
 python -B evidence/skills/ui-atlas/regression/test_atlas.py --browser /path/to/chromium
 ```
 
+Add `--workspace-only` to focus the browser run on workspace entry, sheet
+navigation and retained drafts; the full command also runs existing viewer checks.
+
 The test owns a temporary directory, loopback HTTP fixture and browser. It
 removes its artifacts and stops its processes. It does not install dependencies.
 
-The nineteen contract checks cover standalone/inert packaging, source and recipe
+The twenty contract checks cover standalone/inert packaging, source and recipe
 support-file drift, DOM ownership/inventory, refusal of active DOM and screen-image
 substitutes, incomplete evidence, required inspection arrays, region bounds and
 optional observed-description validation/embedding, visible-element bounds,
@@ -30,13 +33,15 @@ manifest publication after interrupted writes, and isolation of malformed old
 run manifests without deleting their original files, explicit document-envelope
 validation, raw-text/declarative-animation rejection, unavailable-region bounds
 and explicit refusal of a selected file input represented only as a value attribute.
+They also check safe workspace payload embedding and encoded run paths.
 The browser run materializes loading, populated, hover, focus, modal,
 action-pending and failure states using the fixture's actual renderer.
 
 It checks every visible fixture element's source/preview geometry within the
 runner's 3 CSS pixel tolerance, no generated screen PNGs, HTML/SVG and disabled
 control selection, ancestor selection, native modal restoration, pointer-centered
-wheel zoom, sheet pan, movable frame persistence, payload history, filters,
+wheel zoom, sheet pan (including the hand tool and held Space), movable frame
+persistence, payload history, filters,
 notes in parallel tabs, JSON import/export including legacy identities,
 narrow-screen provenance, clipped content and stacked-dialog observation.
 Response holds, zero real backend POSTs, no HTTP requests from the standalone
@@ -60,6 +65,13 @@ are a sheet stress input, not a claim about an app's discovered state count.
 [Workspace checks](workspace_checks.py) retain old files and rebuild the catalog;
 the browser suite also runs the capture CLI without `--out` and checks its default
 repo path and visible terminal-failure status even beside a corrupt older run.
+[Workspace navigation checks](workspace_browser_checks.py) exercise direct sheet
+entry, the selector above the existing tabs, last-sheet restoration, catalog
+search/status/history and browser back/forward. Drafts stay with their original
+sheet and element through switching; failed note saves remain exportable after
+their textarea clears. Clean-sheet eviction preserves saved notes, the root
+unsaved-work guard includes inactive sheets, and 390px layout, standalone views,
+blocked preference storage and untrusted selection messages have separate controls.
 
 [Reliability checks](reliability_checks.py) inject quota/read/delete failures and
 other-tab storage events, checking pending-note retention, export and recovery.
@@ -111,10 +123,14 @@ identities. SMIL color animation is explicitly refused, with static SVG retained
 as the successful materialization control. These refusal checks also run through
 the alternative-materializer builder boundary.
 
-The latest [package manifest](package-manifest.json) identifies the package with
-closeout documentation clarifications. The [v6 manifest](package-manifest-v6.json)
-identifies the final repair candidate reviewed and exercised before closeout;
-runtime code, the entry contract and UI metadata are unchanged between them.
+The current [package manifest](package-manifest.json) identifies the package with
+direct workspace entry, sheet navigation and the hand/Space pan repair. The
+[record-revision-8 closeout manifest](package-manifest-closeout-r8.json) preserves
+the earlier package with its closeout documentation clarifications. The
+[v6 manifest](package-manifest-v6.json) identifies the final repair candidate
+reviewed and exercised before that earlier closeout; runtime code, the entry
+contract and UI metadata were unchanged between v6 and the record-revision-8
+snapshot. The current package changes runtime and the entry contract.
 These manifests preserve package identities through file hashes; they are not
 source archives. Re-executing an older implementation requires its separately
 retained source, while the current package and checks are available here.

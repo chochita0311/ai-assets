@@ -105,6 +105,12 @@ Use [viewer.html](assets/viewer.html) through the bundled
   strip; put scope, provenance, limitations and detailed instructions in accessible
   disclosures. Show element properties, payload and notes on selection instead of
   filling the canvas with explanatory prose.
+- Open the last selected sheet directly at the workspace entry, or the first
+  available sheet when no choice can be restored. Put the sheet selector above
+  the screen/element/opinion tabs. Offer the full catalog, earlier runs and
+  incomplete-run diagnostics through the selector. Retain target-owned drafts
+  and pending note operations when switching sheets; closing still needs the
+  existing unsaved-work guard.
 - Keep notes attached to stable state/region IDs, element locators, quoted text and selectors. Add
   source-file or message-key references only when verified, otherwise leave the
   source relationship unresolved. Export readable grouped requests and portable

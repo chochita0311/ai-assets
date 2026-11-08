@@ -138,13 +138,14 @@ python scripts/capture.py recipe.json --source-root /path/to/app \
   --base-url http://127.0.0.1:8000 --replay inbox.loading
 python scripts/atlas.py check /path/to/atlas/runs/new-run/atlas.json
 python scripts/atlas.py build /path/to/atlas/runs/new-run/atlas.json \
-  --out /path/to/atlas/index.html
+  --out /path/to/atlas/runs/new-run/index.html
 ```
 
-Without `--out`, the runner creates a uniquely named run in the default workspace
-and refreshes its entry catalog. `--workspace` selects an alternative owner.
-An explicit `--out` must name a new directory and leaves workspace management to
-the caller. The runner produces `frames/*.html`, a
+Without `--out`, `capture.py` creates a uniquely named run in the default workspace
+and refreshes its entry catalog. Its `--workspace` selects an alternative owner.
+An explicit `capture.py --out` must name a new directory and leaves workspace
+management to the caller. `atlas.py build --out` names the output HTML
+file rebuilt from a retained manifest. The capture runner produces `frames/*.html`, a
 `ui-atlas/v2` manifest in `atlas.json` and a self-contained `index.html` canvas.
 It generates no screen images. The filename `capture.py` remains compatible
 with existing launchers. The manifest carries conditions, actual DOM elements,
@@ -273,6 +274,13 @@ frozen states is an ordered sequence, not video or a live app transition.
 
 ## Canvas and feedback
 
+Opening a workspace entry shows its last selected sheet directly. Use the sheet
+selector above the screen/element/opinion tabs to switch, or choose the full
+catalog to search sheets and inspect earlier, partial or interrupted runs. Sheet
+switching preserves target-owned drafts and pending note operations in tab memory;
+export saved opinions for durable transfer. The full catalog is an in-view dialog.
+A standalone run opens without the workspace selector.
+
 Drag the sheet to pan; wheel to zoom around the pointer. `V` selects, `H` or held
 Space pans, `Shift+1` fits all frames and `Shift+2` fits the selection. Drag a frame
 header to reposition it; drag a section title to move its frames together.
@@ -313,7 +321,9 @@ panel. Element properties, payload, state navigation and notes appear in the
 selection inspector. `canvas.js` owns camera/gestures; `catalog.js` owns section
 membership, readable names, search and conservative correspondence;
 `sections.js` owns section bounds, explanation cards and label visibility;
-`notes.js` owns feedback persistence. `viewer.js` connects these resources with
+`notes.js` owns feedback persistence. `sheet-picker.js` owns the in-view selector,
+catalog dialog and draft-status bridge; `workspace.js` owns sheet hosting and the
+last selected sheet. `viewer.js` connects these resources with
 selection, trusted frame messages and controls.
 
 Unsubmitted drafts stay attached to their state/element during navigation, in

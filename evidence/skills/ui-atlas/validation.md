@@ -3,14 +3,14 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-atlas-validation",
-  "revision": 8,
+  "revision": 9,
   "audience": "public",
   "subjects": [
     {
       "kind": "skill",
       "key": "skills/ui-atlas",
       "source_revision": null,
-      "content_sha256": "496268507e4be4e7da6b570762ec6c925cf6ea2aa2aae3e2cb246d8e6e6711bb"
+      "content_sha256": "fde12dab7511314b6264155bb67ba231d17940ca5fa8c243b4e7303cf45fd202"
     }
   ],
   "work": {
@@ -89,16 +89,76 @@ output size from the reusable skill itself.
 
 ## Evidence And Evaluation
 
-### Current repair: correspondence, recovery and projection boundaries
+### Workspace navigation and pan repair (record revision 9)
+
+Observed on 2026-11-08. The current [package manifest](regression/package-manifest.json)
+identifies the portable package after these changes. The earlier closeout identity
+is preserved separately in the
+[record-revision-8 manifest](regression/package-manifest-closeout-r8.json).
+The metadata fingerprint identifies this pre-commit working tree; Git records
+the subsequent publication rather than a self-referential commit inside it.
+
+Result: **PASS** for the executed static/resource checks and the adjudicated
+documentation criteria. Evidence Coverage: **partial**; highest level:
+**resource-execution**. These are author-executed synthetic checks, not an
+independent fresh-agent execution of the skill on an unfamiliar app.
+
+The hand tool and held Space could enter a pan path with a false section value;
+accessing its missing dataset then threw before dragging began. Optional dataset
+access now handles that path, and browser witnesses check the actual camera
+delta for both gesture modes while retaining the existing selection controls.
+
+The workspace entry now opens the last selected sheet directly, or the first
+available sheet when no choice can be restored. A selector above the existing
+screen/element/opinion tabs opens other sheets and an in-view searchable catalog
+with earlier runs, partial failures and interrupted/unreadable-run diagnostics.
+Workspace selection uses retained run metadata; it does not invent observations
+or alter the app. Standalone run viewers remain independently usable.
+
+Sheets keep their own element/state selection, drafts and failed note writes
+while mounted. Dirty sheets remain mounted through switching; a bounded cache
+can evict inactive clean sheets and recreate their transient inspection state.
+Successfully saved notes retain their existing atlas identity in embedded and
+standalone views. Drafts and failed writes remain tab memory, and the root's
+unsaved-work guard also covers inactive sheets. Closing is not a durable backup.
+The workspace establishes iframe layout before loading a warm file so a desktop
+sheet does not initialize at the iframe's default narrow width.
+
+The primary executed all twenty standard-library contract tests and the full
+Chromium suite with Playwright 1.64.1. New witnesses cover payload escaping and
+encoded run paths, direct entry, selector hierarchy, last-choice restoration,
+catalog search/status/history, back/forward, per-sheet drafts, failed-save export
+and retry, clean-sheet eviction, saved-note identity, inactive-sheet unload
+protection, 390px layout, standalone operation, blocked preference storage and
+untrusted selection messages. Existing geometry, selection, replay, clipping,
+correspondence, import-conflict and storage-recovery regressions also passed.
+Package validation, JavaScript/Python syntax and whitespace checks passed.
+
+Two independent read-only documentation reviews used docs-structuring and
+docs-shaping. The primary accepted their current-versus-historical identity
+corrections, scoped the capture-directory and build-file forms of `--out`, and
+qualified inspection-state retention by the mounted-sheet lifetime. The existing
+entry/reference/evidence owners remain in place; no new session log or hierarchy
+was introduced. Final local-link and fingerprint checks support those properties,
+not general skill reliability.
+
+Private consumer observations and their current state remain at their private
+owner. They are not public fixtures or evidence for unfamiliar frameworks,
+native hosts, real devices/services, or wider browser/storage compatibility.
+This session did not run a fresh-agent state-discovery task: it repaired and
+checked the delivered viewer/resources. Those broader claims remain unverified.
+
+### Historical repair: correspondence, recovery and projection boundaries
 
 Record revision 7 records the authorized repair/verification loop after the two
 open findings in record revision 6. The package revision-5 baseline remains in
 the [preserved manifest](regression/package-manifest-v5.json), fingerprint
 `790cd45ab9008260cc229485bb68a6446532bdb3ae349a924734e55e2b92db0b`.
 The [revision-6 manifest](regression/package-manifest-v6.json) identifies the
-final repair candidate; the [current manifest](regression/package-manifest.json)
-adds the closeout's documentation clarifications with the same runtime, entry
-contract and UI metadata. The name, default `.artifacts/ui-atlas/` owner, ignore/retention policy,
+final repair candidate; the
+[record-revision-8 closeout manifest](regression/package-manifest-closeout-r8.json)
+adds that closeout's documentation clarifications with the same runtime, entry
+contract and UI metadata as v6. The name, default `.artifacts/ui-atlas/` owner, ignore/retention policy,
 v1 portable note format and original app/output preservation remain unchanged.
 
 Observed on 2026-11-08. Result: **PASS** for the final executed static/resource
@@ -625,20 +685,28 @@ or test-completeness claim is made.
 
 ## Work And Acceptance
 
-The reusable-package repair is closed against the failure/control criteria and
-executed checks above. This state does not close the consumer's separate recipe
+The record-revision-9 pan/workspace changes are complete against their executed
+synthetic/resource criteria. The user authorized repository commit and push after
+the independent documentation reviews, necessary repairs and required checks;
+only session-owned reusable changes are eligible for that publication. Current
+private consumer state belongs to its private owner. Broader evidence limits
+remain as stated above.
+
+At the earlier record-revision-8 closeout, the reusable-package repair was closed
+against its failure/control criteria and executed checks. This state does not close the consumer's separate recipe
 question or the broader evidence needs below. The user subsequently authorized
 repository commit and push after the two documentation reviews, necessary
 corrections, required checks and preservation of unrelated work; that authority
 does not publish the private consumer bundle or authorize product changes.
 
-Private consumer outputs remain preserved at the user's selected owner and
-have not been regenerated with the final package. The fourteen materialization
-failures described under revision 4 have a bounded successful rerun; the separate
-narrow-viewport interaction/recipe failure still needs its target and intended
-behavior reconciled before calling it a product defect or a corrected state.
-Its next check belongs to that consumer's recipe and source owner, not this
-reusable package. The first fourteen-state recollection did not retain a full
+At that earlier closeout, private consumer outputs remained preserved at the
+user's selected owner and had not been regenerated with that final package. The
+fourteen materialization failures described under revision 4 had a bounded
+successful rerun; the separate narrow-viewport interaction/recipe failure still
+needed its target and intended behavior reconciled before being called a product
+defect or a corrected state. Its next check belonged to that consumer's recipe
+and source owner, not this reusable package. These are historical observations,
+not a claim about the consumer's current state. The first fourteen-state recollection did not retain a full
 package fingerprint for its intermediate candidate; a later retained snapshot
 and synthetic checks identify the final revision-4 tool. That limits exact
 whole-package replay of the earlier recollection without invalidating its
@@ -652,14 +720,25 @@ closing the reusable-package repair.
 
 ## Outcome And Reuse
 
-The two previously open findings and all additional accepted candidates are
-closed for these criteria. No known actionable defect remains from the final
-review; broader environment gaps remain the documented limits. That repair
+The pan/workspace changes passed the bounded checks above, including the
+regressions for retained feedback. Reuse the metadata-driven selector and keep
+transient inspection state distinct from saved opinions. Publication is authorized
+after final checks; this record does not itself prove a successful push.
+
+In the earlier repair phase, the two previously open findings and all additional
+accepted candidates were closed for those criteria. No known actionable defect
+remained from that final review; broader environment gaps remain the documented limits. That repair
 phase changed no private app or retained consumer artifact and did not commit
 or publish the work.
 
 ## History
 
+- 2026-11-08, revision 9: recorded direct workspace entry, in-view sheet selection
+  and catalog, retained draft/pending-write ownership and the hand/Space pan repair.
+  Twenty contract tests and the complete synthetic browser suite passed. Preserved
+  the earlier closeout manifest, updated the current package identity, and applied
+  the two independent documentation reviews without broad restructuring. Evidence
+  remains partial resource execution; private consumer state is not published.
 - 2026-11-08, revision 8: reconciled the selected observation model, general
   artifact ownership, optional automation and storage distinctions; corrected
   historical package links, manifest provenance and the record's content roles.

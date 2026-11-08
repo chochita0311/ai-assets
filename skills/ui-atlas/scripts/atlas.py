@@ -304,6 +304,7 @@ def package(manifest, output, root=None, recipe_path=None):
     html = html.replace("/* ATLAS_CANVAS */", (ASSETS / "canvas.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_CATALOG */", (ASSETS / "catalog.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_SECTIONS */", (ASSETS / "sections.js").read_text(encoding="utf-8"))
+    html = html.replace("/* ATLAS_SHEET_PICKER */", (ASSETS / "sheet-picker.js").read_text(encoding="utf-8"))
     html = html.replace("ATLAS_PAYLOAD", payload)
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary = output.with_suffix(output.suffix + ".writing")

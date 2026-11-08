@@ -70,7 +70,7 @@ class AtlasCanvas {
     const section = !this.space && this.tool === 'select' && event.button === 0 && event.target.closest('.section-caption');
     this.drag = {pointer: event.pointerId, x: event.clientX, y: event.clientY, moved: false,
       camera: {...this.camera}, frame, mode: section ? 'section' : movingFrame ? 'frame' : 'pan',
-      section: section?.dataset.section, members: section ? this.callbacks.members(section.dataset.section) : [],
+      section: section?.dataset?.section, members: section ? this.callbacks.members(section.dataset.section) : [],
       frameX: frame ? Number(frame.dataset.x) : 0, frameY: frame ? Number(frame.dataset.y) : 0};
     this.viewport.setPointerCapture(event.pointerId);
   }

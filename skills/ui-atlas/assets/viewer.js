@@ -28,6 +28,7 @@
   let activePanel = 'screens', activeTab = 'element', hoveredFrame = null;
   let announcementTimer, hoverTick, pendingHover, lastClick = null, layoutTick;
   let pendingPick = null, pickSerial = 0, comparison = null, viewRevision = 0;
+  let sheetPicker = null;
   const labels = {unverified: '미확인', unimplemented: '미구현', 'not-applicable': '해당 없음', 'render-failed': '재현 실패'};
   function announce(message) {
     $('#announcement').textContent = message;
@@ -399,6 +400,10 @@
     if (message) drafts.set(draftKey, {message, kind: $('#note-kind').value});
     else drafts.delete(draftKey);
   }
+  function hasUnsavedWork() {
+    saveDraft();
+    return notes.pending.size > 0 || [...drafts.values()].some(draft => draft.message.trim());
+  }
   function recheckReason(note) {
     const frame = frameById.get(note.frame), reasons = [];
     if (!frame) reasons.push('현재 전개도에 이 화면이 없습니다.');
@@ -478,7 +483,7 @@
   }
   function updateNotes() {
     $('#note-count').textContent = notes.items.length; $('#retry-notes').hidden = !notes.pending.size;
-    renderNotes(); renderReviewList(); scheduleLayout();
+    renderNotes(); renderReviewList(); scheduleLayout(); sheetPicker?.changed();
   }
   function requestText() {
     return [`UI Atlas · ${atlas.title}`, `관찰: ${atlas.captured_at}`, `범위: ${atlas.scope}`, '', ...notes.items.map((note, index) => {
@@ -528,7 +533,7 @@
   $('#note').oninput = saveDraft;
   $('#note-kind').onchange = saveDraft;
   window.addEventListener('beforeunload', event => {
-    if (notes.pending.size || [...drafts.values()].some(draft => draft.message.trim())) { event.preventDefault(); event.returnValue = ''; }
+    if (hasUnsavedWork()) { event.preventDefault(); event.returnValue = ''; }
   });
   $('#replay').onclick = () => handoff('상태 재현', '이 장면은 고정된 DOM입니다. 아래 명령은 격리된 실제 앱을 같은 상태까지 실행합니다.', atlas.replay.replaceAll('STATE_ID', selectedFrame.id));
   $('#requests').onclick = () => showPanel('reviews');
@@ -675,4 +680,5 @@
   $('#close-info').onclick = () => $('#information').close();
   if (narrow()) $('#sidebar').hidden = true;
   buildCanvas(); updateNotes();
+  sheetPicker = new AtlasSheetPicker(atlas.id, hasUnsavedWork);
 })();

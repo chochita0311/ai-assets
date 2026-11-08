@@ -1,5 +1,6 @@
 """Generic consumer-repo artifact ownership, retention and relocation witnesses."""
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -85,3 +86,19 @@ class WorkspaceTests(unittest.TestCase):
             self.assertEqual((run / 'atlas.json').read_text(), body)
             self.assertEqual((run / 'index.html').read_text(), 'Preserved canvas')
         self.assertEqual(list((root / 'tmp').iterdir()), [])
+
+    def test_workspace_payload_preserves_history_and_escapes_labels_and_paths(self):
+        root = workspace.initialize(self.repo)
+        title = '</script><script>syntheticMarkup()</script>'
+        run = root / 'runs' / 'synthetic # run'; run.mkdir()
+        (run / 'index.html').write_text('Preserved standalone viewer')
+        (run / 'atlas.json').write_text(json.dumps({'id': 'app', 'title': title,
+                                                    'frames': [{'status': 'rendered'}, {'status': 'unverified'}]}))
+        html = workspace.catalog(root).read_text()
+        payload = re.search(r'<script type="application/json" id="workspace-data">(.*?)</script>', html, re.S).group(1)
+        data = json.loads(payload)
+        self.assertNotIn('</script>', payload)
+        self.assertEqual(data['groups'][0]['runs'][0]['title'], title)
+        self.assertEqual(data['groups'][0]['runs'][0]['url'], 'runs/synthetic%20%23%20run/index.html')
+        self.assertEqual(data['groups'][0]['runs'][0]['gaps'], 1)
+        self.assertEqual((run / 'index.html').read_text(), 'Preserved standalone viewer')

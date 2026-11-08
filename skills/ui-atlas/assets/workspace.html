@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>UI Atlas</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 system-ui,sans-serif;background:#ededf0;color:#29292e}[hidden]{display:none!important}
+.atlas-host{position:fixed;inset:0;width:100%;height:100dvh;border:0;background:#ededf0;visibility:hidden}
+.atlas-host.active{visibility:visible}
+#workspace-fallback{position:relative;max-width:900px;margin:48px auto;padding:0 24px;background:#f4f4f6}
+h1{font-size:24px}h2{font-size:16px}section{background:white;padding:20px 24px;margin:18px 0;border:1px solid #e5e5eb;border-radius:10px}
+a{color:#6542cf}span,small{display:block}small,.label{color:#72727c;font-size:12px}details{margin-top:16px}li{margin:12px 0;list-style:none}summary{cursor:pointer}
+#workspace-loading{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none;color:#72727c;font-size:12px}
+#workspace-error{padding:12px;background:white;border:1px solid #e5e5eb;border-radius:6px}
+</style>
+</head>
+<body>
+<main id="workspace-fallback"><h1>UI Atlas</h1><p id="workspace-error" role="status" hidden></p><p>최신 관찰과 이전 실행. 범위 확인에는 미확인·미구현·해당 없음 상태가 포함됩니다. 실행 완료는 앱 전체 검증을 뜻하지 않습니다.</p>ATLAS_CATALOG</main>
+<div id="workspace-loading" role="status" hidden>전개도를 여는 중입니다.</div>
+<script type="application/json" id="workspace-data">WORKSPACE_PAYLOAD</script>
+<script>/* ATLAS_WORKSPACE */</script>
+</body>
+</html>

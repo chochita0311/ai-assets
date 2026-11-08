@@ -20,6 +20,7 @@
 </header>
 <div class="workspace">
   <aside id="sidebar" class="sidebar">
+    <div id="sheet-picker" class="sheet-picker" hidden><label for="sheet-select">전개도</label><select id="sheet-select" aria-label="전개도 선택"></select></div>
     <div class="panel-tabs"><button data-panel="screens" class="active">화면</button><button data-panel="layers">요소</button><button data-panel="reviews">의견</button></div>
     <div class="search"><svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="search" type="search" placeholder="검색" aria-label="화면·요소 검색"></div>
     <nav id="screens" aria-label="화면 목록"></nav><div id="layers" role="tree" aria-label="요소 계층" hidden></div>
@@ -57,6 +58,7 @@
   </aside>
 </div>
 <div class="gesture-hint">드래그 이동 · 휠 확대/축소</div>
+<dialog id="workspace-catalog" aria-labelledby="workspace-catalog-title"><header><h2 id="workspace-catalog-title">전체 시트</h2><button id="close-workspace-catalog" class="icon-button" aria-label="전체 시트 닫기">×</button></header><p>최신 관찰과 이전 실행. 범위 확인에는 미확인·미구현·해당 없음 상태가 포함됩니다. 실행 완료는 앱 전체 검증을 뜻하지 않습니다.</p><input id="workspace-search" type="search" placeholder="전개도 검색" aria-label="전개도 검색"><div id="workspace-list"></div></dialog>
 <dialog id="handoff"><header><h2 id="handoff-title"></h2><button id="close-handoff" class="icon-button" aria-label="닫기">×</button></header><p id="handoff-description"></p><textarea id="handoff-text" rows="15" readonly></textarea><footer><button id="copy-request" class="accent">복사</button></footer></dialog>
 <dialog id="information"><header><h2>관찰 범위</h2><button id="close-info" class="icon-button" aria-label="닫기">×</button></header><div id="provenance"></div><div id="missing-states"></div></dialog>
 <dialog id="note-import" aria-labelledby="import-title"><form method="dialog"><header><h2 id="import-title">서로 다른 의견 확인</h2></header><p>현재 의견과 파일 내용이 다릅니다. 각 의견에서 사용할 내용을 선택해 주세요.</p><div id="import-conflicts"></div><footer><button value="cancel">취소</button><button value="apply" class="accent">선택한 내용으로 가져오기</button></footer></form></dialog>
@@ -68,6 +70,7 @@
 /* ATLAS_CANVAS */
 /* ATLAS_CATALOG */
 /* ATLAS_SECTIONS */
+/* ATLAS_SHEET_PICKER */
 /* ATLAS_JS */</script>
 </body>
 </html>

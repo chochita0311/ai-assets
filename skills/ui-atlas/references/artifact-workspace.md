@@ -43,7 +43,7 @@ at the repository root. It is a storage convention, not a harness dependency.
 <repo>/.artifacts/ui-atlas/
   .gitignore                 # excludes the whole local workspace
   workspace.json             # ownership/schema marker, no product configuration
-  index.html                 # small entry catalog: latest and earlier runs per atlas
+  index.html                 # opens a sheet directly; selector offers catalog/history
   recipes/
     <atlas-id>/
       recipe.json            # stable journeys, state IDs and declared dependencies
@@ -67,9 +67,13 @@ declare their relevant dependencies. Recipe response files and `support_files`
 must remain inside that recipe's directory. The workspace's `recipes/` is the
 default owner for atlas-specific inputs when no app owner exists.
 
-Each capture gets a new run directory. The entry catalog links to the latest
-readable attempt, labels partial failures and capture-time source-check status,
-and exposes earlier runs. It does not replace
+Each capture gets a new run directory. The workspace entry opens the last selected
+atlas directly, or its first available sheet when no saved choice is available.
+The sheet selector sits above the screen/element/opinion tabs; its full-catalog
+dialog lists the latest readable attempts and earlier runs, labels partial failures
+and capture-time source-check status, and retains incomplete-run diagnostics.
+An explicitly selected historical run remains distinct from an atlas's latest run.
+The catalog does not replace
 the last successful evidence with a claim of success. A run without a manifest
 or built canvas is listed as generating/interrupted. A malformed or unreadable
 manifest is listed separately with its error; its files are preserved and it
@@ -79,7 +83,21 @@ Declared unknown, unimplemented
 and not-applicable states remain coverage information; a completed recipe run is
 not exhaustive app validation. The catalog is derived from retained run files;
 refresh it after manual moves or pruning. Concurrent runs keep separate outputs;
-refresh the catalog after both finish if their entry updates overlap.
+refresh the catalog after both finish if their entry updates overlap. With no
+readable sheet or JavaScript disabled, the entry retains a plain catalog fallback.
+An older viewer without the sheet-selection bridge needs a viewer-only `build`
+from its retained manifest; a connection failure exposes the fallback and its
+standalone links instead of inventing a replacement observation.
+
+The workspace hosts sheets without reflowing their fixed app viewports. Sheet
+selection and the last-choice preference belong to the workspace; each sheet
+keeps its own inspection state, draft ownership and pending note writes while
+mounted. Switching retains sheets with unsaved work. Inactive clean sheets use a
+bounded cache; eviction recreates transient inspection state when they reopen
+from their original HTML. Saved opinions stay under their existing
+atlas identity. Drafts and failed writes are still tab memory, not a durable backup.
+The unsaved-work guard also covers inactive sheets. A standalone run continues
+to open independently and does not show a disconnected workspace selector.
 
 ## Generate and refresh
 
