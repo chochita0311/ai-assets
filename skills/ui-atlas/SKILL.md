@@ -1,6 +1,6 @@
 ---
 name: ui-atlas
-description: Build or refresh a local pan-and-zoom HTML canvas of an existing app's screens, selectable DOM elements, regions, states, and transitions. Use for a Figma-like sheet of loading, empty, populated, error, hover, focus and action-result states, inspecting payloads, or collecting element-specific feedback. Not for inventing screens, redesigning the source product, or claiming exhaustive coverage.
+description: Build or refresh a local pan-and-zoom HTML atlas of an existing app, organized from its entry and menus into topics, features, selectable DOM elements and connected states. Use for a Figma-like product map, inspecting payloads, tracing dropdowns and action results, or collecting element-specific feedback. Not for inventing screens, redesigning the source product, or claiming exhaustive coverage.
 ---
 
 # UI Atlas
@@ -35,16 +35,26 @@ recipes remain the source, and the HTML is a generated view.
    as code. Product contracts govern intended behavior; code and actual renders
    establish implemented behavior. Record differences without silently fixing
    or treating a stale design export as current UI.
-2. Inventory the requested pages, tabs, dialogs, menus and meaningful regions.
+2. Establish the product entry, actual menu order and topic/feature hierarchy
+   before choosing capture batches. Give each observed state one primary topic;
+   use references for genuinely shared contexts. Keep editions or other real
+   product boundaries explicit. Loading/error/empty states and viewport sizes
+   belong under their feature or in view filters, not competing top-level topics.
+   Read [menu topics and state links](references/menu-topics.md) before composing
+   a multi-screen workspace or reorganizing existing sheets.
+3. Inventory the requested pages, tabs, dialogs, menus and meaningful regions.
    Trace a region's shared usage before assuming it belongs only to one page.
    Select regions through actual elements and measure them in each rendered state.
    Do not split an inseparable interaction into supposedly independent fixes.
-3. Enumerate meaningful reachable states: pending/skeleton, empty data, empty
+   For each consequential control, account for the relevant closed/open,
+   input/selection, pending/result, cancel and recovery states. Record an explicit
+   observation or a qualified gap; a visible trigger alone does not cover its menu.
+4. Enumerate meaningful reachable states: pending/skeleton, empty data, empty
    search results, populated content, unavailable/error, hover/focus/disclosure,
    and relevant action outcomes. Include initial entry, retained/reopened state,
    refresh and recovery when they can change what the user sees. Only use states
    relevant to that surface; do not generate every Cartesian combination.
-4. Keep uncertain, unimplemented, not-applicable and failed states visible and
+5. Keep uncertain, unimplemented, not-applicable and failed states visible and
    distinct. Static code discovery and a finite crawl cannot establish that all
    states were found. A state type or a proposed design is not reachability proof.
 
@@ -86,10 +96,21 @@ Use [viewer.html](assets/viewer.html) through the bundled
 - Place related states on one spatial canvas, with drag-to-pan, pointer-centered
   wheel zoom, fit-all/fit-selection and movable frame positions. Keep the source
   viewport fixed: zoom the sheet without reflowing the app.
+- Present the product map in menu/topic order independently of capture files,
+  timestamps or test categories. Compose a topic's related feature states on one
+  canvas; retain original observations, identities, payloads and feedback owners.
+  Expose viewport variants as a view choice. Keep required original observations
+  as backing evidence. Do not repeat fully mapped capture batches in the menu map;
+  expose unassigned observations and any retained earlier runs separately.
 - Group states by their actual journey, with named section bounds that follow
   frame movement and an ordered state list. Keep section and frame labels from
   colliding as zoom changes; prioritize section names at overview scale and the
   selected frame, with full names available on hover or in the inspector.
+- Preserve real journey boundaries inside feature groups. Show recorded action
+  links and result branches beside the corresponding control/state; do not imply
+  a sequence merely because independent captures are adjacent. Keep element
+  inspection separate from following recorded states. Neither executes product
+  actions; actual replay remains separate.
 - Supply concise, evidence-backed purpose, conditions, actions, results and
   exceptions alongside a journey when known. Scale explanation cards with the
   sheet and disclose full details on selection. Distinguish recorded behavior
@@ -105,10 +126,12 @@ Use [viewer.html](assets/viewer.html) through the bundled
   strip; put scope, provenance, limitations and detailed instructions in accessible
   disclosures. Show element properties, payload and notes on selection instead of
   filling the canvas with explanatory prose.
-- Open the last selected sheet directly at the workspace entry, or the first
-  available sheet when no choice can be restored. Put the sheet selector above
-  the screen/element/opinion tabs. Offer the full catalog, earlier runs and
-  incomplete-run diagnostics through the selector. Retain target-owned drafts
+- Open the last selected topic directly at the workspace entry, or the first
+  topic in product order when no choice can be restored. Without a topic map,
+  retain the existing standalone/sheet entry behavior. Put product scope and topic
+  selection above the screen/element/opinion tabs. Offer the full menu map,
+  unassigned captures, retained earlier runs and incomplete-run diagnostics through
+  the selector. Omit empty history controls. Retain target-owned drafts
   and pending note operations when switching sheets; closing still needs the
   existing unsaved-work guard.
 - Keep notes attached to stable state/region IDs, element locators, quoted text and selectors. Add
@@ -150,6 +173,20 @@ migrating from image-only evidence. Report actual checks and gaps; distinguish
 implemented tool capability from states observed in this run. Stop task-owned servers and remove scratch after
 transferring needed outputs to their durable owner. Keep durable replay recipes
 independent of temporary server URLs, profiles and runtime directories.
+
+For a topic map, also follow an actual menu into a feature's ordinary and exception
+states without choosing a capture batch. Exercise a dropdown from its trigger to
+its recorded open/result/cancel states. Check viewport filtering, old links,
+cross-topic drafts, original-note compatibility and unassigned-state diagnostics.
+Run `scripts/test_topics.py` and `node --test scripts/test_topic_notes.mjs` when
+changing composition or feedback ownership. State counts alone do not establish
+that the product map is understandable or its control states are covered.
+
+When cleanup is requested after reorganization, distinguish derived topic views
+from their required source manifests/DOM. Follow the cleanup checks in
+[artifact workspace](references/artifact-workspace.md#retain-move-and-clean-up)
+before removing superseded runs; complete topic membership alone does not make
+backing observations disposable.
 
 If available, use $design-deslop for proposed design alternatives and selection;
 the atlas can supply observed baselines without becoming that approval workflow.

@@ -3,7 +3,9 @@
   const data = JSON.parse(document.querySelector('#workspace-data').textContent);
   const channel = 'ui-atlas-workspace/v1';
   const groups = data.groups;
-  const runs = new Map(groups.flatMap(group => group.runs.map(run => [run.key, {...run, atlasId: group.id}])));
+  const topics = data.topics || [];
+  const runs = new Map([...groups.flatMap(group => group.runs.map(run => [run.key, {...run, atlasId: group.id}])),
+    ...topics.map(topic => [topic.key, topic])]);
   const mounted = new Map();
   const storageKey = 'ui-atlas:workspace:last:' + location.pathname;
   const fallback = document.querySelector('#workspace-fallback');
@@ -12,23 +14,27 @@
 
   function initialRun() {
     const query = new URLSearchParams(location.hash.slice(1));
-    if (runs.has(query.get('run'))) return runs.get(query.get('run'));
+    if (query.has('run')) return runs.get(query.get('run')) || null;
+    const topic = topics.find(item => item.id === query.get('topic'));
+    if (topic) return topic;
     const group = groups.find(item => item.id === query.get('atlas'));
-    if (group) return runs.get(group.runs[0].key);
+    if (group) return topics.find(item => item.origins.some(origin => origin.atlas === group.id && (!query.get('frame') || origin.frame === query.get('frame')))) || runs.get(group.runs[0].key);
     try {
       const saved = JSON.parse(localStorage.getItem(storageKey));
+      if (saved?.topic && runs.has(saved.topic)) return runs.get(saved.topic);
       if (saved?.run && runs.has(saved.run)) return runs.get(saved.run);
       const previous = groups.find(item => item.id === saved?.atlas);
-      if (previous) return runs.get(previous.runs[0].key);
+      if (previous) return topics.find(item => item.origins.some(origin => origin.atlas === previous.id)) || runs.get(previous.runs[0].key);
     } catch { /* The first available sheet also works without browser storage. */ }
-    return groups.length ? runs.get(groups[0].runs[0].key) : null;
+    return topics[0] || (groups.length ? runs.get(groups[0].runs[0].key) : null);
   }
   function remember(run, historyMode) {
-    const latest = groups.find(group => group.id === run.atlasId).runs[0].key === run.key;
-    try { localStorage.setItem(storageKey, JSON.stringify({atlas: run.atlasId, run: latest ? null : run.key})); }
+    const isTopic = run.key.startsWith('topic:');
+    const latest = !isTopic && groups.find(group => group.id === run.atlasId).runs[0].key === run.key;
+    try { localStorage.setItem(storageKey, JSON.stringify(isTopic ? {topic: run.key} : {atlas: run.atlasId, run: latest ? null : run.key})); }
     catch { /* Preference storage must not prevent opening a sheet. */ }
     if (historyMode !== 'none') {
-      const hash = new URLSearchParams(latest ? {atlas: run.atlasId} : {run: run.key});
+      const hash = new URLSearchParams(isTopic ? {topic: run.id} : latest ? {atlas: run.atlasId} : {run: run.key});
       history[historyMode === 'push' ? 'pushState' : 'replaceState'](null, '', '#' + hash);
     }
   }
@@ -43,10 +49,24 @@
   }
   function connect(entry) {
     entry.frame.contentWindow.postMessage({channel, type: 'connect', token: entry.token,
-      current: entry.key, groups, unfinished: data.unfinished, unreadable: data.unreadable}, '*');
+      current: entry.key, groups, topics, unassigned: data.unassigned || [], unfinished: data.unfinished, unreadable: data.unreadable}, '*');
   }
   function open(run, historyMode = 'push') {
-    if (!run) return;
+    if (!run) {
+      if (new URLSearchParams(location.hash.slice(1)).has('run')) {
+        selected = null;
+        for (const entry of mounted.values()) {
+          entry.frame.classList.remove('active');
+          entry.frame.setAttribute('aria-hidden', 'true'); entry.frame.inert = true;
+        }
+        fallback.hidden = false; loading.hidden = true;
+        const message = document.querySelector('#workspace-error');
+        message.textContent = '요청한 실행을 찾을 수 없습니다. 기록이 정리되었거나 파일이 이동했을 수 있습니다. 아래에서 현재 관찰을 선택하세요.';
+        message.hidden = false;
+      }
+      return;
+    }
+    document.querySelector('#workspace-error').hidden = true;
     fallback.hidden = true;
     let entry = mounted.get(run.key);
     if (!entry) {

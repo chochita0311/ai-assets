@@ -204,3 +204,31 @@ select { border: 1px solid var(--line); border-radius: 5px; padding: 5px; backgr
   .canvas-controls .icon-button { width: 27px; }
   .canvas-controls .divider { margin: 0 2px; }
 }
+
+/* Topic navigation stays separate from the original fixed app viewports. */
+#workspace-map { width: 100%; justify-content: flex-start; margin-bottom: 8px; color: var(--accent); }
+#edition-select { width: 100%; height: 28px; margin-bottom: 8px; }
+#topic-tools { display: flex; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+#topic-tools label { min-width: 0; flex: 1; display: grid; gap: 3px; font-size: 10px; color: var(--muted); }
+#topic-tools select { width: 100%; min-width: 0; height: 28px; }
+.feature-tree { margin-top: 6px; }
+.feature-tree > summary { cursor: pointer; padding: 9px 5px; font-size: 12px; font-weight: 600; }
+.feature-tree > summary small { float: right; font-size: 10px; font-weight: 400; color: var(--muted); }
+#state-links { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--line); }
+#state-links:empty { display: none; }
+#state-links strong { font-size: 10px; font-weight: 500; color: var(--muted); }
+#state-links button { white-space: normal; text-align: left; justify-content: flex-start; color: var(--accent); font-size: 11px; }
+.state-connections { position: absolute; left: 0; top: 0; width: 0; height: 0; overflow: visible; pointer-events: none; }
+.state-connections path { stroke: #afa4c7; stroke-width: calc(1.2px / var(--zoom)); fill: none; }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 8px; }
+.workspace-topic { display: flex; align-items: flex-start; flex-direction: column; height: 100%; padding: 14px; border: 1px solid var(--line); border-radius: 6px; white-space: normal; text-align: left; }
+.workspace-topic strong { font-size: 13px; font-weight: 600; }
+.workspace-topic small { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.capture-history { margin-top: 18px; }
+.capture-history > summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+
+.flow-tree { margin: 3px 0 6px 10px; border-left: 1px solid var(--line); padding-left: 5px; }
+.flow-tree > summary { cursor: pointer; padding: 7px 3px; font-size: 11px; color: var(--muted); }
+
+.state-gap { width: 100%; white-space: normal; text-align: left; justify-content: flex-start; font-size: 10px; color: var(--muted); }
+#observation-link { display: block; font-size: 11px; margin-top: 10px; }

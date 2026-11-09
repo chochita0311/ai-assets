@@ -13,8 +13,8 @@ class AtlasSections {
       const boundary = document.createElement('div'); boundary.className = 'section-boundary';
       const title = document.createElement('div'); title.className = 'section-caption';
       title.dataset.section = section.id; title.tabIndex = 0; title.setAttribute('role', 'button');
-      title.textContent = section.surface + ' / ' + section.label;
-      title.title = title.textContent;
+      title.textContent = section.frames[0].feature ? section.label : section.surface + ' / ' + section.label;
+      title.title = section.surface + ' / ' + section.label;
       title.onkeydown = event => {
         if (event.key === 'Enter' || event.code === 'Space') { event.preventDefault(); event.stopPropagation(); this.onSelect(section); }
       };
@@ -51,6 +51,19 @@ class AtlasSections {
     }
   }
   labels(zoom, selectedFrame) {
+    // Very small overviews have less vertical gap than constant-size captions.
+    // Use the empty left gutter so feature names survive without covering frames.
+    const worldBox = this.world.getBoundingClientRect();
+    const viewport = this.world.parentElement.getBoundingClientRect();
+    if (zoom < .12) for (const entry of this.entries.values()) {
+      const bounds = this.bounds(entry.section);
+      const gutter = worldBox.left + bounds.x * zoom - viewport.left - 24;
+      if (gutter > 48) {
+        const width = Math.min(180, gutter);
+        entry.title.style.left = (bounds.x - (width + 12) / zoom) + 'px';
+        entry.title.style.maxWidth = (width / zoom) + 'px';
+      }
+    }
     const allLabels = [...this.world.querySelectorAll('.frame-label, .section-caption')];
     const candidates = [];
     for (const label of allLabels) {

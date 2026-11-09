@@ -84,9 +84,16 @@ class Responses:
                 route.fulfill(response=actual)
                 return
             def merge(value, patch):
+                if isinstance(value, list):
+                    require(all(str(key).isdigit() and int(key) < len(value) for key in patch), "Array merge index is out of range")
+                    result = list(value)
+                    for key, item in patch.items():
+                        index = int(key)
+                        result[index] = merge(result[index], item) if isinstance(item, dict) and isinstance(result[index], (dict, list)) else item
+                    return result
                 result = dict(value)
                 for key, item in patch.items():
-                    result[key] = merge(result[key], item) if isinstance(item, dict) and isinstance(result.get(key), dict) else item
+                    result[key] = merge(result[key], item) if isinstance(item, dict) and isinstance(result.get(key), (dict, list)) else item
                 return result
             route.fulfill(response=actual, json=merge(actual.json(), response["merge"]))
             return
@@ -262,11 +269,19 @@ def run(args):
                     page.clock.install(time=datetime.fromisoformat(journey["clock"]))
                 started = time.monotonic()
                 failure = None
+                previous_frame = None
+                pending_actions = []
                 try:
                     for step_index, step in enumerate(journey["steps"]):
                         if step["action"] not in CHECKPOINTS:
                             if failure is None:
                                 try:
+                                    if previous_frame is not None and step['action'] in ('click', 'fill', 'hover', 'focus', 'press', 'scroll', 'goto', 'respond', 'advance-clock'):
+                                        selector = step.get('selector')
+                                        observed_selector = ''
+                                        if selector and page.locator(selector).count() == 1:
+                                            observed_selector = page.locator(selector).evaluate('(node) => {' + browser_script('geometry.js') + '; return geometry.selector(node); }')
+                                        pending_actions.append({'action': step['action'], 'selector': observed_selector})
                                     perform(page, step, responses, base)
                                 except Exception as error:
                                     failure = f"{step['action']}: {error}"
@@ -306,6 +321,12 @@ def run(args):
                                 failure = f"capture: {error}"
                         if failure:
                             frame["reason"] = failure
+                        if previous_frame is not None and previous_frame['status'] == frame['status'] == 'rendered' and pending_actions:
+                            controls = [action for action in pending_actions if action['action'] not in ('goto', 'respond', 'advance-clock')]
+                            trigger = controls[0] if len(controls) == 1 and pending_actions[0] is controls[0] else {'action': 'sequence' if controls else pending_actions[0]['action'], 'selector': ''}
+                            previous_frame.setdefault('transitions', []).append({**trigger, 'target': frame['id'], 'label': frame['label']})
+                        previous_frame = frame
+                        pending_actions = []
                         atlas["frames"].append(frame)
                         print(f"{frame['id']}: {frame['status']}", flush=True)
                     if failure:

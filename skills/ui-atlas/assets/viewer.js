@@ -23,6 +23,7 @@
   const drafts = new Map();
   let draftKey = null, searchKey = '', searchPage = 0;
   const narrow = () => matchMedia('(max-width: 560px)').matches;
+  let wasNarrow = narrow();
   const zoomPercent = zoom => Number((zoom * 100).toPrecision(3));
   let selectedFrame = null, selectedElement = null, selectionRect = null;
   let activePanel = 'screens', activeTab = 'element', hoveredFrame = null;
@@ -35,7 +36,10 @@
     clearTimeout(announcementTimer);
     announcementTimer = setTimeout(() => $('#announcement').textContent = '', 4500);
   }
-  const notes = new AtlasNotes(atlas.id, updateNotes, announce);
+  const notes = atlas.composition ? new AtlasTopicNotes(atlas, updateNotes, announce) : new AtlasNotes(atlas.id, updateNotes, announce);
+  let viewportVariant = 'wide';
+  const expandedFeatures = new Set();
+  if (atlas.composition) catalog.filter(viewportVariant);
   const canvas = new AtlasCanvas($('#canvas'), $('#world'), atlas.id, {
     zoom: zoom => { $('#zoom-value').textContent = zoomPercent(zoom) + '%'; scheduleLayout(); },
     position: moveFrame,
@@ -63,7 +67,7 @@
       sections.update(); sections.labels(canvas.camera.zoom, selectedFrame);
       document.body.classList.toggle('canvas-overview', canvas.camera.zoom < .45);
       for (const [id, entry] of mounted) entry.card.title = canvas.camera.zoom < .28 ? frameById.get(id).label : '';
-      renderPins();
+      renderPins(); renderStateConnections();
     });
   }
   function embeddedDocument(frame, token) {
@@ -109,23 +113,85 @@
     $('#world').replaceChildren(); mounted.clear(); positions.clear();
     let y = 160;
     for (const section of catalog.sections.values()) {
-      let x = 520, rowHeight = 680;
+      const byFlow = new Map();
       for (const frame of section.frames) {
-        createFrame(frame, canvas.position(frame, {x, y}));
-        x += frame.viewport.width + 160;
-        rowHeight = Math.max(rowHeight, frame.viewport.height);
+        const key = atlas.composition ? frame.origin.atlas + ':' + frame.journey : section.id;
+        if (!byFlow.has(key)) byFlow.set(key, []);
+        byFlow.get(key).push(frame);
       }
-      // Section captions get separate space; collision suppression handles overview zoom.
-      y += rowHeight + 680;
+      const flows = [...byFlow.values()];
+      for (const flow of flows) {
+        let x = 520, rowHeight = 680, column = 0;
+        for (const frame of flow) {
+          if (atlas.composition && column === 4) { y += rowHeight + 160; x = 520; rowHeight = 680; column = 0; }
+          createFrame(frame, canvas.position(frame, {x, y}));
+          x += frame.viewport.width + 160; rowHeight = Math.max(rowHeight, frame.viewport.height); column++;
+        }
+        y += rowHeight + (atlas.composition ? 200 : 680);
+      }
+      if (atlas.composition) y += 480;
     }
     sections.build();
     $('#world').append(hoverBox, selectionBox);
     hoverBox.hidden = true; selectionBox.hidden = true;
     $('#empty').hidden = mounted.size > 0;
     renderScreens(); scheduleLayout();
+    if (atlas.composition) $('#coverage').textContent = `현재 ${mounted.size} · 전체 ${frames.length}개 장면` + (missing.length ? ` · 범위 확인 ${missing.length}` : '');
+  }
+  function setVariant(variant, fit = true) {
+    if (!atlas.composition) return;
+    const feature = selectedFrame?.feature?.id;
+    clearSelection(); viewportVariant = variant; $('#viewport-filter').value = variant;
+    catalog.filter(variant); buildCanvas();
+    if (fit) {
+      const section = catalog.sections.get(feature) || [...catalog.sections.values()][0];
+      if (section) canvas.fit(frameBounds(section.frames[0]), .6); else fitAll();
+    }
+  }
+  function ensureMounted(frame) {
+    if (atlas.composition && !mounted.has(frame.id)) setVariant(frame.variant, false);
+  }
+  function stateButton(frame) {
+    const item = button('', () => chooseFrame(frame, true), 'screen-item' + (selectedFrame?.id === frame.id ? ' active' : ''));
+    item.dataset.state = frame.id;
+    item.append(make('span', '▧', 'frame-icon'), make('span', frame.label));
+    return item;
   }
   function renderScreens() {
     $('#screens').replaceChildren();
+    if (atlas.composition) {
+      for (const section of catalog.sections.values()) {
+        const details = make('details', undefined, 'feature-tree');
+        details.open = expandedFeatures.has(section.id) || !!selectedFrame && catalog.section(selectedFrame).id === section.id;
+        const summary = make('summary', section.label); summary.append(make('small', String(section.frames.length))); details.append(summary);
+        details.ontoggle = () => { if (details.open) expandedFeatures.add(section.id); else expandedFeatures.delete(section.id); };
+        summary.onclick = event => {
+          event.preventDefault();
+          if (details.open) { expandedFeatures.delete(section.id); details.open = false; }
+          else { expandedFeatures.add(section.id); chooseSection(section); }
+        };
+        const flows = new Map();
+        for (const frame of section.frames) {
+          const key = frame.origin.atlas + ':' + frame.journey;
+          if (!flows.has(key)) flows.set(key, []); flows.get(key).push(frame);
+        }
+        for (const flow of flows.values()) {
+          if (flow.length === 1) details.append(stateButton(flow[0]));
+          else {
+            const branch = make('details', undefined, 'flow-tree');
+            branch.open = flow.some(frame => frame.id === selectedFrame?.id);
+            branch.append(make('summary', flow[0].flow_label || flow[0].journey_label));
+            for (const frame of flow) branch.append(stateButton(frame)); details.append(branch);
+          }
+        }
+        for (const gap of missing.filter(frame => frame.feature?.id === section.id && (!frame.variant || viewportVariant === 'all' || frame.variant === viewportVariant))) {
+          const control = button((labels[gap.status] || gap.status) + ' · ' + gap.label, () => $('#information').showModal(), 'state-gap');
+          control.title = gap.reason; details.append(control);
+        }
+        $('#screens').append(details);
+      }
+      return;
+    }
     for (const surface of [...new Set(frames.map(frame => frame.surface))]) {
       const matching = frames.filter(frame => frame.surface === surface && mounted.has(frame.id));
       if (!matching.length) continue;
@@ -240,7 +306,7 @@
     const fit = lastClick?.id === frame.id && event.timeStamp - lastClick.time < 350;
     lastClick = {id: frame.id, time: event.timeStamp};
     if (!mounted.get(frame.id).ready) { chooseFrame(frame); return; }
-    requestSelection(frame, null, {fit, point});
+    requestSelection(frame, null, {fit, point, follow: $('#interaction-mode').value === 'follow'});
   }
   function hoverCanvas(event) {
     const card = event.target.closest('.artboard');
@@ -271,6 +337,7 @@
     renderScreens(); renderLayers(); scheduleLayout();
   }
   function chooseFrame(frame, fit = false, comparing = false) {
+    ensureMounted(frame);
     saveDraft();
     viewRevision++;
     pendingPick = null;
@@ -310,6 +377,11 @@
     saveDraft();
     selectedElement = frame.elements.find(element => element.id === detail.id);
     if (!selectedElement) return;
+    if (pick.follow) {
+      const links = elementLinks(frame, selectedElement);
+      if (links.length === 1) { followLink(links[0]); return; }
+      announce(links.length ? '연결된 상태에서 분기를 선택하세요.' : '이 요소의 연결된 관찰 상태가 없습니다.');
+    }
     selectionRect = detail.rect;
     const open = expandedNodes.get(frame.id);
     for (const ancestor of catalog.ancestors(frame, selectedElement)) open?.add(ancestor.id);
@@ -377,8 +449,14 @@
     $('#note').value = draft?.message || '';
     $('#note-kind').value = draft?.kind || 'proposal';
     $('#conditions').textContent = frame.conditions || '';
-    $('#payload').textContent = JSON.stringify({state: frame.id, viewport: frame.viewport, locale: frame.locale, theme: frame.theme, ...frame.payload}, null, 2);
-    const section = catalog.section(frame), journey = section.frames, index = journey.indexOf(frame);
+    const origin = frame.origin;
+    const observed = origin ? atlas.composition.observations[origin.atlas] : null;
+    $('#observation-link').hidden = !origin;
+    if (origin) $('#observation-link').href = '../' + origin.manifest;
+    $('#payload').textContent = JSON.stringify({state: origin?.frame || frame.id,
+      ...(origin ? {origin: {atlas: origin.atlas, manifest: origin.manifest, identity: frame.identity, captured_at: observed.captured_at, source_revision: observed.source.revision ?? null, recipe_sha256: observed.recipe.sha256 ?? null}} : {}),
+      viewport: frame.viewport, locale: frame.locale, theme: frame.theme, ...frame.payload}, null, 2);
+    const section = catalog.section(frame), journey = catalog.flow(frame), index = journey.indexOf(frame);
     $('#previous').disabled = index <= 0; $('#next').disabled = index >= journey.length - 1;
     const details = make('dl');
     for (const [name, value] of catalog.description(section)) details.append(make('dt', name), make('dd', value));
@@ -388,7 +466,48 @@
       const item = make('li'); item.append(button(step.label, () => chooseFrame(step, true), step.id === frame.id ? 'active' : ''));
       $('#journey-steps').append(item);
     }
-    renderNotes();
+    renderNotes(); renderStateLinks();
+  }
+  function elementLinks(frame, element) {
+    const selectors = new Set(catalog.ancestors(frame, element).map(node => node.selector));
+    return (frame.transitions || []).filter(link => frameById.has(link.target) && selectors.has(link.selector));
+  }
+  function renderStateLinks() {
+    const list = $('#state-links'); list.replaceChildren();
+    if (!selectedFrame) return;
+    const specific = selectedElement ? elementLinks(selectedFrame, selectedElement) : [];
+    const links = specific.length ? specific : (selectedFrame.transitions || []).filter(link => frameById.has(link.target));
+    if (!links.length) return;
+    list.append(make('strong', specific.length ? '선택 요소에서 이어지는 상태' : '이 화면에서 이어지는 상태'));
+    for (const link of links) {
+      const control = button('→ ' + link.label, () => followLink(link));
+      control.dataset.targetState = link.target; list.append(control);
+    }
+  }
+  function followLink(link) {
+    const target = frameById.get(link.target);
+    const element = link.target_node ? catalog.index(target).elements.get(link.target_node) : null;
+    if (element) requestSelection(target, element, {fit: true});
+    else chooseFrame(target, true);
+  }
+  function renderStateConnections() {
+    $('#world').querySelector('.state-connections')?.remove();
+    if (!atlas.composition) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('state-connections'); svg.setAttribute('aria-hidden', 'true');
+    for (const frame of frames) {
+      const from = positions.get(frame.id); if (!from) continue;
+      for (const link of frame.transitions || []) {
+        const target = frameById.get(link.target), to = positions.get(link.target);
+        if (!to || !target || link.target === frame.id) continue;
+        const x = from.x + frame.viewport.width, y = from.y + frame.viewport.height / 2;
+        const tx = to.x, ty = to.y + target.viewport.height / 2, bend = Math.max(80, Math.abs(tx - x) / 2);
+        const path = document.createElementNS(svg.namespaceURI, 'path');
+        path.setAttribute('d', `M${x},${y} C${x + bend},${y} ${tx - bend},${ty} ${tx},${ty}`);
+        svg.append(path);
+      }
+    }
+    $('#world').prepend(svg);
   }
   function quoteEvidence() {
     const texts = selectedFrame?.texts.filter(item => item.selector === selectedElement?.selector) || [];
@@ -408,8 +527,9 @@
     const frame = frameById.get(note.frame), reasons = [];
     if (!frame) reasons.push('현재 전개도에 이 화면이 없습니다.');
     else if (frame.identity !== note.identity) reasons.push('저장 당시와 관찰 근거가 달라졌습니다.');
-    if (atlas.freshness.status === 'changed') reasons.push('현재 소스·재현 파일이 관찰 당시와 다릅니다.');
-    else if (atlas.freshness.status === 'unavailable') reasons.push('현재 소스·재현 파일을 확인할 수 없습니다.');
+    const freshness = frame?.origin?.freshness || atlas.freshness;
+    if (freshness.status === 'changed') reasons.push('현재 소스·재현 파일이 관찰 당시와 다릅니다.');
+    else if (freshness.status === 'unavailable') reasons.push('현재 소스·재현 파일을 확인할 수 없습니다.');
     return reasons.join(' ');
   }
   function renderNotes() {
@@ -486,10 +606,10 @@
     renderNotes(); renderReviewList(); scheduleLayout(); sheetPicker?.changed();
   }
   function requestText() {
-    return [`UI Atlas · ${atlas.title}`, `관찰: ${atlas.captured_at}`, `범위: ${atlas.scope}`, '', ...notes.items.map((note, index) => {
+    return [`UI Atlas · ${atlas.title}`, `${atlas.composition ? '가장 최근 관찰' : '관찰'}: ${atlas.captured_at}`, `범위: ${atlas.scope}`, '', ...notes.items.map((note, index) => {
       const frame = frameById.get(note.frame);
       return `${index + 1}. ${frame ? frame.surface + ' / ' + frame.label : '현재 화면 없음'} [${note.frame}]\n` +
-        `요소: ${note.selector || note.region || '화면'}\n` + (note.quote ? `문구: ${note.quote}\n` : '') +
+        (note.origin ? `원본 시트: ${note.origin.atlas} / ${note.origin.frame}\n` : '') + `요소: ${note.selector || note.region || '화면'}\n` + (note.quote ? `문구: ${note.quote}\n` : '') +
         (note.clipped ? '문구 관찰: 화면에는 일부만 보였으며 인용은 DOM 전체 문구입니다.\n' : '') +
         (note.source ? `확인한 소스: ${note.source}\n` : '') + `종류: ${note.kind === 'observation' ? '관찰 메모' : '수정 제안'} · ${note.status === 'reviewed' ? '확인 완료' : '미검토'}\n의견: ${note.message}\n` +
         (recheckReason(note) ? '재확인: ' + recheckReason(note) + '\n' : '') + `관찰 식별: ${note.identity}`;
@@ -535,7 +655,7 @@
   window.addEventListener('beforeunload', event => {
     if (hasUnsavedWork()) { event.preventDefault(); event.returnValue = ''; }
   });
-  $('#replay').onclick = () => handoff('상태 재현', '이 장면은 고정된 DOM입니다. 아래 명령은 격리된 실제 앱을 같은 상태까지 실행합니다.', atlas.replay.replaceAll('STATE_ID', selectedFrame.id));
+  $('#replay').onclick = () => handoff('상태 재현', '이 장면은 고정된 DOM입니다. 아래 명령은 격리된 실제 앱을 같은 상태까지 실행합니다.', (selectedFrame.origin?.replay || atlas.replay).replaceAll('STATE_ID', selectedFrame.origin?.frame || selectedFrame.id));
   $('#requests').onclick = () => showPanel('reviews');
   $('#collect-notes').onclick = () => handoff('의견 모으기', '선택한 요소와 의견을 함께 복사해 작업 세션에 전달하세요.', requestText());
   $('#review-filter').onchange = renderReviewList;
@@ -603,7 +723,7 @@
   };
   $('#previous').onclick = () => navigate(-1); $('#next').onclick = () => navigate(1);
   function navigate(direction) {
-    const flow = catalog.section(selectedFrame).frames;
+    const flow = catalog.flow(selectedFrame);
     const next = flow[flow.indexOf(selectedFrame) + direction]; if (!next) return;
     if (!selectedElement && !comparison) { chooseFrame(next, true); return; }
     if (!comparison) comparison = {frame: selectedFrame, element: selectedElement, rect: selectionRect};
@@ -653,7 +773,11 @@
     scheduleLayout();
   };
   document.addEventListener('click', event => { if (!event.target.closest('#view-menu,#zoom-value')) closeViewMenu(); });
-  window.addEventListener('resize', () => { scheduleLayout(); if (selectedFrame) fitLater(fitSelection); });
+  window.addEventListener('resize', () => {
+    const compact = narrow();
+    if (compact !== wasNarrow) { $('#sidebar').hidden = compact; wasNarrow = compact; }
+    scheduleLayout(); if (selectedFrame) fitLater(fitSelection);
+  });
   window.addEventListener('keydown', event => {
     if (event.target.closest('input,textarea,select,[contenteditable=true]') || document.querySelector('dialog[open]')) return;
     if (event.code === 'Space') { event.preventDefault(); canvas.space = true; canvas.setTool(canvas.tool); }
@@ -670,7 +794,7 @@
   const freshness = {matched: '생성 시 선언된 소스와 일치', changed: '소스 변경 · 갱신 필요', unavailable: '소스 확인 불가'}[atlas.freshness.status];
   for (const text of [atlas.scope, `${frames.length}개 DOM 장면 · ${frames.reduce((sum, frame) => sum + frame.elements.length, 0)}개 요소`,
     '상태별 실제 DOM을 고정한 관찰 화면입니다. 앱 동작은 Payload의 상태 재현에서 실행합니다.',
-    freshness, '관찰: ' + atlas.captured_at, '소스 확인: ' + atlas.freshness.checked_at,
+    freshness, (atlas.composition ? '가장 최근 관찰: ' : '관찰: ') + atlas.captured_at, '소스 확인: ' + atlas.freshness.checked_at,
     '파일 변경을 자동으로 감시하지 않습니다.', ...atlas.limitations, ...atlas.freshness.changed, ...atlas.freshness.unavailable,
     ...(atlas.journey_failures || []).map(failure => '시나리오 실패: ' + failure.id + ' · ' + failure.reason),
     ...frames.flatMap(frame => (frame.warnings || []).map(warning => frame.label + ': ' + warning))]) $('#provenance').append(make('p', text));
@@ -678,7 +802,13 @@
   $('#coverage').textContent = `${frames.length}개 장면` + (missing.length ? ` · 범위 확인 ${missing.length}` : '');
   $('#info').onclick = $('#coverage').onclick = () => $('#information').showModal();
   $('#close-info').onclick = () => $('#information').close();
+  $('#topic-tools').hidden = !atlas.composition;
+  $('#viewport-filter').onchange = () => setVariant($('#viewport-filter').value);
   if (narrow()) $('#sidebar').hidden = true;
   buildCanvas(); updateNotes();
+  if (atlas.composition) {
+    const first = [...catalog.sections.values()][0]?.frames[0];
+    if (first) canvas.fit(frameBounds(first), .6);
+  }
   sheetPicker = new AtlasSheetPicker(atlas.id, hasUnsavedWork);
 })();

@@ -24,7 +24,7 @@ def initialize(source_root, location=None):
         (root / ".gitignore").write_text("*\n", encoding="utf-8")
         marker.write_text(json.dumps({"schema": SCHEMA}) + "\n", encoding="utf-8")
     require((root / ".gitignore").is_file(), "Workspace ignore file is missing; restore its local-only policy before capturing")
-    for name in ("recipes", "runs", "notes", "tmp"):
+    for name in ("recipes", "runs", "notes", "tmp", "topics"):
         (root / name).mkdir(exist_ok=True)
     return root
 
@@ -90,7 +90,9 @@ def catalog(root):
         catalog_html += '<section><h2>읽을 수 없는 실행</h2><p>원본 파일은 보존했습니다. 다른 실행은 계속 열거나 생성할 수 있습니다.</p><ul>'
         catalog_html += ''.join('<li>' + escape(name) + '<small>' + escape(reason) + '</small></li>' for name, reason in unreadable)
         catalog_html += '</ul></section>'
-    payload = json.dumps({"groups": [{"id": key, "runs": entries} for key, entries in groups.items()],
+    from topics import build_topics
+    topics, unassigned = build_topics(root, groups)
+    payload = json.dumps({"topics": topics, "unassigned": unassigned, "groups": [{"id": key, "runs": entries} for key, entries in groups.items()],
                           "unfinished": unfinished,
                           "unreadable": [{"name": name, "reason": reason} for name, reason in unreadable]},
                          ensure_ascii=False).replace('<', '\\u003c').replace('\u2028', '\\u2028').replace('\u2029', '\\u2029')

@@ -71,6 +71,11 @@ class AtlasNotes {
     return JSON.stringify(canonical(left)) === JSON.stringify(canonical(right));
   }
   planImport(value) {
+    if (value?.schema === 'ui-atlas.notes/v2') {
+      const matches = Array.isArray(value.sources) ? value.sources.filter(source => source?.atlas === this.atlasId) : [];
+      if (matches.length !== 1) throw new Error('이 원본 시트의 의견이 포함된 파일인지 확인해 주세요.');
+      value = matches[0];
+    }
     if (!value || value.schema !== 'ui-atlas.notes/v1' || value.atlas !== this.atlasId || !Array.isArray(value.notes) || !value.notes.every(note => this.valid(note))) {
       throw new Error('이 전개도의 의견 파일인지 확인해 주세요.');
     }
@@ -85,7 +90,7 @@ class AtlasNotes {
     const conflicts = [...incoming.values()].filter(note => before.has(note.id) && !this.same(before.get(note.id), note));
     return {incoming, before, conflicts};
   }
-  applyImport(plan, choices = new Map()) {
+  importAdditions(plan, choices = new Map()) {
     this.requireSettledImport(plan.incoming);
     if (!this.refresh()) throw new Error('현재 저장된 의견을 읽을 수 없습니다. 저장소가 복구된 뒤 다시 가져와 주세요.');
     const current = new Map(this.items.map(note => [note.id, note]));
@@ -101,7 +106,10 @@ class AtlasNotes {
       }
       additions.push(note);
     }
-    return this.change(additions);
+    return additions;
+  }
+  applyImport(plan, choices = new Map()) {
+    return this.change(this.importAdditions(plan, choices));
   }
   requireSettledImport(incoming) {
     if ([...incoming.keys()].some(id => this.pending.has(id))) throw new Error('가져올 의견에 저장 대기 중인 변경이 있습니다. 먼저 파일 메뉴에서 저장을 다시 시도하거나, 의견 파일을 보관하고 새 창에서 가져와 주세요.');

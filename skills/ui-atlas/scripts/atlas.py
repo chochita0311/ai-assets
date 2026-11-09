@@ -263,8 +263,9 @@ def validate_document(document, elements):
     return parts
 
 
-def package(manifest, output, root=None, recipe_path=None):
-    manifest, output = Path(manifest).resolve(), Path(output).resolve()
+def prepare(manifest, root=None, recipe_path=None):
+    """Load one observation without changing its source identity or note owner."""
+    manifest = Path(manifest).resolve()
     atlas = validate(read_json(manifest))
     atlas["freshness"] = check_sources(atlas, root, recipe_path)
     # Rebind locators in this rebuilt view only; recorded hashes and original
@@ -295,12 +296,18 @@ def package(manifest, output, root=None, recipe_path=None):
         # JavaScript slices UTF-16 code units; source text can contain emoji.
         head_end = len(parts[0].encode('utf-16-le')) // 2
         frame["document_slots"] = [head_end, head_end + len(parts[1].encode('utf-16-le')) // 2]
+    return atlas
+
+
+def render(atlas, output):
+    """Render a prepared observation or topic composition with the same viewer."""
+    output = Path(output).resolve()
     payload = json.dumps(atlas, ensure_ascii=False).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     html = (ASSETS / "viewer.html").read_text(encoding="utf-8")
     html = html.replace("/* ATLAS_CSS */", (ASSETS / "viewer.css").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_JS */", (ASSETS / "viewer.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_FRAME */", browser_script("frame.js"))
-    html = html.replace("/* ATLAS_NOTES */", (ASSETS / "notes.js").read_text(encoding="utf-8"))
+    html = html.replace("/* ATLAS_NOTES */", (ASSETS / "notes.js").read_text(encoding="utf-8") + "\n" + (ASSETS / "topic-notes.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_CANVAS */", (ASSETS / "canvas.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_CATALOG */", (ASSETS / "catalog.js").read_text(encoding="utf-8"))
     html = html.replace("/* ATLAS_SECTIONS */", (ASSETS / "sections.js").read_text(encoding="utf-8"))
@@ -315,6 +322,10 @@ def package(manifest, output, root=None, recipe_path=None):
     finally:
         temporary.unlink(missing_ok=True)
     return atlas
+
+
+def package(manifest, output, root=None, recipe_path=None):
+    return render(prepare(manifest, root, recipe_path), output)
 
 
 def main():

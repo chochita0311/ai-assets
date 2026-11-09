@@ -15,9 +15,9 @@ class AtlasCatalog {
             r.x < frame.viewport.width && r.y < frame.viewport.height;
         }
       }
-      const key = frame.surface + '\n' + frame.journey;
+      const key = this.sectionKey(frame);
       if (!this.sections.has(key)) this.sections.set(key, {id: key, surface: frame.surface,
-        label: frame.journey_label || frame.journey, frames: []});
+        label: frame.feature?.label || frame.journey_label || frame.journey, frames: []});
       this.sections.get(key).frames.push(frame);
       const elements = new Map(frame.elements.map(element => [element.id, element]));
       const children = new Map();
@@ -35,8 +35,14 @@ class AtlasCatalog {
       }
       this.indices.set(frame.id, {elements, children, regions});
     }
+    this.allSections = this.sections;
   }
-  section(frame) { return this.sections.get(frame.surface + '\n' + frame.journey); }
+  sectionKey(frame) { return frame.feature?.id || frame.surface + '\n' + frame.journey; }
+  filter(variant) {
+    this.sections = new Map([...this.allSections].map(([id, section]) => [id, {...section, frames: section.frames.filter(frame => variant === 'all' || frame.variant === variant)}]).filter(([, section]) => section.frames.length));
+  }
+  section(frame) { return this.sections.get(this.sectionKey(frame)) || this.allSections.get(this.sectionKey(frame)); }
+  flow(frame) { return frame.origin ? this.frames.filter(other => other.journey === frame.journey && other.origin?.atlas === frame.origin.atlas) : this.section(frame).frames; }
   index(frame) { return this.indices.get(frame.id); }
   name(frame, element) {
     const region = frame.regions.find(region => this.index(frame).regions.get(region.id)?.id === element.id);
@@ -106,6 +112,13 @@ class AtlasCatalog {
   }
   description(section) {
     const first = section.frames[0], last = section.frames.at(-1);
+    if (first.feature) return [
+      ['목적', first.feature.description || first.feature.label + '의 화면과 세부 상태 검토'],
+      ['조건', '장면별 조건과 조작 기록은 Payload에서 확인합니다.'],
+      ['동작', '연결된 상태로 이동하거나 요소를 선택해 의견을 남깁니다.'],
+      ['관찰 결과', section.frames.map(frame => frame.label).join(' · ')],
+      ['예외', '미관찰 상태와 실제 앱의 재현 실행은 관찰 범위에서 구분합니다.']
+    ];
     const authored = first.description || {};
     const steps = last.payload?.steps || [];
     const actions = steps.filter(step => ['goto', 'click', 'hover', 'focus', 'fill', 'press', 'scroll'].includes(step.action));

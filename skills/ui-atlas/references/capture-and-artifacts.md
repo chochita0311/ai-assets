@@ -111,7 +111,9 @@ for actions. A response accepts `status` and `json`, `body`, or a relative `file
 plus optional `content_type`. Files must be inside the recipe owner.
 `{"forward": true}` releases a held same-origin GET to the isolated backend.
 An optional `merge` object recursively replaces fields of that backend's JSON
-response, retaining unrelated fixture fields. Forwarding never permits a real
+response, retaining unrelated fixture fields. A patch object with zero-based
+numeric keys can update existing array entries without replacing their other
+fields; out-of-range indices are refused. Forwarding never permits a real
 POST. A synthetic API failure can use status 500 and the product's error shape.
 
 Journeys can set `theme` (`light`/`dark`), `reduced_motion`, a string-valued
@@ -236,7 +238,8 @@ ordinary static SVG remain supported.
 Unreadable stylesheets and unavailable or nonisolated resources also fail the
 state. Closed shadow roots and OS/native surfaces cannot be inventoried reliably;
 declare them unsupported and use an app-owned preview if they are in scope.
-Popover restoration exists but has no dedicated regression witness. Do not
+Popover restoration needs an app-specific witness of opened geometry and
+selectable children; a captured trigger alone does not establish it. Do not
 substitute a screenshot or claim these surfaces have complete element coverage.
 
 Each captured document first passes the builder's inert-DOM validation inside
@@ -321,7 +324,9 @@ panel. Element properties, payload, state navigation and notes appear in the
 selection inspector. `canvas.js` owns camera/gestures; `catalog.js` owns section
 membership, readable names, search and conservative correspondence;
 `sections.js` owns section bounds, explanation cards and label visibility;
-`notes.js` owns feedback persistence. `sheet-picker.js` owns the in-view selector,
+`notes.js` owns feedback persistence. `topics.py` composes authored menu topics without replacing observation manifests;
+`topic-notes.js` projects feedback while retaining its original namespace.
+`sheet-picker.js` owns the in-view selector,
 catalog dialog and draft-status bridge; `workspace.js` owns sheet hosting and the
 last selected sheet. `viewer.js` connects these resources with
 selection, trusted frame messages and controls.
@@ -329,9 +334,10 @@ selection, trusted frame messages and controls.
 Unsubmitted drafts stay attached to their state/element during navigation, in
 that tab's memory. Closing with pending text prompts the browser's unsaved-work
 guard when supported. Add drafts as notes before export or moving the atlas.
-Saved notes use local browser storage when available and export/import
-`ui-atlas.notes/v1` JSON. Preserve exports when moving the atlas; local-file
-storage is browser-dependent. Separate per-note keys and storage events preserve
+Saved notes use local browser storage when available. Standalone source exports
+use `ui-atlas.notes/v1`; topic exports use `ui-atlas.notes/v2` bundles, with imports
+described in [topic opinion compatibility](menu-topics.md#opinions-and-compatibility).
+Preserve exports when moving the atlas; local-file storage is browser-dependent. Separate per-note keys and storage events preserve
 independent additions/deletions across tabs. Pending failed writes/deletions remain
 in memory across reads and other-tab updates, and later note operations retry them.
 The unsaved-work guard also covers these pending operations. The file menu offers

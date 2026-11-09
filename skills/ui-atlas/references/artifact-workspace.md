@@ -43,7 +43,9 @@ at the repository root. It is a storage convention, not a harness dependency.
 <repo>/.artifacts/ui-atlas/
   .gitignore                 # excludes the whole local workspace
   workspace.json             # ownership/schema marker, no product configuration
-  index.html                 # opens a sheet directly; selector offers catalog/history
+  index.html                 # opens a topic; menu map includes unassigned/history when present
+  navigation.json            # authored product/topic/feature order and state ownership
+  topics/                    # generated topic canvases; original observations stay in runs/
   recipes/
     <atlas-id>/
       recipe.json            # stable journeys, state IDs and declared dependencies
@@ -67,8 +69,9 @@ declare their relevant dependencies. Recipe response files and `support_files`
 must remain inside that recipe's directory. The workspace's `recipes/` is the
 default owner for atlas-specific inputs when no app owner exists.
 
-Each capture gets a new run directory. The workspace entry opens the last selected
-atlas directly, or its first available sheet when no saved choice is available.
+Each capture gets a new run directory. Without a topic map, the workspace entry
+opens the last selected atlas directly, or its first available sheet when no saved
+choice is available.
 The sheet selector sits above the screen/element/opinion tabs; its full-catalog
 dialog lists the latest readable attempts and earlier runs, labels partial failures
 and capture-time source-check status, and retains incomplete-run diagnostics.
@@ -88,6 +91,14 @@ readable sheet or JavaScript disabled, the entry retains a plain catalog fallbac
 An older viewer without the sheet-selection bridge needs a viewer-only `build`
 from its retained manifest; a connection failure exposes the fallback and its
 standalone links instead of inventing a replacement observation.
+
+With an authored [menu topic map](menu-topics.md), the workspace composes related
+observations into product-ordered topic canvases. It preserves source manifests,
+identities, original feedback namespaces and retained-run access. Viewport and
+state variants stay under their feature. Fully mapped latest captures remain
+backing inputs without duplicate menu entries; only unassigned captures and
+retained previous runs need a separate disclosure. Omit it when empty.
+Without a topic map the existing sheet entry behavior remains available.
 
 The workspace hosts sheets without reflowing their fixed app viewports. Sheet
 selection and the last-choice preference belong to the workspace; each sheet
@@ -170,6 +181,33 @@ helper does **not** auto-prune runs, so storage grows with each refresh. When
 cleanup is requested, identify obsolete run directories and their dependencies,
 preserve required evidence, remove only the selected owned directories, then
 refresh the catalog. Never delete an older run merely because a newer one exists.
+
+A complete topic map is a presentation reorganization, not a transfer of all
+source data: rebuilding topics and opening their full Payload manifests still
+depend on the selected source runs and materialized DOM. Keep those inputs unless
+an expressly requested independent-data migration has moved and verified every
+consumer. To remove superseded runs under cleanup authorization:
+
+- Resolve the current selected runs and compare every retired atlas/state pair
+  against a retained primary owner, including failures and qualified gaps. Count
+  equality or matching state names alone is insufficient: inspect changed source,
+  recipe, conditions and state results, and account for intentional corrections.
+- Verify actual topic inspection, payload links, replay inputs, regeneration and
+  the original feedback namespaces/identities. Preserve missing-frame opinions,
+  staleness, drafts and failed-save recovery. Do not infer that browser notes were
+  transferred from a canvas rebuild or a synthetic compatibility check.
+- Resolve unique prior evidence and references needed by notes, comparisons or
+  decisions. Preserve their required contents under an existing owner or keep
+  that run; update current references and record retirement without rewriting
+  earlier verification as current evidence.
+- Stop users of the exact retired paths, recheck selected inputs, remove only
+  the identified obsolete directories and regenerate the workspace. Verify that
+  all current states and source links still work. A removed explicit run must
+  report missing evidence rather than redirect to a supposedly equivalent run.
+
+Do not retain a full duplicate migration/archive by default once its purpose has
+ended. Keep the minimal required evidence and reusable inputs at their actual
+owner, and report exactly what was removed and what remains necessary.
 
 Use one task-owned subdirectory under `tmp/` (or an equivalent task-owned OS
 temporary directory) for isolated runtime data. Stop owned servers/browsers and

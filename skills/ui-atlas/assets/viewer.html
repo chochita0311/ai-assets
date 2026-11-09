@@ -20,7 +20,8 @@
 </header>
 <div class="workspace">
   <aside id="sidebar" class="sidebar">
-    <div id="sheet-picker" class="sheet-picker" hidden><label for="sheet-select">전개도</label><select id="sheet-select" aria-label="전개도 선택"></select></div>
+    <div id="sheet-picker" class="sheet-picker" hidden><button id="workspace-map" type="button">전체 메뉴 지도</button><label for="edition-select" id="edition-label" hidden>제품 범위</label><select id="edition-select" aria-label="제품 범위" hidden></select><label for="sheet-select">주제</label><select id="sheet-select" aria-label="전개도 선택"></select></div>
+    <div id="topic-tools" hidden><label>화면 폭 <select id="viewport-filter" aria-label="화면 폭"><option value="wide">넓게</option><option value="narrow">좁게</option><option value="all">함께 보기</option></select></label><label>조작 <select id="interaction-mode" aria-label="캔버스 조작"><option value="inspect">요소 검사</option><option value="follow">상태 따라가기</option></select></label></div>
     <div class="panel-tabs"><button data-panel="screens" class="active">화면</button><button data-panel="layers">요소</button><button data-panel="reviews">의견</button></div>
     <div class="search"><svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="search" type="search" placeholder="검색" aria-label="화면·요소 검색"></div>
     <nav id="screens" aria-label="화면 목록"></nav><div id="layers" role="tree" aria-label="요소 계층" hidden></div>
@@ -48,17 +49,18 @@
       <div id="dimensions" class="dimensions"></div>
       <div id="properties"></div>
       <div id="regions" class="regions"></div>
+      <div id="state-links" aria-label="연결된 관찰 상태"></div>
       <details class="selector-detail"><summary>선택자</summary><code id="selected-selector"></code><div id="source-reference"></div></details>
       <form id="note-form"><select id="note-kind" aria-label="의견 종류"><option value="proposal">수정 제안</option><option value="observation">관찰 메모</option></select><textarea id="quote" rows="2" readonly aria-label="선택한 문구" hidden></textarea><small id="quote-limit" class="note-kind" hidden>화면에는 일부만 보이며, 인용은 DOM 전체 문구입니다.</small><textarea id="note" rows="3" placeholder="이 요소에 대한 의견…" aria-label="의견"></textarea><button class="accent" type="submit">의견 추가</button></form>
       <div id="frame-notes"></div>
     </div>
     <div id="description-panel" hidden><div id="section-details"></div><h2 class="panel-heading">관찰 순서</h2><ol id="journey-steps"></ol></div>
-    <div id="payload-panel" hidden><p id="conditions"></p><pre id="payload"></pre><button id="replay">이 상태 재현</button></div>
+    <div id="payload-panel" hidden><p id="conditions"></p><pre id="payload"></pre><button id="replay">이 상태 재현</button><a id="observation-link" target="_blank" rel="noopener" hidden>원본 관찰 기록</a></div>
     <p id="comparison-status" role="status" hidden></p><div class="state-navigation"><button id="previous" aria-label="이전 상태">←</button><span id="state-label"></span><button id="next" aria-label="다음 상태">→</button></div>
   </aside>
 </div>
 <div class="gesture-hint">드래그 이동 · 휠 확대/축소</div>
-<dialog id="workspace-catalog" aria-labelledby="workspace-catalog-title"><header><h2 id="workspace-catalog-title">전체 시트</h2><button id="close-workspace-catalog" class="icon-button" aria-label="전체 시트 닫기">×</button></header><p>최신 관찰과 이전 실행. 범위 확인에는 미확인·미구현·해당 없음 상태가 포함됩니다. 실행 완료는 앱 전체 검증을 뜻하지 않습니다.</p><input id="workspace-search" type="search" placeholder="전개도 검색" aria-label="전개도 검색"><div id="workspace-list"></div></dialog>
+<dialog id="workspace-catalog" aria-labelledby="workspace-catalog-title"><header><h2 id="workspace-catalog-title">전체 메뉴 지도</h2><button id="close-workspace-catalog" class="icon-button" aria-label="전체 시트 닫기">×</button></header><p>메뉴에서 주제를 선택해 기능과 상태를 따라갑니다. 미관찰 상태와 과거 캡처는 별도로 확인할 수 있습니다.</p><input id="workspace-search" type="search" placeholder="전개도 검색" aria-label="전개도 검색"><div id="workspace-list"></div></dialog>
 <dialog id="handoff"><header><h2 id="handoff-title"></h2><button id="close-handoff" class="icon-button" aria-label="닫기">×</button></header><p id="handoff-description"></p><textarea id="handoff-text" rows="15" readonly></textarea><footer><button id="copy-request" class="accent">복사</button></footer></dialog>
 <dialog id="information"><header><h2>관찰 범위</h2><button id="close-info" class="icon-button" aria-label="닫기">×</button></header><div id="provenance"></div><div id="missing-states"></div></dialog>
 <dialog id="note-import" aria-labelledby="import-title"><form method="dialog"><header><h2 id="import-title">서로 다른 의견 확인</h2></header><p>현재 의견과 파일 내용이 다릅니다. 각 의견에서 사용할 내용을 선택해 주세요.</p><div id="import-conflicts"></div><footer><button value="cancel">취소</button><button value="apply" class="accent">선택한 내용으로 가져오기</button></footer></form></dialog>
