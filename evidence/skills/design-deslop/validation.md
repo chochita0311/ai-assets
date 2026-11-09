@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-design-deslop-validation",
-  "revision": 6,
+  "revision": 7,
   "audience": "public",
   "subjects": [
     {
@@ -76,6 +76,37 @@ signals, not mandatory defects. The pinned Impeccable source informed the
 pattern reference; that reference does not import its entire workflow.
 
 ## Evidence And Evaluation
+
+### Inspectable disclosures and selective settings adoption (record revision 7)
+
+A generalized private settings comparison exposed a review problem: preserving a
+closed disclosure while blocking its arrow left the hidden proposal content
+unreviewable. A local review bridge then allowed the native disclosure to open
+with pointer, Enter or Space. Expanded captures at wide and narrow widths supplied
+additional evidence. This inspection state did not change item selection or
+source acceptance; other content/style/form mutations still invalidated the
+comparison, and application save/download actions remained inert.
+
+The bridge change belonged to that consumer review, not the reusable package or
+its installed skill. It supports the distinction between safe inspection and
+product action; it does not establish arbitrary preview-script safety or a
+universal requirement to execute every original control.
+
+Successive revisions shortened setup explanation, placed detailed storage/update
+conditions in owned user guides, exposed the model folder near installation
+status, and removed only the links and final divider explicitly rejected by the
+reviewer. A folder-picker concept stayed labeled unimplemented until the actual
+location validation, revision checks and persistence were built and verified.
+Saving a review or displaying a combination did not authorize adoption. A later
+explicit request applied the chosen composition and folder scope, while unrelated
+loading and global error proposals stayed unselected.
+
+The applied-source comparison and later Atlas refresh had separate outputs and
+observation boundaries. Synthetic model bytes/readers and browser actions did not
+verify real downloads, native permission prompts or installed-app behavior.
+No new shared-skill execution comparison was run; this addition retains the
+historical case, knowledge and rule states and adds bounded consumer evidence.
+
 
 ### Initial creation trials: earlier user contract
 
@@ -1171,3 +1202,7 @@ activation or runtime skill selection; neither was evaluated here.
   new exact-final-package producer trial. Completed independent structure and
   shaping reviews, retaining the owner structure and applying only the bounded
   criteria-location and historical-label clarifications.
+- 2026-11-09, revision 7: added consumer disclosure-inspection and selective
+  settings-adoption evidence, including the distinction between a review-only
+  folder concept and verified implementation. Retained prior package/results,
+  independent states and synthetic/native limits; the bridge change was local.

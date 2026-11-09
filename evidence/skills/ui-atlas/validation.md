@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-atlas-validation",
-  "revision": 9,
+  "revision": 10,
   "audience": "public",
   "subjects": [
     {
@@ -88,6 +88,37 @@ distinguishes optional browser automation, authored state discovery and generate
 output size from the reusable skill itself.
 
 ## Evidence And Evaluation
+
+### Consumer settings observations and explicit refresh (record revision 10)
+
+A later generalized private observation reviewed settings, recovery and connected
+source states in an isolated application. A recipe supplied an authored error
+response whose detail reached the rendered alert. Its wording was initially
+read as product copy; inspecting the controlled response identified the fixture
+as its author. This observes rendering under injected failure, not an error
+message required by the product or proof of its natural failure conditions.
+Alert lifetime and recovery need their own interaction sequence.
+
+The first map omitted a connected-source branch. A subsequent explicit refresh
+captured connection, retained list entry, reopening, removal/cancellation,
+reconnection and read-failure recovery. The application registration and rendering
+paths were real; the external reader and relevant service/model responses were
+synthetic. The execution did not request operating-system permissions, read
+personal notes, transfer a real model or measure inference quality.
+
+The refresh retained existing state identities, earlier runs and feedback
+ownership, and marked removed disclosures inapplicable instead of silently
+reusing their observations. Product edits, applied-comparison capture and Atlas
+recapture were distinct acts. Later search-source edits did not retroactively
+update that map. A static retained observation cannot establish current source
+freshness or watch the running application.
+
+These are bounded consumer/resource observations. No portable package or installed
+skill was changed in this addition, and no fresh-agent execution or guidance-effect
+comparison was performed. Existing package fingerprints and historical resource
+checks retain their original revision boundaries. Private originals remain at
+their consumer owner; they are not distributed as public fixtures.
+
 
 ### Workspace navigation and pan repair (record revision 9)
 
@@ -733,6 +764,10 @@ or publish the work.
 
 ## History
 
+- 2026-11-09, revision 10: added bounded consumer evidence for injected error
+  provenance, omitted connected-source states and explicit Atlas refresh.
+  Retained package identities, earlier resource checks, independent states and
+  native/model/guidance-effect limits; no shared skill change is implied.
 - 2026-11-08, revision 9: recorded direct workspace entry, in-view sheet selection
   and catalog, retained draft/pending-write ownership and the hand/Space pan repair.
   Twenty contract tests and the complete synthetic browser suite passed. Preserved

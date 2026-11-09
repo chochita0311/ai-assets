@@ -76,6 +76,7 @@ approved change; a settled screenshot alone does not cover earlier phases.
   active surface or recovery path remains usable when the controller cannot
   initialize, while preserving isolation and relevant URL scope. This is not a
   requirement for whole-application no-script support or a universal timeout.
+- When a completion notice is hidden, verify that required rerun or recovery actions remain reachable outside any hidden ancestor. Check actual rendered visibility, including CSS that can override hidden attributes, and exercise the action after preparation completes. A healthy aggregate status must not swallow a query failure or erase existing results during a polling failure.
 - Compare initial rendering and subsequent updates that represent the same
   lifecycle state. A missing artifact or empty output must not imply an earlier
   lifecycle state or silently replace confirmed content contrary to the approved

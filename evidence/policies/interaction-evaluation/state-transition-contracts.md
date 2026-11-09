@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-state-transition-contracts",
-  "revision": 6,
+  "revision": 7,
   "audience": "public",
   "subjects": [
     {
@@ -91,6 +91,50 @@ loaded instructions, models, and full tool settings are unknown; current policy
 differences do not establish the cause of earlier failures.
 
 ## Evidence And Evaluation
+
+### Query ownership, preference recovery and results-first status (record revision 7)
+
+A generalized private search/settings observation covered a capability-driven
+search surface and an editable minimum-relevance preference. The selected engine
+followed saved activation and model availability; preparation, query failure and
+an empty result were not reasons to silently change retrieval semantics. A
+capability change preserved the latest query and deferred navigation while the
+settings dialog, a focused query field or input composition still owned work.
+Both a page input and the shared header were exercised; after result-page cleanup,
+the header became the sole visible query owner there.
+
+The preference checks covered save/default restoration, stale revisions,
+failed save/read, retained drafts and retry, and a committed save whose response
+was lost but could be confirmed by readback. The numeric cutoff was not presented
+as an accuracy probability. Synthetic retrieval confirmed its query-only storage
+boundary without rebuilding the index; this did not assess a real embedding
+model's semantic quality or establish a universal autosave contract.
+
+The submitted-query screen initially repeated landing instructions, another form,
+healthy readiness and preparation coverage before populated results. The approved
+correction showed result counts and sources, or an honest empty/error state,
+first. Queryless setup guidance remained available. Preparation, partial updates
+and failures retained actionable notices. Query failure remained visible even
+when aggregate index status reported ready.
+
+Moving the same-query rerun outside the hidden readiness region kept it reachable
+after preparation. A rendered check also caught a display rule overriding the
+link's hidden attribute; explicit hidden styling corrected it. Native header
+submission and evidence-return navigation were checked at wide and narrow widths.
+Injected preparation/partial/failure/recovery transitions preserved the query
+draft, focus and existing results. Browser scroll anchoring preserved the visible
+result position; absolute scroll offsets could change as the notice entered the
+document. These are distinct observations from a claim of an unchanged offset.
+
+Product browser checks used synthetic sources, a deterministic encoder and
+synthetic model-installation status; some status transitions were injected.
+No installed-native rebuild, physical composition test, Atlas recapture for the
+later source edits or guidance-effect comparison was part of those checks.
+The addition extends reference evidence and the bounded existing review criteria;
+it does not change the record's independent work, acceptance or adoption states.
+
+
+### Earlier control and preference observations
 
 The private receipts were reviewed on 2026-10-26 as recorded evidence. Their
 reported UI checks were not independently rerun, and raw temporary captures were
@@ -240,3 +284,8 @@ native replacement or new product task is implied.
 - 2026-11-08 — Revision 6. Clarified that the reported pointer click was near
   the middle of the title, avoiding confusion with the middle mouse button.
   The observation, evidence limits and independent record states are unchanged.
+- 2026-11-09 — Revision 7. Added query ownership, preference recovery and
+  results-first status evidence and bounded checks at the existing review
+  owners. Kept earlier observations separately headed, preserving independent
+  states, synthetic/native limits and the distinction between visible scroll
+  anchoring and unchanged absolute offsets. No guidance effect is established.
