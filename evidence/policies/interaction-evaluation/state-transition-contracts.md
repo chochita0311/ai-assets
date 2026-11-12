@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-state-transition-contracts",
-  "revision": 7,
+  "revision": 8,
   "audience": "public",
   "subjects": [
     {
@@ -214,6 +214,32 @@ autosave, one reference application's styling, or a universal caret position.
 Same-author product validation is not independent review or a comparison of
 guidance revisions; guidance effect remains **not assessed**.
 
+### Later live-view restoration and deferred-input evidence
+
+Generalized private source, browser and real-stream observations reviewed on
+2026-11-12 extend this same ownership question to live editable views. Public
+readers cannot inspect the original application or replay these executions here.
+The [runtime-resource account](../../harness/runtime-evaluation/bounded-resource-lifetimes.md)
+covers the same effort's queue/identity contracts without counting shared events
+as independent support.
+
+| Transition | Observation and correction | Boundary retained |
+| --- | --- | --- |
+| Repeated keyboard tab selection | A delayed editor-focus callback overrode the selector's synchronous focus, causing the next arrow to reach the editor. Keyboard navigation retained selector focus while pointer selection still focused the editor. | Compare after delayed callbacks and across repeated keys; one immediate active-state read was insufficient. |
+| Loss and reacquisition of input authority | A native composition helper retained deferred work; a late composition end could send pre-loss text after authority returned. Cancellation retired that work, and a new composition then reached the real stream once. | The browser sequence proves the checked path, not physical keyboard or every input method. Idle observer output also had to retain observation/copy focus instead of repeatedly blurring it. |
+| Keyboard paste rejection | A shortcut committed pending composition before the later multiline-paste decision. Deferring that commit to accepted paste preserved pending text on rejection. | On the checked platform, command-paste and the shell's control-key literal-input chord had different roles; no universal keymap is prescribed. |
+| New or reused renderer | Text serialization omitted partial parser/control state. A typed, versioned checkpoint preserved supported logical continuation, while browser-local cursor initialization and input authority stayed local. Restored coordinates notified the input-method anchor. | Cell equality and an unopened renderer did not establish a focused cursor or final textarea geometry. This is not a claim of every terminal mode, grapheme or OS candidate-window behavior. |
+| Rejected middle input fragment | Per-packet rejection alone allowed later fragments to remain eligible, and ordinary output cleared the error. Closing the affected stream, dropping unsent work and retaining partial-input feedback corrected the checked sequence. | Already accepted bytes could have reached the program; the repair did not make a whole paste atomic or roll back its prefix. |
+| Hidden resource failure | The backend exposed an input fault while its background management row still appeared normal. Updating the row's change key, status and detail made recovery visible before reopening the view. | Failure detail stayed with its affected consumer; a healthy service or peer did not resolve that resource's fault. |
+
+These observations support the bounded deferred-input/restored-view, delayed
+keyboard-focus and existing status-consumer checks in Interaction Evaluation.
+They do not require a particular emulator, persistence layer, font, shortcut,
+buffer size or dense error UI. Operating-system input-method evidence is scoped
+separately in the [native-host record](native-host-evidence.md); user-agent or DOM
+simulation was not promoted to a native-host pass. No public runtime or guidance
+comparison was executed; guidance effect remains **not assessed**.
+
 ## Work And Acceptance
 
 This reference record assigns no separate task or runtime budget. The maintainer
@@ -262,6 +288,12 @@ Existing work/readiness, historical subjects and draft case acceptance remain.
 This export writes source only: no commit, push, consumer refresh, installed
 native replacement or new product task is implied.
 
+Revision 8 adds deferred-input, restored-view and delayed keyboard-focus criteria
+at the existing policy owner, preserving all historical subjects and independent
+record states. The source change is authorized commonization; it assigns no new
+product task or missing-host campaign. Public fitness was reviewed by the primary;
+case acceptance remains draft and source export does not establish consumer use.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created the state-transition reference after matching
@@ -289,3 +321,5 @@ native replacement or new product task is implied.
   owners. Kept earlier observations separately headed, preserving independent
   states, synthetic/native limits and the distinction between visible scroll
   anchoring and unchanged absolute offsets. No guidance effect is established.
+
+- 2026-11-12 — Revision 8. Added live-view ownership, deferred composition, keyboard-paste rejection, receiver-local cursor/anchor and partial-input/background-fault evidence. Preserved platform, non-atomic prefix and native-input limits; implemented bounded existing-owner criteria without changing work or acceptance states.

@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-requested-control-rendering",
-  "revision": 4,
+  "revision": 5,
   "audience": "public",
   "subjects": [
     {
@@ -154,6 +154,40 @@ additional skill or icon-policy change is justified. Reported source/browser
 checks do not establish installed-native delivery or every physical input path.
 Guidance effect remains **not assessed**.
 
+### Later portable glyph and live-canvas geometry evidence
+
+Generalized private observations reviewed on 2026-11-12 extend the declared-versus-
+painted relationship to an embedded technical canvas. A missing-glyph box was not
+sufficient evidence of bad decoding: identical private-use codepoints reached the
+renderer, a font lacking those glyphs showed boxes, and a covering font drew the
+intended shapes. UTF-8 round trips, selected codepoints, actual painted fonts and
+Unicode cell width were separate checks. The observed sample did not contain
+every character reported by the user, so it did not prove a universal diagnosis.
+
+Relying on one operator's installed font was not a portable first-use condition.
+The product instead included reviewed, unmodified font faces with their license,
+source provenance and package checks. URL-only font loading removed that hidden
+OS dependency; actual browser font use and representative language/cell metrics
+were observed. Fitting waited for required faces, and delayed/missing assets had
+a bounded feature-local recovery path rather than silently accepting wrong
+measurements. The existing default size and surrounding UI typography stayed
+with the product contract.
+
+The font did not promise every private-use icon, combined emoji or shaping
+sequence. Parser/Unicode-width agreement and restored input-method geometry also
+needed independent checks; a font change was not a substitute for them. A later
+focused-cursor/textarea-anchor repair is the state event in the
+[ownership record](../interaction-evaluation/state-transition-contracts.md), not
+another independent font experiment. Actual delivery checks established the
+bundled assets, not an OS installation or a legal conclusion about every font.
+
+The existing [Font Source And Fallback Evidence](../../../policies/review/design-evaluation.md#font-source-and-fallback-evidence)
+now explicitly distinguishes painted coverage, decoding, measurement readiness
+and package/license evidence. The account contains no copied personal font,
+private preference, capture or project-specific size. Product checks ran
+privately; no public reproduction or forward comparison of the revised guidance
+was executed, so guidance effect remains **not assessed**.
+
 ## Work And Acceptance
 
 This is a reference record, with no separately assigned execution task or budget.
@@ -201,6 +235,12 @@ Revision 4 preserves historical evidence and all independent record states.
 Only the existing scroll-inset policy owner gains a bounded clarification; no
 commit, push, consumer refresh or new runtime reproduction is performed.
 
+Revision 5 adds portable glyph/measurement evidence and bounded criteria at the
+existing font-review owner. It does not prescribe bundling for every UI, a font
+brand, a default size or universal character support. Historical fingerprints,
+work/readiness and draft case acceptance remain unchanged; public fitness was
+reviewed by the primary before the source write.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created a generalized reference record for requested
@@ -216,3 +256,5 @@ commit, push, consumer refresh or new runtime reproduction is performed.
   evidence maintenance, with no additional design-policy or skill rule. Retained
   the earlier cases and their original evidence limits.
 - 2026-11-08 — Revision 4. Added intrinsic horizontal end spacing, narrow containing-block hit geometry and retained vector-family evidence. Clarified the existing scroll-end check without prescribing dimensions.
+
+- 2026-11-12 — Revision 5. Added actual glyph-versus-decoding, portable font loading, measured readiness and delivered-license evidence. Preserved character, geometry, host and historical limits; no standalone skill, font asset or installation change.

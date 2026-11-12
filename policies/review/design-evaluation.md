@@ -300,6 +300,9 @@
 - When a feature changes a webfont or type stack, evaluators should confirm both the declared CSS stack and the actual loaded font assets.
 - Self-hosted display fonts should include source and license evidence near the committed assets; missing evidence is a design-system risk, not only a repository hygiene issue.
 - Fallback stacks should be intentionally short enough to maintain readability while still covering expected language scripts and failed webfont loading.
+- For required language or symbol coverage, distinguish byte decoding, glyph availability and cell or advance width. Inspect the actual painted font and representative characters; a configured family, successful UTF-8 round trip or visible Latin text does not establish coverage. Do not infer an encoding defect from a missing-glyph box alone.
+- When a measured surface depends on a webfont, compare first use without the corresponding OS font, all required faces becoming ready, and delayed or failed font loading before accepting fitted geometry. Follow the approved fallback or feature-local recovery contract; another user's installed font must not silently become an undeclared prerequisite.
+- Font source/license/provenance and inclusion in the delivered asset package are separate from glyph and width checks. A bundled font's coverage does not establish every private-use symbol, emoji sequence or shaping behavior; scope those claims to observed characters and supported renderers.
 
 #### Font Weight Token Semantics
 

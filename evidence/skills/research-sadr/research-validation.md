@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-research-sadr-validation",
-  "revision": 1,
+  "revision": 3,
   "audience": "public",
   "subjects": [
     {"kind": "skill", "key": "skills/research-sadr", "source_revision": null, "content_sha256": null},
@@ -98,13 +98,15 @@ the same evidence and method do not justify endless repetition.
 
 The following are generalized reports of actual private executions using
 synthetic research inputs, plus inspection of the public source contracts.
-They are not public replay fixtures or unrun illustrative examples. Retained
-conversation and handoff reports describe the observations; original task-owned
-trial logs and fixtures were removed after their prior audit and recovery
-purposes ended. This record does not reconstruct those logs or expose private
+They are not public replay fixtures or unrun illustrative examples. For the
+earlier synthetic trials, retained conversation and handoff reports describe the
+observations; original task-owned trial logs and fixtures were removed after
+their prior audit and recovery purposes ended. The later application audit below
+retains its frozen sources, fixtures, raw results and review registers in private
+archives. This record does not reconstruct the deleted logs or expose private
 identities, source paths, hashes, traces or their associations. Readers can
-inspect the current contracts but cannot independently replay these historical
-trials from this record.
+inspect the current contracts but cannot independently replay these executions
+from this record.
 
 Subject revisions and fingerprints are null because this account spans evolving
 source snapshots and the retained reports do not establish one exact public
@@ -242,6 +244,44 @@ sandbox. Reasoning-context independence, method diversity, source independence
 and untouched validation data remain separate; fresh contexts or same-data
 recalculation do not establish all four.
 
+### Later producer/consumer investigation with frozen repair rounds
+
+A later generalized private application audit applied the complete SADR method
+and required references from a fixed source snapshot. The primary framed
+competing causes for broken text, reconstructed state and background execution;
+source and runtime probes distinguished decoding, glyph coverage, cell width,
+parser continuation and input ownership instead of treating one visual symptom
+as a single encoding diagnosis. Reference application and dependency observations
+were kept separate from assumptions about an installed engine.
+
+Fresh bounded inquiries received frozen source and normative requirements before
+prior reviewer conclusions. They returned source-backed candidates and requested
+small discriminators; the primary performed implementation and actual tests.
+Useful distinctions included an unopened model versus a focused browser cursor,
+ordinary text flood versus unread automatic replies, and a never-reading peer
+versus cooperative duplex progress. Repair rounds found integration defects in
+previously proposed fixes. Each round retained its fixed input, first return,
+contrary evidence and later adjudication; follow-up was informed confirmation,
+not another independent discovery.
+
+One normative contract included earlier delivery claims, and one reviewer briefly
+consulted a live-tree reference outside the intended frozen packet. Those limits
+were disclosed, the live outputs excluded from candidate evidence, and context
+independence was not reported as complete. Full matching manifests did not erase
+those exposures or prove an independent OS sandbox. A later timezone cause was
+found by the primary, not retroactively credited to a fresh worker.
+
+The product checks ran privately; this public projection and the related
+[review-challenger account](../../agents/codex/review-challenger-validation.md)
+are not public replays or separate independent support. The final scoped product
+result passed with explicit environment limits after correction. No controlled
+single-agent/multi-agent or old/new-method comparison established effectiveness,
+universal stability or cost benefit. This audit supplies additional method-use
+and adversarial-test evidence while leaving the broader acceptance and runtime
+proof below open. The applied method files had obtainable fingerprints in the
+private receipt; that does not fill the unknown historical fingerprints of the
+earlier trials above.
+
 ## Work And Acceptance
 
 The source implementation is complete within its reported scope; broader
@@ -314,6 +354,13 @@ establishes neither external publication nor consumer refresh. Historical local
 activation remains limited to the cases above. Original trial scratch was already
 removed; retained generalized observations have no durable temporary-path dependency.
 
+Revision 2 retains the earlier method, worker-installation observations, failures
+and open comparative acceptance. It adds one later observed investigation with
+honest independence, caller-budget and repair-round boundaries. No skill,
+research governance, runtime binding or installation changes are made. Public
+fitness was reviewed by the primary for standalone meaning and disclosure;
+source integration alone establishes no public reproduction or guidance effect.
+
 ## History
 
 - **2026-11-02 — revision 1:** Prepared one research-acceptance record from
@@ -324,3 +371,7 @@ removed; retained generalized observations have no durable temporary-path depend
   partial coverage and waiting follow-up without assigning execution. This
   migration is not a new trial, comparable rerun, public replay or evidence of
   general research improvement; it does not supersede the contrary outcomes.
+
+- 2026-11-12 — Revision 2. Added a later frozen application investigation, discriminating runtime checks and informed repair rounds. Preserved initial-review exposures, primary discovery, earlier failures and all open acceptance states; no source-method or binding change.
+
+- 2026-11-12 — Revision 3. Scoped the deleted-log statement to the earlier synthetic trials and clarified private archival of the later application audit. Preserved historical deletion, unknown historical fingerprints and the public-replay limit; no new execution or state change.

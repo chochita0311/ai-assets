@@ -28,6 +28,14 @@
 - Distinguish a fresh isolated-process pass from evidence against the active long-running runtime. When server code, templates, schemas, generated assets, or browser caches can advance independently, test the mixed-version or restart boundary or state clearly that it remains unverified.
 - For client-enhanced actions, a successful endpoint call is not proof that the currently served control works. Check the rendered control with the served asset version and its required fallback path when progressive enhancement is part of the contract.
 
+## Conditional Runtime Resource Checks
+
+- When changing queues, resource budgets or backpressure, exercise every relevant producer, including automatic replies and detached/no-view work. A bounded output tail or browser outbox does not establish a bound on a separate reverse-direction queue.
+- Check both a stalled/non-reading peer and a cooperative peer that reads and writes. A cap can prevent memory growth while a pause/resume dependency creates duplex deadlock; retain eventual progress and byte-order/admission evidence for accepted work.
+- Where those runtime boundaries exist, exercise failure after a partial user action, resource close before process exit, pending callback cancellation and healthy peer/control use. Distinguish an explicit per-resource fault from service-wide failure, and verify its required visible/background/API/CLI consumers from the affected handoff.
+- Measure the actual admitted workload and a producer that is still alive and advancing during responsiveness samples. Confirm that the selected data is rendered rather than timing empty or unregistered sources. Separate manager/helper, backend, child and whole-browser costs, cold/warm conditions and shared-memory accounting; a small helper or rounded short idle sample does not establish universal lightness.
+- Keep simulated close/admission fixtures, actual OS events and complete runtime paths distinct. A failed fixture prerequisite or an OS trigger that did not occur is not a reproduced product defect; retain it as counterevidence and report the checked boundary.
+
 ## Required Output
 Produce:
 

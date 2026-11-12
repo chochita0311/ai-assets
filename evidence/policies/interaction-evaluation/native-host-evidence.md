@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-native-host-evidence",
-  "revision": 4,
+  "revision": 5,
   "audience": "public",
   "subjects": [
     {
@@ -178,6 +178,41 @@ delivery. No new tool, permission scheme or runtime binding is introduced. No
 public reproduction, independent review or guidance comparison ran; effect is
 **not assessed**. Public readers cannot inspect the private original observation.
 
+### Later operating-system input method and guarded probe evidence
+
+Generalized private observations reviewed on 2026-11-12 distinguish scripted DOM
+composition, browser automation and an actual operating-system input-method
+path. The product under review was a web surface; a temporary AppKit/WebKit host
+loaded its matching web assets and connected to a real PTY. Application-local
+injected keys passed through a selected Korean two-set input source, composition,
+browser events and the shell. The checked sequences included a full phrase,
+jamo deletion, resyllabification, a shifted compound, rapid syllables and control
+cancellation. They were not hardware keyboard input, a Safari-application trial
+or delivery of a packaged native edition.
+
+Earlier drivers lost activation or did not reach the intended pane/prompt; those
+attempts were not product-input failures or successful before-repair controls.
+Concurrent tool/GUI starts could also take activation away. A standalone sequence
+guarded its intended window and readiness, aborted on lost focus, and restored
+its temporary input source and previous focus. Tagged local key delivery avoided
+continuing the remaining sequence in an unintended application. Recorded trusted
+browser events did not turn that injected input into physical input.
+
+A separate browser sequence checked that cancelling old composition on authority
+loss did not disable fresh composition after recovery. That routing/real-stream
+witness is described in the [state record](state-transition-contracts.md), not
+counted as another OS-input-method execution. Fixture corrections included an
+incorrect owner-socket reference and an input above the product's paste limit;
+only a later in-contract sequence supported the corresponding failure boundary.
+The wider private checks passed within their frozen-source scope, with physical
+input, assistive announcements, other engines and prolonged use still unverified.
+
+This adds the guarded-native-input check to the existing evidence owner. It
+narrows the earlier absence of OS-input-method evidence only for this later
+isolated path; it does not rewrite the dated gaps above or establish every host's
+acceptance. No native product rebuild, public reproduction or controlled guidance
+comparison was part of this export; effect remains **not assessed**.
+
 ## Work And Acceptance
 
 No separate runtime task or budget is assigned by this reference record. The
@@ -222,6 +257,12 @@ Revision 4 adds a scoped reference-observation check at the existing policy
 owner. Prior work/readiness and adoption states are retained. The export performs
 no commit, push, installation, consumer refresh or native product rebuild.
 
+Revision 5 retains historical permission and input observations and adds a
+later, explicitly scoped OS-input-method path. The new policy note guards the
+actual input target and temporary global changes without introducing a new tool,
+permission flow or required native edition. Existing work/readiness and draft
+case states stay unchanged; only source export and static validation are current.
+
 ## History
 
 - 2026-10-26 — Revision 1. Matched the public collection and created one host-evidence
@@ -237,3 +278,5 @@ no commit, push, installation, consumer refresh or native product rebuild.
   earlier observations and physical/recipient limits. The source clarification
   does not imply a public reproduction, installation or improved agent outcome.
 - 2026-11-08 — Revision 4. Added helper-specific permission recovery, semantic press versus pointer-caret evidence, draft-preserving observation and reference/target delivery limits. Historical host gaps remain dated.
+
+- 2026-11-12 — Revision 5. Added guarded OS-input-method/WebKit/PTY observations and failed-driver counterevidence. Kept injected versus physical input, isolated web host versus packaged native delivery and unchanged acceptance states explicit.

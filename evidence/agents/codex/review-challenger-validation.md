@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-codex-review-challenger-validation",
-  "revision": 4,
+  "revision": 5,
   "audience": "public",
   "subjects": [
     {
@@ -230,6 +230,41 @@ the complete repaired pair or general project deployment was established. Raw
 task-owned audit bundles were deleted after integration; the conversation
 retains the reported results and limits. The broader checks below remain open.
 
+### Later application review and informed integration confirmation
+
+A later generalized private application task invoked three registered
+`review_challenger` instances on distinct input/rendering, state-continuation and
+process/resource questions. The initial packets requested no inherited history,
+frozen full-source inventories and bounded read-only inquiry. They withheld
+prior review conclusions, but normative requirements exposed some historical
+closure claims; one early live-tree lookup was disclosed and its output excluded.
+These qualifications limit answer isolation even though supplied manifest hashes
+matched. Instruction restrictions and reported read/search/hash conduct were not
+an independently enforced OS sandbox or a complete child action trace.
+
+Returned candidates led to primary-owned browser/PTY and process probes. Those
+probes supported focus/cursor and authority defects, detached query behavior,
+unbounded automatic-reply buffering and identity/setup gaps. Informed rounds then
+challenged repair-side duplex progress, read-only focus, interrupted-input
+feedback and background fault visibility. The primary made the fixes, selected
+acceptance and ran the checks; a worker supplied neither implementation nor
+completion approval. Later turns and repeated source hashes do not multiply the
+initial independent inquiry count.
+
+A proposed wrong-target-descriptor consequence remained unobserved: the suggested
+OS trigger did not produce master closure. Controlled close plus real descriptor
+reuse supported the added guard's boundary without proving the proposed OS
+failure. A final timezone false-positive was primary-discovered and received
+only narrow informed confirmation. The [research record](../../skills/research-sadr/research-validation.md)
+describes the same task's method use, not additional independent replication.
+
+The configured role/model/effort was known, while actual provider internals,
+cumulative cost, complete hidden context and effective capability reductions
+were not exposed. Private scoped checks eventually passed; no public replay,
+causal role-benefit comparison or complete runtime-acceptance matrix ran for this
+export. Keep the open evidence requirements and historical subject identities
+below; a successful private application review does not close them.
+
 ## Work And Acceptance
 
 ### Eligibility And Authority
@@ -295,6 +330,13 @@ record for the evolving verification question; its candidate conclusion does
 not adopt a universal review rule. Original evidence stays in the originating
 task conversation. Public reproduction or deployment needs its own evidence.
 
+Revision 5 adds bounded application-use evidence without changing the adapter,
+model binding, existing work/readiness or acceptance states. Original per-task
+returns, first discoveries and informed dispositions are retained privately;
+older deleted-diagnostic statements above remain scoped to their dated cases.
+The primary reviewed this projection for necessary meaning and public fitness,
+not as independent runtime attestation or proof of the role's general benefit.
+
 ## History
 
 - Revision 1, 2026-10-31: retained the reviewed source configuration, bounded
@@ -318,3 +360,5 @@ task conversation. Public reproduction or deployment needs its own evidence.
   clarified historical subject fingerprints and
   completed scratch cleanup, and preserved runtime/comparison gaps. This
   reconciliation ran no new challenger trial and adds no independent trial count.
+
+- 2026-11-12 — Revision 5. Added frozen application inquiry and informed integration/closure confirmation. Preserved disclosed context exposures, primary-owned execution, unobserved descriptor consequence and provider/cost gaps; no new worker trial or binding change in this export.

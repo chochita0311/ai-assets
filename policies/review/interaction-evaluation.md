@@ -155,6 +155,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - Identify the source revision, served or bundled assets, backend, and native host actually exercised, including unchanged or reused layers. A browser check, isolated embedded-view probe, and running packaged app are distinct targets; apply [Active Runtime And Mixed-Version Evidence](#active-runtime-and-mixed-version-evidence) when those layers can refresh independently.
 - State the input mechanism with the observation: script-dispatched events, browser automation, operating-system events injected into an isolated view, or physical input in the target app. An event reported as trusted does not by itself establish physical input or execution in the target host.
 - When observing a native reference, distinguish the reference application's behavior from delivery of the product being changed. Record the permission scope and helper actually exercised; screen capture, application automation and Accessibility access do not establish one another. A semantic accessibility press does not prove a coordinate-dependent pointer result. Keep observation within the approved action and protect pre-existing drafts; report later recovery without erasing earlier failures.
+- For automated native input, identify and guard the intended window, focus, input source and target readiness before delivery. Stop or classify lost activation, concurrent-driver interference and unmet readiness as probe failures; do not send the remaining sequence to an unintended window. Restore temporary global input/focus changes when safe and record restoration. An isolated OS-input-method pass remains distinct from physical input or execution in a packaged target.
 - Check the hosts and input paths required by the affected product contract. Mark missing host or end-to-end evidence as unverified rather than promoting a partial probe to full acceptance; the owning acceptance contract decides whether the gap blocks delivery.
 
 #### Scope Transition State Contract
@@ -217,6 +218,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - When a nested selection reveals or replaces a meaningful content region, focus and scroll should move to the most specific newly selected destination that establishes context, not to a generic page heading or shared ancestor.
 - The destination should remain visible below sticky shell regions and use the nearest reachable document position when the exact offset cannot be attained near a scroll boundary.
 - Click-driven selection, back or forward restoration, and initial direct entry should have explicit, separately tested focus and scroll behavior rather than sharing one unconditional jump routine.
+- Repeated keyboard navigation must retain its intended control owner after relevant animation-frame or delayed focus callbacks. Compare two successive navigation keys with pointer activation; a pointer-appropriate editor or canvas focus must not silently consume the next key intended for a tablist or selector.
 
 #### Temporary Inspection And Committed Selection
 
@@ -236,6 +238,14 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 - Component-level interaction code should own local affordances, visible state, and emitted intents; route delays, shell classes, global storage, and cross-surface animation timing should belong to an explicit shell or navigation coordinator.
 - If a component accumulates route-specific timers, body classes, storage markers, and unrelated surface checks, evaluators should flag the ownership drift even when the visible behavior currently passes.
 - A component may expose a small controller or event surface for orchestration, but evaluators should confirm that the component can still be understood as the owner of its own interaction contract rather than the owner of the page transition.
+
+#### Deferred Input And Restored View Ownership
+
+- When input authority, connection or view lifetime can change, exercise pending composition, deferred callbacks and queued input through loss and reacquisition. Cancelled work must not regain authority merely because a new lease or connection becomes writable. Verify that fresh input still commits once afterward; cancellation alone does not establish recovery.
+- Compare accepted and rejected paste or confirmation paths through keyboard and menu entry. A rejected action must retain or cancel the pending draft according to its contract; an earlier shortcut handler must not commit it before that decision. Preserve platform-specific literal-input and control-chord behavior.
+- Distinguish per-packet admission from completion of the larger user action. After a rejected fragment, verify whether later fragments can still execute, what accepted prefix may already have reached the program, and whether unsent work is discarded or retried under the approved rule. Keep partial-input feedback through unrelated output or reconnect until its defined recovery or dismissal.
+- Restored logical content must not blindly replace receiver-local focus, cursor initialization, input authority or current presentation preferences. Exercise a fresh and reused renderer after resize/reconnect, including a focused cursor and non-origin input-method anchor; cell equality alone does not establish the browser's final geometry.
+- Cancellation should not repeatedly blur an idle read-only observer. Check observation/copy focus through later output as well as the writable input path. Propagate an actionable failure to its affected background-management consumers without implying that a healthy peer or service-wide state resolves it.
 
 #### Shell And Local Keyboard Ownership
 

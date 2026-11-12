@@ -26,6 +26,13 @@
 - If the contract itself is underspecified, classify the finding as `spec gap` or `planning gap` instead of inventing the missing rule.
 - If a contract change can leave stale assumptions behind, require a post-contract regression check.
 
+## Conditional Resource And Identity Checks
+
+- When an approved boundary owns queued work or resources across processes/views, distinguish the resource's close event, owner-process exit and logical session lifetime. Check that pending work cannot act through a recycled handle or a newly assigned authority after its original resource closes.
+- For process or session recovery, distinguish a reusable locator from positive identity evidence. Compare identity using a declared, compatible format and canonical time/locale where relevant; a display-timezone difference, failed inspection or unknown legacy format must not itself prove replacement or safe cleanup.
+- Check actual runtime readiness against the artifact, architecture and version the consumer selects. A matching installation marker or successful import is not proof that the selected executable/helper is present and usable.
+- For protocol reports or restored state shared by background and visible consumers, check their approved ownership and availability together. Exercise view detach/return to detect missing required replies or duplicate responders; incompatible consumers must not silently acquire authority beyond the protocol contract.
+
 ## Contract Surfaces
 Check relevant surfaces such as:
 - API request or response shape
