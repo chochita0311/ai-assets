@@ -89,6 +89,7 @@ approved change; a settled screenshot alone does not cover earlier phases.
   collect the missing evidence or mark it unverified under the coverage rules.
   Keep captured sample counts, phase coverage and actual rendered observations
   distinct from independent scenario counts or compositor-paint measurements.
+- For transient state observed through polling or another sampled path, establish the producer duration, observation cadence and relevant delivery delay before interpreting an absent signal. Use a controlled witness that spans the required observation window or coordinate an observed transition, while assessing the product's freshness contract separately. A longer assertion timeout cannot recover a pulse that already fell between samples; do not silently change production timing or infer continuous visibility from the longer witness.
 
 Fixture values, viewport boundaries, skeleton use, motion and persistence rules
 remain with the consuming product. Do not turn this sequence into an exhaustive
@@ -379,6 +380,7 @@ screen/state cross-product or infer guidance effectiveness from a passing run.
 
 - Exercise repeated controls as a sequence: open one, dismiss it through supported outside-click or Escape paths, open a peer, then return. Transient open, hover, and focus states must not alter another record's committed selection or leave obsolete menus active.
 - Compare activation on the painted icon, text, and surrounding hit area rather than only the button center. Child event targets and host focus behavior can make visually equivalent parts behave differently; observe the reported path in each affected supported host or state the missing evidence.
+- When asynchronous updates can change a control while the user targets it, compare DOM identity and painted hit bounds from pointer targeting through press and release. Exercise relevant badge removal, result acknowledgement or metadata refresh during that interval, and retain the intended activation or approved cancellation outcome. Keeping the same node does not preserve its position; a direct handler call or always reacquiring coordinates after updates does not exercise this race. Do not hide a missed hit with a retry that omits the intervening update.
 - Distinguish the selected value from incidental focus retained after pointer activation. Test pointer-to-keyboard handoff and genuine keyboard navigation so selection, accessible state, and the focus indicator remain coherent without stale or doubled emphasis.
 - A pointer-focus correction must preserve visible keyboard focus and the control's accessible meaning. Blanket focus suppression is not evidence that the interaction is fixed.
 

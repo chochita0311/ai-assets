@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-native-host-evidence",
-  "revision": 5,
+  "revision": 6,
   "audience": "public",
   "subjects": [
     {
@@ -213,6 +213,27 @@ isolated path; it does not rewrite the dated gaps above or establish every host'
 acceptance. No native product rebuild, public reproduction or controlled guidance
 comparison was part of this export; effect remains **not assessed**.
 
+### Later packaged lifetime and unavailable-window evidence
+
+Generalized private delivery, driver and packaged-runtime observations reviewed
+on 2026-11-17 add the following host boundaries. Original identities, credentials,
+process identifiers, fingerprints, captures and timing measurements stay with
+the originating private evidence owner. No public runtime replay was performed.
+
+| Checked boundary | Reported evidence | Limit |
+| --- | --- | --- |
+| Relocated packaged runtime and process lifetime | A signed relocated package exercised offline creation and authentication. Normal app Quit and removal of the source app left separately cached management and existing work alive; relaunch reconnected to the same generation and processes. Explicit scoped termination remained a different action. | Shared business code did not by itself establish shared running processes or app-independent lifetime. These checks support the chosen lifetime contract, not one mandatory deployment architecture, reboot survival or physical sleep. Process suspension/resume was separately labeled as a simulation. |
+| UI change after an earlier packaged-window pass | An earlier actual packaged-view packet passed. After a later visible change, browser interaction, new package integrity and packaged-backend checks passed, while the actual-window preflight encountered a locked screen. | The latest actual-window UI remained unverified. The earlier artifact and backend-only result did not accept the changed UI; the originating product's required gate stayed open, without a waiver or completed-product claim. |
+| Readiness and input-driver prerequisites | Attempts clicked before a chooser was open and editable, waited too briefly for a cold prerequisite, or exceeded a typing-driver deadline. Later probes waited for actual readiness with a bounded cold allowance or typed a short owned script invocation while retaining real keyboard/state assertions. | A corrected driver prerequisite is not evidence that every failed attempt was a product defect. Longer waits did not weaken the behavior assertions, and injected keyboard input did not become physical input or an OS-input-method pass. |
+
+The existing [native host evidence owner](../../../policies/review/interaction-evaluation.md#native-host-and-end-to-end-action-evidence)
+already distinguishes target identity, readiness, input and missing coverage.
+No further normative or standalone-skill change is warranted by these events.
+Required window checks remain with the original product acceptance owner, not a
+new task assigned by this reference record. Historical subject fingerprints and
+dated coverage remain intact; no comparative guidance test ran, so effect remains
+**not assessed**.
+
 ## Work And Acceptance
 
 No separate runtime task or budget is assigned by this reference record. The
@@ -263,6 +284,12 @@ actual input target and temporary global changes without introducing a new tool,
 permission flow or required native edition. Existing work/readiness and draft
 case states stay unchanged; only source export and static validation are current.
 
+Revision 6 adds packaged-lifetime, driver-prerequisite and unavailable-window
+counterevidence under existing rules. The reference remains draft for case
+acceptance and not-applicable for work assignment; product acceptance and source
+export are separate. This export does not close an unmet host gate, install an
+asset, publish a change or infer physical sleep/input coverage.
+
 ## History
 
 - 2026-10-26 — Revision 1. Matched the public collection and created one host-evidence
@@ -280,3 +307,5 @@ case states stay unchanged; only source export and static validation are current
 - 2026-11-08 — Revision 4. Added helper-specific permission recovery, semantic press versus pointer-caret evidence, draft-preserving observation and reference/target delivery limits. Historical host gaps remain dated.
 
 - 2026-11-12 — Revision 5. Added guarded OS-input-method/WebKit/PTY observations and failed-driver counterevidence. Kept injected versus physical input, isolated web host versus packaged native delivery and unchanged acceptance states explicit.
+
+- 2026-11-17 — Revision 6. Added relocated runtime and Quit/relaunch boundaries, an unavailable latest-window gate after an earlier pass, and readiness/driver corrections. Existing policy suffices; retained product acceptance and physical-input limits.

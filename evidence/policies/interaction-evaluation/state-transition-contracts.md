@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-state-transition-contracts",
-  "revision": 8,
+  "revision": 10,
   "audience": "public",
   "subjects": [
     {
@@ -240,6 +240,28 @@ separately in the [native-host record](native-host-evidence.md); user-agent or D
 simulation was not promoted to a native-host pass. No public runtime or guidance
 comparison was executed; guidance effect remains **not assessed**.
 
+### Later asynchronous hit-target and sampled-state evidence
+
+Generalized private event traces, source and browser observations reviewed on
+2026-11-17 add two transition-related observations. Original labels, paths, captures and
+product-specific dimensions remain private. These are reported executions,
+not public reruns or independent repetitions of earlier records.
+
+| Transition | Observation and correction | Boundary retained |
+| --- | --- | --- |
+| Result acknowledgement during close targeting | After the driver located a close control, asynchronous completion acknowledgement removed a neighboring badge and shrank the tab before pointer press. The pointer then hit the surrounding strip. Preserving the DOM node alone passed once but the miss recurred; reserving stable title/control geometry with in-place updates addressed both identity and painted position, and the actual close flow subsequently passed. | A handler invocation, node-identity assertion or a retry after reacquiring settled coordinates would not exercise the observed interval. Exact reserved width, ellipsis and layout technique are product decisions; this evidence does not establish physical pointer behavior on every host. |
+| Short command in an inactive tab under metadata polling | A controlled command could finish between metadata samples, leaving no running-state sample for a later assertion. A longer-lived witness crossed the observation window and retained the running-state assertion; the existing production cadence stayed unchanged and its latency was documented. | A larger test timeout alone could not recover the missed pulse. The longer witness proved its observed state, not immediate display of every short command or a new event stream. Missing telemetry stayed unknown rather than becoming idle or agent activity. |
+
+[Sequential Control Input And Focus](../../../policies/review/interaction-evaluation.md#sequential-control-input-and-focus)
+now explicitly checks hit geometry across asynchronous targeting and activation.
+[Initialization And Recovery Check Sequence](../../../policies/review/interaction-evaluation.md#initialization-and-recovery-check-sequence)
+now makes sampled-state witness sufficiency explicit. The Functional Evaluator's
+existing observation-sufficiency rule already routes to that owner; no duplicate
+role rule is added. The current shared comparison used common-source commit
+`4a3e50c88fb7026feddf22f65ffece5549724e82`, separately from the historical subject
+fingerprints. No controlled comparison of guidance revisions ran; effect remains
+**not assessed**.
+
 ## Work And Acceptance
 
 This reference record assigns no separate task or runtime budget. The maintainer
@@ -294,6 +316,12 @@ record states. The source change is authorized commonization; it assigns no new
 product task or missing-host campaign. Public fitness was reviewed by the primary;
 case acceptance remains draft and source export does not establish consumer use.
 
+Revision 9 implements bounded hit-target and sampling criteria at the existing
+Interaction Evaluation owner. Earlier deferred-input, renderer and composition
+observations remain intact, as do work/readiness and draft case acceptance.
+The source correction creates no new pending product task, skill requirement,
+consumer installation or claim of continuous state visibility.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created the state-transition reference after matching
@@ -323,3 +351,7 @@ case acceptance remains draft and source export does not establish consumer use.
   anchoring and unchanged absolute offsets. No guidance effect is established.
 
 - 2026-11-12 — Revision 8. Added live-view ownership, deferred composition, keyboard-paste rejection, receiver-local cursor/anchor and partial-input/background-fault evidence. Preserved platform, non-atomic prefix and native-input limits; implemented bounded existing-owner criteria without changing work or acceptance states.
+
+- 2026-11-17 — Revision 9. Added the badge-removal pointer race, recurrence after node-only preservation, final geometry correction and missed-poll witness. Extended existing interaction checks; retained cadence, native-input and guidance-effect limits.
+
+- 2026-11-17 — Revision 10. Clarified the sampled-state witness as an observation rather than a product defect and identified the inactive subject as the tab. Retained the unchanged cadence, assertion, freshness and evidence limits; no new execution or guidance-effect claim.

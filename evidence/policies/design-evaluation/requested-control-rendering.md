@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-requested-control-rendering",
-  "revision": 5,
+  "revision": 6,
   "audience": "public",
   "subjects": [
     {
@@ -188,6 +188,27 @@ private preference, capture or project-specific size. Product checks ran
 privately; no public reproduction or forward comparison of the revised guidance
 was executed, so guidance effect remains **not assessed**.
 
+### Later reference-state meaning and painted-size evidence
+
+Generalized private source, accessibility-menu and rendered observations reviewed
+on 2026-11-17 extend the requested-versus-implemented question to compact state
+cues. This account omits application identities, original titles and captures;
+the reported product checks were not rerun publicly.
+
+| Condition | Observation and correction | Limit |
+| --- | --- | --- |
+| Reference menu marks and program titles | Menu selection or visibility marks and a program-supplied animated title prefix appeared independently, including combinations on the same row. Related version- and setting-bound source inspection further qualified a job-related mark. Treating all marks as one command-activity signal was unsupported. | The local menu read was not a universal command classifier or a definition of agent-internal activity. Native window visibility need not equal a product's hidden-view model. |
+| Assumed legend with passing checks | Tests passed a legend derived from an overbroad interpretation; the user corrected that interpretation. Later, an explicitly approved prompt/program distinction became the acceptance target while selection and hidden state retained their own meaning. | Earlier interpretation errors were not retroactively relabeled as changed user requirements. The later approved refinement also does not establish one legend for all products. |
+| Filled versus outlined state cue | Equal SVG viewports did not establish equal painted diameter. The outline's stroke contributed to its outside edge; checking that edge against the filled cue supported a consistent rendered size. | Container size, artwork size and hit area remain distinct. Exact symbols, dimensions, state precedence and grouping choices are product-owned. |
+
+[Independent State-Axis Legibility](../../../policies/review/design-evaluation.md#independent-state-axis-legibility)
+now makes reference-signal provenance, unknown handling and reduction explicit.
+The existing painted-geometry rule already covers the size distinction. The
+comparison used the current shared owner at common-source commit
+`4a3e50c88fb7026feddf22f65ffece5549724e82`; historical subject fingerprints above
+remain unchanged. Passing product tests did not validate the assumed user meaning
+or measure the revised guidance's effect. That effect remains **not assessed**.
+
 ## Work And Acceptance
 
 This is a reference record, with no separately assigned execution task or budget.
@@ -241,6 +262,12 @@ brand, a default size or universal character support. Historical fingerprints,
 work/readiness and draft case acceptance remain unchanged; public fitness was
 reviewed by the primary before the source write.
 
+Revision 6 adds reference-state interpretation and painted-size evidence,
+preserving prior observations, subject provenance and independent record states.
+The bounded policy clarification is implemented by this local source export;
+no skill change, public runtime rerun, consumer refresh or publication follows
+from it. Private originals and the exchange association remain with their owner.
+
 ## History
 
 - 2026-10-26 — Revision 1. Created a generalized reference record for requested
@@ -258,3 +285,5 @@ reviewed by the primary before the source write.
 - 2026-11-08 — Revision 4. Added intrinsic horizontal end spacing, narrow containing-block hit geometry and retained vector-family evidence. Clarified the existing scroll-end check without prescribing dimensions.
 
 - 2026-11-12 — Revision 5. Added actual glyph-versus-decoding, portable font loading, measured readiness and delivered-license evidence. Preserved character, geometry, host and historical limits; no standalone skill, font asset or installation change.
+
+- 2026-11-17 — Revision 6. Added independent reference-signal meaning, corrected-interpretation and stroke-inclusive size evidence. Extended the existing state-axis review owner without prescribing a product legend or attributing guidance effect.
