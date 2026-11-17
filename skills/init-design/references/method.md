@@ -125,7 +125,9 @@
 - If no creative-source document exists, keep the governance wording general enough to tolerate a future source file.
 
 ## Source Priority
-Explicit user instructions and clarified constraints for the active task govern the run. Within those constraints, use this priority order unless the repository explicitly defines another source-of-truth rule consistent with them:
+Explicit user instructions and clarified constraints for the active task govern the run. Existing design constitutions and durable policies remain binding outside an authorized change; resetting a baseline does not silently discard them. Treat product entities, roles, supported behavior, device priorities, and technical requirements as compatibility constraints, even when a visual source omits them.
+
+Within that boundary, use this priority order unless the repository explicitly defines another source-of-truth rule consistent with it:
 1. current committed visual source set or the explicit base artifact(s) named by the user
 2. existing creative-source document such as `DESIGN.md`
 3. repository constraints and product/runtime docs
@@ -133,6 +135,8 @@ Explicit user instructions and clarified constraints for the active task govern 
 
 Rules:
 - Higher-priority sources should not be silently overridden by lower-priority sources.
+- Explicitly distinguish a selected base from supporting external inspiration and discovery leads. An external screen may be the selected base for a new product; an award, directory card, copied style export, or familiar filename does not give it that authority automatically.
+- When revising established rules, record the authorized delta and preserve unaffected rules. Continue an already authorized change without asking for the same approval again; surface consequential conflicts the task has not resolved.
 - If a lower-priority source reveals a real contradiction, record it and resolve it explicitly instead of blending them together.
 - When the source set is `index.html + DESIGN.md`, treat `index.html` as the artifact and `DESIGN.md` as the intent source; the constitution must reconcile them rather than copy either one blindly.
 - When the source set contains several screens or HTML files, identify:
@@ -149,6 +153,8 @@ Rules:
   - existing schema docs
   - existing screens
   - token files if they exist
+- Identify existing durable design rules and the authorized initialization or reset scope.
+- Record the sources used and their evidence limits; use [Source Evidence And Rule Promotion](source-evidence.md) for external references and extracted measurements.
 
 ### Step 2. Identify Starting Source-Set Type
 - classify:
@@ -171,6 +177,7 @@ Rules:
   - navigation assumptions
   - layout density
   - list/detail/edit implications
+- Distinguish observed facts, reported analysis, inferred patterns, and proposed adaptations. Resolve material conflicts before promoting rules; keep unsupported decisions open.
 
 ### Step 5. Convert Artifact Into Constitution
 - write:
@@ -181,6 +188,7 @@ Rules:
   - semantic draft
   - layout rules
   - component rules
+- Keep token origins and semantic mappings traceable, and test the rules against supported families, required states, device constraints, and the intended visual character. Record source-based checks separately from rendered checks.
 
 ### Step 6. Write Outputs To Project Docs
 - Default output locations:
@@ -188,6 +196,8 @@ Rules:
   - `./docs/policies/design/design-document-governance.md`
 - If the project already uses another established design-doc folder, follow that local convention instead of creating a second parallel location.
 - If `DESIGN.md` or another creative-source doc exists, wire that actual file into the governance output instead of leaving the source unnamed.
+- Keep finalized rules and a compact source basis in the constitution. Report open decisions and temporary validation gaps separately; do not fill unsupported sections with invented certainty or leave the template uncompleted.
+- Generate token/code exports only when requested, from the same adopted decisions and in the project's established format. The constitution remains the rule owner; exports do not become a competing authority.
 
 ### Step 7. Add Guardrails
 - explicitly define:

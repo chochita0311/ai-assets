@@ -232,6 +232,7 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
 ### Primitive Tokens
 - Primitive tokens are raw constants.
 - They should not know what a card or topbar is.
+- For extraction provenance, normalization, exact-value limits, and alias checks, use [Extract Traceable Tokens](source-evidence.md#extract-traceable-tokens).
 - Use [Concrete Token Example](#concrete-token-example) for the complete raw-token example.
 
 ### Semantic Tokens
@@ -272,12 +273,12 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
 - Example:
 ```css
 :root {
-  --color-primary: #144bb8;
-  --color-primary-strong: #0f3d97;
-  --color-bg-light: #fdfcf9;
-  --color-surface-light: #ffffff;
-  --color-text-strong: #101828;
-  --color-text-muted: #667085;
+  --color-blue-600: #144bb8;
+  --color-blue-700: #0f3d97;
+  --color-cream-50: #fdfcf9;
+  --color-white: #ffffff;
+  --color-gray-900: #101828;
+  --color-gray-500: #667085;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -293,11 +294,13 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
 - Example:
 ```css
 :root {
-  --page-bg: var(--color-bg-light);
-  --page-heading: var(--color-text-strong);
-  --surface-card: var(--color-surface-light);
+  --page-bg: var(--color-cream-50);
+  --page-heading: var(--color-gray-900);
+  --text-muted: var(--color-gray-500);
+  --surface-card: var(--color-white);
   --shadow-card: var(--shadow-soft);
-  --interactive-primary-bg: var(--color-primary);
+  --interactive-primary-bg: var(--color-blue-600);
+  --interactive-primary-hover-bg: var(--color-blue-700);
   --radius-card: var(--radius-md);
   --radius-panel: var(--radius-lg);
 }
@@ -337,8 +340,7 @@ The procedural workflow remains in [method.md](method.md). Output structure rema
 
 ### Shadow
 - Means depth cue.
-- In premium interfaces:
-  - weaker is often better
+- Match its strength to the source-supported visual character and hierarchy; a restrained reading surface and an expressive poster can need different treatment.
 
 ### Spacing Scale
 - Means approved gaps and paddings.

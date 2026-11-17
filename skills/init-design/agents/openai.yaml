@@ -1,7 +1,7 @@
 interface:
   display_name: "Init Design"
-  short_description: "Turn an initial source set into stable design rules"
-  default_prompt: "Use $init-design to turn this initial source set into a durable design constitution."
+  short_description: "Ground design tokens and rules in visual sources"
+  default_prompt: "Use $init-design to turn these visual sources and product constraints into a durable design constitution with traceable tokens and source-aware governance."
 
 policy:
   allow_implicit_invocation: true

@@ -6,6 +6,18 @@
 - Do not put immediate next actions, implementation sequencing, or temporary task lists here.
 - Do not write transition phrases inside locked rules; if something is unsettled, leave it out of the constitution or handle it in a separate planning workflow.
 
+## Source Basis And Adopted Decisions
+- Baseline identity and authorized scope:
+- Existing rules retained or deliberately changed:
+
+| Source | Locator and available snapshot identity | Role and derivation | Observed region/device/theme/state and evidence kind | Material limits |
+|---|---|---|---|---|
+| | | | | |
+
+| Adopted rule or token group | Source locator or product requirement | Basis: observed / reported / inferred / proposed | Adoption rationale and resolved conflicts |
+|---|---|---|---|
+| | | | |
+
 ## 1. Project Context
 - Product type:
 - Primary users:
@@ -41,6 +53,10 @@
 - Motion:
 - States:
 
+| Token | Type and chosen value/unit | Original value and source/context | Normalization reason, if changed |
+|---|---|---|---|
+| | | | |
+
 ## 5. Semantic Tokens
 - Page background:
 - Surface hierarchy:
@@ -49,6 +65,17 @@
 - Feedback hierarchy:
 - Shell sizing:
 - Reading mode:
+
+| Semantic token | Primitive mapping | Role and component usage | Theme/state scope |
+|---|---|---|---|
+| | | | |
+
+Material color combinations, including adopted interaction states; equivalent
+pairs may share a row. Keep static checks distinct from rendered validation.
+
+| Text/control variant | Foreground, background, and host surface | Theme/state and usage restrictions | Actual check result and evidence limit |
+|---|---|---|---|
+| | | | |
 
 ## 6. Layout Rules
 - App shell:
@@ -66,6 +93,7 @@
 - Tabs or chips:
 - Dialogs or drawers:
 - Empty, loading, and error states:
+- For each applicable component: purpose, anatomy, variants, required states, token mappings, and forbidden deviations.
 
 ## 8. Core UI Patterns
 - App shell pattern:
@@ -81,6 +109,7 @@
 - What must stay visually consistent:
 - Navigation transformation:
 - Density rule:
+- Content overflow, missing content, and touch/zoom behavior:
 
 ## 10. Implementation Rules
 - Primitive token rule:
@@ -88,6 +117,9 @@
 - Component rule:
 - Layout rule:
 - Source-of-truth update rule:
+- Readability, contrast, keyboard focus, and reduced-motion requirements:
+- Font/asset availability and fallback rules:
+- Optional derived token/export owner and synchronization rule:
 
 ## 11. AI Guardrails
 - AI may:

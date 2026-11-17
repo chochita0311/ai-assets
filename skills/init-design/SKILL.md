@@ -1,6 +1,6 @@
 ---
 name: init-design
-description: Use when starting or resetting product design from an initial source set and you need to turn it into a stable design constitution with compatibility checks and reusable rules. Use for web, mobile, or mixed products when one or more visual sources exist but should not become the system by themselves.
+description: Derive or reset a durable design constitution from existing screens, HTML, mockups, or selected visual references plus product context. Extract grounded primitive and semantic tokens, layout and component rules, reconcile DESIGN.md or style exports, and check product compatibility for web or mobile. Use when visual sources exist and durable rules need to be established or deliberately revised; not for reference discovery alone, text-only inspiration without a visual source, isolated component polish, or implementation under an established constitution.
 ---
 
 # Init Design
@@ -9,6 +9,7 @@ Use this skill to turn an initial source set into a stable design starting point
 
 ## Use This Skill When
 - A project has one or more visual sources such as screens, HTML pages, mocks, or AI-generated entry pages but no stable design rules yet
+- A selected external screen is the visual seed for a new product, with product context to guide adaptation
 - The visual direction exists, but compatibility, expandability, and maintainability are still unclear
 - You need to convert a screen into:
   - design DNA
@@ -21,7 +22,7 @@ Use this skill to turn an initial source set into a stable design starting point
 - A project has drifted and needs its design baseline rebuilt from the current source set
 
 ## Do Not Use This Skill When
-- There is no visual source set yet
+- There is no inspectable visual source yet; directory cards, repository lists, or an uncorroborated style description alone do not supply one
 - The task is only to polish a single existing component
 - The task is implementation-only and the design constitution already exists
 - The task is a full visual redesign without a stable starting artifact to evaluate
@@ -31,12 +32,15 @@ Use this skill to turn an initial source set into a stable design starting point
 - `Use $init-design to review these initial screens and turn them into stable tokens, layout rules, and a design constitution.`
 - `Use $init-design to reset the design baseline for this app using the current main screen and the existing product constraints.`
 - `Use $init-design to analyze these HTML files plus DESIGN.md and derive one design constitution.`
+- `Use $init-design with this selected reference screen and these product constraints to establish our initial design rules.`
+- `Use $init-design to reconcile our screens with this exported style reference; preserve the product's established constraints and identify what the sources actually support.`
 
 ## Reference Routing
 
 - For every run, read [Source Priority](references/method.md#source-priority), [Workflow Of `init-design`](references/method.md#workflow-of-init-design), [Output Rule](references/method.md#output-rule), and [Constitution vs Plan](references/method.md#constitution-vs-plan).
 - Read [Starting Artifact Types](references/method.md#starting-artifact-types) when the source-set type is unclear.
 - Read [Source-Set Extraction Rules](references/method.md#source-set-extraction-rules) when extracting rules from several artifacts or reconciling source differences.
+- Read [source-evidence.md](references/source-evidence.md) when using external references, style exports, screenshots, video, or tool-extracted measurements. It owns source intake, observation limits, token traceability, and promotion checks.
 - Read [Screen Expansion Rules](references/method.md#screen-expansion-rules) only when the constitution needs durable screen-family guidance.
 - Read [constitution-content-guide.md](references/constitution-content-guide.md) only when detailed property definitions, token examples, the department model, or design terminology are needed.
 - Use [references/checklist.md](references/checklist.md) as the final quick validation pass.
@@ -46,26 +50,27 @@ Use this skill to turn an initial source set into a stable design starting point
    - `single-screen artifact`
    - `multi-screen source set`
    - `screen-plus-context`
-2. Honor explicit user instructions and clarified constraints for the active task, then rank design sources within those constraints:
+2. Honor explicit user instructions, clarified product constraints, and existing durable rules within the authorized change scope; use [Source Priority](references/method.md#source-priority) to reconcile:
    - current visual source set or committed base artifact(s)
    - existing creative-source document such as `DESIGN.md`
    - repository constraints and docs
    - only then inference
 3. Identify whether a creative-source document already exists, such as `DESIGN.md`, and treat it as source material rather than as durable law.
-4. Evaluate the artifact as design input, not as the final system.
+4. Evaluate the artifact as design input, not as the final system. Identify its source, observed scope, and role; distinguish direct observations from reported values, interpretations, and proposed adaptations.
 5. Check compatibility against:
    - product goals
    - entities
    - roles
    - states
    - device priority
-6. Write or update the constitution with [templates/design-constitution.md](templates/design-constitution.md).
+6. Reconcile conflicting evidence, derive reusable tokens and rules, and write or update the constitution with [templates/design-constitution.md](templates/design-constitution.md). Preserve the intended visual character while checking supported screen families and required states.
 7. Write or update design document governance with [templates/design-document-governance.md](templates/design-document-governance.md).
 8. Complete the routed final validation pass.
 
 ## Package Layout
 - `references/`
   - `method.md`: procedural workflow and ownership decisions
+  - `source-evidence.md`: evidence intake, extraction limits, and rule promotion
   - `constitution-content-guide.md`: optional property, token, and terminology guidance
   - `checklist.md`: final binary validation
 - `templates/`
@@ -78,11 +83,14 @@ Use this skill to turn an initial source set into a stable design starting point
   - `./docs/policies/design/design-constitution.md`
   - `./docs/policies/design/design-document-governance.md`
 - Only use another folder if the project already has an established convention.
+- Complete the documents with usable decisions and source references, not unfilled scaffolds. Keep unresolved decisions and temporary validation work in the response or an existing plan.
+- Token code or exports are optional, explicitly requested derived outputs; keep their format and location aligned with the project and their values aligned with the constitution. Do not change application code or install reference tools merely to produce the two documents.
 
 ## Core Rule
 - Start from a visual source set, but never let the source set become the system by itself.
 - Always convert the source set into explicit rules before expanding screens.
 - Always validate design against compatibility, expandability, and maintainability constraints.
+- A style analysis, generated `DESIGN.md`, or token export is evidence to assess; its precision or popularity does not make it the product's design authority.
 - Treat the constitution as the stable rule document.
 - Keep screen families in the constitution only when they are durable product structure.
 - Treat this skill as drafting-agent/evaluator friendly: a second agent should be able to judge pass/fail from the output files without reconstructing the whole design process.
@@ -93,6 +101,7 @@ Use this skill to turn an initial source set into a stable design starting point
   - how the product should feel
   - which tokens, semantics, layouts, and component rules are durable
   - which screen families are fundamental to the product structure
+  - which sources and adoption reasons support those rules, including material observation limits
 - `design-constitution.md` must not include:
   - immediate next actions
   - implementation sequencing

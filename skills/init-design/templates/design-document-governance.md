@@ -8,10 +8,14 @@
 ## Governance Model
 - Creative source:
   - usually `DESIGN.md` or another repo-specific design-intent document
+- Supporting external references:
+  - name the actual selected references and distinguish them from the project's creative source
 - Durable design source of truth:
   - `design-constitution.md`
 - Optional future planning track:
   - `docs/plans/design/` when the repo later needs tracked design planning
+- Optional derived token/code outputs:
+  - name actual outputs only when requested or already present; derive them from adopted rules in the constitution
 
 These documents are related, but they are not peers. Each one owns a different kind of information and should be updated for different reasons.
 
@@ -19,6 +23,11 @@ These documents are related, but they are not peers. Each one owns a different k
 1. `design-constitution.md` governs implementation and evaluation.
 2. The creative source document provides intent, direction, and source material.
 3. Any future design plan tracks active sequencing and unresolved work only when needed.
+
+External style analyses, catalogs, and exports supply evidence rather than
+independent rule authority. Derived project token/code outputs implement adopted
+rules; they do not redefine them. Record source identity and observation limits
+in the constitution's source basis.
 
 If documents conflict:
 - The constitution wins for durable rules.
@@ -67,6 +76,8 @@ If documents conflict:
 - Update `design-constitution.md` when a durable rule changes.
 - Update a future design plan only when active scope, sequencing, or uncertainty needs durable tracking.
 - Do not update all documents by default. Update only the document that owns the change.
+- Changes to an external site or export do not automatically revise the baseline. Review their product impact and deliberately update the constitution when a durable change is authorized.
+- When a rule changes, synchronize affected derived outputs within scope and verify that names, values, semantic mappings, and state/theme coverage still agree.
 
 ## Rule Promotion
 When new design input appears:
