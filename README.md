@@ -16,6 +16,7 @@ Reusable AI assets for project work, centered on portable Codex skills and share
 
 ## How To Navigate
 - Start with [AGENTS.md](AGENTS.md) for the operational repo map and working rules.
+- Browse AI development references and bookmarks in the [link library](links/README.md).
 - Read [skills/SKILL-QUALITY.md](skills/SKILL-QUALITY.md) for the quality bar and maintenance reference for reusable skills.
 - Use the [improvement record catalog](evidence/README.md) for reusable knowledge and pending improvements across asset domains, stored by component. The [record and exchange contract](harness/policies/improvement-record-contract.md) governs their shared format, placement, import, export and feedback.
 - Read [harness/README.md](harness/README.md) for shared workflow roles, orchestration, and adoption; [agents/README.md](agents/README.md) covers independent runtime instructions, presets, and adapters.
