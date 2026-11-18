@@ -70,7 +70,7 @@ separate merge that preserves its existing instructions and settings; see the
 ## Skill Catalog
 - [clean-code](skills/clean-code/SKILL.md): simplify hard-to-read code and clarify responsibility boundaries within the requested scope
 - [design-deslop](skills/design-deslop/SKILL.md): compare UI improvements through inspectable before/after HTML, choose whole changes or parts, and send preferences back for another preview before adoption
-- [design-plan](skills/design-plan/SKILL.md): plan multi-screen design consistency and reconciliation work
+- [design-plan](skills/design-plan/SKILL.md): plan scoped design changes, consistency improvements, and phased rollout for existing products
 - [docs-shaping](skills/docs-shaping/SKILL.md): reshape document composition while preserving meaning
 - [docs-structuring](skills/docs-structuring/SKILL.md): organize layered repository documentation and ownership
 - [gh-review-pr](skills/gh-review-pr/SKILL.md): review, draft, audit, refresh, publish, or safely maintain frozen-snapshot GitHub PR reviews with verified inline threads
