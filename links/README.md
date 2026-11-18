@@ -4,7 +4,7 @@
 
 ## AI Development and References
 
-[Skills and MCP](#skills-and-mcp) · [Official Documentation](#official-documentation) · [Skills and Prompts](#skills-and-prompts) · [Harnesses and Workflows](#harnesses-and-workflows) · [Design](#design) · [Code Understanding and Documentation](#code-understanding-and-documentation) · [Explainers and Review Artifacts](#explainers-and-review-artifacts) · [Search and Research](#search-and-research)
+[Skills and MCP](#skills-and-mcp) · [Official Documentation](#official-documentation) · [AI Sites](#ai-sites) · [Skills and Prompts](#skills-and-prompts) · [Harnesses and Workflows](#harnesses-and-workflows) · [Design](#design) · [Code Understanding and Documentation](#code-understanding-and-documentation) · [Explainers and Review Artifacts](#explainers-and-review-artifacts) · [Search and Research](#search-and-research)
 
 ### Skills and MCP
 
@@ -17,6 +17,11 @@
 
 - [Codex Docs](https://developers.openai.com/codex) · Official documentation for OpenAI Codex **[Site]**
 - [Claude Code Docs](https://code.claude.com/docs/en/overview) · Official documentation for Claude Code **[Site]**
+
+### AI Sites
+
+- [Codex Pets](https://codex-pets.net/) · Community gallery of animated pets for Codex **[Site]**
+- [GitHub Copilot](https://github.com/features/copilot) · Overview of GitHub's AI coding assistant **[Site]**
 
 ### Skills and Prompts
 
