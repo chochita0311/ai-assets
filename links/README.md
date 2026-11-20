@@ -60,14 +60,31 @@
 
 ### Design
 
+Find individual works by product task, material and visual relationship in the [design source library](../skills/brand-direction/references/design-sources.md). It includes source locators, the evidence inspected and transfer limits. The websites below also support open discovery.
+
 #### Screen and Interaction References
 
+- [Refero Styles](https://styles.refero.design/) · Curated product style references with links to original products **[Site]**
 - [Awwwards](https://www.awwwards.com/) · Gallery of website layouts and motion examples **[Site]**
 - [Awwwards MCP](https://github.com/INSANE0777/Awwwards-mcp) · Natural-language search of Awwwards examples from an agent **[Git]**
+- [Siteinspire](https://www.siteinspire.com/) · Curated websites browsable by style, type and subject, with links to the original work **[Site]**
+
+#### Art Direction and Editorial Design
+
+- [It’s Nice That](https://www.itsnicethat.com/) · Projects and interviews on how graphic designers, illustrators and art directors make visual decisions **[Site]**
+- [Wildy Riftian, Motion Works](https://www.wildyriftian.com/works-motion) · Artist’s portfolio with project stills and notes on imagery, texture and motion **[Site]**
+
+#### Typography
+
+- [Google Fonts](https://fonts.google.com/) · Type specimens and font families with licenses in the official [distribution repository](https://github.com/google/fonts) **[Site]**
+- [Pangram Pangram](https://pangrampangram.com/) · Independent foundry and type specimens with [licenses by use](https://pangrampangram.com/pages/eula) **[Site]**
+- [Fontshare](https://www.fontshare.com/) · Type families from Indian Type Foundry and other designers, distributed under [ITF or open-source terms](https://www.fontshare.com/licenses) **[Site]**
 
 #### Design Systems and AI Inputs
 
 - [Awesome DESIGN.md](https://github.com/VoltAgent/awesome-design-md) · Examples of using `DESIGN.md` to pass web design rules to agents **[Git]**
+- [Dembrandt](https://github.com/dembrandt/dembrandt) · Extracts color, type and other design tokens from a website. Its [companion skills](https://github.com/dembrandt/dembrandt-skills) cover design systems and UX. **[Git]**
+- [Astryx](https://astryx.atmeta.com/) · Meta’s React component library with customizable themes and light and dark appearances **[Site]**
 
 #### AI-Assisted Design and Refinement
 

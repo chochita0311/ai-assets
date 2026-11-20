@@ -14,3 +14,6 @@ __pycache__/
 
 # Local editor state
 .obsidian/
+
+# Private product specimens used in brand-direction reviews
+/.artifacts/brand-direction/

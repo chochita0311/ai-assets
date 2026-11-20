@@ -33,9 +33,10 @@ Choose the requested work and reuse authorization that already applies:
   before dependent execution.
 - **Prepare a public case:** construct and review a standalone candidate from
   supported experience. Saving a candidate locally does not publish it.
-- **Export common experience:** reconcile a reviewed public improvement record
-  or authorized normative change into the resolved canonical shared source, following the
-  export procedure below. It does not imply commit, push or consumer refresh.
+- **Export common experience:** use the procedure below to reconcile a reviewed
+  public improvement record or an authorized change to an existing shared asset,
+  including a skill resource, at its canonical source. Commit, push and consumer
+  refresh require their own authorization.
 
 These can form one authorized task. Observation alone does not authorize live
 replays, source edits, publication or installation. Optional unavailable tooling
@@ -286,6 +287,9 @@ This direction is consumer to common source, independent of Git ignore rules.
 1. **Resolve scope and source.** Apply the request mode/category/time limits and
    resolve the actual ai-assets checkout. Select relevant records, observations, comparisons
    or scattered improvement notes from available current-project evidence.
+   For an unrestricted export, include useful references already inspected in
+   the project or session. When a skill maintains a collection for those
+   references, follow its contribution instructions as part of the same export.
    Include new support, counterevidence and changed conditions; do not scan all
    raw history or unrelated environments. Report missing history and retain
    local/hold candidates when scope, source or evidence is unresolved. For a
@@ -305,9 +309,9 @@ This direction is consumer to common source, independent of Git ignore rules.
    independent events. Hold privately if meaning or public fitness is unresolved.
    Validate the format and approval state; same-revision changed bytes or a
    concurrent source update require reconciliation, not a blind overwrite.
-4. **Write the common result.** Write the normalized record to the resolved
-   `evidence/<domain>/<component>/` source location, using one of the four owner
-   domains defined by [Public Record Placement](../policies/improvement-record-contract.md#public-record-placement).
+4. **Write the common result.** Write each eligible, normalized improvement
+   record to its resolved `evidence/<domain>/<component>/` source location,
+   using one of the four owner domains defined by [Public Record Placement](../policies/improvement-record-contract.md#public-record-placement).
    Increment content revision for changed record content; a path-only move with
    identical bytes retains it. Preserve original observations,
    contrary evidence and history. Reconcile the common catalog/index

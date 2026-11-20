@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Direction"
+  short_description: "Compare and refine original visual identities on product screens"
+  default_prompt: "Use $brand-direction to improve this product’s visual identity from my references and reactions, and show the strongest choices on representative screens."

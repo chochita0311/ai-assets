@@ -69,6 +69,7 @@ separate merge that preserves its existing instructions and settings; see the
 [shared instruction guide](agents/instructions/README.md).
 
 ## Skill Catalog
+- [brand-direction](skills/brand-direction/SKILL.md) — develop and compare original product identities on working screens, with local studies under the target project's `.artifacts/brand-direction/`
 - [clean-code](skills/clean-code/SKILL.md): simplify hard-to-read code and clarify responsibility boundaries within the requested scope
 - [design-deslop](skills/design-deslop/SKILL.md): compare UI improvements through inspectable before/after HTML, choose whole changes or parts, and send preferences back for another preview before adoption
 - [design-plan](skills/design-plan/SKILL.md): plan scoped design changes, consistency improvements, and phased rollout for existing products
