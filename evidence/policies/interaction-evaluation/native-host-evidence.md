@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-native-host-evidence",
-  "revision": 6,
+  "revision": 8,
   "audience": "public",
   "subjects": [
     {
@@ -52,7 +52,8 @@
     "related": [
       "ir-ui-requested-control-rendering",
       "ir-ui-state-transition-contracts",
-      "ir-ui-initialization-recovery-evidence"
+      "ir-ui-initialization-recovery-evidence",
+      "ir-change-impact-preservation"
     ],
     "supersedes": []
   }
@@ -234,6 +235,39 @@ new task assigned by this reference record. Historical subject fingerprints and
 dated coverage remain intact; no comparative guidance test ran, so effect remains
 **not assessed**.
 
+### Verified bundles and the live executable
+
+A generalized private backend cutover produced a newer side-by-side web
+and desktop distribution while the existing local server was running. The
+primary reconciled the intended build inputs, both artifact receipts and
+artifact hashes. Isolated package checks covered startup, authenticated
+desktop requests, restoring an archive across restart and normal shutdown
+with interpreter execution denied. After relocation, both hosts again
+started, served requests and shut down on separate loopback listeners.
+The app signature verified in the bundle and after archive extraction. The same archive restart witness supports the
+typed-settings case. [`ir-change-impact-preservation`](../../harness/execution-loop-governance/change-impact-and-preservation.md#typed-configuration-compatibility-and-mutation-refusal)
+
+The browser exercised real PTYs with synthetic input and the final shipped
+Terminal helper. The final run recovered from a font failure after an earlier
+attempt stopped while awaiting a replacement document. Navigation and
+initial-state browser suites preceded the final settings-refusal repair.
+Packaged-host and native tests exercised the repaired inputs.
+
+The live server still mapped the binary from the default launcher path.
+Its executable identity was checked independently of the new build receipt.
+The new package had a different terminal payload identity, and replacing the
+default bundle during active work could change manager compatibility.
+Side-by-side packaging preserved the existing service while retaining a
+runnable verified candidate. Live replacement and mixed-version terminal
+session compatibility require their own verification.
+
+Artifact minimum-OS metadata, a packaged host process and browser PTYs each
+cover their observed boundary. An earlier native-window visit passed its
+scoped checks. A later extended keyboard sequence stopped at its focus guard.
+Physical input-method behavior, sleep and the minimum OS on a device remain
+separate. This account generalizes private synthetic execution.
+Public reproduction remains unrun. Guidance effect is unassessed.
+
 ## Work And Acceptance
 
 No separate runtime task or budget is assigned by this reference record. The
@@ -309,3 +343,10 @@ asset, publish a change or infer physical sleep/input coverage.
 - 2026-11-12 — Revision 5. Added guarded OS-input-method/WebKit/PTY observations and failed-driver counterevidence. Kept injected versus physical input, isolated web host versus packaged native delivery and unchanged acceptance states explicit.
 
 - 2026-11-17 — Revision 6. Added relocated runtime and Quit/relaunch boundaries, an unavailable latest-window gate after an earlier pass, and readiness/driver corrections. Existing policy suffices; retained product acceptance and physical-input limits.
+
+- 2026-11-20 — Revision 7. Added verified-but-staged replacement evidence,
+  actual mapped executable identity, and the distinct packaged-host, browser
+  and native-device limits.
+
+- 2026-11-20 — Revision 8. Identified the shared archive witness and stated
+  which checks used the final repair inputs.

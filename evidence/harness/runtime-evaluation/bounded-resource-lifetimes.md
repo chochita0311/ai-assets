@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-bounded-runtime-resource-validation",
-  "revision": 1,
+  "revision": 4,
   "audience": "public",
   "subjects": [
     {
@@ -108,6 +108,39 @@ an observed product failure were retained as different evidence. Public readers
 cannot inspect the originals through this account; related research/runtime/UI
 records share the effort and do not multiply its independent support.
 
+### CLI interruption at a publication boundary
+
+In a generalized private native CLI cutover, Ctrl+C could leave an inventory
+marked prepared even though the CLI reported interruption. A full simulation
+could publish a replacement report before a separate signal relay updated
+the worker flag. Source review identified that short delivery window and an
+I/O-error path that could report failure while cancellation was pending.
+The repair used the worker's own cancellation flag from the signal handler,
+rolled back an uncommitted inventory, and checked cancellation after staging
+reports and before publication. Errors within that pre-publication phase
+honor a pending cancellation. Completed publication retains the ordinary
+success outcome if the remaining work succeeds.
+
+Real SIGINT witnesses used synthetic data at inventory preparation,
+final verification, report staging and after report replacement. Inventory
+cancellation returned exit 130 with interrupted status and allowed retry.
+A transaction control checked rollback. Full simulation cancellation before
+publication returned exit 130, kept both prior report files intact and
+cleared pending files. A later signal with publication already visible
+yielded one completion. An in-process control combined an inference error
+with a set cancellation flag. Post-publication I/O failures, other signal
+timings and complete numerical grouping equivalence remain outside this
+witness.
+
+Separate cancellation witnesses rolled back the uncommitted source in a scan,
+emitted one interrupted query result before result output, and preserved a
+previously published index when search preparation stopped. These checks
+cover the active source, query response and index publication independently.
+Public reproduction remains unrun. Guidance effect is unassessed.
+
+The same product follow-up supports the review-method observation in
+[`ir-codex-review-challenger-validation`](../../agents/codex/review-challenger-validation.md#backend-cutover-and-repair-confirmation).
+
 ## Work And Acceptance
 
 The bounded requested common-source work is resolved: conditional resource,
@@ -149,3 +182,14 @@ close behavior or contrary outcomes invalidate an applicability condition.
   catalog row. Preserved the unconfirmed OS trigger, controlled close boundary,
   corrected probe prerequisites, primary timezone discovery and partial coverage.
   No new runtime execution or publication was performed by this export.
+
+- 2026-11-20 — Revision 2. Added a private CLI observation on pre-
+  publication cancellation, pending-output cleanup, error precedence, and
+  the separate post-publication control. No new common implementation work
+  was assigned.
+
+- 2026-11-20 — Revision 3. Identified the shared review observation and
+  clarified the limits of execution and guidance evidence.
+
+- 2026-11-20 — Revision 4. Added separately exercised scan rollback, query
+  interruption and search index preservation.

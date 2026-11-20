@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-result-preserving-performance",
-  "revision": 1,
+  "revision": 3,
   "audience": "public",
   "subjects": [
     {
@@ -55,35 +55,37 @@
 
 ## Context And Applicability
 
-How can a local data application remove repeated database, filesystem and index
-work while retaining the same admitted results and lifecycle behavior? The
-primary owner is [Code Quality](../../../policies/baseline/code-quality.md);
-[Clean Code](../../../skills/clean-code/SKILL.md) supplies a related bounded
-inspection method. This record retains evidence, not another normative policy,
-a benchmark suite or a new optimization task.
+How can a local application reduce database, filesystem, index and model
+work while retaining admitted results and lifecycle behavior? Code Quality
+owns the question. Clean Code supplies a related bounded inspection method.
+The observations are reference evidence for future comparisons.
+[Code Quality](../../../policies/baseline/code-quality.md) · [Clean Code](../../../skills/clean-code/SKILL.md)
 
 Use these observations when a measured path repeats independent aggregation,
-owner lookups, fallback reads, directory descent or reusable index preparation.
-An intentional full-candidate ranking, inexpensive current path or shared
-registry is not inherently defective. Preserve eligibility, ordering, exact
+owner lookups, fallback reads, directory descent, reusable index preparation or
+tokenization. An intentional full-candidate ranking, inexpensive current path or
+shared registry can be appropriate. Preserve eligibility, ordering, exact
 arithmetic, read snapshots, observation times, immutable facts, resumption and
-failure/cancellation semantics before choosing a cache or moving a filter.
+failure or cancellation semantics before choosing a cache or moving a filter.
+An inference change also needs checks for admission, input windows, numeric
+outputs and the retrieval results that depend on them.
 
-The projection preserves the computation and distinguishing boundaries while
-removing private corpus contents, project identities, row totals and local
-latencies. Synthetic fixture sizes below were executed in the original private
-product checks; they are not newly executed public reproductions. Original
-receipts remain private and cannot be inspected through this record. Subject
-fingerprints identify the shared files inspected for this export, not the exact
-historical installed/provided instructions. Those identities and complete model
-settings are unknown. No causal skill or guidance effect is established.
+The revision 1 projection preserves the computation and distinguishing
+boundaries while omitting private corpus contents, project identities, row
+totals and local latency measurements. The later inference case reports
+selected anonymized phase timings from a synthetic paired trial. The fixture
+sizes and timing observations come from the original private product checks.
+The original receipts remain with their private owners. The subject
+fingerprints identify the shared files inspected for revision 1. The exact
+historical installed and provided instructions, complete model settings, public
+reproduction and causal guidance effect remain unestablished.
 
 ## Evidence And Evaluation
 
-Selected execution receipts, implementation and regression controls were
-reviewed on 2026-11-08. Product results came from same-author source, synthetic
-browser/package checks and paired read-only local comparisons. This export
-does not replay the product or disclose a personal database.
+The 2026-11-08 review used selected receipts, implementation and regression
+controls. Its product results came from same-author source, synthetic browser
+and package checks, and paired read-only local comparisons. The later
+inference case has its own paired execution and limits below.
 
 ### Locate the expensive computation before changing it
 
@@ -129,6 +131,34 @@ Public execution and a controlled guidance comparison were **not run**; guidance
 effect is **not assessed**. Evidence maturity is the original observed stage,
 with partial coverage and no independent implementation review.
 
+### Preserve retrieval output while isolating inference cost
+
+A generalized private native-model follow-up profiled tokenization, input
+packing and transfer, model forward execution, and normalized output
+readback. A short earlier Python-to-native comparison had mixed results and
+included a slower long CPU sample. The later optimization compared two native
+implementations with the same pinned model. It reused budget-check token IDs
+only when whitespace stripping left the text unchanged and transferred
+ownership of the existing CPU attention mask buffer. A wider variant that
+also removed decoder state was dropped after repeated slowdown on a long
+GPU workload at the larger vector dimension.
+
+For a warmed two-window synthetic input, tokenization medians fell from
+5.22 to 4.41 ms on CPU and from 3.53 to 2.64 ms on GPU. Whole-call medians in
+that experiment rose slightly. A separate alternating comparison with the
+same loaded model and allocator produced small favorable whole-call
+medians. The distinction matters for process and allocation effects.
+Phase timing synchronized device work, while wall-time comparisons turned
+off that instrumentation. The timings apply to the paired local workloads.
+
+Successful vectors matched bit for bit at both checked output dimensions on
+CPU and GPU. The controls checked admission before
+whitespace stripping, window order and weights, cancellation, and reuse of an
+existing index without rewriting it. Synthetic queries retained their scores,
+ranks and source locators. Forced rebuild retained vectors and fragment
+metadata while rotating the generation. Original product checks ran with
+synthetic inputs. Public reproduction remains unrun. Guidance effect is unassessed.
+
 ## Work And Acceptance
 
 This reference assigns no common work, executor or runtime budget. The user
@@ -169,3 +199,11 @@ observed future use; private exchange associations remain at the task owner.
   reference for result-preserving repeated-work reduction. Retained contrary
   alternatives, cache/snapshot contracts, unimplemented scope and delivery limits.
   Generalization and source checks add no new product execution or effect claim.
+
+- 2026-11-20 — Revision 2. Added paired native inference profiling, a
+  rejected slower variant, exact retrieval-output controls and the separate
+  limits of phase and wall-clock evidence.
+
+- 2026-11-20 — Revision 3. Aligned applicability and disclosure scope with
+  the later synthetic inference measurements. The catalog now makes that
+  case discoverable.

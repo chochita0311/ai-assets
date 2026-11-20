@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-codex-review-challenger-validation",
-  "revision": 6,
+  "revision": 8,
   "audience": "public",
   "subjects": [
     {
@@ -337,6 +337,33 @@ Hidden context, full child capability enforcement, connector-only controls,
 ordinary-session behavior and billed cost remain open. No comparative result
 between 6.1 and 6.2 Sol was measured.
 
+### Backend cutover and repair confirmation
+
+A separate generalized private backend cutover review used three named
+review-challenger instances for storage, CLI cancellation and route parity.
+The initial packets supplied frozen baseline, pre-repair and candidate source,
+contracts and test definitions. The instances received no conversation fork
+and were assigned read-only inspection. One reviewer disclosed seeing a
+generic earlier pass statement while opening the frozen plan. The statement
+contained no finding-specific evidence.
+
+The candidates distinguished a delayed signal-to-worker handoff, loss of valid
+configuration siblings, and missing authenticated bookmark aliases. The
+primary compared old and new hosts on isolated inputs and ran process, storage
+and HTTP witnesses. The saved web URLs kept their original query through the
+redirect. The desktop admitted its two redirected pages with authentication
+and refused unauthenticated requests. An informed confirmation then
+found that fixing the read path had changed a rejected edit from a content
+conflict to an unavailable response. The primary repaired it, froze the
+two-file delta and reran the affected test and packaged-host checks. A final
+informed source pass confirmed which revision and diagnostic predicates ran
+before mutation. The reviewers inspected source and returned evidence
+requests. The primary executed the artifacts and made the decision.
+
+This is original stage execution with partial coverage and an unrun public
+reproduction. The informed passes share the discovery lineage. Review
+effectiveness, provider behavior and model binding effects remain unmeasured.
+
 ## Work And Acceptance
 
 ### Eligibility And Authority
@@ -446,3 +473,11 @@ not as independent runtime attestation or proof of the role's general benefit.
   test and the subsequent user-approved named checks. Kept the 6.1 Sol results
   scoped to their original trials and the 6.2 Sol results scoped to the late
   synthetic probes.
+
+- 2026-11-20 — Revision 7. Added a distinct backend cutover observation
+  covering blind discovery limits, informed refusal repair, and primary-
+  owned process and artifact witnesses. The binding and open evidence work
+  retain their prior status.
+
+- 2026-11-20 — Revision 8. Added the observed redirected URL and
+  authentication outcomes for the reviewed route case.

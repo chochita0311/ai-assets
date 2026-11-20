@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-ui-initialization-recovery-evidence",
-  "revision": 2,
+  "revision": 5,
   "audience": "public",
   "subjects": [
     {
@@ -160,6 +160,32 @@ commit `19e14c8d48fc9ba3106219969f6ca70802479032`
 Historical subject fingerprints above remain unchanged. This identifies the
 compared shared source, not the instructions loaded during product executions.
 
+### Cached dashboard entry and the first complete frame
+
+In a generalized private dashboard change, a saved default summary cut
+response time and allowed a refresh after entry. This still exposed a visible
+composition sequence. The heading briefly used loading copy, and a cold
+entry displayed placeholder cards before results. Reserving the layout removed
+movement while the intermediate state remained visible. The final design
+served a complete saved summary with a stable heading. A cold document
+request completed the summary before navigation, leaving the previous
+document visible during the wait. Calculation failure retained a retry path.
+
+A Chrome fixture injected 220 ms before the cold response. The previous
+document stayed mounted, and all 12 sampled styled frames after entry had
+the normal description, four values and the chart. An unchanged background
+refresh produced identical before-and-after images. A failed background
+refresh preserved the existing result and recovered on retry. Separate
+checks exercised keyboard focus, chart scrolling and filter history during
+navigation. These are generalized private observations on synthetic data.
+Public reproduction remains unrun. Guidance effect is unassessed.
+
+The measured warm-entry improvement applies to an eligible cached response.
+Eligibility depends on the default view, local day, timezone and database
+identity. A stale summary within those conditions can appear while updating.
+The cold-navigation probe checks first visibility by sampling styled frames
+from entry after the delayed response.
+
 ## Work And Acceptance
 
 This reference starts no product run or experiment. The authorized common-source
@@ -206,3 +232,12 @@ refresh, runtime replay, commit or push is performed by this export.
   restoration observations, including the passing-fixture counterexample and
   hidden-frame boundary. Clarified the existing initialization check at its
   policy owner; retained draft case acceptance and unverified physical boundaries.
+
+- 2026-11-20 — Revision 3. Added cached and cold dashboard entry evidence
+  with delayed navigation, complete styled frames, unchanged refresh imagery
+  and retry controls. The existing interaction rule covers this case.
+
+- 2026-11-20 — Revision 4. Clarified the cached measurement scope and the
+  separate cold first-frame witness.
+
+- 2026-11-20 — Revision 5. Clarified that styled sampling began at entry.

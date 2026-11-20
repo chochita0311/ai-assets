@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-change-impact-preservation",
-  "revision": 3,
+  "revision": 6,
   "audience": "public",
   "subjects": [
     {
@@ -62,7 +62,8 @@
   },
   "relations": {
     "related": [
-      "ir-ui-initialization-recovery-evidence"
+      "ir-ui-initialization-recovery-evidence",
+      "ir-codex-review-challenger-validation"
     ],
     "supersedes": []
   }
@@ -168,6 +169,38 @@ related [performance case](../../policies/code-quality/result-preserving-perform
 owns repeated-work and cache-lifetime observations from the same work episode;
 cross-reference is not independent evidence. Guidance effect is **not assessed**.
 
+### Typed configuration compatibility and mutation refusal
+
+In a generalized private cutover, the preceding host created a synthetic
+SQLite3 file and companion TOML settings. The new host opened both, checked
+SQLite integrity and read back retained records and effective settings.
+
+A separate same-install backup contained valid TOML dates, infinity and a
+large integer. A whole-document
+projection into JSON rejected that archive before restoration. The correction
+parsed the full TOML, read an exact supported integer schema version and
+restored the original bytes. Malformed syntax and a string schema version
+were refusal controls. Isolated packaged web and desktop runs checked
+same-install archive admission, restart and effective preference readback
+alongside the original bytes.
+
+A related configuration loader had rejected a multi-profile file because
+one entry's value could not be projected into JSON. The revised loader
+diagnosed the affected entry while retaining eligible siblings. A later
+review showed that the edit operation still attempted strict conversion
+before reporting the diagnostic. The current revision and stale revision were
+checked separately. Each returned a content conflict with its own recovery
+message while the original file and visible inventory survived. Strict
+decoding still guards an admitted write. These are private synthetic product
+witnesses. Public reproduction remains unrun. Guidance effect is unassessed.
+
+Consumers include a restarted host, collection from eligible profiles, a
+rejected edit and the recovery message. Concurrent external file edits and
+the full range of prior storage versions remain outside the witness.
+
+The same product follow-up supports the review-method observation in
+[`ir-codex-review-challenger-validation`](../../agents/codex/review-challenger-validation.md#backend-cutover-and-repair-confirmation).
+
 ## Work And Acceptance
 
 This reference assigns no task or experiment. The authorized common-source work
@@ -225,3 +258,13 @@ installation, consumer refresh or native product replacement is performed.
   observations. Retained existing governance because it already covers actual
   consumers and preserved contracts; added no universal platform or build policy.
 - 2026-11-08 — Revision 3. Added backed-up admitted migration, imported/user-title ownership and registry/display/presence evidence. Retained existing governance and runtime-migration limits.
+
+- 2026-11-20 — Revision 4. Added same-install typed backup restoration and
+  sibling isolation with current- and stale-revision refusal witnesses.
+  Retained the existing governance and evidence scope.
+
+- 2026-11-20 — Revision 5. Identified the related review-method case and
+  stated the distinct limits of product and guidance evidence.
+
+- 2026-11-20 — Revision 6. Restored the distinct predecessor-host data
+  compatibility witness beside the same-install archive case.
