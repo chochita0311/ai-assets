@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-codex-review-challenger-validation",
-  "revision": 5,
+  "revision": 6,
   "audience": "public",
   "subjects": [
     {
@@ -11,6 +11,12 @@
       "key": "agents/adapters/codex/custom-agents/review_challenger.toml",
       "content_sha256": "0107df39d140e2fe15256c88c4e6b028e8ee4da7d25c276d8fdf0bdfe5f52140",
       "source_revision": "17e414f69d3323df98c2191b217fb4c3241e0350"
+    },
+    {
+      "kind": "runtime",
+      "key": "agents/adapters/codex/custom-agents/research_worker.toml",
+      "content_sha256": "772de526484aa28abc2292f71456fa2b038f271a05d1a4bbe262c726ccb98fcd",
+      "source_revision": "526a681f455230946bfde18a0493fc1bf3f2eeeb"
     },
     {
       "kind": "skill",
@@ -55,7 +61,8 @@
   },
   "relations": {
     "related": [
-      "ir-pr-review-semantic-corpus"
+      "ir-pr-review-semantic-corpus",
+      "ir-research-sadr-validation"
     ],
     "supersedes": []
   }
@@ -73,15 +80,19 @@ semantic candidate discovery. It is an omission-only support role; the
 [portable PR-review skill](../../../skills/gh-review-pr/SKILL.md#run-directly-or-as-a-delegated-reviewer)
 can also be executed directly or by a full-task delegated reviewer without it.
 
-The role file still selects `gpt-6.1-sol` / `max` and four optional feature
-reductions. Configuration is not proof of effective model, competence, cost or
-context isolation. The [adapter](../../../agents/adapters/codex/README.md#review_challenger)
+In the earlier trials, the role file selected `gpt-6.1-sol` / `max` and four
+optional feature reductions. Configuration is not proof of effective model,
+competence, cost or context isolation. The
+[adapter](../../../agents/adapters/codex/README.md#review_challenger)
 owns binding, installation, reasons and tradeoffs. Task contracts own risk
 routing and semantic gates: [refactor-plan](../../../skills/refactor-plan/SKILL.md)
 for local refactor checkpoints, [execution-loop governance](../../../harness/policies/execution-loop-governance.md#independent-code-challenge)
 for approved-feature implementation, and the PR-review skill for its own domain.
 The primary remains the decision owner. This record reports evidence; it does
 not install a global router, adopt a universal rule or authorize model replacement.
+It also holds the shared Codex configuration, installation and named-runtime
+evidence for the Sol upgrade. [Research SADR validation](../../skills/research-sadr/research-validation.md)
+owns the research method's acceptance question.
 
 ## Evidence And Evaluation
 
@@ -102,8 +113,8 @@ The final independent refine audit returned PASS for static and resource checks,
 Evidence Coverage partial, highest evidence resource execution. It found no
 reason for further document restructuring. The [official custom-agent schema](https://learn.chatgpt.com/docs/agent-configuration/subagents#custom-agent-file-schema)
 supported the declared fields; account access, actual loading and effective
-permissions were not observed in that audit. These checks were not rerun for
-this record refresh.
+permissions were not observed in that audit. The record refresh at that
+checkpoint reused the results of those checks.
 
 At that checkpoint, the TOML hash identified an uncommitted candidate and its
 `source_revision` was null. No shared harness routing, repair-loop budget or
@@ -156,10 +167,11 @@ activation were not independently exposed. Earlier source/runtime-copy equality
 checks are historical installation input, not proof that all runtime flags were
 effective. Requested or configured settings must not be reported as observed.
 
-The TOML remains byte-identical to its verified committed source; metadata now
-records that commit without rewriting the original uncommitted observation.
-The other subject hashes identify the public skill entry, method and harness
-policy snapshots at that observation. They were uncommitted candidates then,
+At the November 2 checkpoint, the TOML matched its verified committed source
+byte for byte. The subject metadata records that commit while preserving the
+original uncommitted observation in its earlier scope.
+The refactor-plan entry, method and harness-policy hashes identify those
+snapshots at the same checkpoint. They were uncommitted candidates then,
 hence null source revisions; later source edits or publication do not relabel
 those historical fingerprints as the current files.
 Only original reported observations, source/input identities and reviewer returns
@@ -265,6 +277,66 @@ causal role-benefit comparison or complete runtime-acceptance matrix ran for thi
 export. Keep the open evidence requirements and historical subject identities
 below; a successful private application review does not close them.
 
+### Sol binding migration
+
+GPT-6.2 Sol became available in Codex on 2026-11-17. The November 20 audit
+still found 6.1 Sol listed, with no retirement identified. The user then
+approved upgrading `review_challenger` and `research_worker` to 6.2 Sol. Both
+local Codex homes already defaulted to `gpt-6.2-sol` / `max`, and both catalogs
+supported that effort. At that point the named roles explicitly selected
+`gpt-6.1-sol` / `max`. All four installed regular files matched their canonical
+TOMLs. [Release announcement](https://learn.chatgpt.com/docs/whats-new/gpt-62-astra-sol) ·
+[Codex model catalog](https://learn.chatgpt.com/docs/models?surface=cli)
+
+The migration changed the `model` keys of the two role TOMLs to `gpt-6.2-sol`
+and retained `max`. After atomic replacement, the four regular files matched
+their source bytes and retained their file modes. The current session's tool
+registry exposed both updated named bindings. TOML parsing, the model-only
+diff check and seven offline model-binding audit tests passed. Focused
+exploration, bounded verification and the optional audit profile use separate
+Luna bindings. The audit profile was present only in the repository for these
+two homes.
+
+The isolated role-matched smoke test required before replacement did not run.
+The initial migration also ended before fresh named execution in either
+installed home. The user approved retaining the installed settings and running
+the named-worker checks during closeout as late verification. The subject
+metadata preserves the earlier `review_challenger` source and the
+`research_worker` baseline checked before the upgrade. Both are 6.1 Sol
+configurations. [Controlled migration procedure](../../../agents/adapters/codex/model-binding-audit.md#controlled-migration-after-an-alert)
+
+#### Late named-worker verification
+
+Codex CLI 0.170.0 opened one fresh, ephemeral app-server session per installed
+home. Each session loaded that home's installed role TOMLs in an isolated
+configuration under its existing account. The parent used Luna, a read-only
+sandbox and no approval prompts. The probe kept the normal user instructions
+and connectors out of the test sessions. The named-worker requests called for
+fresh context and used only public method files and synthetic fixtures.
+
+Structured child activity reported `gpt-6.2-sol` / `max` at start for
+both named roles in both sessions. All four child turns completed, and each
+emitted cumulative token usage. The first receipt parser missed the child
+activity items. The results were verified directly from the captured start,
+completion, action and usage events.
+
+- Both research workers verified the method files and hashed the two input
+  extracts. They found that repetition raised the completed-row rate from
+  `2/4` to `5/7`, while both extracts still contained `2/4` distinct completed
+  tasks. The source of the repeated rows remained unresolved.
+- Both review challengers identified the missing-title and null-title path in
+  a frozen render change. The baseline returned a placeholder. The candidate
+  called `.strip()` on `None` and would raise `AttributeError`. Both reports
+  traced the caller and retained a normal string-title control. The code was
+  inspected statically.
+
+The parent sandbox and approval settings were visible, and recorded worker
+actions stayed within the synthetic task. The probes establish named execution,
+bounded fixture behavior and per-child token reporting under those conditions.
+Hidden context, full child capability enforcement, connector-only controls,
+ordinary-session behavior and billed cost remain open. No comparative result
+between 6.1 and 6.2 Sol was measured.
+
 ## Work And Acceptance
 
 ### Eligibility And Authority
@@ -282,12 +354,14 @@ live GitHub writes, schedule activation, commit/push or model replacement.
   installation or update, follow the adapter's [installation and recovery procedure](../../../agents/adapters/codex/README.md#installation-boundary),
   preserve unrelated destination content, capture prior state, and verify
   regular-file copies and exact source equality in every approved runtime home.
-- In a fresh session, complete the unobserved named-runtime proof: actual
-  model/effort, effective instructions and their revision, cached activation,
-  inherited permissions and all capability reductions. Named calls and no-history packets are now observed; generic
-  invocation, successful reads, configuration equality or worker self-report
-  cannot fill the remaining fields. Retain the justified-routing and
-  primary-retention results within their tested conditions.
+- In a fresh session, complete named-runtime proof under the settings in scope.
+  Verify actual model and effort, effective instructions and revision, cached
+  activation, inherited permissions, all capability reductions and observable
+  usage. The earlier 6.1 Sol trials observed named calls and no-history packets.
+  The late 6.2 Sol probes observed named execution, model and effort, and token
+  usage in isolated sessions. Generic invocation, successful reads, configuration
+  equality or worker self-report cannot fill the remaining fields. Retain
+  justified-routing and primary-retention results within their tested conditions.
 - Confirm behavioral limits with sufficient action evidence: raw-evidence
   discovery without author discussion or expected findings; no edits,
   reviewed-code execution, publication, acceptance decisions or further
@@ -317,12 +391,16 @@ record starts no further trial by itself.
 
 ## Outcome And Reuse
 
-The source adapter and explanatory documentation are complete, and named local
-use plus bounded semantic controls now have observed results. Full runtime
-acceptance, broader semantic utility and cost remain open. The configuration
-was not changed, installed or replaced by these trials; no push, publication or
-consumer rollout occurred. Static compatibility and partial runtime use do not
-establish all configured behavior or a stable improvement.
+The earlier work completed the source adapter and explanatory documentation.
+Its trials observed named local use and bounded semantic controls on the 6.1
+Sol binding. They left the configuration in place and included no push,
+publication or consumer rollout. The later [binding migration](#sol-binding-migration)
+established the source and local installation of 6.2 Sol. The late named checks
+observed bounded execution in isolated sessions that loaded each home's
+installed role files. Full runtime
+acceptance, broader semantic utility and cost remain open. Static compatibility
+and partial runtime use do not establish all configured behavior or a stable
+improvement.
 
 Keep actual configuration and installation instructions with the adapter, and
 risk routing and semantic decisions with the task owners. Reuse this existing
@@ -362,3 +440,9 @@ not as independent runtime attestation or proof of the role's general benefit.
   reconciliation ran no new challenger trial and adds no independent trial count.
 
 - 2026-11-12 — Revision 5. Added frozen application inquiry and informed integration/closure confirmation. Preserved disclosed context exposures, primary-owned execution, unobserved descriptor consequence and provider/cost gaps; no new worker trial or binding change in this export.
+
+- 2026-11-20 — Revision 6. Recorded the approved Sol binding migration and the
+  configuration, copy and registration checks. Recorded the missed pre-install
+  test and the subsequent user-approved named checks. Kept the 6.1 Sol results
+  scoped to their original trials and the 6.2 Sol results scoped to the late
+  synthetic probes.

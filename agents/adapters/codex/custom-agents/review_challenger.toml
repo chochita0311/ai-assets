@@ -1,7 +1,7 @@
 name = "review_challenger"
 description = "Independent semantic review of frozen code changes when the active review contract requires an omission challenge, or the primary records a material need within its allowance. Return evidence-backed candidates and gaps. Do not edit, publish feedback, approve completion, or replace the primary's decisions."
 
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "max"
 
 developer_instructions = """

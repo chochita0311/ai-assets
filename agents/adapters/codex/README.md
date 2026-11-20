@@ -168,7 +168,8 @@ For harness research, the [adoption guide](../../../harness/ADOPTION-GUIDE.md#op
 - independent semantic candidate discovery and omission checks from frozen raw artifacts
 - cross-file behavior, terminal consumers, realistic failure paths and counterevidence under the primary's supplied review contract
 - no source edits, execution of reviewed code, GitHub writes, acceptance decisions or further delegation
-- configured with an initial `gpt-6.1-sol` / `max` binding; actual availability, competence and cost require the named-runtime and semantic checks below
+- model and reasoning effort are set in the [role TOML](custom-agents/review_challenger.toml)
+- actual availability, competence and cost require the named-runtime and semantic checks below
 
 This is one Codex implementation of the portable [independent reviewer brief](../../../skills/gh-review-pr/references/review-criteria.md#independent-reviewer-brief). The skill defines the review role without requiring this adapter, this worker name or any model binding. Another authorized competent reviewer can perform the role. This adapter owns only the concrete Codex configuration and installation.
 
@@ -193,7 +194,7 @@ Keep observed results and remaining runtime acceptance in the [review-challenger
 
 ### `research_worker` (optional)
 
-Use this capable research support role for a bounded fresh exploration, challenge, or later informed claim adjudication after the primary selects the method and resolves scope, authority and permitted evidence access. Assign these responsibilities separately as needed; they are not a mandatory cast or a second orchestrator. The primary retains architecture, source-of-truth, permissions, persistence, integration, final judgment and completion. The initial binding is `gpt-6.1-sol` / `max`; suitability and availability require the checks below.
+Use this capable research support role for a bounded fresh exploration, challenge, or later informed claim adjudication after the primary selects the method and resolves scope, authority and permitted evidence access. Assign these responsibilities separately as needed; they are not a mandatory cast or a second orchestrator. The primary retains architecture, source-of-truth, permissions, persistence, integration, final judgment and completion. The [role TOML](custom-agents/research_worker.toml) sets the model and reasoning effort. Verify suitability and availability with the checks below.
 
 Pass a no-history packet for fresh discovery with the question, full constraints and acceptance criteria, raw evidence access, exact method path/revision/fingerprint, allowed analysis, actual limits, planning allowance and return conditions. Withhold the author's favored answer; preserve the initial return before later exchange. Supply both sides for informed adjudication and record that changed context. Follow the selected [independent-inquiry protocol](../../../skills/research-sadr/references/independent-inquiry.md); the TOML defines the runtime boundary, not another research method. Returns include evidence, alternatives, methods, counterevidence, provenance and gaps; claim validity remains separate from the primary's response action.
 
@@ -201,7 +202,7 @@ The worker disables memories to reduce prior-context input and permission reques
 
 Before relying on the binding, use a fresh runtime to verify the exact registered name, actual model/effort, method and instruction identities/fingerprints, input history, inherited permissions and feature reductions from observable runtime evidence. Record unexposed fields as unknown; file equality and worker self-report do not establish activation. Then test answer-isolated exploration that can find an alternative framing, a challenge with a legitimate null result, an informed dispute with evidence on both sides, and a needed-source access gap. Verify support, counterevidence and method applicability, honest partial returns under actual limits, and the routing controls below. Include a source available only through an approved app or plugin to check the inherited-access choice. Confirm the binding appears in the existing audit's discovered manifest; no new scheduler is required.
 
-The existing workers keep their roles and bindings. In particular, code-change omission review remains with `review_challenger` under its owning contract; the research worker does not replace it. Optional unavailability leaves feasible research and explicit self-review with the primary, while any required independence or evidence gap remains open.
+Adding `research_worker` preserved the other workers' roles and bindings. Code-change omission review remains with `review_challenger` under its owning contract. Optional unavailability leaves feasible research and explicit self-review with the primary, while any required independence or evidence gap remains open.
 
 Do not add an automatically invoked code-writing worker until real runs show that its task class is consistently bounded, reversible, and cheaper to review than direct primary-agent work.
 

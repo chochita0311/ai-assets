@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-brand-direction-validation",
-  "revision": 15,
+  "revision": 16,
   "audience": "public",
   "subjects": [
     {
@@ -223,6 +223,19 @@ A third reader received a synthetic instrument-return register, a separate visua
 
 The two documentation readers inspected package `4e052fb18ac65003f84ba6af2e037eaa303c14346aa2649bf07b7885eaef1c8e` initially and `6fb331eece6c58d6d96fcbe46eec8f57514a49b9ea6555df4e2ac7bc8502b911` for their informed follow-up. The transfer reader used the latter. After those readings, the package recorded in revision 13 (`f324d15060741bac7791e2c647375e226fc7a9344a747c1406306f290021c041`) also allowed retaining the current treatment after comparison.
 
+### Local skill discovery
+
+On 2026-11-20 the seven-file package from `526a681` passed the package
+validator, which flagged two availability-qualified optional skills for review,
+`init-design` and `design-plan`. The user-level skill entry was absent before
+installation. The new package-directory symlink pointed to the maintained
+`skills/brand-direction` directory. The installed paths and contents of all
+seven files matched the committed package. A fresh Codex CLI 0.170.0
+app-server process found one enabled `brand-direction` user skill from both
+the source checkout and a clean working directory outside it.
+The check covers installation and discovery on one local host. Skill invocation
+and discovery on other hosts remain unverified by this check.
+
 ## Work and acceptance
 
 The first cycle closed after the local studies and reviews of scoped design decisions, the reference contribution instructions and a product handoff. Each trial covers the conditions reported above. Two further readers examined all seven files of the revision 14 package for ownership and clarity. Both could trace a partial decision to a visual refactor that preserves behavior, distinguish private studies from public contributions, and find the comparison against the selected specimen. These were document readings. One reader also saw earlier review conclusions after its initial pass.
@@ -236,6 +249,10 @@ The [review method](../../../skills/brand-direction/references/reviewing-studies
 The studies support comparing the same task and content under competing visual treatments and retaining a dissenting judgment when a different task makes it relevant. A selected atmosphere can guide a visual refactor. The acceptance checks are whether the endorsed impression is visible on the working screen and whether the same task still produces its expected result. Human taste, measured performance and consistent quality across independent designers remain open. Distribution, consumer adoption and production results were outside the design trials.
 
 ## History
+
+Revision 16, 2026-11-20, added the local symlink installation and Codex discovery
+check for the committed package. The previous record SHA-256 was
+`c92d75ee2b7f231618b12d6e71e80d3cf4749fd472d451ceb6ae6a79f58b1a78`.
 
 Revision 15, 2026-11-20, added the original pilot and the final package readings, identified historical tests by their record revisions, and kept private input fingerprints at the local study owner. The trial conditions, competing judgments and package identities were retained. The previous record SHA-256 was `1ddb710213f01fc0222262691148186b79accf19f2c5a78e18841a8a3959bef0`.
 

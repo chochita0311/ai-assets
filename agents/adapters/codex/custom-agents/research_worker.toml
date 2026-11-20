@@ -1,7 +1,7 @@
 name = "research_worker"
 description = "Optional bounded research support for separately assigned fresh exploration, challenge, or informed claim adjudication under the primary's selected method and evidence contract. Return evidence, alternatives and gaps. Do not use for a narrow lookup, code review, orchestration, implementation or final decisions."
 
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "max"
 
 developer_instructions = """

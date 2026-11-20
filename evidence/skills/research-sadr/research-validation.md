@@ -3,7 +3,7 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-research-sadr-validation",
-  "revision": 3,
+  "revision": 4,
   "audience": "public",
   "subjects": [
     {"kind": "skill", "key": "skills/research-sadr", "source_revision": null, "content_sha256": null},
@@ -25,7 +25,7 @@
     "coverage": "partial"
   },
   "adoption": {"public_fitness": "approved", "case_status": "not-requested", "rule_status": "not-proposed"},
-  "relations": {"related": ["ir-harness-mapping-v10-validation"], "supersedes": []}
+  "relations": {"related": ["ir-harness-mapping-v10-validation", "ir-codex-review-challenger-validation"], "supersedes": []}
 }
 ---
 
@@ -194,12 +194,12 @@ and did not establish real rollout, long-term usefulness or multi-agent superior
 
 The subsequent source change added
 [`research_worker`](../../../agents/adapters/codex/custom-agents/research_worker.toml)
-and complete standalone-package discovery/installation guidance. The configured
-binding is **`gpt-6.1-sol` / `max`**. The four method files, three existing worker
-bindings and research flow/governance were unchanged by that addition. Separate
-author/refine review reports passing source-contract checks, three skill
-validators, renderer freshness and seven offline audit tests. Those checks do
-not establish runtime activation.
+and complete standalone-package discovery/installation guidance. That change
+configured the worker for **`gpt-6.1-sol` / `max`**. The four method files, three
+existing worker bindings and research flow/governance were unchanged by that
+addition. Separate author/refine review reports passing source-contract checks,
+three skill validators, renderer freshness and seven offline audit tests. Those
+checks do not establish runtime activation.
 
 The private installation reports describe a regular-file worker copy in the
 initial selected runtime home and a shared skill-discovery link to the maintained
@@ -282,6 +282,19 @@ proof below open. The applied method files had obtainable fingerprints in the
 private receipt; that does not fill the unknown historical fingerprints of the
 earlier trials above.
 
+### November 20 Sol binding migration
+
+The shared adapter migration moved `research_worker` to `gpt-6.2-sol` / `max`
+in both installed Codex homes. Checks in the migration turn covered
+source-to-copy equality in both homes and the current session's tool registry.
+The earlier named CLI and stdio observations used `gpt-6.1-sol` / `max`.
+The late adapter checks observed named `research_worker` execution at
+`gpt-6.2-sol` / `max` in test sessions loading each home's installed bindings.
+The synthetic counts and provenance checks support that bounded research
+case. Connector access and general research acceptance remain open. The
+shared adapter record owns the execution evidence and its limitations.
+[Late named-worker verification](../../agents/codex/review-challenger-validation.md#late-named-worker-verification)
+
 ## Work And Acceptance
 
 The source implementation is complete within its reported scope; broader
@@ -329,7 +342,7 @@ permissions, inputs or assumptions change, or when contrary outcomes arrive.
 The bounded evidence supports that the method was used standalone and through
 local harness payloads, that criticism and informed adjudication corrected a
 material measurement distinction, and that optional named-worker activation was
-observed in later local cases. A useful provisional lesson is to keep source
+observed in the local 6.1 Sol trials. A useful provisional lesson is to keep source
 completeness, installed-copy equality, activation, response provenance and
 research efficacy as separate checks. The original missing-hash FAIL and later
 reminded PASS show why an installation or narrow numerical success cannot stand
@@ -375,3 +388,7 @@ source integration alone establishes no public reproduction or guidance effect.
 - 2026-11-12 — Revision 2. Added a later frozen application investigation, discriminating runtime checks and informed repair rounds. Preserved initial-review exposures, primary discovery, earlier failures and all open acceptance states; no source-method or binding change.
 
 - 2026-11-12 — Revision 3. Scoped the deleted-log statement to the earlier synthetic trials and clarified private archival of the later application audit. Preserved historical deletion, unknown historical fingerprints and the public-replay limit; no new execution or state change.
+
+- 2026-11-20 — Revision 4. Clarified when the original worker binding was
+  configured and linked the shared record of the 6.2 Sol migration and late
+  named checks. Preserved the separate scope of earlier checks and named runs.
