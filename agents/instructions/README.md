@@ -9,7 +9,7 @@ actual discovery paths, loading behavior, and installation procedure.
 
 | Reference | Scope |
 |---|---|
-| [general.md](general.md) | Common personal preferences: PR descriptions, local writes, temporary artifacts, and Go caches |
+| [general.md](general.md) | Common personal guidance on Git commit and push authorization, PR descriptions, local writes, temporary artifacts, and Go caches |
 | [environment.template.md](environment.template.md) | Optional rules for a company or other environment: hosts, connectors, and GitHub Enterprise commands |
 | [machine.template.md](machine.template.md) | PC-specific path aliases and examples |
 | [standard.md](standard.md) | Generated common instructions: meaning-preserving response defaults, code quality guidance, delegation, and conditional context continuity |

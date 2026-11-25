@@ -153,21 +153,16 @@ Long-running imported harnesses can provide automatic, low-noise user context th
 Use [Operator Briefing Template](templates/operator-briefing.md) as a non-persistent output scaffold. Repository-local adoption owns the detailed policy and template; the shared instruction bundle carries only a small recognition hook, installed through a runtime adapter, which remains silent when the current repo does not expose the policy.
 
 ## Consumer Repo Placement
-- This package is a shared source set, not a consumer repo by itself.
-- In a consuming repo, place:
-  - role docs under `docs/agents/roles/`
-  - the repo-owned harness import manifest at `docs/agents/harness-import-manifest.json` after a successful fresh export, existing-installation bootstrap, or refresh/resync
-  - flow docs under `docs/agents/flows/`
-  - operation docs under `docs/agents/operations/`
-  - profile docs under `docs/agents/profiles/`
-  - non-persistent agent response scaffolds under `docs/agents/templates/`
-  - the complete pinned research method under `docs/agents/methods/research-sadr/` only when `research` is selected
-  - optional blank improvement templates under `docs/agents/templates/` and their metadata schema under `docs/agents/schemas/`
-  - generated local experience at `docs/evidence/STORE.md`, `stages/`, `improvements/` and `experiments/` under that layer, ignored and consumer-owned, or at an existing configured equivalent; shared refresh preserves these outputs
-  - separately selected public records under `docs/evidence/<domain>/<component>/`, preserving the four-domain source placement above, and only their common catalog's selected rows at `docs/evidence/README.md`, following managed import ownership
-  - PRD and execution templates under `docs/plans/`
-  - governance and review assets under `docs/policies/`
-- Keep the rules for those artifacts in the consuming repo's policy layer instead of repeating them in folder README files.
+
+Use the adoption guide's [target layout](ADOPTION-GUIDE.md#target-shape-in-a-consuming-repo)
+and [export mapping](ADOPTION-GUIDE.md#export-mapping) for the selected flows
+and capabilities. Follow the [import manifest lifecycle](ADOPTION-GUIDE.md#manifest-lifecycle)
+for a fresh export, existing-installation bootstrap, or refresh/resync.
+
+Use the [consumer evidence layout](policies/harness-improvement.md#consumer-evidence-layout)
+for consumer-owned local records and separately selected public references.
+Keep artifact rules in the consuming repo's policy layer. Use pointers in
+folder README files where readers need those rules.
 
 ## Workflow Variation
 - Treat `harness/flows/delivery.md` as a strong default example, not the only valid orchestration shape.

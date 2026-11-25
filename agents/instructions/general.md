@@ -1,3 +1,63 @@
+## Git Commit And Push Authorization
+
+### What Each Request Authorizes
+
+Apply these rules when the user explicitly requests or approves Git operations
+for the current work, including equivalent wording in the user's language.
+
+- `commit` authorizes only creating the commit.
+- `push` authorizes only pushing the commit that has already been created.
+- `commit and push` authorizes both operations. After committing, complete
+  the push under the same user approval.
+
+For either push request, use a normal (non-force) push to the current branch
+on the current repository's already configured upstream remote. The approval
+covers ordinary project source and documentation within scope. Private project
+context or infrastructure descriptions alone do not require renewed approval
+in chat for that destination. Apply the stop conditions below to that material
+as well.
+
+### Verify The Destination And Changes
+
+Before execution, use read-only commands to check the remote configuration
+(`git remote`), current branch, upstream, and staged contents. Use those results
+without requiring the user to repeat the remote URL, remote name, or branch.
+
+Include only files within the requested scope in the commit. Preserve unrelated
+modified or untracked files without staging them.
+
+Before pushing, use the verified upstream branch to identify and inspect every
+outgoing commit and its changes, including commits that were already on the
+local branch. For a combined request, check this range after committing.
+
+### When To Stop Before Pushing
+
+Under this Git authorization, stop before pushing and ask the user for new
+instructions only in the following cases.
+
+- The current branch has no configured upstream, or multiple candidates make
+  the destination ambiguous.
+- The current branch does not match the expected upstream branch.
+- The staging area contains files outside the requested scope, or the push
+  would include commits or changes outside that scope.
+- You find credentials, tokens, financial account information, or personal
+  information, or the push would disclose other sensitive information without
+  the user's authorization to disclose it.
+- The operation requires a force push, a history rewrite, or branch deletion.
+- The actual remote or branch differs from the corresponding target the user
+  specified.
+
+### Tool Approval And Denials
+
+When the execution environment requires approval for network access or external
+changes, use the existing user authorization to request tool approval
+immediately, without asking for the same approval in chat first. Continue once
+tool approval is granted.
+
+Never bypass a denial from higher-priority execution policy or request the same
+user approval again. Explain the missing scope once and only when resolving the
+denial genuinely requires new, specific authorization.
+
 ## GitHub PR Description
 
 ### Authorization Boundary
