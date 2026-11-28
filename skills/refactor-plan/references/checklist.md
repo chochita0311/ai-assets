@@ -19,9 +19,10 @@ Use this as the final yes-or-no validation after applying [method.md](method.md)
 
 ## Parity And Merge Claims
 
-- If parity is claimed, are baseline and candidate frozen separately, both sides' state/guidance identities recorded, and the requested moving reference rechecked at close?
+- For every parity or merge-safety decision, including a hold, are the baseline and candidate frozen separately, with each side's dependency, configuration, environment, and guidance identities or evidence gaps recorded?
+- If the request names a moving reference, was it rechecked at close and was any change reconciled before making a current-reference claim?
 - Were affected old-to-new paths and logic units compared?
-- Were query, write, output, side-effect, and failure semantics covered where relevant?
+- Were query, write, output, side-effect, and failure semantics audited where relevant, with a reason for each category that has no path in scope?
 - Do path witnesses include relevant terminal consumers, lifecycle/recovery paths, actual types, predicates, and dependency branches?
 - Was independent review need assessed proportionally, with actual discovery/dispute exposure and any required independence gap recorded?
 - Were candidates adjudicated with counterevidence and valid fixtures, keeping claim status separate from action?
@@ -29,15 +30,17 @@ Use this as the final yes-or-no validation after applying [method.md](method.md)
 - Were actual hard limits, their sources, and their action/resource/task scopes distinguished from revisable planning allowances, with justified revisions and integration, verification, and cleanup capacity recorded?
 - Were cumulative usage, spent attempts, unresolved objections, commitments, remaining capacity, and stop/resume conditions preserved across changed inputs and sessions without treating a planning checkpoint as a forced task stop or exhaustion as acceptance?
 - Did each further pass have material information or decision value, with worker return boundaries kept separate from overall acceptance and any real hard-stop partial result?
-- Is parity `Unknown` or `Provisional` whenever required audit coverage is incomplete?
-- Does a merge decision use [../templates/merge-check.md](../templates/merge-check.md) rather than an ad hoc report?
-- Is the reviewed working tree limited to the intended merge scope?
+- Is overall parity `Unknown` or `Provisional` whenever required audit coverage is incomplete, with any confirmed regression still identified?
+- Does the checkpoint answer the requested decision first and distinguish required repairs from remaining local or environment-dependent evidence where applicable? Use the [merge-check template](../templates/merge-check.md) when recording the decision.
+- Was the frozen candidate checked for changes outside the intended scope, and does the record distinguish that result from what was observed in the working tree?
 
 ## Artifact Roles
 
 - Does the active plan own future work rather than execution history?
 - Do logs own completed work, blockers, runtime evidence, and handoffs?
 - Is the dedicated merge-check used only when parity or merge safety is the active decision?
+- If an execution log reports a current verdict, does it carry over the verdict, evidence basis, and qualifications from the merge-check for the same baseline, candidate, and scope?
+- If material inputs change or a new observation contradicts a matching decision, does the log link that decision, withhold the verdict, and identify the evidence to recheck?
 
 ## Final Question
 

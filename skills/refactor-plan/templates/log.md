@@ -1,6 +1,6 @@
 # Refactor Log Form
 
-Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff event. Use [merge-check.md](merge-check.md) for parity and merge-safety decisions, and [../references/method.md](../references/method.md) for artifact-selection and adaptation rules.
+Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff event. Record a parity or merge-safety decision in [the merge-check](merge-check.md). The [logging method](../references/method.md#artifact-selection-and-logging) explains how an event can cite that decision.
 
 ## Canonical Log Template
 
@@ -11,7 +11,7 @@ Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff
 
 - Type: `Step | Batch | Blocker | Runtime Smoke | Wrap-Up | Handoff`
 - Date: `YYYY-MM-DD`
-- Related track: `[path/to/active-plan.md]`
+- Related track: `[path/to/existing-plan.md] | None`
 - Scope: `[step, batch, slice, or decision scope]`
 
 ## Summary
@@ -42,14 +42,10 @@ Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff
   - `None` or `...`
 - Important compatibility or contract notes:
   - `...`
-- Parity claim status:
-  - `Preserved | Intentional deltas present | Provisional | Unknown`
-- Parity confidence basis:
-  - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
-- If `Preserved`, strict baseline audit completed:
-  - `Yes | No`
-- Supporting merge-check decision record when parity or merge safety was judged:
-  - `[path to decision record] | Not applicable`
+- Existing parity or merge decision for the same baseline, candidate, and scope (choose one):
+  - `No matching decision`
+  - `[link to merge-check] — [its verdict, evidence basis, and material qualifications, including any confirmed regression]`
+  - `[link to merge-check] — Verdict withheld pending reassessment. [What changed, what remains established, and the next check.]`
 
 ## Validation
 
@@ -57,6 +53,8 @@ Use this template for a step, batch, blocker, runtime-smoke, wrap-up, or handoff
   - `...`
 - Baseline resolved commit SHA (if available):
   - `...`
+- Candidate used for this event:
+  - `[commit, immutable bundle, or observed artifact identity and evidence locator] | Unknown | No candidate involved`
 - Build / compile:
   - command: `...`
   - result: `...`

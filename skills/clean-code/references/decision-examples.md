@@ -41,6 +41,24 @@ A handler with no ordinary call sites may be loaded by a configuration string, d
 
 If the usage boundary cannot be established, retain the uncertain code and describe the gap; continue with independently supported cleanup.
 
+A control missing from one person's output may still appear for another role or input. Establish who is eligible and trace the route to its consumer. Observed use confirms a use case. An empty sample establishes only what was observed under those conditions.
+
+### Retiring a feature with shared consumers
+
+An explicit decision to retire a control can justify removing it even if it is reachable or used. Remove its entry and dependencies used exclusively by it within the agreed scope. Check that independently used outputs or actions sharing the same renderer or handler still reach their consumers.
+
+Trace failure paths for any retained output that uses the same helper or input. A missing field might send a record to recovery while a present, empty field simply omits a link. Preserve that distinction when the consumer relies on it.
+
+## Simplifying failure diagnostics
+
+Two failures may return the same public error while operators need different actions, such as correcting an input or restoring storage. Inspect what the operator actually receives for each failure. Keep a safe distinction that supports recovery and preserve existing redaction of payloads, paths, and exception details. Group failures when the same message serves their consumers and recovery needs.
+
+If an operation and its cleanup can both fail, inspect or exercise that combination. Check the emitted diagnostics and what reaches the caller, including which failure takes precedence and how the other is signaled according to the established contract.
+
+## Retiring migration tests and fixtures
+
+A check of a one-time migration can be retired with its exclusive fixture once that acceptance obligation has ended. A test written during the same migration may still be the only witness for a supported input or failure. Identify the current contract each test exercises and where surviving coverage would detect a break. Keep or replace a unique witness, including any state restoration or isolation its check needs.
+
 ## Reuse and lifecycle compatibility
 
 A framework scheduler may replace custom startup, worker, and shutdown machinery. Compare startup timing, overlap/concurrency, cancellation, failures, shutdown behavior, and required performance before substitution. The existence of a similarly named facility is not evidence of semantic equivalence. Verify the installed version's official contract when uncertain; no particular documentation tool is required.

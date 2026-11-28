@@ -5,7 +5,7 @@ description: Create or update refactoring plans, phased tracks, and tracking doc
 
 # Refactor Plan
 
-Use this skill when the task is to plan refactoring work, not to immediately implement the full refactor blindly.
+Use this skill to plan refactoring work, record tracked execution, or assess parity or merge safety.
 
 This skill is general-purpose. It should travel well across repositories, stacks, and languages.
 
@@ -13,12 +13,10 @@ Use it without requiring a harness, runtime adapter, or particular reviewer. The
 
 ## Workflow
 
-1. Read [references/method.md](references/method.md) and the target repository's guidance, nearby plans, architecture notes, and actual code boundaries.
+1. Choose the [artifact role](#artifact-roles) from the request. Read the [method](references/method.md), the target repository's guidance, relevant existing plans, architecture notes, and affected code.
 2. Classify the work as `Structural`, `Behavioral`, or `Semantic`, and separate parity-preserving work from intentional deltas.
-3. Extend the existing track or create a new one according to the method's ownership and continuity rules.
-4. Build bounded steps around an explicit baseline, invariants, targets, validation, and exit gates. Before a parity or completion judgment, apply the method's frozen-comparison, independent-challenge, adjudication, and re-review gates.
-5. Write only the requested plan, log, or merge-check artifact using the routed template.
-6. Finish with [references/checklist.md](references/checklist.md) as the short final validation pass.
+3. For a parity, merge-safety, or completion judgment, apply the method's frozen-comparison, independent-challenge, adjudication, and re-review gates.
+4. Write only the requested artifact using the routed template or established equivalent. Finish with the applicable questions in [the checklist](references/checklist.md).
 
 ## General Rules
 
@@ -56,14 +54,9 @@ If the project already has a numbered scheme such as `REFACTOR-0001`, reuse that
 
 ## Artifact Roles
 
-Use the skill outputs as a small coordinated document set rather than one interchangeable file type.
-
-- Active plan:
-  - the main tracking document for scope, invariants, planned steps, validation gates, and exit goals
-- Refactor log:
-  - the default execution record when tracked refactor work changes code, confirms a blocker, records runtime verification, or closes a handoff event
-- Merge-check log:
-  - a decision record used when the active question is whether a step, batch, or track is safe to merge or parity-safe against its baseline
+- **Active plan.** Extend the existing track or create one under the method's ownership and continuity rules. Record its scope, baseline, invariants, and exit goal. Give each bounded step targets, validation, and an exit gate.
+- **Execution log.** Record meaningful tracked execution such as a completed step or batch, a blocker, runtime verification, wrap-up, or handoff. Use the existing durable record for that event or the general log template if it has no such owner.
+- **Merge-check.** When the question is parity or merge safety for a step, batch, or track, identify the scope, baseline, and candidate. Link the active plan if one exists. A standalone checkpoint needs no new plan.
 
 ## Canonical Output Format
 
@@ -95,10 +88,7 @@ Use this stricter structure by default. Do not omit sections just because the an
 
 ## Log Guidance
 
-- Treat logs as durable event records rather than casual notes.
-- Use the general log for step, batch, blocker, runtime-smoke, wrap-up, and handoff events.
-- Use the dedicated merge-check only when parity or merge safety is the active decision.
-- Read [references/method.md](references/method.md) for log selection, adaptation, naming, and evidence rules.
+Keep each log as a durable record of the event or decision. Follow the [logging method](references/method.md#artifact-selection-and-logging) for selection, adaptation, naming, and evidence requirements.
 
 ## Output Standard
 

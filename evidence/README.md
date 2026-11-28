@@ -48,7 +48,8 @@ Current records have responsible owners in harness, agents, policies and skills.
 |---|---|---|
 | [ir-code-quality-human-readability](policies/code-quality/human-readable-code-validation.md) | Code Quality, generated shared instructions | Human-readable code guidance and validation limits |
 | [ir-result-preserving-performance](policies/code-quality/result-preserving-performance.md) | Evidence for Code Quality and `skills/clean-code` across database, filesystem, index and model work | Result-preserving aggregation, batching, cache lifetimes, inference stages and measured-path limits |
-| [ir-clean-code-validation](skills/clean-code/validation.md) | `skills/clean-code`, `skills/refactor-plan` | Clean Code author checks, replayable cases, discovery boundaries, and effectiveness limits |
+| [ir-clean-code-validation](skills/clean-code/validation.md) | `skills/clean-code`, `skills/refactor-plan` | Cleanup scope, independent editing comparisons, replayable cases, discovery boundaries and effectiveness limits |
+| [ir-refactor-checkpoint-validation](skills/refactor-plan/checkpoint-validation.md) | `skills/refactor-plan` | Refactor checkpoint decisions, CI effects and carrying a verdict into an execution log |
 | [ir-brand-direction-validation](skills/brand-direction/validation.md) | `skills/brand-direction` | Independent reviews of color, typography and composition on working screens, cross-project reference curation, transfer of an approved visual direction, and local skill discovery |
 | [ir-design-deslop-validation](skills/design-deslop/validation.md) | `skills/design-deslop` | Inspectable DOM and component/whole-screen HTML review, disclosure inspection, partial adoption and preservation cases |
 | [ir-ui-atlas-validation](skills/ui-atlas/validation.md) | `skills/ui-atlas` | Selectable DOM canvas, workspace and feedback repairs, synthetic-response provenance and explicit refresh evidence |

@@ -132,6 +132,7 @@ For every changed write path, verify:
   - unintentional and must fix
 - Compare actual value types, null/blank cases, exact predicates, and distinguishing boundary combinations at logic-unit level. Include applicable storage/state combinations such as memory/disk and fresh/existing targets.
 - Inspect the actual old and new dependency implementations and configuration branches reached by the application. An unchanged call name or application body does not establish equivalent library behavior; unavailable dependency evidence leaves the affected conclusion provisional.
+- When an acceptance claim depends on a shipped default, verify the normal entry point with the shipped configuration, including settings it omits. Record what a fixture overrides and which behavior that run establishes.
 
 ### 4.4 Check Transaction and Failure Model
 
@@ -191,9 +192,8 @@ For every changed write path, verify:
   - exception model
   - retry/rollback/compensation behavior
   - transaction boundary and partial-failure behavior
-- If any path was not audited:
-  - parity conclusion must be `Unknown` or `Provisional`
-  - do not conclude `Preserved`
+- Mark an audit category `Not applicable` only when the affected flow establishes that the reviewed scope contains no such path. Record the reason.
+- If any relevant path was not audited, overall parity must be `Unknown` or `Provisional`. Identify the missing evidence and still report any regression confirmed on another path.
 
 ### 4.8 Obtain an Independent Omission Challenge
 
@@ -219,6 +219,7 @@ For every changed write path, verify:
 - Start substantive follow-up only for new evidence, a question/path, changed input or repair, or a concrete unresolved concern. Before another pass, name the material decision it could change, the new information it could supply, and its estimated cost within actual limits; reassess the planning allowance when needed. Do not repeat the same evidence and method merely to obtain agreement.
 - Stop when the declared scope and evidence gates are satisfied. Continue useful, authorized work that can resolve material gaps when a limit blocks only one action or resource. Return an explicitly partial result when evidence, required independence, or material objections cannot be resolved with available means, or when actual limits, scope, or authority prevent further useful authorized work, including at a whole-task deadline. Keep the resource stop, unmet acceptance conditions, and quality verdict distinct. Exhaustion and repeated rereading are not acceptance; no loop must continue until “spotless.”
 - Keep claims scoped to audited contracts and observed checks. Report drift immediately and revise prior parity claims; explicitly retract and correct a contradicted safety or preservation statement. Record the next bounded check and resume condition for remaining work without silently expanding the task.
+- In the first paragraph of a checkpoint, answer the requested decision for the reviewed candidate. Name any code repair the evidence shows is still needed. If work remains, identify the next local check or the decision that needs target-environment evidence, or both when they apply. A required fix for an in-scope regression stays actionable even when its occurrence at a particular site is unknown. If the checked scope establishes no required fix, say so and keep any unmet acceptance condition open.
 
 ## 5) Validation Gates
 
@@ -232,6 +233,10 @@ For every changed write path, verify:
   - run at least one representative runtime path when refactoring touches operationally significant flows
 - Full-suite checkpoint:
   - before declaring a phase complete, run the full test suite once on the committed state when practical
+- If changing a routine check, its runner, or the wiring it exercises could make the job send, publish, or write to a shared system, plan the following verification and run it when execution is in scope.
+  - Establish which destinations the job may use. Before running the normal CI command, intercept or block routes outside that boundary, including routes selected by shared test state, configuration, or child processes where applicable. Preserve explicitly authorized integrations at their agreed destinations.
+  - Exercise the relevant input through that command under isolation. Compare what each intended receiver or store recorded with the expected effects, including content and any required identity, count, or order. Check for missing or extra effects at that same destination and unintended effects elsewhere. Where retries are allowed, distinguish attempts from the logical effects they produce.
+  - For a case that should suppress delivery, verify that absence. If selecting the correct route is itself required, record the attempted destinations too. A blocked attempt at the wrong destination can leave the same empty delivery log as a disabled sender.
 - Build, targeted tests, wiring, startup, and runtime checks establish only their checked scope. Record skipped checks and their acceptance impact; a pass does not replace strict coverage, required independence, or unresolved material objections.
 
 ## 6) Refactoring Anti-Patterns
@@ -249,8 +254,8 @@ Treat these as warning signs that the plan is weak or the change is violating re
 
 ## 7) Clean Tree and Merge Scope Gate
 
-- Before final parity judgment, confirm no unintended local changes remain.
-- Review the exact merge scope against the chosen baseline.
+- Before a parity or merge decision, compare the frozen candidate with the chosen baseline. Use the diff or immutable bundle manifest to check for changes outside the intended scope. List any such changes or identify the evidence gap if the comparison is incomplete.
+- Record whether the working tree was inspected and what was observed. Local edits count toward the review only if they belong to the frozen candidate. For a commit-only review without working-tree access, record that limit and assess the committed diff.
 - Do not mix:
   - unfinished later-phase refactors
   - debug-only changes
@@ -271,8 +276,6 @@ Use a refactor log when tracked execution changes code or records a meaningful e
 
 - Prefer one log per step, batch, blocker, runtime-smoke, wrap-up, or handoff event.
 - Keep logs factual and scoped: attempted work, changes, evidence, residual risk, and next action.
-- Use a sortable filename such as `YYYY-MM-DD_refactor-xxxx_<event-slug>.md` when the repository has no stronger convention.
-- Default to `./docs/plans/refactoring/logs/` only when the repository has no established log location.
 - Do not combine unrelated events merely because they occurred on the same day.
 
 Adapt the general log by event:
@@ -282,7 +285,13 @@ Adapt the general log by event:
 - `runtime smoke`: replace change narration with environment, assumptions, checks, observed results, and unverified scope
 - `wrap-up` or `handoff`: summarize closure, accepted deltas, deferred work, and the destination track
 
-Use the dedicated merge-check artifact instead of the general log whenever the active question is whether a step, batch, or track is parity-safe, merge-safe, or blocked by missing proof. Do not list `merge check` as a general log type.
+Use the dedicated merge-check whenever the active question is whether a reviewed scope is parity-safe, merge-safe, or blocked by missing proof. A standalone decision can identify its scope without an active plan.
+
+An execution log may cite an existing merge-check when the event identifies the same baseline, candidate, and reviewed scope. Link the decision and carry over its verdict, evidence basis, and material qualifications, including confirmed regressions. Carry forward `Preserved` only if the decision meets the [strict baseline audit gate](#47-strict-baseline-audit-gate-required-for-parity-claims).
+
+If material inputs change or a new observation contradicts a matching decision, link it, record what changed, and leave the current verdict unassessed until [the affected evidence is rechecked](#410-reconcile-repairs-and-stop-within-scope). Without a matching decision, record the event's observations and leave parity and merge safety unassessed in that log.
+
+For both execution logs and merge-checks, use the repository's established location and naming convention. If there is no established log location, use `./docs/plans/refactoring/logs/`. If there is no naming convention, use a sortable name such as `YYYY-MM-DD_refactor-xxxx_<event-slug>.md` for an event or `YYYY-MM-DD_refactor-xxxx_<scope>-merge-check.md` for a checkpoint. A standalone checkpoint can omit the track ID when none exists.
 
 For every log:
 
@@ -293,6 +302,6 @@ For every log:
 ## Output Resource Routing
 
 - Use [../templates/plan.md](../templates/plan.md) for the active refactor plan.
-- Use [../templates/log.md](../templates/log.md) for step, blocker, runtime-smoke, and wrap-up logs.
+- Use [../templates/log.md](../templates/log.md) when a [tracked execution event](#artifact-selection-and-logging) needs its own log, including a batch or handoff.
 - Use [../templates/merge-check.md](../templates/merge-check.md) for exact parity and merge-decision evidence.
 - Do not duplicate those output forms inside this method.

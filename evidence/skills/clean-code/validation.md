@@ -3,17 +3,17 @@
   "format": "ai-assets-improvement-record",
   "schema_version": 1,
   "record_id": "ir-clean-code-validation",
-  "revision": 6,
+  "revision": 8,
   "audience": "public",
   "subjects": [
-    {"kind": "skill", "key": "skills/clean-code", "source_revision": null, "content_sha256": null},
-    {"kind": "skill", "key": "skills/refactor-plan", "source_revision": null, "content_sha256": null}
+    {"kind": "skill", "key": "skills/clean-code", "source_revision": null, "content_sha256": "5a7a3e73dee3459a74e16a8f0ee7e273906308fef94eb1c727c2ceab1abce09c"},
+    {"kind": "skill", "key": "skills/refactor-plan", "source_revision": null, "content_sha256": "521a75478922d1cf6a4a9a848fd10418e81914c4973663f46b0c0b722a80d712"}
   ],
   "work": {"basis": "evidence-gap", "state": "open", "readiness": "waiting"},
   "knowledge": {"state": "candidate"},
-  "evidence": {"kinds": ["static-observation", "generalized-private-observation", "illustrative-synthetic"], "maturity": "fresh-forward-test", "execution": "run", "coverage": "partial"},
+  "evidence": {"kinds": ["static-observation", "generalized-private-observation", "illustrative-synthetic"], "maturity": "comparable-rerun", "execution": "run", "coverage": "partial"},
   "adoption": {"public_fitness": "approved", "case_status": "not-requested", "rule_status": "implemented"},
-  "relations": {"related": ["ir-code-quality-human-readability"], "supersedes": []}
+  "relations": {"related": ["ir-code-quality-human-readability", "ir-refactor-checkpoint-validation"], "supersedes": []}
 }
 ---
 
@@ -35,8 +35,8 @@ authorized cleanup may delete, inline, consolidate, extract, or move code.
 No-change outcomes require evidence proportional to the requested target.
 Language-specific implementation rules remain with the consuming project.
 This record also owns the adjacent `refactor-plan` discovery clarification
-arising from the cleanup/planning boundary; it is not a separate effectiveness
-study of that skill.
+arising from the cleanup/planning boundary. The later checkpoint and CI
+comparisons have their own [validation record](../refactor-plan/checkpoint-validation.md).
 
 The design used the document-shaping analogy to preserve required meaning while
 reducing reading and change effort. The [design sources](../../../skills/clean-code/references/decision-examples.md#design-sources-and-limits)
@@ -309,7 +309,7 @@ templates and already planning-focused UI metadata were unchanged. This clarifie
 the discovery contract; actual over-selection was not established and changed
 host selection has not been tested.
 
-| Current changed file | SHA-256 |
+| File at revision 5 | SHA-256 |
 |---|---|
 | `skills/clean-code/SKILL.md` | `b5c023740080e604bf80bff7e0e6963e03b22ce31d101d88b6044394be528a53` |
 | `skills/clean-code/references/decision-examples.md` | `5b5264391f1edce42adafc7a7df382eb24469779aa75d57a8027692cc0dad11d` |
@@ -362,7 +362,7 @@ independent authoring or host-routing trial.
 
 ### Repository closeout verification
 
-Two new contexts independently reviewed the consolidated session material and
+At revision 6, two new contexts independently reviewed the consolidated session material and
 relevant owners: one used `docs-structuring` for ownership, organization and
 duplication; the other used `docs-shaping` for coherence and meaning preservation.
 Both received the same session evidence, frozen 13-file manifest and source
@@ -392,6 +392,99 @@ dependencies; the retained record and regression inputs are sufficient for
 their stated roles. Commit and remote publication verification remain distinct
 from these checks and from consumer activation.
 
+### Independent editing comparison
+
+Fresh same-model editors used the previous and revised instructions in separate
+disposable checkouts. Both reported progress and completed the remaining
+authorized work. When asked to pause, both stopped after the first batch.
+Snapshots taken before and after a narrower follow-up confirmed that each
+resumed only the newly authorized part.
+
+On copies of the [repository validator](../../../scripts/validate_skill_packages.py) from `67828fb`,
+both versions completed two accepted changes and passed the nine original tests
+and 14 compatibility comparisons. A changing-directory test confirmed that each
+implementation used one package listing. Both also consolidated reference
+classification after the requested progress update. In a separate JavaScript
+task the initial fixture left the meaning of a missing field unspecified, so
+that input was excluded from scoring. Once the surviving consumer's contract
+was defined, both versions sent a missing field to recovery and published
+without a link when the field was present but empty.
+The comparisons establish scoped editing behavior. Their outcomes showed no
+additional completion or preservation gain from the revised wording.
+
+### Cleanup decisions in migration follow-ups
+
+In the [shared archive sample](../refactor-plan/checkpoint-validation.md#field-evidence),
+one cleanup stopped after the first prioritized batch even though the user
+had authorized the remaining work. Another inverted the requested ownership
+relationship while 166 tests passed. A later, explicitly narrowed batch
+closed at its new boundary. Reducing three selected compiler-warning categories
+from 44 occurrences to zero supported completion of that specific cleanup.
+These cases motivated comparing the work at handoff to the **current**
+authorization and checking the direction of a
+structural change across all applicable peers. A progress report, an explicit
+pause and a request for a report only each have different completion conditions.
+
+An option absent for one account depended on the account and the data in
+each result row. Page visits could not establish whether the option was
+clicked. The user approved removing it because its destination was being
+withdrawn and kept the independently displayed keyword and identifier. Another
+migration's redacted error summary made failures
+requiring different recovery actions look alike. Follow-up checks distinguished
+input mapping from a storage connection failure without exposing the raw data.
+These observations motivated the examples for surviving consumers and useful
+failure diagnostics.
+
+The [comparisons](../refactor-plan/checkpoint-validation.md#comparative-checks)
+used the same model (`gpt-6.2-sol` at `max` for the
+designated editors), with one editor per condition and task. Both instruction
+versions finished all four editing tasks. In the read-only JavaScript and Ruby
+cases both also identified inverted ownership, a still-required publishing
+path and distinct failure diagnostics. Both permitted retiring an expired
+migration check and kept the only check that a disabled feature never opened
+a file. Shared fixtures and the shared model limit independence across runs.
+
+Three subsequent runs exercised the revised skill. After an explicit pause,
+one follow-up expanded the work to remove an output, while another narrowed
+it to a shared normalization rule and retained the deferred feature and its
+external mapping. In the expanded case the retained consumer sent a missing
+required field to recovery and accepted a present, empty one. In a separate
+Java 21 queue exercise, registration and replay shared one rule and passed
+five checks covering duplicates, cancellation, errors and a live read-only
+view. These runs tested continued behavior under the revised instructions.
+
+A final baseline/candidate pair removed an obsolete test and its exclusive
+fixture while retaining a test for the order of notifications when saving and
+closing both failed.
+Both edits passed 16 combinations across two entry points. Suppressing the
+first notification made both tests fail. A location-specific check initially
+rejected the baseline edit. After the oracle was corrected to check where
+one format change could be made across three failure paths, both designs
+qualified. The baseline put that change in the notification consumer and the
+revision in the existing input-processing module. No completion or
+defect-detection advantage was established.
+
+Folder review exposed a separate reading problem. The original delete/inline
+bullet could allow dropping a live operation simply because its wrapper was
+thin. A first folder review and two informed rereads checked a configuration-registered public
+entry, an expressly retired control sharing a renderer, and an uncertain
+scheduler replacement. The final entry separates deletion and inlining and
+links the relevant [decision examples](../../../skills/clean-code/references/decision-examples.md).
+The ordinary reachability section retains the role/input eligibility and
+empty-sample warning. The retirement example retains the surviving consumer's
+failure and recovery paths. These were reader checks on the final wording.
+Earlier editing comparisons used the versions identified at their stages.
+
+The repository closeout also made ambiguous inlining a direct cue to read
+the forwarding example. The two subject fingerprints identify the local
+packages after that review and before commit.
+Each is SHA-256 over a sorted, two-space-indented UTF-8 JSON object plus a
+trailing newline, mapping every file path relative to `skills/` to its
+lowercase SHA-256. Local registrations matched all ten package files. Older
+file-level hashes in this record identify the versions used at those stages.
+The [shared repository checks](../refactor-plan/checkpoint-validation.md#repository-checks)
+distinguish initial exploration, behavioral comparisons and the final document checks.
+
 ## Work And Acceptance
 
 The requested skill, local registration, adjacent discovery clarification and
@@ -399,7 +492,7 @@ replayable evaluation resource are implemented. The record's open/waiting work
 state concerns the remaining effectiveness evidence below; it does not mark
 those deliverables incomplete or assign a new experiment.
 
-Result: **PASS for the bounded static, read-only review and native author checks**,
+Result: **PASS for the bounded static, read-only review, native author checks and independent editing comparisons**,
 with the paid-total and subsequent oracle/test corrections described above.
 Evidence coverage: **partial**.
 The earlier paired review conditions reached the same substantive judgments;
@@ -407,21 +500,18 @@ no incremental advantage was observed. One worker per condition, shared model an
 instructions, small synthetic tasks, and no human-reader measurement limit
 interpretation. The independent contexts are not independent human studies.
 
-Fresh independent autonomous editing, production rollout and general
-cross-language benefit remain untested. Actual edits, new code and a subsequent
-change now have bounded author-check evidence; this replaces the earlier lack
-of implementation exercises without establishing independent effectiveness.
-Implicit selection has the observations above; broader reliability is untested.
-No eligible named code-writing worker was available under the active delegation
-contract; a generic worker was not substituted. That limits independent
-authoring trials; the primary performed the authorized isolated checks instead.
-Remaining gaps prevent an effectiveness or stable-behavior claim, but do not
-block delivery of the requested candidate.
+In revisions 1–6 the primary performed the isolated checks of edits, new code
+and a subsequent change because the active delegation contract had no eligible
+code-writing worker. Revision 7 used an editing role explicitly designated for
+that comparison. Independent editing now has direct evidence for the tested
+tasks. Production rollout, long-running
+completion rates and general cross-language benefit remain unmeasured. Implicit
+selection retains the observations above and its broader reliability is open.
 
 The declared revision-3 extended checks finished after concrete test gaps were repaired
 and affected checks reran. No supported package defect remained that justified
 adding instructions at that stage. An incremental-benefit claim still needs comparable
-independent authoring on untouched real code, with correct human understanding
+repeated independent authoring on representative real code, with correct human understanding
 and subsequent modification, regressions, correction effort and total cost
 measured. Broader languages/toolchains, real integrations, other models/catalogs
 and long-running-session refresh remain outside observed coverage. Repeated
@@ -481,3 +571,9 @@ does not establish effectiveness or consumer activation.
   resource/package checks, and reconciled explicit publication authorization.
   Preserved historical evidence and remaining effectiveness limits without a
   separate session log or unnecessary restructuring.
+- 2026-11-28, revision 7 recorded paired, independent editing outcomes for
+  progress updates, approval gates, narrowed scope and retained failure behavior.
+  Comparative effectiveness in longer work remains open.
+- 2026-11-28, revision 8 added the migration follow-ups, corrected location
+  check, final document walkthroughs and package fingerprints. The outstanding
+  effectiveness question remains open.

@@ -1,31 +1,42 @@
 # Refactor Merge Check Form
 
-Use this template when recording a merge-safety or parity checkpoint for a refactor track, step, or batch.
-
-Default location:
-- `./docs/plans/refactoring/logs/`
-
-This template is stricter than a normal execution log. It is for decisions, not narration.
+Use this template when recording a merge-safety or parity decision for a defined scope, with or without an active refactor plan.
+Select `Preserved` only after completing the [strict baseline audit](../references/method.md#47-strict-baseline-audit-gate-required-for-parity-claims).
 
 ## Recommended File Naming
 
-Use a stable sortable pattern:
+Follow the [log location and naming conventions](../references/method.md#artifact-selection-and-logging). When the repository has no naming convention, the fallback produces names like these:
 
-`YYYY-MM-DD_refactor-xxxx_<scope>-merge-check.md`
-
-Examples:
-- `2026-02-24_refactor-0001-level5-7-merge-check.md`
-- `2026-02-26_refactor-0003-groupa-merge-check.md`
-- `2026-03-18_refactor-0005-final-merge-check.md`
+- `2026-02-24_refactor-0001_level5-7-merge-check.md`
+- `2026-02-26_refactor-0003_groupa-merge-check.md`
+- `2026-03-18_refactor-0005_final-merge-check.md`
 
 ## Canonical Merge Check Template
 
 ```md
 # [Merge Check Title]
 
+## Merge Assessment
+
+[Give the requested decision for this candidate in the first paragraph. Name any code repair still needed, the next locally answerable question, and the decision awaiting target-environment evidence, where applicable.]
+
+- Safe to merge:
+  - `Yes | No | Not yet | Not requested`
+- Behavioral parity vs baseline:
+  - `Preserved | Intentional deltas present | Known regression | Provisional | Unknown`
+  - [If any relevant path is unaudited, select `Unknown` or `Provisional` for overall parity and name any confirmed regression in the opening assessment.]
+- Parity confidence basis:
+  - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
+- External contract parity:
+  - `Preserved | Intentional deltas present | Known regression | Provisional | Unknown`
+- Client-visible change:
+  - `No | Yes | Unknown`
+- Required fixes before merge, if assessed:
+  - `None` or `...`
+
 ## Scope
 
-- Related track: `[path/to/active-plan.md]`
+- Related track: `[path/to/existing-plan.md] | None`
 - Scope under review:
   - `...`
 - Compare baseline:
@@ -42,8 +53,8 @@ Examples:
   - `...`
 - Observation time, access limits, and evidence locators:
   - `...`
-- Requested moving reference rechecked at close; change and reconciliation:
-  - `...`
+- Requested moving reference rechecked at close, change and reconciliation:
+  - `... | Not applicable (fixed reference)`
 
 ## Changed Surface
 
@@ -58,8 +69,10 @@ Examples:
 
 ## Validation Run
 
-- Working tree clean:
-  - `Yes | No`
+- Working tree observation:
+  - `Inspected, clean | Inspected, local changes (describe) | Not inspected (reason)`
+- Changes outside the intended scope in the frozen candidate (diff or manifest):
+  - `None found | Present (list) | Unknown (evidence gap)`
 - Build / compile:
   - command: `...`
   - result: `Pass | Fail | Not run`
@@ -98,6 +111,8 @@ Examples:
 
 ## Strict Parity Audit Coverage
 
+[Use `Not applicable` only when the reviewed scope contains no such path and give the reason. Mark an unaudited relevant path `No` and record the gap in the path table.]
+
 - Baseline pinned to immutable target (commit SHA):
   - `Yes | No`
 - Source mapping complete (old -> new paths):
@@ -106,14 +121,16 @@ Examples:
   - `Yes | No | Not applicable with reason`
 - Actual types, predicates, boundary combinations, and old/new dependency branches compared:
   - `Yes | No | Not applicable with reason`
-- Query/write semantics audited at logic-unit level:
-  - `Yes | No`
+- Query semantics audited at logic-unit level:
+  - `Yes | No | Not applicable with reason`
+- Write semantics audited at logic-unit level:
+  - `Yes | No | Not applicable with reason`
 - Payload/output mapping audited field-by-field:
-  - `Yes | No`
+  - `Yes | No | Not applicable with reason`
 - Side-effect paths audited explicitly:
-  - `Yes | No`
+  - `Yes | No | Not applicable with reason`
 - Failure-mode paths audited explicitly:
-  - `Yes | No`
+  - `Yes | No | Not applicable with reason`
 - Any unaudited relevant path:
   - `None | ...`
 
@@ -140,21 +157,6 @@ Examples:
   - `None | ...`
 - Carried candidate statuses/actions and corrected or retracted earlier claims:
   - `None | ...`
-
-## Merge Assessment
-
-- Safe to merge:
-  - `Yes | No | Not yet`
-- Behavioral parity vs baseline:
-  - `Preserved | Intentional deltas present | Unknown`
-- Parity confidence basis:
-  - `Strict audit complete | Partial audit | Test-only evidence | Runtime-only evidence`
-- External contract parity:
-  - `Preserved | Intentional deltas present | Unknown`
-- Client-visible change:
-  - `No | Yes | Unknown`
-- Required fixes before merge:
-  - `None` or `...`
 
 ## Parity Proof
 
